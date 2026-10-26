@@ -15,3 +15,6 @@ artifacts/private/
 data/client_*/
 data/raw_private/
 *.log
+
+# Extracted starter documents are tracked; keep the duplicate archive local.
+/Semantic_Content_Analyser_Starter_Docs.zip
