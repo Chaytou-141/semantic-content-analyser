@@ -35,13 +35,13 @@ I embedded the titles and bodies of 20 fictional articles, leaving their IDs and
 
 The collection now contains 21 articles, producing an embedding matrix of shape (21, 384).
 
-| Rank | ID | Title | Cosine similarity |
-| --- | --- | --- | --- |
-| 1 | A21 | Cleaning a refrigerated bakery display cabinet | 0.6782 |
-| 2 | A04 | Measuring space for a cafe display refrigerator | 0.6046 |
-| 3 | A01 | Choosing a display fridge for a cafe | 0.5295 |
-| 4 | A05 | Comparing running costs of display fridges | 0.5281 |
-| 5 | A03 | Open versus closed refrigerated displays | 0.4979 |
+| Rank | ID  | Title                                           | Cosine similarity |
+| ---- | --- | ----------------------------------------------- | ----------------- |
+| 1    | A21 | Cleaning a refrigerated bakery display cabinet  | 0.6782            |
+| 2    | A04 | Measuring space for a cafe display refrigerator | 0.6046            |
+| 3    | A01 | Choosing a display fridge for a cafe            | 0.5295            |
+| 4    | A05 | Comparing running costs of display fridges      | 0.5281            |
+| 5    | A03 | Open versus closed refrigerated displays        | 0.4979            |
 
 ### Lessons and next improvement
 
@@ -69,10 +69,10 @@ I extended the comparison to four labelled questions and added automatic precisi
 
 ### Q04 results verified from the learner's terminal output
 
-| Method | Top three IDs | Relevant in top three | Precision@3 | Recall@3 |
-| --- | --- | --- | --- | --- |
-| Embeddings | A01, A04, A03 | 3 | 3/3 = 100% | 3/4 = 75% |
-| TF-IDF | A01, A08, A04 | 2 | 2/3 = 66.7% | 2/4 = 50% |
+| Method     | Top three IDs | Relevant in top three | Precision@3 | Recall@3  |
+| ---------- | ------------- | --------------------- | ----------- | --------- |
+| Embeddings | A01, A04, A03 | 3                     | 3/3 = 100%  | 3/4 = 75% |
+| TF-IDF     | A01, A08, A04 | 2                     | 2/3 = 66.7% | 2/4 = 50% |
 
 The script rounds displayed percentages to whole numbers, so TF-IDF Precision@3 appears as 67%.
 
@@ -93,3 +93,9 @@ I first ran Q05 against all 21 articles, and both methods ranked the relevant A1
 - Labels and reasons: `labels/full_collection_relevance.csv`.
 - Generated report: `docs/evaluation-results.md`.
 - All ranked pairs: `docs/evaluation-rankings.csv`.
+
+## My Git practice
+
+A commit is...
+A push is...
+One thing I learned about comparing retrieval methods is...
