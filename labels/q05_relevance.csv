@@ -1,0 +1,22 @@
+query_id,article_id,relevant,label_source,reason
+Q05,A01,no,assistant,"Concerns choosing and displaying a fridge, not arranging espresso preparation."
+Q05,A02,no,assistant,"Concerns buying a bakery display cabinet, not espresso station layout."
+Q05,A03,no,assistant,"Compares refrigerated display types, not staff workflow at a coffee station."
+Q05,A04,no,assistant,Mentions staff movement but specifically concerns fitting a refrigerator; no espresso-area arrangement guidance.
+Q05,A05,no,assistant,Concerns refrigerator running costs rather than espresso workflow.
+Q05,A06,no,assistant,Concerns cleaning a refrigerator rather than arranging coffee equipment.
+Q05,A07,no,assistant,Concerns choosing bulk freezer storage rather than a coffee preparation area.
+Q05,A08,no,assistant,"Borderline: mentions workflow and counter space, but gives buying considerations rather than layout guidance; no under the strict rule."
+Q05,A09,no,assistant,"Borderline: mentions workspace, but concerns grinder selection rather than arranging equipment; no under the strict rule."
+Q05,A10,no,assistant,Concerns grind adjustment and extraction rather than physical workflow.
+Q05,A11,no,assistant,"Concerns cleaning equipment, not arranging the preparation area."
+Q05,A12,yes,assistant,"Directly describes positioning the espresso machine, grinder and milk workspace to reduce movement and improve access."
+Q05,A13,no,assistant,Concerns buying a bakery oven rather than an espresso preparation area.
+Q05,A14,no,assistant,Explains dough fermentation rather than cafe layout.
+Q05,A15,no,assistant,Explains pastry handling rather than cafe layout.
+Q05,A16,no,assistant,"Concerns bakery production timing, not espresso equipment arrangement."
+Q05,A17,no,assistant,Concerns writing a buying guide rather than giving espresso layout advice.
+Q05,A18,no,assistant,Concerns website internal links rather than physical cafe workflow.
+Q05,A19,no,assistant,Concerns reviewing article overlap rather than cafe workflow.
+Q05,A20,no,assistant,Concerns website contact information rather than staff preparation space.
+Q05,A21,no,assistant,Concerns cleaning a refrigerated cabinet rather than espresso station layout.

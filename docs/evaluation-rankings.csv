@@ -1,0 +1,211 @@
+method,query_id,rank,article_id,title,similarity,relevant
+Embeddings,Q05,1,A12,Planning a cafe coffee station,0.8174093961715698,True
+Embeddings,Q05,2,A08,Choosing an espresso machine for a small cafe,0.6776551008224487,False
+Embeddings,Q05,3,A09,Selecting a coffee grinder for espresso,0.5350115299224854,False
+Embeddings,Q05,4,A11,Cleaning cafe coffee equipment,0.5115442872047424,False
+Embeddings,Q05,5,A04,Measuring space for a cafe display refrigerator,0.47491782903671265,False
+Embeddings,Q05,6,A10,Adjusting espresso grind for a balanced shot,0.47334516048431396,False
+Embeddings,Q05,7,A01,Choosing a display fridge for a cafe,0.40374457836151123,False
+Embeddings,Q05,8,A16,Planning a bakery production schedule,0.3798249363899231,False
+Embeddings,Q05,9,A20,Improving a cafe website contact page,0.36074990034103394,False
+Embeddings,Q05,10,A17,Writing a cafe equipment buying guide,0.36022934317588806,False
+Embeddings,Q05,11,A06,Cleaning a commercial display fridge,0.32945895195007324,False
+Embeddings,Q05,12,A02,Selecting a refrigerated cabinet for a bakery,0.3236120343208313,False
+Embeddings,Q05,13,A21,Cleaning a refrigerated bakery display cabinet,0.30268988013267517,False
+Embeddings,Q05,14,A03,Open versus closed refrigerated displays,0.23980087041854858,False
+Embeddings,Q05,15,A13,Choosing an oven for a small bakery,0.21431584656238556,False
+Embeddings,Q05,16,A05,Comparing running costs of display fridges,0.20916983485221863,False
+Embeddings,Q05,17,A15,Keeping pastry layers light and crisp,0.17156709730625153,False
+Embeddings,Q05,18,A07,Choosing a chest freezer for bulk storage,0.15833428502082825,False
+Embeddings,Q05,19,A14,Why bread dough needs time to rise,0.12528347969055176,False
+Embeddings,Q05,20,A19,Reviewing two articles about the same topic,0.09686566144227982,False
+Embeddings,Q05,21,A18,Linking related buying guides on a website,0.011986203491687775,False
+Embeddings,Q06,1,A06,Cleaning a commercial display fridge,0.6773657202720642,True
+Embeddings,Q06,2,A21,Cleaning a refrigerated bakery display cabinet,0.6174840927124023,True
+Embeddings,Q06,3,A03,Open versus closed refrigerated displays,0.4763426184654236,False
+Embeddings,Q06,4,A04,Measuring space for a cafe display refrigerator,0.39471474289894104,False
+Embeddings,Q06,5,A11,Cleaning cafe coffee equipment,0.37546300888061523,False
+Embeddings,Q06,6,A02,Selecting a refrigerated cabinet for a bakery,0.3670880198478699,False
+Embeddings,Q06,7,A01,Choosing a display fridge for a cafe,0.3236747980117798,False
+Embeddings,Q06,8,A05,Comparing running costs of display fridges,0.28400203585624695,False
+Embeddings,Q06,9,A12,Planning a cafe coffee station,0.20938697457313538,False
+Embeddings,Q06,10,A20,Improving a cafe website contact page,0.18974372744560242,False
+Embeddings,Q06,11,A17,Writing a cafe equipment buying guide,0.17904600501060486,False
+Embeddings,Q06,12,A07,Choosing a chest freezer for bulk storage,0.12186446040868759,False
+Embeddings,Q06,13,A16,Planning a bakery production schedule,0.10615888983011246,False
+Embeddings,Q06,14,A19,Reviewing two articles about the same topic,0.10233410447835922,False
+Embeddings,Q06,15,A08,Choosing an espresso machine for a small cafe,0.09309308975934982,False
+Embeddings,Q06,16,A18,Linking related buying guides on a website,0.08194209635257721,False
+Embeddings,Q06,17,A09,Selecting a coffee grinder for espresso,0.02660052292048931,False
+Embeddings,Q06,18,A10,Adjusting espresso grind for a balanced shot,0.010523596778512001,False
+Embeddings,Q06,19,A13,Choosing an oven for a small bakery,-0.010138096287846565,False
+Embeddings,Q06,20,A15,Keeping pastry layers light and crisp,-0.010542561300098896,False
+Embeddings,Q06,21,A14,Why bread dough needs time to rise,-0.05920229107141495,False
+Embeddings,Q07,1,A14,Why bread dough needs time to rise,0.6972788572311401,True
+Embeddings,Q07,2,A15,Keeping pastry layers light and crisp,0.4593946039676666,False
+Embeddings,Q07,3,A16,Planning a bakery production schedule,0.30000144243240356,False
+Embeddings,Q07,4,A13,Choosing an oven for a small bakery,0.28605493903160095,False
+Embeddings,Q07,5,A02,Selecting a refrigerated cabinet for a bakery,0.17507998645305634,False
+Embeddings,Q07,6,A21,Cleaning a refrigerated bakery display cabinet,0.16329188644886017,False
+Embeddings,Q07,7,A10,Adjusting espresso grind for a balanced shot,0.09993632137775421,False
+Embeddings,Q07,8,A04,Measuring space for a cafe display refrigerator,0.03991176560521126,False
+Embeddings,Q07,9,A08,Choosing an espresso machine for a small cafe,0.03614062815904617,False
+Embeddings,Q07,10,A20,Improving a cafe website contact page,0.025519710034132004,False
+Embeddings,Q07,11,A12,Planning a cafe coffee station,0.025279613211750984,False
+Embeddings,Q07,12,A09,Selecting a coffee grinder for espresso,0.018841929733753204,False
+Embeddings,Q07,13,A03,Open versus closed refrigerated displays,7.697194814682007e-05,False
+Embeddings,Q07,14,A01,Choosing a display fridge for a cafe,-0.0002940390259027481,False
+Embeddings,Q07,15,A11,Cleaning cafe coffee equipment,-0.019866829738020897,False
+Embeddings,Q07,16,A17,Writing a cafe equipment buying guide,-0.02251260355114937,False
+Embeddings,Q07,17,A05,Comparing running costs of display fridges,-0.03682791069149971,False
+Embeddings,Q07,18,A19,Reviewing two articles about the same topic,-0.04317069798707962,False
+Embeddings,Q07,19,A18,Linking related buying guides on a website,-0.06623896956443787,False
+Embeddings,Q07,20,A07,Choosing a chest freezer for bulk storage,-0.06772883236408234,False
+Embeddings,Q07,21,A06,Cleaning a commercial display fridge,-0.09522229433059692,False
+Embeddings,Q08,1,A02,Selecting a refrigerated cabinet for a bakery,0.7596007585525513,True
+Embeddings,Q08,2,A01,Choosing a display fridge for a cafe,0.7467058300971985,True
+Embeddings,Q08,3,A04,Measuring space for a cafe display refrigerator,0.6019055843353271,True
+Embeddings,Q08,4,A03,Open versus closed refrigerated displays,0.6003015637397766,True
+Embeddings,Q08,5,A05,Comparing running costs of display fridges,0.5672892332077026,True
+Embeddings,Q08,6,A21,Cleaning a refrigerated bakery display cabinet,0.5572909712791443,False
+Embeddings,Q08,7,A06,Cleaning a commercial display fridge,0.46504777669906616,False
+Embeddings,Q08,8,A08,Choosing an espresso machine for a small cafe,0.4578236937522888,False
+Embeddings,Q08,9,A12,Planning a cafe coffee station,0.41337740421295166,False
+Embeddings,Q08,10,A17,Writing a cafe equipment buying guide,0.36829179525375366,False
+Embeddings,Q08,11,A13,Choosing an oven for a small bakery,0.3566422462463379,False
+Embeddings,Q08,12,A07,Choosing a chest freezer for bulk storage,0.3244292736053467,False
+Embeddings,Q08,13,A16,Planning a bakery production schedule,0.3195778429508209,False
+Embeddings,Q08,14,A09,Selecting a coffee grinder for espresso,0.3111047148704529,False
+Embeddings,Q08,15,A20,Improving a cafe website contact page,0.30075258016586304,False
+Embeddings,Q08,16,A11,Cleaning cafe coffee equipment,0.21237438917160034,False
+Embeddings,Q08,17,A15,Keeping pastry layers light and crisp,0.18250565230846405,False
+Embeddings,Q08,18,A10,Adjusting espresso grind for a balanced shot,0.13968734443187714,False
+Embeddings,Q08,19,A19,Reviewing two articles about the same topic,0.12731079757213593,False
+Embeddings,Q08,20,A14,Why bread dough needs time to rise,0.11304329335689545,False
+Embeddings,Q08,21,A18,Linking related buying guides on a website,0.08908859640359879,False
+Embeddings,Q09,1,A08,Choosing an espresso machine for a small cafe,0.8437207341194153,True
+Embeddings,Q09,2,A12,Planning a cafe coffee station,0.7241727709770203,False
+Embeddings,Q09,3,A09,Selecting a coffee grinder for espresso,0.6384686231613159,False
+Embeddings,Q09,4,A11,Cleaning cafe coffee equipment,0.534618616104126,False
+Embeddings,Q09,5,A10,Adjusting espresso grind for a balanced shot,0.4581716060638428,False
+Embeddings,Q09,6,A17,Writing a cafe equipment buying guide,0.42267322540283203,False
+Embeddings,Q09,7,A01,Choosing a display fridge for a cafe,0.416533499956131,False
+Embeddings,Q09,8,A04,Measuring space for a cafe display refrigerator,0.36697661876678467,False
+Embeddings,Q09,9,A05,Comparing running costs of display fridges,0.31909653544425964,False
+Embeddings,Q09,10,A02,Selecting a refrigerated cabinet for a bakery,0.3045536279678345,False
+Embeddings,Q09,11,A20,Improving a cafe website contact page,0.30300551652908325,False
+Embeddings,Q09,12,A06,Cleaning a commercial display fridge,0.2803363800048828,False
+Embeddings,Q09,13,A13,Choosing an oven for a small bakery,0.2640092968940735,False
+Embeddings,Q09,14,A07,Choosing a chest freezer for bulk storage,0.2597729563713074,False
+Embeddings,Q09,15,A16,Planning a bakery production schedule,0.2517545819282532,False
+Embeddings,Q09,16,A03,Open versus closed refrigerated displays,0.24779470264911652,False
+Embeddings,Q09,17,A21,Cleaning a refrigerated bakery display cabinet,0.21388646960258484,False
+Embeddings,Q09,18,A15,Keeping pastry layers light and crisp,0.14494839310646057,False
+Embeddings,Q09,19,A14,Why bread dough needs time to rise,0.14030341804027557,False
+Embeddings,Q09,20,A19,Reviewing two articles about the same topic,0.13242962956428528,False
+Embeddings,Q09,21,A18,Linking related buying guides on a website,0.10425040870904922,False
+TF-IDF,Q05,1,A12,Planning a cafe coffee station,0.2753021029001438,True
+TF-IDF,Q05,2,A08,Choosing an espresso machine for a small cafe,0.1752710901678551,False
+TF-IDF,Q05,3,A16,Planning a bakery production schedule,0.13347738248573518,False
+TF-IDF,Q05,4,A09,Selecting a coffee grinder for espresso,0.12909964722901016,False
+TF-IDF,Q05,5,A01,Choosing a display fridge for a cafe,0.12173569372772944,False
+TF-IDF,Q05,6,A18,Linking related buying guides on a website,0.10476736185406413,False
+TF-IDF,Q05,7,A11,Cleaning cafe coffee equipment,0.1017030673977769,False
+TF-IDF,Q05,8,A10,Adjusting espresso grind for a balanced shot,0.0997892850450965,False
+TF-IDF,Q05,9,A05,Comparing running costs of display fridges,0.0968589934467176,False
+TF-IDF,Q05,10,A04,Measuring space for a cafe display refrigerator,0.09598523979533617,False
+TF-IDF,Q05,11,A03,Open versus closed refrigerated displays,0.08978387540489102,False
+TF-IDF,Q05,12,A20,Improving a cafe website contact page,0.05401001210025213,False
+TF-IDF,Q05,13,A21,Cleaning a refrigerated bakery display cabinet,0.036704567392545885,False
+TF-IDF,Q05,14,A13,Choosing an oven for a small bakery,0.026689492863146893,False
+TF-IDF,Q05,15,A19,Reviewing two articles about the same topic,0.023762109257182876,False
+TF-IDF,Q05,16,A17,Writing a cafe equipment buying guide,0.023563350666454472,False
+TF-IDF,Q05,17,A06,Cleaning a commercial display fridge,0.013993203130820574,False
+TF-IDF,Q05,18,A15,Keeping pastry layers light and crisp,0.013816372850321898,False
+TF-IDF,Q05,19,A14,Why bread dough needs time to rise,0.011342988611265835,False
+TF-IDF,Q05,20,A02,Selecting a refrigerated cabinet for a bakery,0.0,False
+TF-IDF,Q05,21,A07,Choosing a chest freezer for bulk storage,0.0,False
+TF-IDF,Q06,1,A21,Cleaning a refrigerated bakery display cabinet,0.42062677142802807,True
+TF-IDF,Q06,2,A06,Cleaning a commercial display fridge,0.32758343579621085,True
+TF-IDF,Q06,3,A01,Choosing a display fridge for a cafe,0.29233687855564516,False
+TF-IDF,Q06,4,A02,Selecting a refrigerated cabinet for a bakery,0.2786421474516344,False
+TF-IDF,Q06,5,A03,Open versus closed refrigerated displays,0.24277850191352135,False
+TF-IDF,Q06,6,A04,Measuring space for a cafe display refrigerator,0.2090820437880832,False
+TF-IDF,Q06,7,A05,Comparing running costs of display fridges,0.17513836767284716,False
+TF-IDF,Q06,8,A08,Choosing an espresso machine for a small cafe,0.11642450269779822,False
+TF-IDF,Q06,9,A10,Adjusting espresso grind for a balanced shot,0.10556404271110614,False
+TF-IDF,Q06,10,A13,Choosing an oven for a small bakery,0.09640626576866479,False
+TF-IDF,Q06,11,A19,Reviewing two articles about the same topic,0.07837056506857693,False
+TF-IDF,Q06,12,A11,Cleaning cafe coffee equipment,0.06489947102407011,False
+TF-IDF,Q06,13,A20,Improving a cafe website contact page,0.06468170599214787,False
+TF-IDF,Q06,14,A09,Selecting a coffee grinder for espresso,0.05782425656587503,False
+TF-IDF,Q06,15,A15,Keeping pastry layers light and crisp,0.0443243597182502,False
+TF-IDF,Q06,16,A07,Choosing a chest freezer for bulk storage,0.04399221337130728,False
+TF-IDF,Q06,17,A12,Planning a cafe coffee station,0.038597881465730344,False
+TF-IDF,Q06,18,A14,Why bread dough needs time to rise,0.029265831373271232,False
+TF-IDF,Q06,19,A18,Linking related buying guides on a website,0.025757188896612028,False
+TF-IDF,Q06,20,A16,Planning a bakery production schedule,0.01724155813519431,False
+TF-IDF,Q06,21,A17,Writing a cafe equipment buying guide,0.008698819536565771,False
+TF-IDF,Q07,1,A14,Why bread dough needs time to rise,0.4119124826229278,True
+TF-IDF,Q07,2,A15,Keeping pastry layers light and crisp,0.18364607334552135,False
+TF-IDF,Q07,3,A19,Reviewing two articles about the same topic,0.11327911265229693,False
+TF-IDF,Q07,4,A16,Planning a bakery production schedule,0.07257959437823061,False
+TF-IDF,Q07,5,A04,Measuring space for a cafe display refrigerator,0.042260957596902404,False
+TF-IDF,Q07,6,A02,Selecting a refrigerated cabinet for a bakery,0.04053588569464625,False
+TF-IDF,Q07,7,A08,Choosing an espresso machine for a small cafe,0.04006080247760127,False
+TF-IDF,Q07,8,A18,Linking related buying guides on a website,0.035851650303940406,False
+TF-IDF,Q07,9,A01,Choosing a display fridge for a cafe,0.0,False
+TF-IDF,Q07,10,A03,Open versus closed refrigerated displays,0.0,False
+TF-IDF,Q07,11,A05,Comparing running costs of display fridges,0.0,False
+TF-IDF,Q07,12,A06,Cleaning a commercial display fridge,0.0,False
+TF-IDF,Q07,13,A07,Choosing a chest freezer for bulk storage,0.0,False
+TF-IDF,Q07,14,A09,Selecting a coffee grinder for espresso,0.0,False
+TF-IDF,Q07,15,A10,Adjusting espresso grind for a balanced shot,0.0,False
+TF-IDF,Q07,16,A11,Cleaning cafe coffee equipment,0.0,False
+TF-IDF,Q07,17,A12,Planning a cafe coffee station,0.0,False
+TF-IDF,Q07,18,A13,Choosing an oven for a small bakery,0.0,False
+TF-IDF,Q07,19,A17,Writing a cafe equipment buying guide,0.0,False
+TF-IDF,Q07,20,A20,Improving a cafe website contact page,0.0,False
+TF-IDF,Q07,21,A21,Cleaning a refrigerated bakery display cabinet,0.0,False
+TF-IDF,Q08,1,A01,Choosing a display fridge for a cafe,0.4947026752410376,True
+TF-IDF,Q08,2,A02,Selecting a refrigerated cabinet for a bakery,0.3706403595369383,True
+TF-IDF,Q08,3,A04,Measuring space for a cafe display refrigerator,0.31136304323710423,True
+TF-IDF,Q08,4,A21,Cleaning a refrigerated bakery display cabinet,0.2581559991458805,False
+TF-IDF,Q08,5,A03,Open versus closed refrigerated displays,0.24570465720146326,True
+TF-IDF,Q08,6,A06,Cleaning a commercial display fridge,0.20741204931783647,False
+TF-IDF,Q08,7,A05,Comparing running costs of display fridges,0.17366804815423176,True
+TF-IDF,Q08,8,A08,Choosing an espresso machine for a small cafe,0.16301492316098498,False
+TF-IDF,Q08,9,A09,Selecting a coffee grinder for espresso,0.16191207987671258,False
+TF-IDF,Q08,10,A13,Choosing an oven for a small bakery,0.11940677468126423,False
+TF-IDF,Q08,11,A20,Improving a cafe website contact page,0.11880612667930118,False
+TF-IDF,Q08,12,A17,Writing a cafe equipment buying guide,0.11499553691620808,False
+TF-IDF,Q08,13,A07,Choosing a chest freezer for bulk storage,0.09775938316501989,False
+TF-IDF,Q08,14,A18,Linking related buying guides on a website,0.0663701554401271,False
+TF-IDF,Q08,15,A19,Reviewing two articles about the same topic,0.0623392514611264,False
+TF-IDF,Q08,16,A11,Cleaning cafe coffee equipment,0.05396987228097485,False
+TF-IDF,Q08,17,A12,Planning a cafe coffee station,0.0462306323084003,False
+TF-IDF,Q08,18,A10,Adjusting espresso grind for a balanced shot,0.03081349841467107,False
+TF-IDF,Q08,19,A15,Keeping pastry layers light and crisp,0.02292828883356434,False
+TF-IDF,Q08,20,A16,Planning a bakery production schedule,0.015186492891496015,False
+TF-IDF,Q08,21,A14,Why bread dough needs time to rise,0.012549136300456966,False
+TF-IDF,Q09,1,A08,Choosing an espresso machine for a small cafe,0.5900247606014817,True
+TF-IDF,Q09,2,A09,Selecting a coffee grinder for espresso,0.22757956898382986,False
+TF-IDF,Q09,3,A01,Choosing a display fridge for a cafe,0.20219224619842643,False
+TF-IDF,Q09,4,A02,Selecting a refrigerated cabinet for a bakery,0.19936801103294402,False
+TF-IDF,Q09,5,A12,Planning a cafe coffee station,0.1901196297589294,False
+TF-IDF,Q09,6,A13,Choosing an oven for a small bakery,0.1867542201851766,False
+TF-IDF,Q09,7,A04,Measuring space for a cafe display refrigerator,0.16060686960578455,False
+TF-IDF,Q09,8,A11,Cleaning cafe coffee equipment,0.15969597651676792,False
+TF-IDF,Q09,9,A20,Improving a cafe website contact page,0.15829409828930974,False
+TF-IDF,Q09,10,A18,Linking related buying guides on a website,0.13950499385228232,False
+TF-IDF,Q09,11,A17,Writing a cafe equipment buying guide,0.11860718992329806,False
+TF-IDF,Q09,12,A07,Choosing a chest freezer for bulk storage,0.07943098082763976,False
+TF-IDF,Q09,13,A19,Reviewing two articles about the same topic,0.07181385829195568,False
+TF-IDF,Q09,14,A10,Adjusting espresso grind for a balanced shot,0.05990190306626715,False
+TF-IDF,Q09,15,A15,Keeping pastry layers light and crisp,0.038862798516453356,False
+TF-IDF,Q09,16,A03,Open versus closed refrigerated displays,0.018417596509564097,False
+TF-IDF,Q09,17,A21,Cleaning a refrigerated bakery display cabinet,0.017417778779369068,False
+TF-IDF,Q09,18,A05,Comparing running costs of display fridges,0.0,False
+TF-IDF,Q09,19,A06,Cleaning a commercial display fridge,0.0,False
+TF-IDF,Q09,20,A14,Why bread dough needs time to rise,0.0,False
+TF-IDF,Q09,21,A16,Planning a bakery production schedule,0.0,False

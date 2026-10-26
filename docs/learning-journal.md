@@ -83,3 +83,13 @@ The script rounds displayed percentages to whole numbers, so TF-IDF Precision@3 
 - Labels are human judgements for a defined reader task. They are not fed into the ranking methods and do not train the embedding model.
 - These examples are for learning, not a held-out benchmark. They do not prove one method is best for the final product.
 - Next: write new questions, review every article in the 21-article collection for each question before inspecting rankings, and evaluate both methods on that shared collection. Record uncertainty and false matches before considering model changes.
+
+## Full-collection development evaluation
+
+I first ran Q05 against all 21 articles, and both methods ranked the relevant A12 first. At my request, the assistant then prepared four more questions and complete relevance judgements before running those rankings, producing 105 assistant-proposed labels across five development questions. The batch script embeds the articles once, fits TF-IDF on the same full collection and writes a report with rankings and precision/recall at 1, 3 and 5. Averaged equally across questions, both methods achieved Precision@1 of 100%, Precision@3 of 53.3% and Recall@3 of 92%; at five results, embeddings achieved precision/recall of 40%/100%, versus 36%/96% for TF-IDF. These familiar synthetic tasks and assistant-proposed labels are a development check, so the next evaluation improvement is independent human review and questions kept separate from tuning.
+
+- Run: `.venv/Scripts/python.exe experiments/batch_evaluation.py`.
+- Questions: `data/evaluation_queries.csv`.
+- Labels and reasons: `labels/full_collection_relevance.csv`.
+- Generated report: `docs/evaluation-results.md`.
+- All ranked pairs: `docs/evaluation-rankings.csv`.
