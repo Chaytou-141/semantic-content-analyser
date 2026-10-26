@@ -43,9 +43,26 @@ The learner selected A14 before inspecting either method's ranking, explaining t
 | A15: Keeping pastry layers light and crisp | Describes dough and fat layers, resting and careful handling. | no | Concerns preserving pastry layers rather than explaining loaf expansion. |
 | A16: Planning a bakery production schedule | Coordinates mixing, resting and baking around demand. | no | Concerns scheduling rather than the cause of expansion. |
 
+## Q04: Choosing a cafe display fridge
+
+Reader question: What should I consider when choosing a refrigerated display for my cafe?
+
+Before seeing rankings, the learner selected the buying-related articles. For this six-candidate exercise, the agreed relevant IDs are A01, A03, A04 and A05. A02 is outside this candidate set.
+
+| Candidate | Summary | Relevant? (yes/no) | Reason |
+| --- | --- | --- | --- |
+| A01: Choosing a display fridge for a cafe | Capacity, shelf layout and counter space. | yes | Directly supports selecting a display fridge. |
+| A03: Open versus closed refrigerated displays | Customer access, product visibility and energy use. | yes | Helps compare cabinet types. |
+| A04: Measuring space for a cafe display refrigerator | Counter and doorway measurements, ventilation and staff movement. | yes | Helps check equipment fit before purchase. |
+| A05: Comparing running costs of display fridges | Energy consumption, purchase price and capacity. | yes | Helps compare costs when selecting equipment. |
+| A06: Cleaning a commercial display fridge | Routine cleaning of shelves and glass. | no | Describes cleaning rather than selecting equipment. |
+| A08: Choosing an espresso machine for a small cafe | Drink volume, counter space and machine capacity. | no | Describes selecting different equipment. |
+
+This exercise has four relevant articles, making it possible to retrieve useful results while still missing other useful candidates. Precision@3 counts relevant articles among the first three results and divides by three; Recall@3 divides that same count by four.
+
 ## Evaluation limits
 
-- Each question uses four reviewed candidates, not a complete labelled evaluation set. Other relevant articles may exist in the collection.
+- Q01-Q03 each use four reviewed candidates; Q04 uses six. These are restricted candidate exercises, not a complete labelled evaluation set. Other relevant articles may exist in the collection.
 - A21 was written after inspecting earlier results. This example is useful for learning but is not an independent test of generalisation.
 - Before reporting retrieval metrics across the full collection, review every eligible candidate for each evaluation question and define self-exclusion consistently.
 - Later, add new questions and label them before inspecting rankings. Use the same questions, collection and relevance labels for embeddings and TF-IDF.

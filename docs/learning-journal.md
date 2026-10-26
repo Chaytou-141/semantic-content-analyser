@@ -50,3 +50,36 @@ The collection now contains 21 articles, producing an embedding matrix of shape 
 - Adding A21 left the displayed scores for existing pairs unchanged; it supplied a new candidate rather than training the model.
 - The terminal's `python` command could not find Sentence Transformers despite showing `(.venv)`. Running the project's `.venv/Scripts/python.exe` explicitly used the project environment successfully.
 - Next improvement: record expected matches for more examples before changing the model or choosing a relevance threshold.
+
+## Comparing embeddings with a TF-IDF baseline
+
+I labelled relevant articles for three questions before inspecting the question rankings, then compared embeddings and TF-IDF using the same four candidates per question. Both methods ranked the relevant article first for the display-cabinet cleaning question and the espresso-machine buying question. For the loaf-expansion question, embeddings ranked A14 first at 0.5638, while TF-IDF ranked A13 first at 0.2110 and the relevant A14 second at 0.1895. Across these three exercises, mean Precision@1 was 100% for embeddings and about 66.7% for TF-IDF; Precision@2 was 50% for both methods on every question because each top-two list contained exactly one relevant article. These selected examples illustrate different behaviour, but do not establish which method is best for the full collection or future questions.
+
+- Labels are human reference judgements, not predictions or inputs to either ranking method.
+- TF-IDF word weights are fitted on each question's four candidate articles, with the question transformed using that vocabulary.
+- Comparing raw similarity scores across methods does not establish retrieval quality.
+- These are teaching examples with restricted candidate sets, not an independent held-out benchmark; A21 was constructed after earlier retrieval inspection.
+- The automatic Precision@1 and Precision@2 calculations were run and matched the manual counts above.
+
+## Milestone 2 checkpoint: Precision, recall and multiple relevant articles
+
+Date: 27 October 2026
+
+I extended the comparison to four labelled questions and added automatic precision and recall at K = 1, 2 and 3. Precision measures the fraction of displayed results labelled relevant, while recall measures the fraction of all relevant candidates found within that result limit. For Q04 about choosing a cafe display fridge, I marked A01, A03, A04 and A05 relevant within a six-article candidate set before inspecting the rankings. Embeddings returned three relevant articles in its first three results, while TF-IDF returned two relevant articles and an espresso-machine article. This shows how a method can have perfect precision at a chosen result limit while still missing relevant articles beyond that limit.
+
+### Q04 results verified from the learner's terminal output
+
+| Method | Top three IDs | Relevant in top three | Precision@3 | Recall@3 |
+| --- | --- | --- | --- | --- |
+| Embeddings | A01, A04, A03 | 3 | 3/3 = 100% | 3/4 = 75% |
+| TF-IDF | A01, A08, A04 | 2 | 2/3 = 66.7% | 2/4 = 50% |
+
+The script rounds displayed percentages to whole numbers, so TF-IDF Precision@3 appears as 67%.
+
+### Limits and next step
+
+- Q01-Q03 each search four reviewed candidates; Q04 searches six. None searches all 21 articles.
+- Both methods use identical article text, questions, labels and result limits within each exercise. TF-IDF is fitted separately on each exercise's candidate articles.
+- Labels are human judgements for a defined reader task. They are not fed into the ranking methods and do not train the embedding model.
+- These examples are for learning, not a held-out benchmark. They do not prove one method is best for the final product.
+- Next: write new questions, review every article in the 21-article collection for each question before inspecting rankings, and evaluate both methods on that shared collection. Record uncertainty and false matches before considering model changes.
