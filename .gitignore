@@ -18,3 +18,19 @@ data/raw_private/
 
 # Extracted starter documents are tracked; keep the duplicate archive local.
 /Semantic_Content_Analyser_Starter_Docs.zip
+
+# Local application state and build/verification output.
+runtime/
+*.sqlite3-shm
+*.sqlite3-wal
+.coverage
+htmlcov/
+test-results/
+node_modules/
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfplan
+!terraform.tfvars.example
+dist/

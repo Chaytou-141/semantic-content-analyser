@@ -1,0 +1,47 @@
+services:
+  app:
+    image: ${IMAGE:?Set IMAGE to an immutable ECR image tag or digest}
+    environment:
+      APP_ENV: production
+      APP_PASSWORD: ${APP_PASSWORD:?Set APP_PASSWORD}
+      SECRET_KEY: ${SECRET_KEY:?Set SECRET_KEY}
+      PRELOAD_MODEL: "true"
+      DATABASE_PATH: /app/runtime/workspace.sqlite3
+    volumes:
+      - workspace:/app/runtime
+    expose:
+      - "8000"
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+  proxy:
+    image: caddy:2.10.2-alpine
+    environment:
+      DOMAIN: ${DOMAIN:?Set DOMAIN to your DNS hostname}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      app:
+        condition: service_healthy
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+volumes:
+  workspace:
+  caddy_data:
+  caddy_config:

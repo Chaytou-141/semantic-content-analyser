@@ -99,3 +99,11 @@ I first ran Q05 against all 21 articles, and both methods ranked the relevant A1
 A commit is...
 A push is...
 One thing I learned about comparing retrieval methods is...
+
+## Additional questions and the first internal-link prototype
+
+At my request, the assistant labelled two more questions against all 21 articles before running their rankings: T01 about cafe website visitor information (A20 relevant), and T02 about preserving pastry layers (A15 relevant). Both methods ranked the designated relevant article first on both questions, giving Precision@1 and Recall@1 of 100% for those two examples. Although the input files are named test_queries and test_relevance, the labels were proposed by the assistant, so independent human evaluation remains outstanding. The next practical experiment compares an explicitly selected source article's short body passage with eligible destination articles, excluding self-links, a fictional existing link and a fictional disallowed target. The output is a set of review candidates with passage evidence and example URLs, not automatic link insertion or proof of SEO value.
+
+## Scope expanded: a deployable application and AWS learning path
+
+At my request, the project expanded beyond guided experiments into a working FastAPI application and browser interface. It supports embedding/TF-IDF comparison, article import/export and edits, source/destination passage evidence for internal-link review, existing/disallowed-link exclusions, overlap candidates and persistent editorial decisions. Model-sized overlapping chunks replace silent whole-article truncation, while the Evaluation page keeps the historical experiments clearly separate from claims about the new passage scorer. SQLite serves one shared workspace, Docker packages the app and pinned CPU model, and Terraform plus an HTTPS proxy prepare an EC2/ECR deployment path in Sydney. Tests and browser checks verify local behaviour, while actual AWS provisioning, independent human evaluation and production operational testing remain separate steps.

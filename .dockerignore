@@ -1,0 +1,14 @@
+.git
+.venv
+.env
+.env.*
+runtime
+node_modules
+__pycache__
+*.pyc
+.pytest_cache
+.terraform
+*.tfstate*
+*.tfvars
+Semantic_Content_Analyser_Starter_Docs.zip
+test-results

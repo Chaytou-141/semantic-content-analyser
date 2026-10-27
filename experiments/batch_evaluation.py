@@ -1,5 +1,6 @@
 """Compare two retrieval methods on the same fully labelled development queries."""
 
+import argparse
 import csv
 from pathlib import Path
 
@@ -8,6 +9,15 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 project_root = Path(__file__).resolve().parent.parent
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument(
+    "--additional", action="store_true",
+    help="Run the two additional assistant-labelled questions, saving a separate report.",
+)
+args = parser.parse_args()
+query_path = "data/test_queries.csv" if args.additional else "data/evaluation_queries.csv"
+label_path = "labels/test_relevance.csv" if args.additional else "labels/full_collection_relevance.csv"
+report_prefix = "additional-evaluation" if args.additional else "evaluation"
 
 
 def read_csv(relative_path):
@@ -16,8 +26,8 @@ def read_csv(relative_path):
 
 
 articles = read_csv("data/synthetic_articles.csv")
-queries = read_csv("data/evaluation_queries.csv")
-label_rows = read_csv("labels/full_collection_relevance.csv")
+queries = read_csv(query_path)
+label_rows = read_csv(label_path)
 article_ids = {article["id"] for article in articles}
 query_ids = {query["query_id"] for query in queries}
 if len(article_ids) != len(articles) or len(query_ids) != len(queries):
@@ -73,7 +83,7 @@ for method, score_matrix in [("Embeddings", embedding_scores), ("TF-IDF", tfidf_
 
 output_dir = project_root / "docs"
 output_dir.mkdir(exist_ok=True)
-with (output_dir / "evaluation-rankings.csv").open("w", encoding="utf-8", newline="") as file:
+with (output_dir / f"{report_prefix}-rankings.csv").open("w", encoding="utf-8", newline="") as file:
     writer = csv.DictWriter(file, fieldnames=list(ranking_rows[0]))
     writer.writeheader()
     writer.writerows(ranking_rows)
@@ -82,8 +92,11 @@ report = [
     "# Retrieval development evaluation", "",
     f"Compared {len(queries)} questions across all {len(articles)} fictional articles.", "",
     "Labels are assistant-proposed judgements under strict direct-answer rules. "
-    "The questions revisit familiar development tasks, and the collection includes an article "
-    "constructed after earlier retrieval inspection. This is not an independent held-out benchmark.", "",
+    "Both questions and labels were prepared by the assistant before their rankings were run. "
+    "The collection is familiar and includes an article constructed after earlier retrieval "
+    "inspection. Even files named test_queries and test_relevance do not make this an "
+    "independent human-reviewed held-out benchmark.", "",
+    f"Question source: `{query_path}`. Label source: `{label_path}`.", "",
     "Both methods receive the same titles, bodies and questions. TF-IDF uses default "
     "TfidfVectorizer settings fitted on the 21 article texts only. Embeddings use "
     "sentence-transformers/all-MiniLM-L6-v2 on CPU; its exact model revision is not pinned.", "",
@@ -130,5 +143,5 @@ report.extend([
     "Next: have a person review disputed labels, then add independently labelled questions that remain "
     "unseen while tuning. Do not fine-tune or choose a score threshold from this report alone.",
 ])
-(output_dir / "evaluation-results.md").write_text("\n".join(report) + "\n", encoding="utf-8")
-print("Saved docs/evaluation-results.md and docs/evaluation-rankings.csv")
+(output_dir / f"{report_prefix}-results.md").write_text("\n".join(report) + "\n", encoding="utf-8")
+print(f"Saved docs/{report_prefix}-results.md and docs/{report_prefix}-rankings.csv")
