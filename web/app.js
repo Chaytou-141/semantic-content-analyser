@@ -1,7 +1,7 @@
 "use strict";
 
 const $ = (selector) => document.querySelector(selector);
-const state = { articles: [], meta: null, view: "search", busy: false, lastLinks: null, sourceId: null };
+const state = { articles: [], meta: null, view: "search", busy: false, lastLinks: null, sourceId: null, hasSearched: false, pendingEvaluation: false };
 
 function el(tag, attrs = {}, ...children) {
   const node = document.createElement(tag);
@@ -44,6 +44,7 @@ async function task(message, action) {
   if (state.busy) return;
   state.busy = true;
   $("#app-error").hidden = true;
+  document.querySelectorAll(".dialog-error").forEach((error) => error.remove());
   $("#busy-message").textContent = message;
   $("#busy").hidden = false;
   const submitButtons = [...document.querySelectorAll("button[type=submit]")];
@@ -52,11 +53,21 @@ async function task(message, action) {
   catch (error) {
     $("#app-error").textContent = error.message;
     $("#app-error").hidden = false;
+    const dialog = document.querySelector("dialog[open]");
+    if (dialog) {
+      const inlineError = el("p", { class: "dialog-error", role: "alert", tabindex: "-1", text: error.message });
+      (dialog.querySelector("form") || dialog).append(inlineError);
+      inlineError.focus();
+    } else $("#app-error").focus();
     toast(error.message);
   } finally {
     state.busy = false;
     $("#busy").hidden = true;
     submitButtons.forEach((button) => { button.disabled = false; });
+    if (state.pendingEvaluation) {
+      state.pendingEvaluation = false;
+      if (state.view === "evaluation") task("Loading saved evaluation results…", renderEvaluation);
+    }
   }
 }
 
@@ -67,11 +78,55 @@ async function loadCollection() {
   state.articles = collection.articles;
   state.meta = meta;
   $("#collection-count").textContent = `${state.articles.length} articles in your collection`;
+  $("#nav-article-count").textContent = state.articles.length;
   const select = $("#links-source");
   const previous = select.value;
   select.replaceChildren(...state.articles.map((article) => el("option", { value: article.id, text: `${article.id} — ${article.title}` })));
   if (state.articles.some((article) => article.id === previous)) select.value = previous;
   renderCollection();
+  renderCollectionRail();
+  if (!state.hasSearched) renderDiscovery();
+}
+
+function browseCollection(topic = "") {
+  $("#article-filter").value = topic;
+  renderCollection();
+  navigate("collection");
+}
+
+function renderCollectionRail() {
+  const topics = new Map();
+  for (const article of state.articles) {
+    const topic = article.topic || "Uncategorised";
+    topics.set(topic, (topics.get(topic) || 0) + 1);
+  }
+  const words = state.articles.reduce((count, article) => count + article.body.split(/\s+/u).filter(Boolean).length, 0);
+  const topicList = el("div", { class: "rail-topics" });
+  [...topics.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).forEach(([topic, count], index) => {
+    topicList.append(el("button", { class: "topic-row", "aria-label": `Browse ${topic.replaceAll("_", " ")}: ${count} articles`, onclick: () => browseCollection(topic === "Uncategorised" ? "" : topic) }, el("span", { class: `topic-swatch swatch-${index % 4}`, "aria-hidden": "true" }), el("span", { text: topic.replaceAll("_", " ") }), el("span", { text: count })));
+  });
+  $("#collection-rail").replaceChildren(
+    el("div", { class: "rail-header" }, el("h2", { text: "The collection" }), el("span", { class: "rail-symbol", "aria-hidden": "true", text: "▤" })),
+    el("p", { class: "rail-summary", text: `${state.articles.length} articles across ${topics.size} topics. ${new Intl.NumberFormat().format(words)} words of source material.` }),
+    topicList,
+    el("button", { class: "button small rail-browse", text: "Browse all articles", onclick: () => browseCollection() }),
+    el("details", { class: "method-help" }, el("summary", { text: "How matching works" }), el("p", {}, el("strong", { text: "Meaning" }), " uses embeddings to find related ideas, including different wording."), el("p", {}, el("strong", { text: "Words" }), " uses TF-IDF to compare weighted vocabulary. Choose Compare both to inspect their rankings."), el("p", { text: "Similarity is a clue to relevance, not a confidence percentage." }))
+  );
+}
+
+function renderDiscovery() {
+  const topics = new Set();
+  const featured = [];
+  for (const article of state.articles) {
+    if (!topics.has(article.topic)) { featured.push(article); topics.add(article.topic); }
+    if (featured.length === 4) break;
+  }
+  const list = el("div", { class: "collection-preview" });
+  for (const article of featured) {
+    const excerpt = article.body.length > 160 ? article.body.slice(0, 160).replace(/\s+\S*$/u, "") + "…" : article.body;
+    list.append(el("button", { class: "preview-row", "aria-label": `Open ${article.title}`, onclick: () => openArticle(article.id) }, el("span", { class: "preview-id", text: article.id }), el("span", {}, el("span", { class: "preview-title", text: article.title }), el("span", { class: "preview-excerpt", text: excerpt }), el("span", { class: "preview-topic", text: article.topic.replaceAll("_", " ") || "Uncategorised" })), el("span", { class: "preview-arrow", "aria-hidden": "true", text: "↗" })));
+  }
+  $("#search-results").replaceChildren(el("div", { class: "result-heading" }, el("h2", { text: "From your collection" }), el("span", { text: `${featured.length} of ${state.articles.length} articles` })), list);
 }
 
 async function start() {
@@ -97,7 +152,10 @@ function navigate(view) {
   });
   history.replaceState(null, "", `#${view}`);
   $("#app-error").hidden = true;
-  if (view === "evaluation") task("Loading saved evaluation results…", renderEvaluation);
+  if (view === "evaluation") {
+    if (state.busy) state.pendingEvaluation = true;
+    else task("Loading saved evaluation results…", renderEvaluation);
+  }
 }
 
 function empty(container, title, description) {
@@ -113,6 +171,7 @@ function metadata(result) { return el("div", { class: "article-meta" }, el("span
 function methodName(method) { return method === "embeddings" ? "Embeddings" : "TF-IDF"; }
 
 function renderSearch(payload) {
+  state.hasSearched = true;
   const container = $("#search-results");
   const methods = Object.entries(payload.results);
   const grid = el("div", { class: methods.length > 1 ? "comparison" : "" });
@@ -120,8 +179,8 @@ function renderSearch(payload) {
     const section = el("div", {}, el("div", { class: "result-heading" }, el("h2", { text: `${methodName(method)} results` }), el("span", { text: `${results.length} matches · ${(payload.elapsed_ms / 1000).toFixed(2)} seconds` })));
     const list = el("div", { class: "result-list" });
     if (!results.length) empty(list, "No matches above this score.", "Try a lower minimum score or a different question. A keyword query may not share any vocabulary with this collection.");
-    for (const result of results) {
-      list.append(el("article", { class: "result-card" }, el("div", { class: "result-topline" }, articleTitle(result), scoreBadge(result.score)), metadata(result), el("p", { class: "passage", text: result.passage }), el("div", { class: "result-footer" }, el("span", { text: "Best matching passage" }), el("button", { class: "text-button", text: "Open article", onclick: () => openArticle(result.id) }))));
+    for (const [index, result] of results.entries()) {
+      list.append(el("article", { class: "result-card" }, el("div", { class: "result-topline" }, el("div", { class: "ranked-title" }, el("span", { class: "result-rank", "aria-label": `Rank ${index + 1}`, text: index + 1 }), el("h3", {}, articleTitle(result))), scoreBadge(result.score)), metadata(result), el("p", { class: "passage", text: result.passage }), el("div", { class: "result-footer" }, el("span", { text: "Matching passage" }), el("button", { class: "text-button", text: "Read article", onclick: () => openArticle(result.id) }))));
     }
     section.append(list);
     grid.append(section);
@@ -141,13 +200,13 @@ function renderLinks(payload) {
   const methods = Object.entries(payload.results);
   const sections = [];
   for (const [method, group] of methods) {
-    const section = el("section", {}, el("div", { class: "result-heading" }, el("h2", { text: `${methodName(method)} candidates` }), el("span", { text: `${group.results.length} destinations · review required` })));
+    const section = el("section", { class: "method-section" }, el("div", { class: "result-heading" }, el("h2", { text: `${methodName(method)} candidates` }), el("span", { text: `${group.results.length} destinations · review required` })));
     section.append(el("div", { class: "exclusions" }, el("span", { text: `Self: ${group.excluded.self}` }), el("span", { text: `Existing links excluded: ${group.excluded.existing.length}` }), el("span", { text: `Ineligible pages excluded: ${group.excluded.disallowed.length}` })));
     const list = el("div", { class: "result-list" });
     if (!group.results.length) empty(list, "No eligible candidates found.", "Check destination eligibility, existing links and the text in this collection.");
     for (const result of group.results) {
       const saved = payload.reviews.find((review) => review.target_id === result.id);
-      const note = el("input", { type: "text", maxlength: "1000", placeholder: "Optional editorial note", value: saved?.note || "", "aria-label": `Review note for ${result.id}` });
+      const note = el("input", { type: "text", name: `review_note_${method}_${result.id}`, autocomplete: "off", maxlength: "1000", placeholder: "Why would this link help the reader?…", value: saved?.note || "", "aria-label": `Review note for ${result.id}` });
       const actions = el("div", { class: "review-actions" });
       for (const [decision, label] of [["useful", "Useful candidate"], ["not_useful", "Not useful"], ["pending", "Clear decision"]]) {
         actions.append(el("button", { class: `button small ${saved?.decision === decision ? "selected-review" : ""}`, text: label, onclick: () => task("Saving your review…", async () => {
@@ -159,7 +218,7 @@ function renderLinks(payload) {
         }) }));
       }
       actions.append(el("span", { class: "review-label", text: saved && saved.decision !== "pending" ? "Review saved" : "Awaiting your review" }));
-      list.append(el("article", { class: "result-card" }, el("div", { class: "result-topline" }, articleTitle(result), scoreBadge(result.score)), metadata(result), el("div", { class: "evidence" }, el("div", {}, el("span", { class: "evidence-label", text: "Source passage" }), el("p", { text: result.source_passage })), el("div", {}, el("span", { class: "evidence-label", text: "Destination evidence" }), el("p", { text: result.passage }))), el("div", { class: "result-footer" }, safeTarget(result.url)), el("label", { class: "sr-only", text: "Editorial note" }), note, el("div", { class: "result-footer" }, actions)));
+      list.append(el("article", { class: "result-card" }, el("div", { class: "result-topline" }, el("h3", {}, articleTitle(result)), scoreBadge(result.score)), metadata(result), el("div", { class: "evidence" }, el("div", {}, el("span", { class: "evidence-label", text: "Source passage" }), el("p", { text: result.source_passage })), el("div", {}, el("span", { class: "evidence-label", text: "Destination evidence" }), el("p", { text: result.passage }))), el("div", { class: "result-footer" }, safeTarget(result.url)), el("label", { class: "review-note" }, "Editorial note", note), el("div", { class: "result-footer" }, actions)));
     }
     section.append(list);
     sections.push(section);
@@ -174,7 +233,7 @@ function renderOverlaps(payload) {
   const list = el("div", { class: "result-list" });
   for (const pair of payload.pairs) {
     const columns = el("div", { class: "pair-grid" });
-    for (const article of [pair.left, pair.right]) columns.append(el("div", {}, articleTitle(article), metadata(article), el("p", { class: "passage", text: article.passage })));
+    for (const article of [pair.left, pair.right]) columns.append(el("div", {}, el("h3", {}, articleTitle(article)), metadata(article), el("p", { class: "passage", text: article.passage })));
     list.append(el("article", { class: "result-card" }, el("div", { class: "pair-heading" }, el("span", { text: "Possible topic overlap · editorial review" }), scoreBadge(pair.score)), columns, el("div", { class: "result-footer" }, el("span", { text: "Check whether the pages answer different reader questions and contain unique information." }))));
   }
   container.replaceChildren(el("div", { class: "result-heading" }, el("h2", { text: `${payload.pairs.length} pairs to inspect` })), list);
@@ -197,18 +256,19 @@ function formField(label, input) {
 function openArticle(id) {
   const article = state.articles.find((row) => row.id === id);
   if (!article) return;
-  const title = el("input", { value: article.title, required: "", maxlength: "200" });
-  const topic = el("input", { value: article.topic, maxlength: "100" });
-  const url = el("input", { type: "url", value: article.url, maxlength: "2048", placeholder: "https://example.com/article" });
-  const body = el("textarea", { rows: "8", required: "", maxlength: "20000", text: article.body });
-  const existing = el("input", { value: article.existing_links.join(";"), placeholder: "A04;A05" });
-  const eligible = el("input", { type: "checkbox", checked: article.eligible });
+  const title = el("input", { name: "title", autocomplete: "off", value: article.title, required: "", maxlength: "200" });
+  const topic = el("input", { name: "topic", autocomplete: "off", value: article.topic, maxlength: "100" });
+  const url = el("input", { name: "url", autocomplete: "off", spellcheck: "false", type: "url", value: article.url, maxlength: "2048", placeholder: "https://example.com/article…" });
+  const body = el("textarea", { name: "body", autocomplete: "off", rows: "8", required: "", maxlength: "20000", text: article.body });
+  const existing = el("input", { name: "existing_links", autocomplete: "off", spellcheck: "false", value: article.existing_links.join(";"), placeholder: "A04;A05…" });
+  const eligible = el("input", { name: "eligible", type: "checkbox", checked: article.eligible });
   const form = el("form", { onsubmit: (event) => {
     event.preventDefault();
     task("Saving article…", async () => {
       await api(`/api/articles/${encodeURIComponent(id)}`, { ...article, title: title.value, body: body.value, topic: topic.value, url: url.value, eligible: eligible.checked, existing_links: existing.value.split(";").map((item) => item.trim()).filter(Boolean) }, "PUT");
       await loadCollection();
       invalidateResults();
+      form.dataset.dirty = "false";
       $("#article-dialog").close();
       toast("Article saved. Related review decisions were cleared.");
     });
@@ -219,7 +279,8 @@ function openArticle(id) {
 
 function invalidateResults() {
   state.lastLinks = null;
-  empty($("#search-results"), "Collection updated.", "Run a new search to use the current article text.");
+  state.hasSearched = false;
+  renderDiscovery();
   empty($("#links-results"), "Collection updated.", "Run link discovery again to use the current text and rules.");
   empty($("#overlap-results"), "Collection updated.", "Run overlap review again to use the current article text.");
 }
@@ -237,8 +298,25 @@ async function renderEvaluation() {
   content.replaceChildren(el("div", { class: "notice", text: data.notice }), el("div", { class: "result-heading" }, el("h2", { text: `${data.queries.length} saved questions · ${data.article_count} original demo articles` }), el("span", { text: "Equal weight per question" })), grid, el("div", { class: "metric-explanation" }, el("div", {}, el("h3", { text: "Precision: are the suggestions useful?" }), el("p", { text: "Relevant results found divided by results shown. Finding 2 relevant articles among 3 results gives 67% precision." })), el("div", {}, el("h3", { text: "Recall: what did we miss?" }), el("p", { text: "Relevant results found divided by all relevant articles. Finding 2 of the 4 relevant articles gives 50% recall." }))), el("h2", { class: "evaluation-heading", text: "Questions in this development set" }), queries);
 }
 
-document.querySelectorAll("[data-view]").forEach((button) => button.addEventListener("click", () => navigate(button.dataset.view)));
-document.querySelectorAll(".close-dialog").forEach((button) => button.addEventListener("click", () => button.closest("dialog").close()));
+document.querySelectorAll("[data-view]").forEach((link) => link.addEventListener("click", (event) => {
+  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+  event.preventDefault();
+  navigate(link.dataset.view);
+}));
+function mayClose(dialog) {
+  return dialog.querySelector("form")?.dataset.dirty !== "true" || confirm("Discard the unsaved changes in this form?");
+}
+document.querySelectorAll(".close-dialog").forEach((button) => button.addEventListener("click", () => {
+  const dialog = button.closest("dialog");
+  if (mayClose(dialog)) { const form = dialog.querySelector("form"); if (form) form.dataset.dirty = "false"; dialog.close(); }
+}));
+document.querySelectorAll("dialog").forEach((dialog) => {
+  dialog.addEventListener("input", (event) => { const form = event.target.closest("form"); if (form) form.dataset.dirty = "true"; });
+  dialog.addEventListener("cancel", (event) => { if (!mayClose(dialog)) event.preventDefault(); else { const form = dialog.querySelector("form"); if (form) form.dataset.dirty = "false"; } });
+});
+window.addEventListener("beforeunload", (event) => {
+  if (document.querySelector('dialog[open] form[data-dirty="true"]')) { event.preventDefault(); event.returnValue = ""; }
+});
 document.querySelectorAll("[data-example]").forEach((button) => button.addEventListener("click", () => { $("#search-query").value = button.dataset.example; $("#search-form").requestSubmit(); }));
 $("#search-form").addEventListener("submit", (event) => {
   event.preventDefault();
@@ -267,6 +345,7 @@ $("#csv-file").addEventListener("change", async (event) => {
   if (!file) return;
   if (file.size > 1500000) { toast("Choose a CSV smaller than 1.5 MB."); event.target.value = ""; return; }
   $("#csv-text").value = await file.text();
+  $("#import-form").dataset.dirty = "true";
 });
 $("#import-form").addEventListener("submit", (event) => {
   event.preventDefault();
@@ -275,6 +354,7 @@ $("#import-form").addEventListener("submit", (event) => {
     const result = await api("/api/articles/import", { csv_text: $("#csv-text").value });
     await loadCollection();
     invalidateResults();
+    $("#import-form").dataset.dirty = "false";
     $("#import-dialog").close();
     navigate("collection");
     toast(`Imported ${result.count} articles.`);

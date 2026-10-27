@@ -3,82 +3,86 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#173d58">
-  <meta name="description" content="Explore meaning across your content. Search articles, review link opportunities and investigate topic overlap.">
+  <meta name="theme-color" content="#f8f7fa">
+  <meta name="description" content="A workspace for searching articles, reviewing internal links and comparing related passages.">
   <title>Semantic Content Analyser</title>
   <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+  <link rel="preload" href="/static/fonts/InstrumentSans.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="stylesheet" href="/static/styles.css">
   <script src="/static/app.js" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
   <div id="login" class="login-shell" hidden>
     <form id="login-form" class="login-panel">
-      <img src="/static/favicon.svg" width="48" height="48" alt="">
-      <h1>Your content, connected.</h1>
-      <p>Sign in to your Semantic Content Analyser workspace.</p>
+      <img src="/static/favicon.svg" width="42" height="42" alt="">
+      <p class="login-brand">Semantic Content Analyser</p>
+      <h1>Open your workspace.</h1>
+      <p>Search your collection and review the evidence behind each connection.</p>
       <label for="password">Workspace password</label>
-      <input id="password" type="password" autocomplete="current-password" required>
+      <input id="password" name="password" type="password" autocomplete="current-password" required>
       <button class="button primary" type="submit">Open workspace</button>
       <p id="login-error" role="alert"></p>
     </form>
   </div>
   <div id="workspace" class="workspace" hidden>
-    <aside class="sidebar">
-      <a class="brand" href="#search"><img src="/static/favicon.svg" alt="" width="38" height="38"><span>Semantic<span class="brand-sub">Content analyser</span></span></a>
-      <div class="workspace-label"><span class="status-dot"></span> Your workspace</div>
-      <nav aria-label="Main navigation">
-        <button class="nav-item active" data-view="search"><span class="nav-icon">⌕</span>Semantic search</button>
-        <button class="nav-item" data-view="links"><span class="nav-icon">↗</span>Link opportunities</button>
-        <button class="nav-item" data-view="overlap"><span class="nav-icon">◉</span>Content overlap</button>
-        <button class="nav-item" data-view="collection"><span class="nav-icon">▤</span>Article collection</button>
-        <button class="nav-item" data-view="evaluation"><span class="nav-icon">▥</span>Evaluation</button>
-      </nav>
-      <div class="sidebar-bottom">
-        <div class="model-label"><span class="status-dot"></span> Runs on your server</div>
-        <p>MiniLM embeddings<br>384 dimensions · English</p>
-        <button id="sign-out" class="text-button" hidden>Sign out</button>
-        <span class="version">Version 1.0</span>
+    <header class="masthead">
+      <div class="masthead-inner">
+        <a class="brand" href="#search" aria-label="Semantic Content Analyser home"><img src="/static/favicon.svg" alt="" width="38" height="38"><span>Semantic<span class="brand-sub">Content analyser</span></span></a>
+        <div class="workspace-identity"><span class="workspace-name">Article workspace</span><span id="collection-count">Loading collection…</span></div>
+        <div class="masthead-actions"><button id="sign-out" class="text-button" hidden>Sign out</button><button id="import-top" class="button small"><svg aria-hidden="true" viewBox="0 0 20 20" width="17" height="17"><path d="M10 13V3m-4 4 4-4 4 4M4 12v5h12v-5"/></svg>Import CSV</button></div>
       </div>
-    </aside>
-    <main>
-      <header class="topbar"><span>Content intelligence workspace</span><div><span id="collection-count">Loading collection…</span><button id="import-top" class="button small">Import CSV</button></div></header>
-      <div id="app-error" class="error-banner" role="alert" hidden></div>
-      <div id="busy" class="busy-banner" role="status" hidden><span class="spinner"></span><span id="busy-message">Analysing your collection…</span></div>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a class="nav-item active" data-view="search" href="#search"><svg aria-hidden="true" viewBox="0 0 20 20"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4 4"/></svg>Semantic search</a>
+        <a class="nav-item" data-view="links" href="#links"><svg aria-hidden="true" viewBox="0 0 20 20"><path d="m8 12 4-4m-5 6-1 1a3.5 3.5 0 0 1-5-5l4-4a3.5 3.5 0 0 1 5 0m0 8a3.5 3.5 0 0 0 5 0l4-4a3.5 3.5 0 0 0-5-5l-1 1" transform="translate(1 1) scale(.9)"/></svg>Link opportunities</a>
+        <a class="nav-item" data-view="overlap" href="#overlap"><svg aria-hidden="true" viewBox="0 0 20 20"><rect x="2" y="3" width="10" height="13" rx="2"/><rect x="8" y="5" width="10" height="13" rx="2"/></svg>Content overlap</a>
+        <a class="nav-item" data-view="collection" href="#collection"><svg aria-hidden="true" viewBox="0 0 20 20"><path d="M3 4h14M3 10h14M3 16h14"/></svg>Article collection<span id="nav-article-count" class="nav-count"></span></a>
+        <a class="nav-item" data-view="evaluation" href="#evaluation"><svg aria-hidden="true" viewBox="0 0 20 20"><path d="M3 17V9m7 8V3m7 14v-6"/></svg>Evaluation</a>
+      </nav>
+    </header>
+    <main id="main-content" tabindex="-1">
+      <div id="app-error" class="error-banner" role="alert" tabindex="-1" hidden></div>
+      <div id="busy" class="busy-banner" role="status" aria-live="polite" hidden><span class="spinner"></span><span id="busy-message">Analysing your collection…</span></div>
       <section id="view-search" class="view">
-        <div class="page-heading"><div><h1>Find meaning.<br><span>Discover connections.</span></h1><p>Search your articles by the questions your readers ask.</p></div><div class="heading-note">Your words.<br>A wider perspective.</div></div>
-        <form id="search-form" class="search-panel">
-          <label for="search-query">What are you looking for?</label>
-          <div class="query-row"><span aria-hidden="true">⌕</span><input id="search-query" placeholder="How do I choose a display fridge for a cafe?" minlength="2" maxlength="2000" required><button class="button primary" type="submit">Search articles</button></div>
-          <div class="search-options"><label>Search method<select id="search-method"><option value="embeddings">Embeddings · meaning</option><option value="tfidf">TF-IDF · keywords</option><option value="compare">Compare both</option></select></label><label>Results<select id="search-k"><option>3</option><option selected>5</option><option>10</option><option>20</option></select></label><label>Minimum score<input id="search-min" type="number" min="0" max="1" step="0.05" value="0"></label></div>
-        </form>
-        <div class="examples"><span>Try a question</span><button data-example="Choosing a display fridge for a cafe">Choosing a display fridge</button><button data-example="Why does bread dough expand while resting?">Why dough rises</button><button data-example="How can I arrange a cafe coffee station?">Planning a coffee station</button></div>
-        <div id="search-results"><div class="intro-panel"><div class="connection-art" aria-hidden="true"><span>Article</span><i></i><strong>Meaning</strong><i></i><span>Article</span></div><h2>A better starting point for content decisions.</h2><p>Find related ideas even when the words are different. Compare meaning-based search with a keyword baseline, then inspect the evidence.</p><div class="intro-facts"><span>Local inference</span><span>No external text API</span><span>Human review</span></div></div></div>
+        <div class="page-heading"><div><h1>Search your collection</h1><p>Ask a question. Find the passage worth reading.</p></div><span class="keyboard-hint"><kbd>/</kbd> to focus search</span></div>
+        <div class="search-layout">
+          <div class="search-main">
+            <form id="search-form" class="search-panel">
+              <label for="search-query">Your question or topic</label>
+              <div class="query-row"><input id="search-query" name="query" autocomplete="off" placeholder="Choosing a display fridge for a cafe…" minlength="2" maxlength="2000" required><button class="button primary" type="submit">Search articles<svg aria-hidden="true" viewBox="0 0 20 20" width="16" height="16"><path d="M3 10h13m-5-5 5 5-5 5"/></svg></button></div>
+              <div class="search-options"><label>Match by<select id="search-method" name="method"><option value="embeddings">Meaning · embeddings</option><option value="tfidf">Words · TF-IDF</option><option value="compare">Compare both methods</option></select></label><label>Show<select id="search-k" name="top_k"><option value="3">3 results</option><option value="5" selected>5 results</option><option value="10">10 results</option><option value="20">20 results</option></select></label><label>Minimum similarity<input id="search-min" name="min_score" type="number" min="0" max="1" step="0.05" value="0"></label></div>
+            </form>
+            <div class="examples"><span>Try</span><button data-example="Choosing a display fridge for a cafe">Display fridges</button><button data-example="Why does bread dough expand while resting?">Bread fermentation</button><button data-example="How can I arrange a cafe coffee station?">Cafe workflow</button></div>
+            <div id="search-results" aria-live="polite"><div class="initial-loading">Loading your article collection…</div></div>
+          </div>
+          <aside id="collection-rail" class="collection-rail" aria-label="Collection overview"></aside>
+        </div>
       </section>
       <section id="view-links" class="view" hidden>
-        <div class="page-heading compact"><div><h1>Connect the right articles.</h1><p>Find destination candidates and inspect where a link could help a reader.</p></div></div>
-        <form id="links-form" class="control-panel"><label class="grow">Source article<select id="links-source" required></select></label><label>Method<select id="links-method"><option value="embeddings">Embeddings</option><option value="tfidf">TF-IDF</option><option value="compare">Compare both</option></select></label><label>Results<select id="links-k"><option>3</option><option selected>5</option><option>10</option></select></label><button class="button primary" type="submit">Find opportunities</button></form>
-        <p class="context-note">Self-links, existing links and ineligible destinations are excluded. A candidate needs editorial review before insertion.</p>
-        <div id="links-results" class="empty-state"><h2>Start with one article.</h2><p>Select a source to see potential destinations and the passages that connect them.</p></div>
+        <div class="page-heading"><div><h1>Link opportunities</h1><p>Choose a source. Decide whether a destination helps its reader.</p></div><span class="view-note">Editorial review</span></div>
+        <form id="links-form" class="control-panel"><label class="grow">Source article<select id="links-source" name="source_id" required></select></label><label>Match by<select id="links-method" name="method"><option value="embeddings">Meaning · embeddings</option><option value="tfidf">Words · TF-IDF</option><option value="compare">Compare both</option></select></label><label>Show<select id="links-k" name="top_k"><option value="3">3 candidates</option><option value="5" selected>5 candidates</option><option value="10">10 candidates</option></select></label><button class="button primary" type="submit">Find opportunities</button></form>
+        <p class="context-note">Self-links, existing links and ineligible destinations are excluded. Nothing is inserted automatically.</p>
+        <div id="links-results" class="empty-state"><span class="empty-symbol" aria-hidden="true">↗</span><h2>Follow the reader’s next question.</h2><p>Select an article to compare its passages with potential destinations. Review the text on both sides before saving a decision.</p></div>
       </section>
       <section id="view-overlap" class="view" hidden>
-        <div class="page-heading compact"><div><h1>Related topics. Different needs?</h1><p>Surface similar passages, then review intent and unique information.</p></div></div>
-        <form id="overlap-form" class="control-panel"><label>Method<select id="overlap-method"><option value="embeddings">Embeddings</option><option value="tfidf">TF-IDF</option></select></label><label>Similarity threshold<input id="overlap-threshold" type="number" min="0" max="1" step="0.05" value="0.65"></label><label>Maximum pairs<select id="overlap-limit"><option>10</option><option selected>20</option><option>50</option></select></label><button class="button primary" type="submit">Review overlap</button></form>
-        <div class="notice">Similarity alone does not establish identical search intent or justify merging or removing pages.</div><div id="overlap-results" class="empty-state"><h2>Look beyond shared words.</h2><p>Run the review to find article pairs with related passages.</p></div>
+        <div class="page-heading"><div><h1>Content overlap</h1><p>Related subject matter can still serve different reader needs.</p></div><span class="view-note">Compare passages</span></div>
+        <form id="overlap-form" class="control-panel"><label>Match by<select id="overlap-method" name="method"><option value="embeddings">Meaning · embeddings</option><option value="tfidf">Words · TF-IDF</option></select></label><label>Minimum similarity<input id="overlap-threshold" name="threshold" type="number" min="0" max="1" step="0.05" value="0.65"></label><label>Maximum pairs<select id="overlap-limit" name="limit"><option>10</option><option selected>20</option><option>50</option></select></label><button class="button primary" type="submit">Review overlap</button></form>
+        <div class="notice">A similar passage is a starting point for review, not a reason to merge or remove an article.</div><div id="overlap-results" class="empty-state"><span class="empty-symbol" aria-hidden="true">≋</span><h2>Find the shared ground.</h2><p>Compare passages, then inspect what each article contributes. The threshold controls which pairs appear.</p></div>
       </section>
       <section id="view-collection" class="view" hidden>
-        <div class="page-heading compact"><div><h1>Your article collection.</h1><p>Review the text and link rules behind every recommendation.</p></div><div class="heading-actions"><a class="button" href="/api/articles/export">Export CSV</a><button id="import-collection" class="button primary">Import articles</button></div></div>
-        <div class="collection-toolbar"><label class="grow">Filter articles<input id="article-filter" type="search" placeholder="Search titles, IDs or topics"></label><button id="reset-demo" class="text-button">Restore demo collection</button></div>
-        <div class="table-wrap"><table><thead><tr><th>Article</th><th>Topic</th><th>Words</th><th>Link eligibility</th><th><span class="sr-only">Open article</span></th></tr></thead><tbody id="article-table"></tbody></table></div><p class="context-note">The demo uses fictional articles and example.com URLs. Import only text you are authorised to process. This is one shared workspace, not a multi-user service.</p>
+        <div class="page-heading"><div><h1>Article collection</h1><p>The source material behind every result.</p></div><div class="heading-actions"><a class="button" href="/api/articles/export">Export CSV</a><button id="import-collection" class="button primary">Import articles</button></div></div>
+        <div class="collection-toolbar"><label class="grow">Find an article<input id="article-filter" name="article_filter" autocomplete="off" type="search" placeholder="Filter by title, ID or topic…"></label><button id="reset-demo" class="text-button">Restore demo collection</button></div>
+        <div class="table-wrap"><table><thead><tr><th scope="col">Article</th><th scope="col">Topic</th><th scope="col">Words</th><th scope="col">Link destination</th><th scope="col"><span class="sr-only">Edit article</span></th></tr></thead><tbody id="article-table"></tbody></table></div><p class="context-note">Demo articles are fictional. Import only content you are authorised to process. This installation has one shared workspace.</p>
       </section>
       <section id="view-evaluation" class="view" hidden>
-        <div class="page-heading compact"><div><h1>Measure before you decide.</h1><p>Compare methods against recorded relevance judgements.</p></div></div>
+        <div class="page-heading"><div><h1>Evaluation</h1><p>Check the rankings against recorded relevance judgements.</p></div><span class="view-note">Saved development results</span></div>
         <div id="evaluation-content"></div>
       </section>
-      <footer>Semantic Content Analyser <span>Evidence for your judgement.</span></footer>
+      <footer><span>Semantic Content Analyser</span><span>Text is analysed on this server.</span></footer>
     </main>
   </div>
-  <dialog id="article-dialog"><div class="dialog-header"><h2>Article details</h2><button class="icon-button close-dialog" aria-label="Close article">×</button></div><div id="article-details"></div></dialog>
-  <dialog id="import-dialog"><div class="dialog-header"><h2>Import a collection</h2><button class="icon-button close-dialog" aria-label="Close import">×</button></div><form id="import-form"><p>Your CSV must include <strong>id, title, body</strong>. Optional columns: topic, url, eligible, existing_links. Separate existing target IDs with semicolons.</p><label for="csv-file">Choose a CSV file</label><input id="csv-file" type="file" accept=".csv,text/csv"><label for="csv-text">CSV content</label><textarea id="csv-text" rows="9" required placeholder="id,title,body,topic,url,eligible,existing_links"></textarea><div class="notice">Import replaces this workspace's collection and clears saved link reviews. Export your existing collection first. Limit: 100 articles and 250,000 characters of text.</div><button class="button primary" type="submit">Replace collection</button></form></dialog>
-  <div id="toast" class="toast" role="status" hidden></div>
+  <dialog id="article-dialog" aria-labelledby="article-dialog-title"><div class="dialog-header"><h2 id="article-dialog-title">Article details</h2><button class="icon-button close-dialog" aria-label="Close article">×</button></div><div id="article-details"></div></dialog>
+  <dialog id="import-dialog" aria-labelledby="import-dialog-title"><div class="dialog-header"><h2 id="import-dialog-title">Import a collection</h2><button class="icon-button close-dialog" aria-label="Close import">×</button></div><form id="import-form"><p>Required columns: <strong>id, title, body</strong>. Optional: topic, url, eligible, existing_links. Separate existing destination IDs with semicolons.</p><label for="csv-file">CSV file</label><input id="csv-file" name="csv_file" type="file" accept=".csv,text/csv"><label for="csv-text">CSV content</label><textarea id="csv-text" name="csv_text" autocomplete="off" rows="9" required placeholder="id,title,body,topic,url,eligible,existing_links…"></textarea><div class="notice">Import replaces the current collection and clears saved link reviews. Export your collection first if needed. Limit: 100 articles and 250,000 text characters.</div><button class="button primary" type="submit">Replace collection</button></form></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 </body>
 </html>
