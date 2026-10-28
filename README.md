@@ -1,6 +1,6 @@
 # Semantic Content Analyser
 
-A working, single-workspace application for exploring related content using local CPU embeddings and a keyword baseline. Built as an AI engineering learning project, with an AWS EC2 deployment path.
+A working application for exploring related content using local CPU embeddings and a keyword baseline, with persistent local-demo or isolated temporary visitor workspaces. Built as an AI engineering learning project, with an AWS EC2 deployment path.
 
 ## What it does
 
@@ -11,7 +11,7 @@ A working, single-workspace application for exploring related content using loca
 - **Evaluation:** view the saved, honestly labelled development comparison. The earlier Python experiments remain available.
 - **Deployment:** Docker image with a pinned CPU model, HTTPS proxy configuration, Terraform for AWS EC2/ECR, and CI checks.
 
-This is a bounded learning/demo application, not a multi-tenant commercial platform. It has one shared article collection and one optional workspace password. Independent human evaluation, multi-user authorisation, large-scale retrieval and production load testing remain future work.
+This is a bounded learning/demo application. Local mode has one persistent collection; visitor mode isolates temporary collections with signed ownership cookies. Independent human evaluation, large-scale retrieval, public abuse controls and production load testing remain future work.
 
 ## Run locally on Windows
 
@@ -175,15 +175,34 @@ The frontend and API are served from the same origin. Authenticated callers can 
 
 All state-changing and analysis POST/PUT calls require `X-Workspace-Request: true`. This custom header, same-origin requests and strict same-site cookies prevent ordinary cross-site form submissions. Production requires a 12+ character `APP_PASSWORD` and 32+ character `SECRET_KEY`; the deployment helper enforces a longer password. Sessions expire after eight hours. The single-worker process throttles sign-in attempts; this is not a distributed abuse-prevention system.
 
+## Website import (Phase 3B)
+
+Set `$env:ENABLE_WEBSITE_FETCH = 'true'` before launching Uvicorn to enable **Import
+website** on the Article collection screen. Enter a public website or `.xml` sitemap,
+discover WordPress posts or sitemap URLs, select up to 40 articles, and review the
+extracted text before replacing your collection. Existing CSV/sample workflows remain.
+
+Only public server-rendered UTF-8 pages with an article/main region are supported.
+No authentication, paywall bypass, JavaScript rendering or cross-host redirects are
+supported. Each bounded run lasts three minutes INCLUDING selection time, with 60
+network attempts. Oversized collections still fail the existing character/passage
+checks without replacing your articles or reviews. This is not a complete-site crawl.
+
+See [workflow, supported structures and limitations](docs/phase3b-websites.md),
+[verification evidence](docs/phase3b-verification.json) and the short
+[project context](docs/PROJECT_CONTEXT.md).
+
 ## Website fetching foundation (Phase 3A)
 
 The reusable safe-fetch service validates and pins public DNS destinations, checks
-robots.txt, and bounds time, bytes, redirects and requests. It does not discover posts,
-extract articles or add a website-import UI yet. `ENABLE_WEBSITE_FETCH=true` enables
-only the diagnostic API above; it uses the existing workspace cookie, request header
-and visitor collection revision. Keep public multi-visitor use in visitor mode.
+robots.txt, and bounds time, bytes, redirects and requests. Phase 3A introduced the
+diagnostic API; Phase 3B adds the website workflow described above. Both use the existing
+workspace cookie, request header and visitor collection revision. Keep public
+multi-visitor use in visitor mode.
 `FETCH_DENY_CIDRS` can add comma-separated operator infrastructure ranges to the deny
-policy. Existing data, semantic scoring and admission limits are unchanged.
+policy. Existing data, semantic scoring and admission limits are unchanged. Phase 3B
+reuses this service for discovery and article import; the Phase 3A report describes
+the foundation at its original milestone.
 
 See [architecture, limits, security limitations and the Phase 3B plan](docs/phase3a-safe-fetch.md)
 and [measured verification evidence](docs/phase3a-verification.json). Local fixtures
@@ -210,4 +229,4 @@ infra/aws/             Terraform infrastructure
 docs/                  Learning journal, evaluation evidence and deployment guide
 ```
 
-The original brief remains in `Semantic_Content_Analyser_Starter_Docs/`. At the user's later request, scope expanded from guided experiments to a deployable demo application. No SocialBuzz or WordPress integration, client-site access, automatic publishing, merging or deletion is implemented.
+The original brief remains in `Semantic_Content_Analyser_Starter_Docs/`. At the user's later request, scope expanded from guided experiments to a deployable demo application. WordPress/sitemap import is opt-in; SocialBuzz integration and automatic publishing, merging or deletion are not implemented.

@@ -33,7 +33,7 @@ async function api(path, data, method = "POST", expectedRevision = state.revisio
     if (response.status === 409) { await loadCollection(); invalidateResults(); }
     throw new Error(message);
   }
-  if (path === "/api/articles" || (data !== undefined && (path.startsWith("/api/articles/") || path === "/api/articles/import"))) {
+  if (path === "/api/articles" || (data !== undefined && (path.startsWith("/api/articles/") || path === "/api/articles/import" || path === "/api/website/import"))) {
     if (payload.collection_revision) state.revision = payload.collection_revision;
   } else if (payload.collection_revision && state.revision && payload.collection_revision !== state.revision) {
     await loadCollection(); invalidateResults();
@@ -87,6 +87,7 @@ async function loadCollection() {
   const [collection, meta] = await Promise.all([api("/api/articles"), api("/api/meta")]);
   state.articles = collection.articles;
   state.meta = meta;
+  $("#website-open").hidden = !meta.website_fetch_enabled;
   $("#workspace-notice").textContent = meta.workspace_mode === "visitor"
     ? `This browser has its own temporary workspace. Data expires after ${Math.round(meta.idle_seconds / 60)} minutes without activity. Import only content you are authorised to process.`
     : "Demo articles are fictional. Import only content you are authorised to process. This installation has one shared workspace.";
@@ -388,6 +389,86 @@ $("#login-form").addEventListener("submit", async (event) => {
   finally { button.disabled = false; }
 });
 $("#sign-out").addEventListener("click", () => task("Signing out…", async () => { await api("/api/logout", {}); showLogin(); }));
+let websiteRun = null;
+let websiteCancelled = false;
+
+function renderWebsite(run) {
+  websiteRun = run;
+  $("#website-progress").textContent = `${run.phase}: ${run.candidates.length} discovered, ${run.processed} processed. ${run.seconds_remaining}s remaining; ${run.requests_used}/60 requests used.`;
+  const results = $("#website-results");
+  results.replaceChildren();
+  for (const warning of run.warnings) results.append(el("p", { class: "notice", text: warning }));
+  $("#website-extract").hidden = run.phase !== "selecting" || !run.candidates.length;
+  $("#website-commit").hidden = run.phase !== "ready" || !run.articles.length;
+  $("#website-stop").hidden = ["imported", "cancelled", "failed"].includes(run.phase);
+  if (run.phase === "selecting") {
+    const count = el("p", { id: "website-selection-count", text: "0 selected (maximum 40)" });
+    const list = el("div", { class: "website-candidates" });
+    for (const item of run.candidates) {
+      const input = el("input", { type: "checkbox", value: item.id, "aria-label": `Select ${item.title}` });
+      input.addEventListener("change", () => {
+        const selected = list.querySelectorAll("input:checked").length;
+        if (selected > 40) { input.checked = false; toast("Choose up to 40 articles."); }
+        count.textContent = `${list.querySelectorAll("input:checked").length} selected (maximum 40)`;
+      });
+      list.append(el("label", { class: "website-candidate" }, input, el("span", {}, item.title, el("small", { text: item.url }))));
+    }
+    results.append(count, list);
+  }
+  for (const failure of run.failures) results.append(el("p", { class: "notice", text: `${failure.id}: ${failure.message}` }));
+  if (run.phase === "ready") {
+    results.append(el("p", { text: `${run.articles.length} extracted articles; ${new Intl.NumberFormat().format(run.characters)} text characters. Review the actual text below. The final import also checks model passage limits.` }));
+    for (const article of run.articles) {
+      results.append(el("details", { class: "website-preview" }, el("summary", { text: `${article.title} (${article.body.length} characters)` }),
+        el("p", { text: article.url }), el("p", { text: `${article.headings.length} headings; ${article.existing_links.length} links to selected articles` }), el("pre", { text: article.body })));
+    }
+    if (run.failures.length) results.append(el("label", { class: "website-candidate" }, el("input", { id: "website-partial", type: "checkbox" }), "I accept importing only the successfully extracted articles."));
+  }
+}
+
+async function advanceWebsite() {
+  while (!websiteCancelled && ["discovering", "extracting"].includes(websiteRun.phase)) {
+    $("#busy-message").textContent = websiteRun.phase === "discovering" ? "Discovering public articles…" : "Extracting selected articles…";
+    renderWebsite(await api("/api/website/step", { run_id: websiteRun.run_id }, "POST", websiteRun.collection_revision));
+  }
+  if (websiteCancelled && websiteRun && !["imported", "cancelled"].includes(websiteRun.phase)) {
+    renderWebsite(await api("/api/website/cancel", { run_id: websiteRun.run_id }, "POST", websiteRun.collection_revision));
+  }
+}
+
+$("#website-open").addEventListener("click", () => $("#website-dialog").showModal());
+$("#website-form").addEventListener("submit", (event) => {
+  event.preventDefault();
+  task("Starting website discovery…", async () => {
+    websiteCancelled = false;
+    renderWebsite(await api("/api/website/start", { url: $("#website-url").value, method: $("#website-method").value }));
+    $("#website-form").dataset.dirty = "false";
+    await advanceWebsite();
+  });
+});
+$("#website-extract").addEventListener("click", () => task("Preparing your selection…", async () => {
+  const ids = [...document.querySelectorAll(".website-candidates input:checked")].map((input) => input.value);
+  if (!ids.length) throw new Error("Select at least one article.");
+  renderWebsite(await api("/api/website/select", { run_id: websiteRun.run_id, ids }, "POST", websiteRun.collection_revision));
+  await advanceWebsite();
+}));
+$("#website-stop").addEventListener("click", () => {
+  websiteCancelled = true;
+  if (!state.busy) task("Cancelling website run…", advanceWebsite);
+});
+$("#website-dialog").addEventListener("close", () => { websiteCancelled = true; });
+$("#website-commit").addEventListener("click", () => {
+  if (!confirm("Replace the collection with these extracted articles and clear its editorial reviews? Export first if needed.")) return;
+  task("Validating article and model passage limits…", async () => {
+    const result = await api("/api/website/import", { run_id: websiteRun.run_id, accept_partial: Boolean($("#website-partial")?.checked) }, "POST", websiteRun.collection_revision);
+    websiteRun.phase = "imported";
+    renderWebsite(websiteRun); // Reopening must not offer a stale replacement action.
+    $("#website-dialog").close();
+    await loadCollection(); invalidateResults(); navigate("collection");
+    toast(`Imported ${result.count} website articles. You can now search, review links and compare overlap.`);
+  });
+});
+
 window.addEventListener("hashchange", () => navigate(location.hash.slice(1)));
 document.addEventListener("keydown", (event) => {
   if (event.key === "/" && !["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement.tagName) && !$("#workspace").hidden && !document.querySelector("dialog[open]")) {

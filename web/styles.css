@@ -321,3 +321,15 @@ dialog textarea { min-height: 130px; font-family: var(--reading); font-size: 15p
   .spinner { animation: none; }
   .button { transition: none; }
 }
+
+#website-dialog { width: min(860px, calc(100vw - 40px)); }
+#website-form { display: grid; gap: 10px; }
+#website-form .button { justify-self: start; }
+#website-progress { margin: 20px 0; font-weight: 600; }
+.website-candidates { max-height: 350px; overflow: auto; border-block: 1px solid var(--line); }
+.website-candidate { display: flex; align-items: start; gap: 12px; padding: 12px 4px; border-bottom: 1px solid var(--line); }
+.website-candidate input { width: auto; margin-top: 5px; }
+.website-candidate span { overflow-wrap: anywhere; }
+.website-candidate small { display: block; font-weight: normal; }
+.website-preview { margin: 12px 0; padding: 12px; border: 1px solid var(--line); }
+.website-preview pre { white-space: pre-wrap; font: inherit; max-height: 230px; overflow: auto; }

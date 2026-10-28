@@ -63,6 +63,7 @@ class FetchResult:
     body: bytes
     encoded_bytes: int
     redirects: int
+    headers: dict = field(default_factory=dict)
 
     def metadata(self):
         return {"url": self.url, "status": self.status, "content_type": self.content_type,
@@ -178,12 +179,14 @@ class SafeFetcher:
                 if response.status == 429:
                     raise FetchError("backoff")
                 if response.status != 200:
-                    raise FetchError("inaccessible")
+                    error = FetchError("inaccessible")
+                    error.upstream_status = response.status  # Internal adapter fallback; not exposed to visitors.
+                    raise error
                 if not response.body:
                     raise FetchError("content")
                 budget.check()
                 return FetchResult(target.url, response.status, response.headers.get("content-type", "").split(";", 1)[0].strip().lower(),
-                                   response.body, response.encoded_bytes, index)
+                                   response.body, response.encoded_bytes, index, response.headers)
             raise FetchError("limit")
         finally:
             session.lock.release()

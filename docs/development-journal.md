@@ -436,3 +436,121 @@ Local implementation commit subject: **Add bounded SSRF-protected website fetch 
 Use `git log -1 --format=%H --grep="Add bounded SSRF-protected website fetch foundation"`
 to resolve the commit containing this entry. The final review response records its hash.
 No push or deployment is authorized/performed in this phase.
+
+## Phase 3B - Bounded website discovery, extraction and staged import
+
+29 October 2026, Australia/Sydney. Starting commit: `f93c03b` (Phase 3A).
+Implementation commit subject: **Add bounded website discovery and staged article import**.
+Resolve its hash with `git log -1 --format=%H --grep="Add bounded website discovery and staged article import"`.
+
+### Problem and selected architecture
+
+Visitors could analyse CSV/sample articles but could not build a collection from a
+website. The task was to connect discovery and untrusted HTML extraction to the
+existing pipeline without weakening SSRF defenses, visitor ownership or atomic admission.
+
+One transient website run now belongs to each existing workspace. Its random run token
+selects an operation but never authorizes access; the signed cookie still determines
+ownership. The original collection revision is retained through discovery, selection,
+preview and final import. Discovery/preview make no article/review writes. Only explicit
+confirmation calls `CollectionService.replace`; real-tokenizer admission and a final
+ownership/revision/expiry guard run before committing.
+
+Instead of one long crawler request or a new job service, the browser advances one
+fetch per step through the existing bounded executor/lease. This provides progress and
+between-step cancellation while preserving Phase 3A's 180-second run, 60-attempt,
+20-second per-fetch and byte limits. The budget includes human selection time. A larger
+job infrastructure or silently renewed budgets were rejected as unnecessary or unsafe.
+
+Discovery supports public WordPress REST pages (20 posts/page, <=10 pages) and XML URL
+sets/indexes, including homepage/robots sitemap references. It caps discovery at 12
+documents/200 candidates and sitemap nesting at three. Duplicates, cycles, unsafe URLs
+and protected posts are filtered. Only 404/410 or a valid empty REST collection allows
+fallback; auth/robots/anti-bot/error responses stop rather than trying bypass routes.
+
+Extraction uses bounded inert standard-library HTML parsing. It prefers article/main
+regions and omits navigation/footer/hidden/script/form/related/template regions.
+Titles/headings/text, same-site canonicals and links are extracted; selected link targets
+map to existing article IDs. Exact canonical/body duplicates collapse, and short exact
+paragraphs repeated across >=80% of >=3 pages are removed with a visible warning.
+This is a deliberately conservative heuristic, not general browser rendering/readability.
+Ambiguous, short, oversized or explicitly restricted content is refused. Partial parser
+failures are shown and require explicit subset consent before an import.
+
+The UI extends the existing collection view without a framework change. It displays
+candidates, selections, progress, full escaped plaintext previews and replacement
+confirmation. CSV/sample workflows remain. `ENABLE_WEBSITE_FETCH=true` opts in; the
+default remains off. There are no new dependencies, persisted tables or infrastructure.
+MiniLM, TF-IDF, ranking, offsets and all original admission limits are unchanged.
+
+### Verification, challenges and measured evidence
+
+Details: `docs/phase3b-websites.md`; portable results: `docs/phase3b-verification.json`;
+short future-session context: `docs/PROJECT_CONTEXT.md`. Disposable logs, HTTP fixtures,
+screenshots and databases stay in ignored `runtime/phase3b`.
+
+- During implementation, targeted new workflow/API tests ran first, then relevant
+  SafeFetcher/robots tests after transport integration. No historical performance
+  benchmark was rerun and no public website was fetched.
+- Final full suite ran once: **222 passed, 1 skipped in 29.16 seconds**. The skipped
+  Windows symlink test requires permissions unavailable to this account. Phase 3A's
+  real local TLS, rebinding, compression and slow-response cases remain included.
+- 34 new automated cases cover 40-article WordPress/sitemap workflows, pagination,
+  nested/cyclic/unsafe sitemaps, UTF-16 DTD rejection, protected content, deduplication,
+  template removal, capacity, visitor tokens/revisions, cancellation/expiry and rollback.
+  Expiry during tokenizer admission is also checked before writing.
+- Initial focused browser attempts exposed a fixture defect: posts advertised HTTPS
+  while the controlled server served HTTP. The pinned TLS transport correctly refused
+  it. Fixing fixture URLs, rather than weakening transport security, resolved the issue.
+  Those attempts failed before model admission and did not load MiniLM.
+- Focused verification then used actual loopback HTTP + mocked DNS/test-only connector,
+  with two independent Chromium contexts. Each imported **36 articles**, via WordPress
+  and via REST-404-to-sitemap-index fallback. Foreign run import/step/select were refused;
+  previews did not change saved collections and each visitor retained its own site URLs.
+- One shared offline MiniLM construction handled the real integration. The admitted
+  synthetic collection contained **238,690 characters**, **270 passages**, embeddings
+  **(270, 384)**. A both-method search took **7.828 seconds**, including collection encoding;
+  source/target link evidence, exclusions and overlap checks also passed. This is one
+  local integration observation, not an accuracy or throughput benchmark.
+- Browser checks also passed invalid CSV rollback, valid CSV replacement, actual CSV
+  download and a 390-pixel mobile layout, with no page errors.
+- Final UI review found that reopening an imported run could still show its old commit
+  button. The UI now renders its imported state before closing. An affected browser
+  follow-up uses three fixture articles and a deterministic encoder to verify both
+  workflows/reopened state/CSV/mobile without loading MiniLM again. The original full
+  suite and real-model evidence are retained separately from this follow-up.
+- Parser review replaced repeated summation of fragmented XML character callbacks with
+  a linear running count, and translates HTMLParser's malformed-declaration assertion
+  into an explicit extraction failure. The affected **34 tests passed in 5.37 seconds**,
+  including adversarial XML entity-fragmented URL text and invalid HTML marked sections.
+  The UI-only browser follow-up completed successfully with exit code 0.
+- The successful real verifier wrote its completion JSON after all assertions; PowerShell
+  classified Hugging Face's stderr progress display as NativeCommandError when redirected.
+  There was no Python exception in that completed run. This shell/logging artifact did
+  not justify another model load; the separate UI follow-up reports a normal exit.
+- JavaScript syntax/whitespace checks pass. **651 protected files** remain unchanged,
+  including saved development SQLite/sidecars, datasets, historical benchmarks, previous
+  verification evidence and infrastructure. The original server/database was not used
+  by verification. No packages were installed, pushed or deployed.
+
+The realistic prose is authorised assistant-authored synthetic Phase 1B input, reused
+as HTML fixtures only. Neither historical benchmark code nor results were rerun or
+overwritten. These results do not establish extraction quality or recommendation
+precision/recall, public-load capacity or production readiness.
+
+### Limitations and next stage
+
+General link crawling, RSS, compressed sitemap files, JavaScript-only pages, non-UTF-8
+HTML, authenticated/private posts, cross-host/www redirects and nonstandard REST routes
+are unsupported. A sitemap may list non-blog pages; human selection/preview is necessary.
+HTML recovery and boilerplate removal are heuristic, and a 200 teaser/login response
+cannot always be identified. Some valid sites will be refused by conservative policies.
+
+Three minutes including selection can be restrictive; refresh does not resume a run.
+40 long articles may exceed 250,000 characters or 800 passages. No limits were raised.
+Public abuse fairness, runtime patch levels, deployment-specific egress and sustained
+capacity testing still need assessment; inherited OS/native timeout limitations remain.
+
+Next: review this phase, then evaluate a small authorised real-site sample and measured
+completion under actual pacing before deciding on extraction/UX refinements and minimal
+public hosting/abuse controls. No public deployment or push is performed in this phase.

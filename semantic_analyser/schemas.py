@@ -83,3 +83,20 @@ class LoginRequest(BaseModel):
 class FetchRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
     url: str = Field(min_length=1, max_length=2048)
+
+
+class WebsiteStart(FetchRequest):
+    method: Literal['auto', 'wordpress', 'sitemap'] = 'auto'
+
+
+class WebsiteAction(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    run_id: str = Field(pattern=r'^[a-f0-9]{32}$')
+
+
+class WebsiteSelection(WebsiteAction):
+    ids: list[str] = Field(min_length=1, max_length=40)
+
+
+class WebsiteImport(WebsiteAction):
+    accept_partial: bool = False

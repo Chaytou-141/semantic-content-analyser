@@ -21,12 +21,14 @@ from .config import ROOT, Settings
 from .collections import PreflightUnavailable
 from .engine import AnalysisEngine
 from .schemas import (Article, ImportRequest, LinkRequest, LoginRequest, OverlapRequest,
-                      ReviewRequest, SearchRequest, FetchRequest)
+                      ReviewRequest, SearchRequest, FetchRequest, WebsiteStart, WebsiteAction,
+                      WebsiteSelection, WebsiteImport)
 from .storage import Store, demo_articles, parse_csv
 from .execution import BoundedExecutor
 from .workspaces import COOKIE, Workspace, WorkspaceManager
 from .safe_fetch import SafeFetcher
 from .fetch_policy import FetchError
+from .websites import WebsiteService
 
 
 def create_app(settings=None, engine=None, fetcher=None):
@@ -38,6 +40,7 @@ def create_app(settings=None, engine=None, fetcher=None):
     manager = WorkspaceManager(settings, engine) if local is None else None
     execution = BoundedExecutor(settings.analysis_queue_size, settings.analysis_timeout_seconds)
     fetcher = fetcher or SafeFetcher(denied_networks=settings.fetch_deny_cidrs)
+    websites = WebsiteService(fetcher)
     cookie_name = "__Host-" + COOKIE if settings.production else COOKIE
     signing_key = settings.secret or secrets.token_hex(32)
     signer = URLSafeTimedSerializer(signing_key, salt="semantic-workspace")
@@ -236,6 +239,7 @@ def create_app(settings=None, engine=None, fetcher=None):
                 "article_count": len(articles), "topics": sorted({a.topic for a in articles if a.topic}),
                 "review_count": len(reviews), "single_workspace": manager is None,
                 "workspace_mode": settings.workspace_mode, "idle_seconds": settings.workspace_idle_seconds,
+                "website_fetch_enabled": settings.website_fetch_enabled,
                 "chunking": "192 body tokens, 32-token overlap; title capped at 40 tokens"}
 
     @app.get("/api/schema")
@@ -334,6 +338,69 @@ def create_app(settings=None, engine=None, fetcher=None):
                     "requests_used": entry.fetch_session.requests,
                     "notice": "Fetch check only; no articles were extracted or saved."}
 
+        return await execute(request, operation)
+
+    def website_run(entry, run_id):
+        if not settings.website_fetch_enabled:
+            raise HTTPException(404, 'Website importing is not enabled on this installation.')
+        run = entry.website_run
+        if run is None or run.identifier != run_id or run.owner != (entry.identifier or 'local'):
+            raise HTTPException(404, 'Website run not found in this workspace.')
+        if run.revision != entry.store.revision():
+            raise HTTPException(409, 'Collection changed. Start website discovery again.')
+        if time.monotonic() >= run.session.started + run.session.limits.run_seconds:
+            entry.website_run = None
+            raise HTTPException(410, 'Website run expired. Start discovery again with fewer articles if needed.')
+        return run
+
+    @app.post('/api/website/start')
+    async def website_start(data: WebsiteStart, request: Request):
+        if not settings.website_fetch_enabled:
+            raise HTTPException(404, 'Website importing is not enabled on this installation.')
+        def operation(entry, control):
+            if entry.website_run and time.monotonic() - entry.website_run.session.started < 5:
+                raise HTTPException(429, 'Wait briefly before starting another website run.', headers={'Retry-After': '5'})
+            run = websites.start(entry.identifier or 'local', entry.store.revision(), data.url, data.method)
+            control.check()
+            entry.website_run = run
+            return run.view()
+        return await execute(request, operation)
+
+    @app.post('/api/website/step')
+    async def website_step(data: WebsiteAction, request: Request):
+        return await execute(request, lambda entry, control: websites.step(website_run(entry, data.run_id), control))
+
+    @app.post('/api/website/select')
+    async def website_select(data: WebsiteSelection, request: Request):
+        return await execute(request, lambda entry, control: websites.select(website_run(entry, data.run_id), data.ids))
+
+    @app.post('/api/website/cancel')
+    async def website_cancel(data: WebsiteAction, request: Request):
+        def operation(entry, control):
+            run = website_run(entry, data.run_id)
+            run.phase = 'cancelled'
+            run.pending.clear()
+            run.articles.clear()
+            run.extracted.clear()
+            return run.view()
+        return await execute(request, operation)
+
+    @app.post('/api/website/import')
+    async def website_import(data: WebsiteImport, request: Request):
+        def operation(entry, control):
+            run = website_run(entry, data.run_id)
+            if run.phase != 'ready' or not run.articles:
+                raise HTTPException(409, 'Finish extraction and review the articles before importing.')
+            if run.failures and not data.accept_partial:
+                raise HTTPException(422, 'Some articles failed extraction. Explicitly accept the successful subset or start again.')
+            # The format-independent admission service checks real-tokenizer limits
+            # before any transaction; failures preserve articles and editorial reviews.
+            def admission_guard():
+                control.check()
+                website_run(entry, data.run_id)  # Expiry during tokenization also prevents a late write.
+            count = entry.collections.replace(run.articles, admission_guard)
+            run.phase = 'imported'
+            return {'count': count, 'collection_revision': entry.store.revision()}
         return await execute(request, operation)
 
     @app.get("/api/reviews")

@@ -190,11 +190,11 @@ def validate_headers(response, captured):
         name, colon, value = line.partition(b":")
         if not colon or not re.fullmatch(rb"[!#$%&'*+.^_`|~0-9A-Za-z-]+", name) or any(c < 32 and c != 9 or c == 127 for c in value):
             raise FetchError("invalid_response")
-    for key in ["content-length", "transfer-encoding", "content-encoding", "content-type", "location", "retry-after"]:
+    for key in ["content-length", "transfer-encoding", "content-encoding", "content-type", "location", "retry-after", "x-wp-totalpages"]:
         if len(response.headers.get_all(key, [])) > 1:
             raise FetchError("invalid_response")
     headers = {key: response.headers.get(key, "").strip() for key in
-               ["content-length", "transfer-encoding", "content-encoding", "content-type", "location", "retry-after", "cache-control"]}
+               ["content-length", "transfer-encoding", "content-encoding", "content-type", "location", "retry-after", "cache-control", "x-wp-totalpages"]}
     length, transfer = headers["content-length"], headers["transfer-encoding"].lower()
     headers["cache-control"] = ",".join(response.headers.get_all("cache-control", []))
     if ((response.headers.get_all("content-length") and not re.fullmatch(r"[0-9]{1,10}", length)) or

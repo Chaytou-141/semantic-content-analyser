@@ -32,6 +32,7 @@ class Workspace:
     active: int = 0
     fetch_session: object = None
     fetch_revision: str | None = None
+    website_run: object = None
 
     def __post_init__(self):
         self.collections = CollectionService(self.store, self.engine, self.lock)

@@ -57,6 +57,7 @@ class RobotsPolicy:
     rules: tuple = ()
     delay: float = 0
     deny_all: bool = False
+    sitemaps: tuple = ()
 
     def allows(self, request_target, check=lambda: None, match_steps=200000):
         if self.deny_all:
@@ -82,7 +83,7 @@ def parse_robots(body, limits):
     if len(body) > limits.robots_bytes:
         raise FetchError("limit")
     groups, agents, rules, delays = [], [], [], []
-    count, had_rule = 0, False
+    count, had_rule, sitemaps = 0, False, []
 
     def finish():
         nonlocal had_rule
@@ -105,6 +106,8 @@ def parse_robots(body, limits):
         if not colon:
             continue
         key, value = key.strip().lower(), value.strip()
+        if key == 'sitemap' and len(sitemaps) < 10 and len(value) <= 2048:
+            sitemaps.append(value)
         if key == "user-agent":
             if had_rule or delays:
                 finish()
@@ -131,4 +134,4 @@ def parse_robots(body, limits):
     delay = max((d for _, _, ds in selected for d in ds), default=0)
     if delay > limits.max_crawl_delay:
         raise FetchError("robots")
-    return RobotsPolicy(tuple(rule for _, rs, _ in selected for rule in rs), delay)
+    return RobotsPolicy(tuple(rule for _, rs, _ in selected for rule in rs), delay, sitemaps=tuple(sitemaps))
