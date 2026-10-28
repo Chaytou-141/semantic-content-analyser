@@ -152,6 +152,8 @@ def browser_and_model(real_model=True):
                 page.on('dialog', lambda dialog: dialog.accept())
                 page.goto(base + '/#collection')
                 expect(page.locator('#collection-count')).to_have_text('21 articles in your collection')
+            if not real_model:
+                pa.screenshot(path=str(OUT / 'ui-collection.png'), full_page=True)
 
             def collection(context):
                 return context.request.get(base + '/api/articles').json()
@@ -166,6 +168,17 @@ def browser_and_model(real_model=True):
                 page.locator('#website-url').fill('http://' + host + '/')
                 page.locator('#website-form button[type=submit]').click()
                 expect(page.locator('.website-candidates input')).to_have_count(count, timeout=30000)
+                page.locator('#website-filter').fill('/posts/1')
+                expect(page.locator('.website-candidates label:visible')).to_have_count(11 if count == 36 else 1)
+                page.get_by_role('button', name='Select first 40 shown', exact=True).click()
+                expect(page.locator('#website-selection-count')).to_have_text(f'{11 if count == 36 else 1} selected (maximum 40)')
+                page.get_by_role('button', name='Clear selection', exact=True).click()
+                expect(page.locator('#website-selection-count')).to_have_text('0 selected (maximum 40)')
+                page.locator('#website-filter').fill('nothing-matches-this-title')
+                expect(page.locator('.website-no-matches')).to_be_visible()
+                page.locator('#website-filter').fill('')
+                if not real_model:
+                    page.screenshot(path=str(OUT / (host + '-selection.png')), full_page=True)
                 for checkbox in page.locator('.website-candidates input').all():
                     checkbox.check()
                 expect(page.locator('#website-selection-count')).to_have_text(f'{count} selected (maximum 40)')

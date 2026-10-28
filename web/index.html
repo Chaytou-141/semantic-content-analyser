@@ -70,7 +70,11 @@
         <div class="notice">A similar passage is a starting point for review, not a reason to merge or remove an article.</div><div id="overlap-results" class="empty-state"><span class="empty-symbol" aria-hidden="true">≋</span><h2>Find the shared ground.</h2><p>Compare passages, then inspect what each article contributes. The threshold controls which pairs appear.</p></div>
       </section>
       <section id="view-collection" class="view" hidden>
-        <div class="page-heading"><div><h1>Article collection</h1><p>The source material behind every result.</p></div><div class="heading-actions"><a class="button" href="/api/articles/export">Export CSV</a><button id="website-open" class="button" hidden>Import website</button><button id="import-collection" class="button primary">Import articles</button></div></div>
+        <div class="page-heading"><div><h1>Article collection</h1><p>The source material behind every result.</p></div><a class="button" href="/api/articles/export">Export CSV</a></div>
+        <div class="collection-sources">
+          <div class="collection-source website-source"><div class="source-mark" aria-hidden="true">www.</div><div><h2>Start with your website</h2><p>Discover posts, choose your articles and review the text before bringing it into your collection.</p><p id="website-availability" class="source-availability" hidden>Website import is unavailable on this installation.</p><button id="website-open" class="button primary" hidden>Import website</button></div></div>
+          <div class="collection-source"><div class="source-mark file-mark" aria-hidden="true">.csv</div><div><h2>Bring a prepared collection</h2><p>Already have your article text? Import a CSV, or use the sample collection below to explore.</p><button id="import-collection" class="button">Import articles</button></div></div>
+        </div>
         <div class="collection-toolbar"><label class="grow">Find an article<input id="article-filter" name="article_filter" autocomplete="off" type="search" placeholder="Filter by title, ID or topic…"></label><button id="reset-demo" class="text-button">Restore demo collection</button></div>
         <div class="table-wrap"><table><thead><tr><th scope="col">Article</th><th scope="col">Topic</th><th scope="col">Words</th><th scope="col">Link destination</th><th scope="col"><span class="sr-only">Edit article</span></th></tr></thead><tbody id="article-table"></tbody></table></div><p id="workspace-notice" class="context-note">Demo articles are fictional. Import only content you are authorised to process. This installation has one shared workspace.</p>
       </section>
@@ -85,21 +89,26 @@
   <dialog id="import-dialog" aria-labelledby="import-dialog-title"><div class="dialog-header"><h2 id="import-dialog-title">Import a collection</h2><button class="icon-button close-dialog" aria-label="Close import">×</button></div><form id="import-form"><p>Required columns: <strong>id, title, body</strong>. Optional: topic, url, eligible, existing_links. Separate existing destination IDs with semicolons.</p><label for="csv-file">CSV file</label><input id="csv-file" name="csv_file" type="file" accept=".csv,text/csv"><label for="csv-text">CSV content</label><textarea id="csv-text" name="csv_text" autocomplete="off" rows="9" required placeholder="id,title,body,topic,url,eligible,existing_links…"></textarea><div class="notice">Import replaces the current collection and clears saved link reviews. Export your collection first if needed. Limit: 100 articles and 250,000 text characters.</div><button class="button primary" type="submit">Replace collection</button></form></dialog>
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
   <dialog id="website-dialog" aria-labelledby="website-title">
-    <div class="dialog-header"><h2 id="website-title">Build a collection from a website</h2><button class="icon-button close-dialog" aria-label="Close website import">×</button></div>
-    <p>Use public content you are authorised to analyse. Discover posts, choose up to 40, then review the extracted text. Nothing replaces your collection until you confirm.</p>
+    <div class="dialog-header website-header"><div><h2 id="website-title">From website to collection</h2><p>Choose the source material for your next analysis.</p></div><button class="icon-button close-dialog" aria-label="Close website import">×</button></div>
+    <ol class="website-steps" aria-label="Website import progress"><li data-stage="0" aria-current="step"><span>1</span>Find articles</li><li data-stage="1"><span>2</span>Choose articles</li><li data-stage="2"><span>3</span>Review &amp; import</li></ol>
+    <div class="website-workspace"><aside class="website-source-panel">
+    <h3>Your source</h3><p>Use a public website or sitemap you are authorised to analyse.</p>
     <form id="website-form">
       <label for="website-url">Website or XML sitemap URL</label><input id="website-url" type="url" required maxlength="2048" placeholder="https://your-website.com/">
       <label for="website-method">Discovery</label><select id="website-method"><option value="auto">WordPress, then XML sitemaps</option><option value="wordpress">WordPress REST API</option><option value="sitemap">XML sitemap</option></select>
       <button class="button primary" type="submit">Discover articles</button>
     </form>
-    <p id="website-progress" role="status" aria-live="polite"></p>
-    <div id="website-results"></div>
-    <div class="heading-actions">
+    <div class="website-retention"><strong>Your collection stays intact.</strong><p>Discovery and preview do not change your articles or reviews. You confirm the replacement at the end.</p></div>
+    </aside><div class="website-content-panel">
+    <p id="website-progress" role="status" aria-live="polite">Add a website to find its articles.</p>
+    <div id="website-results"><div class="website-empty"><div class="website-page-symbol" aria-hidden="true"><span></span><span></span><span></span></div><h3>Pick the articles worth comparing.</h3><p>Find public posts through WordPress or a sitemap, then choose up to 40. You can inspect every extracted article before importing.</p></div></div>
+    </div></div>
+    <div class="website-action-bar"><p id="website-action-note">Your saved collection will stay as it is until you confirm.</p><div class="heading-actions">
       <button id="website-extract" class="button primary" type="button" hidden>Extract selected articles</button>
       <button id="website-commit" class="button primary" type="button" hidden>Replace collection with these articles</button>
       <button id="website-stop" class="button" type="button" hidden>Cancel website run</button>
-    </div>
-    <p class="context-note">Each run expires after three minutes, including selection time. Article size, passage and total collection limits still apply. A sitemap may contain pages that are not blog posts; review your selection.</p>
+    </div></div>
+    <p class="website-limit-note">Runs expire after three minutes, including selection time. Choose up to 40 articles; size and passage limits still apply. Sitemaps can also list pages that are not blog posts.</p>
   </dialog>
 </body>
 </html>

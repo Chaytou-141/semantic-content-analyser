@@ -17,6 +17,8 @@ Updated 29 October 2026 (Australia/Sydney). Phase 3B; no deployment or push.
 - Phase 3B adds staged website runs: WordPress REST pagination or XML sitemap indexes,
   candidate selection (max 40), inert HTML extraction/preview, explicit atomic import.
   Current implementation commit subject: `Add bounded website discovery and staged article import`.
+- UI follow-up: website/CSV entry points, three-stage import workspace, searchable
+  candidates, bounded bulk selection and persistent confirmation controls.
 - Enable website UI/API explicitly with `ENABLE_WEBSITE_FETCH=true` before startup.
   Every network request uses SafeFetcher: full public DNS validation, numeric-IP pinning,
   verified TLS, robots, same-host redirects, byte/decompression/deadline limits.

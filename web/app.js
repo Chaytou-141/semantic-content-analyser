@@ -88,6 +88,7 @@ async function loadCollection() {
   state.articles = collection.articles;
   state.meta = meta;
   $("#website-open").hidden = !meta.website_fetch_enabled;
+  $("#website-availability").hidden = Boolean(meta.website_fetch_enabled);
   $("#workspace-notice").textContent = meta.workspace_mode === "visitor"
     ? `This browser has its own temporary workspace. Data expires after ${Math.round(meta.idle_seconds / 60)} minutes without activity. Import only content you are authorised to process.`
     : "Demo articles are fictional. Import only content you are authorised to process. This installation has one shared workspace.";
@@ -394,7 +395,14 @@ let websiteCancelled = false;
 
 function renderWebsite(run) {
   websiteRun = run;
-  $("#website-progress").textContent = `${run.phase}: ${run.candidates.length} discovered, ${run.processed} processed. ${run.seconds_remaining}s remaining; ${run.requests_used}/60 requests used.`;
+  const stage = ["ready", "imported"].includes(run.phase) ? 2 : ["selecting", "extracting"].includes(run.phase) ? 1 : 0;
+  document.querySelectorAll(".website-steps li").forEach((item, index) => {
+    item.classList.toggle("complete", index < stage);
+    if (index === stage) item.setAttribute("aria-current", "step"); else item.removeAttribute("aria-current");
+  });
+  const labels = { discovering: "Finding public articles", selecting: "Choose your articles", extracting: "Extracting article text", ready: "Review your collection", imported: "Collection imported", cancelled: "Import cancelled", failed: "This run could not finish" };
+  $("#website-progress").textContent = `${labels[run.phase] || run.phase} · ${run.candidates.length} found${run.phase === "extracting" ? ` · ${run.processed} of ${run.selected.length} processed` : ""}`;
+  $("#website-action-note").textContent = run.phase === "ready" ? "Import replaces your collection and clears its editorial reviews." : run.phase === "imported" ? "Import complete. Start another discovery to build a new collection." : "Your saved collection is unchanged until you confirm.";
   const results = $("#website-results");
   results.replaceChildren();
   for (const warning of run.warnings) results.append(el("p", { class: "notice", text: warning }));
@@ -404,20 +412,42 @@ function renderWebsite(run) {
   if (run.phase === "selecting") {
     const count = el("p", { id: "website-selection-count", text: "0 selected (maximum 40)" });
     const list = el("div", { class: "website-candidates" });
+    const updateSelection = () => {
+      const selected = list.querySelectorAll("input:checked").length;
+      count.textContent = `${selected} selected (maximum 40)`;
+      $("#website-extract").textContent = selected ? `Extract ${selected} selected article${selected === 1 ? "" : "s"}` : "Extract selected articles";
+    };
     for (const item of run.candidates) {
       const input = el("input", { type: "checkbox", value: item.id, "aria-label": `Select ${item.title}` });
       input.addEventListener("change", () => {
         const selected = list.querySelectorAll("input:checked").length;
         if (selected > 40) { input.checked = false; toast("Choose up to 40 articles."); }
-        count.textContent = `${list.querySelectorAll("input:checked").length} selected (maximum 40)`;
+        updateSelection();
       });
       list.append(el("label", { class: "website-candidate" }, input, el("span", {}, item.title, el("small", { text: item.url }))));
     }
-    results.append(count, list);
+    const filter = el("input", { id: "website-filter", type: "search", placeholder: "Find an article by title or URL", "aria-label": "Filter discovered articles" });
+    const noMatches = el("p", { class: "website-no-matches", text: "No articles match this filter. Try a title word or part of the URL.", hidden: "" });
+    filter.addEventListener("input", () => {
+      const query = filter.value.trim().toLowerCase();
+      for (const row of list.children) row.hidden = !row.textContent.toLowerCase().includes(query);
+      noMatches.hidden = [...list.children].some((row) => !row.hidden);
+    });
+    const bulk = el("button", { type: "button", class: "text-button", text: "Select first 40 shown", onclick: () => {
+      list.querySelectorAll("input").forEach((input) => { input.checked = false; });
+      [...list.children].filter((row) => !row.hidden).slice(0, 40).forEach((row) => { row.querySelector("input").checked = true; });
+      updateSelection();
+    } });
+    const clear = el("button", { type: "button", class: "text-button", text: "Clear selection", onclick: () => {
+      list.querySelectorAll("input").forEach((input) => { input.checked = false; }); updateSelection();
+    } });
+    results.append(el("div", { class: "website-selection-tools" }, filter, el("div", { class: "website-selection-actions" }, count, bulk, clear)), list, noMatches);
+    updateSelection();
   }
   for (const failure of run.failures) results.append(el("p", { class: "notice", text: `${failure.id}: ${failure.message}` }));
   if (run.phase === "ready") {
-    results.append(el("p", { text: `${run.articles.length} extracted articles; ${new Intl.NumberFormat().format(run.characters)} text characters. Review the actual text below. The final import also checks model passage limits.` }));
+    results.append(el("div", { class: "website-preview-summary" }, el("strong", { text: `${run.articles.length} articles ready to review` }), el("span", { text: `${new Intl.NumberFormat().format(run.characters)} characters of source text` })),
+      el("p", { text: "Open an article to check what was extracted. Import checks the final collection size and model passage limits before saving." }));
     for (const article of run.articles) {
       results.append(el("details", { class: "website-preview" }, el("summary", { text: `${article.title} (${article.body.length} characters)` }),
         el("p", { text: article.url }), el("p", { text: `${article.headings.length} headings; ${article.existing_links.length} links to selected articles` }), el("pre", { text: article.body })));

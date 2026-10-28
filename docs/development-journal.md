@@ -554,3 +554,33 @@ capacity testing still need assessment; inherited OS/native timeout limitations 
 Next: review this phase, then evaluate a small authorised real-site sample and measured
 completion under actual pacing before deciding on extraction/UX refinements and minimal
 public hosting/abuse controls. No public deployment or push is performed in this phase.
+
+## UI follow-up - Collection sources and website import
+
+29 October 2026. Baseline: `30088d1`. Local commit subject:
+**Refine collection and website import interface**.
+
+The initial website workflow placed selection and long previews in a single scrolling
+form. The collection screen also made website import hard to discover. Using the
+frontend-design skill, this follow-up retains the established Instrument Sans/reading
+type and plum palette, but gives the collection explicit website/CSV entry points and
+the importer a three-stage workspace with a source sidebar and persistent action bar.
+Candidates can be filtered by title/URL, selected in a bounded batch of 40 or cleared;
+the extraction action displays the selection count. Preview copy and mobile layout
+were refined. All fetched content remains escaped plaintext.
+
+Changes: `web/index.html`, `web/styles.css`, `web/app.js`; focused browser assertions in
+`scripts/verify_phase3b.py`. No backend, database, fetch limit or ML changes.
+
+Verification: `--ui-only` passed both local fixture workflows, two browser contexts,
+filter/empty/bulk/clear states, reopened dialog, CSV rollback/import/download and
+390-pixel mobile layout with no page errors. Existing 651-file preservation check passed.
+An initial added assertion assumed sitemap candidates already had extracted titles;
+the verifier now filters by a known URL substring supported by both discovery sources.
+No MiniLM load, public fetching, full-suite rerun or historical benchmark was needed.
+JavaScript syntax and Git whitespace checks passed; desktop/mobile screenshots were
+inspected in ignored runtime/phase3b. Portable follow-up evidence: `docs/ui-verification.json`.
+
+A separate loopback preview on port 8001 uses temporary visitor data under
+runtime/ui-preview. It does not open or replace the original development collection.
+Website import remains opt-in for other installations. No push or deployment.
