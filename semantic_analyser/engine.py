@@ -9,6 +9,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 from .config import MODEL_REVISION
 
+MAX_PASSAGES = 800
+
 
 class AnalysisEngine:
     def __init__(self, revision=MODEL_REVISION, model_factory=None):
@@ -50,20 +52,38 @@ class AnalysisEngine:
                 break
         return passages
 
-    def prepare(self, articles):
-        fingerprint = hashlib.sha256(json.dumps([a.model_dump() for a in articles], sort_keys=True).encode()).hexdigest()
-        if self.cache_key == fingerprint:
-            return
-        chunks = [passage for article in articles for passage in self.passages(article)]
+    def _build_index(self, articles):
+        # Local candidates only: failed admission must not replace a working cache.
+        chunks = []
+        for article in articles:
+            chunks.extend(self.passages(article))
+            if len(chunks) > MAX_PASSAGES:
+                raise ValueError(f"The collection exceeds {MAX_PASSAGES} passages. Import fewer or shorter articles.")
         if not chunks:
             raise ValueError("The collection does not contain any tokenisable text.")
-        if len(chunks) > 800:
-            raise ValueError("The collection exceeds 800 passages. Import fewer or shorter articles.")
         vectorizer = TfidfVectorizer()
         try:
             word_vectors = vectorizer.fit_transform([p["model_text"] for p in chunks])
         except ValueError as error:
             raise ValueError("Add text containing words of at least two characters before analysing.") from error
+        return chunks, vectorizer, word_vectors
+
+    def preflight(self, articles):
+        """Check real passage/vocabulary constraints without encoding or caching."""
+        with self.lock:
+            chunks, _, _ = self._build_index(articles)
+            tokenizer = self.load().tokenizer
+            if any(len(tokenizer.encode(p["model_text"], add_special_tokens=True)) > 256 for p in chunks):
+                raise ValueError("A title/passage exceeds 256 model tokens. Shorten the article text or title.")
+            return {"article_count": len(articles),
+                    "character_count": sum(len(a.title) + len(a.body) for a in articles),
+                    "passage_count": len(chunks)}
+
+    def prepare(self, articles):
+        fingerprint = hashlib.sha256(json.dumps([a.model_dump() for a in articles], sort_keys=True).encode()).hexdigest()
+        if self.cache_key == fingerprint:
+            return
+        chunks, vectorizer, word_vectors = self._build_index(articles)
         self.chunks = chunks
         self.vectorizer = vectorizer
         self.word_vectors = word_vectors

@@ -17,6 +17,7 @@ from pydantic import ValidationError
 from starlette.concurrency import run_in_threadpool
 
 from .config import ROOT, Settings
+from .collections import CollectionService, PreflightUnavailable
 from .engine import AnalysisEngine
 from .schemas import (Article, ImportRequest, LinkRequest, LoginRequest, OverlapRequest,
                       ReviewRequest, SearchRequest)
@@ -34,6 +35,7 @@ def create_app(settings=None, engine=None):
     attempts = defaultdict(deque)
     attempts_lock = threading.Lock()
     mutations_lock = threading.RLock()
+    collections = CollectionService(store, engine, mutations_lock)
 
     @asynccontextmanager
     async def lifespan(app):
@@ -45,6 +47,7 @@ def create_app(settings=None, engine=None):
                   docs_url=None, redoc_url=None, openapi_url=None)
     app.state.store = store
     app.state.engine = engine
+    app.state.collections = collections
 
     def authenticated(request):
         if not settings.password:
@@ -94,6 +97,10 @@ def create_app(settings=None, engine=None):
     @app.exception_handler(KeyError)
     async def missing_item(request, error):
         return JSONResponse({"detail": "Article not found in this collection."}, status_code=404)
+
+    @app.exception_handler(PreflightUnavailable)
+    async def unavailable_preflight(request, error):
+        return JSONResponse({"detail": str(error)}, status_code=503)
 
     @app.get("/health")
     def health():
@@ -150,22 +157,19 @@ def create_app(settings=None, engine=None):
     @app.post("/api/articles/import")
     def import_articles(data: ImportRequest):
         parsed = parse_csv(data.csv_text)
-        with mutations_lock:
-            count = store.replace(parsed)
+        count = collections.replace(parsed)
         return {"count": count, "message": "Collection replaced. Previous review decisions were cleared."}
 
     @app.post("/api/articles/reset")
     def reset_articles():
-        with mutations_lock:
-            count = store.replace(demo_articles())
+        count = collections.replace(demo_articles())
         return {"count": count}
 
     @app.put("/api/articles/{article_id}")
     def update_article(article_id: str, data: Article):
         if article_id != data.id:
             raise HTTPException(422, "Article IDs cannot be changed while editing.")
-        with mutations_lock:
-            store.save_article(data)
+        collections.save_article(data)
         return data.model_dump()
 
     @app.get("/api/articles/export")

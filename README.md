@@ -26,7 +26,7 @@ py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe -m uvicorn semantic_analyser.api:app --host 127.0.0.1 --port 8000
 ```
 
-Open **http://127.0.0.1:8000**. The 21 fictional demo articles load automatically into an ignored SQLite database at `runtime/workspace.sqlite3`. The first analysis loads the model and builds the collection index; subsequent requests reuse it. Model files are fetched from Hugging Face if not cached. Article/query text is processed on the machine running the app, not sent to a hosted inference API.
+Open **http://127.0.0.1:8000**. The 21 fictional demo articles load automatically into an ignored SQLite database at `runtime/workspace.sqlite3`. The first import/edit preflight or analysis loads the model. Imports and edits check real-tokenizer passage limits before saving; collection embeddings are built on the first semantic analysis and reused until the collection changes. Model files are fetched from Hugging Face if not cached. Article/query text is processed on the machine running the app, not sent to a hosted inference API.
 
 Local mode has no password by default and binds to the loopback address. To test sign-in locally, set environment variables before launching:
 
@@ -69,6 +69,7 @@ A02,Measuring cabinet space,Measure the counter and ventilation clearance.,refri
 - `eligible=false` excludes a page as a link destination; it remains searchable and available for overlap review.
 - Import replaces the full collection and clears previous review decisions. Export first if you need the old collection.
 - Limits: 100 articles, 20,000 characters per body, 250,000 total text characters, and 800 model passages. HTTP requests are limited to 2 MB.
+- Imports, demo resets and article edits run full preflight before any collection write. Invalid candidates preserve the existing articles and reviews; model-validation unavailability returns a retryable error. The 250,000-character limit remains unchanged.
 - Export escapes spreadsheet formula prefixes. If a text field begins with `=`, `+`, `-` or `@`, a leading apostrophe is added to the exported value.
 - The demo's A01 → A04 existing link and A20's ineligible status are fictional test conditions, not observed website data.
 
