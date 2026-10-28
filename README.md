@@ -37,6 +37,61 @@ $env:SECRET_KEY = .\.venv\Scripts\python.exe -c "import secrets; print(secrets.t
 
 Do not set `APP_ENV=production` for plain HTTP localhost: production sessions require HTTPS. Local source execution does not automatically read `.env`; Docker Compose reads the relevant environment files.
 
+## Temporary visitor workspaces (Phase 2B)
+
+The default `WORKSPACE_MODE=local` retains the existing persistent local demo and its
+SQLite file. Use it on loopback or as a trusted private demonstration. To test isolated
+visitors locally in a new PowerShell terminal:
+
+```powershell
+$env:WORKSPACE_MODE = 'visitor'
+$env:SECRET_KEY = .\.venv\Scripts\python.exe -c "import secrets; print(secrets.token_hex(32))"
+.\.venv\Scripts\python.exe -m uvicorn semantic_analyser.api:app --host 127.0.0.1 --port 8000 --workers 1
+```
+
+Use two browser profiles or private sessions to test different visitors. Each starts
+with its own copy of the fictional demo and can import its own CSV. Visitor mode does
+not open the original `DATABASE_PATH`; its default temporary root is a `visitors`
+directory beside that path, or `VISITOR_WORKSPACE_ROOT` when set explicitly. Keep the
+same strong SECRET_KEY across restarts to retain ownership of unexpired workspaces.
+HTTPS with `APP_ENV=production` is required for secure public cookies; no public
+deployment is performed or certified by this implementation.
+
+Defaults: 32 workspaces, one CPU analysis/preflight worker, two pending operations,
+four idle cached indexes, a 60-second operation response deadline, one-hour idle
+expiry, 24-hour absolute expiry, and cleanup every 60 seconds. Configure with
+`MAX_VISITOR_WORKSPACES`, `ANALYSIS_QUEUE_SIZE`, `MAX_CACHED_INDEXES`,
+`ANALYSIS_TIMEOUT_SECONDS`, `WORKSPACE_IDLE_SECONDS`, `WORKSPACE_LIFETIME_SECONDS`
+and `WORKSPACE_CLEANUP_SECONDS`. Workspace locks and SQLite busy waits are bounded
+at one second by default (`WORKSPACE_LOCK_SECONDS` controls the former).
+
+Native inference cannot be force-cancelled by a Python thread. A timed-out running
+operation keeps its slot and workspace lease until it finishes; excess work gets 503
+with Retry-After. Writes check cancellation/ownership before committing. After a
+timeout refresh the collection to reconcile state; do not automatically replay writes.
+Graceful shutdown waits for running work. A permanently stuck native call requires a
+supervisor/process restart. This is not a hard CPU-time or RAM sandbox.
+
+Visitor API clients first call `GET /api/session` with `X-Workspace-Request: true`,
+retain the ownership cookie, then read `/api/articles`. Supply its `collection_revision`
+as `If-Match` on analysis and mutation requests. Missing/stale revisions return 428/409.
+Results carry their snapshot revision; review actions and article editors retain that
+revision. `DELETE /api/workspace` deletes only the current visitor's idle workspace;
+logout revokes ownership, with active work protected until it exits. Expired sessions
+return 410 and clear the cookie; reload to begin again. No workspace ID/path is accepted
+as an authorization override. Local-mode legacy calls may omit If-Match, but the UI
+sends revisions in both modes.
+
+One process owns a visitor root; a second owner fails startup. Restarts retain unexpired
+SQLite text/reviews/revisions but discard indexes and pending HTTP work. Cleanup closes
+SQLite handles and deletes only recognized, unleased workspace files; unexpected
+contents are retained for inspection. This phase adds no crawler, external identity
+provider, PostgreSQL, Redis or cloud infrastructure.
+
+Run the full tests and `scripts/verify_phase2b.py` using the existing virtual environment
+for offline real-model/two-browser verification. That script uses localhost port 8013,
+disposable data under `runtime/phase2b/` and never regenerates Phase 1B results.
+
 ## Use Docker locally
 
 Install Docker Desktop and select Linux containers first; Docker is not currently installed in the original development environment.

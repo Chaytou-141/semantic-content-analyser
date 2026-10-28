@@ -20,6 +20,12 @@ class AnalysisEngine:
         self.lock = threading.RLock()
         self.cache_key = None
 
+    def clear_index(self):
+        with self.lock:
+            self.cache_key = None
+            for name in ("chunks", "vectorizer", "word_vectors", "embeddings"):
+                self.__dict__.pop(name, None)
+
     def load(self):
         with self.lock:
             if self.model is None:

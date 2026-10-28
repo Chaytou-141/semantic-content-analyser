@@ -2,6 +2,8 @@ import csv
 import io
 import json
 import sqlite3
+import secrets
+from contextlib import contextmanager
 from pathlib import Path
 
 from .config import ROOT
@@ -77,23 +79,41 @@ class Store:
                 connection.executemany("INSERT INTO articles VALUES (?, ?)",
                                        [(a.id, a.model_dump_json()) for a in demo_articles()])
                 connection.execute("INSERT INTO metadata VALUES ('initialised', 'true')")
+            connection.execute("INSERT OR IGNORE INTO metadata VALUES ('revision', ?)", (secrets.token_hex(16),))
 
+    @contextmanager
     def connect(self):
-        return sqlite3.connect(self.path, timeout=15)
+        connection = sqlite3.connect(self.path, timeout=1)
+        try:
+            with connection:
+                yield connection
+        finally:
+            connection.close()
+
+    def revision(self):
+        with self.connect() as connection:
+            return connection.execute("SELECT value FROM metadata WHERE key='revision'").fetchone()[0]
+
+    @staticmethod
+    def bump_revision(connection):
+        connection.execute("UPDATE metadata SET value=? WHERE key='revision'", (secrets.token_hex(16),))
 
     def articles(self):
         with self.connect() as connection:
             return [Article.model_validate_json(row[0]) for row in connection.execute("SELECT payload FROM articles ORDER BY id")]
 
-    def replace(self, articles):
+    def replace(self, articles, before_commit=None):
         validate_collection(articles)
         with self.connect() as connection:
             connection.execute("DELETE FROM articles")
             connection.executemany("INSERT INTO articles VALUES (?, ?)", [(a.id, a.model_dump_json()) for a in articles])
             connection.execute("DELETE FROM reviews")
+            self.bump_revision(connection)
+            if before_commit:
+                before_commit()
         return len(articles)
 
-    def save_article(self, article):
+    def save_article(self, article, before_commit=None):
         with self.connect() as connection:
             collection = [Article.model_validate_json(row[0]) for row in connection.execute("SELECT payload FROM articles")]
             if article.id not in {a.id for a in collection}:
@@ -101,13 +121,16 @@ class Store:
             validate_collection([article if a.id == article.id else a for a in collection])
             connection.execute("UPDATE articles SET payload=? WHERE id=?", (article.model_dump_json(), article.id))
             connection.execute("DELETE FROM reviews WHERE source_id=? OR target_id=?", (article.id, article.id))
+            self.bump_revision(connection)
+            if before_commit:
+                before_commit()
 
     def reviews(self):
         with self.connect() as connection:
             connection.row_factory = sqlite3.Row
             return [dict(row) for row in connection.execute("SELECT * FROM reviews ORDER BY updated_at DESC")]
 
-    def review(self, review):
+    def review(self, review, before_commit=None):
         with self.connect() as connection:
             ids = {row[0] for row in connection.execute("SELECT id FROM articles")}
             if review.source_id not in ids or review.target_id not in ids:
@@ -116,6 +139,8 @@ class Store:
                 ON CONFLICT(source_id,target_id) DO UPDATE SET decision=excluded.decision,
                 note=excluded.note,updated_at=CURRENT_TIMESTAMP""",
                 (review.source_id, review.target_id, review.decision, review.note))
+            if before_commit:
+                before_commit()
 
     def export(self):
         stream = io.StringIO(newline="")

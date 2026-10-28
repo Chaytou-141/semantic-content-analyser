@@ -18,16 +18,26 @@ function el(tag, attrs = {}, ...children) {
   return node;
 }
 
-async function api(path, data, method = "POST") {
-  const options = data === undefined ? {} : { method, headers: { "Content-Type": "application/json", "X-Workspace-Request": "true" }, body: JSON.stringify(data) };
+async function api(path, data, method = "POST", expectedRevision = state.revision) {
+  const headers = { "X-Workspace-Request": "true" };
+  if (data !== undefined) headers["Content-Type"] = "application/json";
+  if (data !== undefined && expectedRevision && path !== "/api/login" && path !== "/api/logout") headers["If-Match"] = expectedRevision;
+  const options = data === undefined ? { headers } : { method, headers, body: JSON.stringify(data) };
   const response = await fetch(path, options);
   let payload;
   try { payload = await response.json(); } catch { throw new Error("The server returned an unexpected response. Check the server logs."); }
   if (!response.ok) {
-    if (response.status === 401 && path !== "/api/login") showLogin();
+    if (response.status === 401 && path !== "/api/login" && state.passwordRequired) showLogin();
     let message = payload.detail || "The request could not be completed.";
     if (Array.isArray(message)) message = message.map((issue) => `${issue.loc.slice(1).join(".")}: ${issue.msg}`).join("; ");
+    if (response.status === 409) { await loadCollection(); invalidateResults(); }
     throw new Error(message);
+  }
+  if (path === "/api/articles" || (data !== undefined && (path.startsWith("/api/articles/") || path === "/api/articles/import"))) {
+    if (payload.collection_revision) state.revision = payload.collection_revision;
+  } else if (payload.collection_revision && state.revision && payload.collection_revision !== state.revision) {
+    await loadCollection(); invalidateResults();
+    throw new Error("Collection changed. Run the analysis again using the current articles.");
   }
   return payload;
 }
@@ -77,6 +87,9 @@ async function loadCollection() {
   const [collection, meta] = await Promise.all([api("/api/articles"), api("/api/meta")]);
   state.articles = collection.articles;
   state.meta = meta;
+  $("#workspace-notice").textContent = meta.workspace_mode === "visitor"
+    ? `This browser has its own temporary workspace. Data expires after ${Math.round(meta.idle_seconds / 60)} minutes without activity. Import only content you are authorised to process.`
+    : "Demo articles are fictional. Import only content you are authorised to process. This installation has one shared workspace.";
   $("#collection-count").textContent = `${state.articles.length} articles in your collection`;
   $("#nav-article-count").textContent = state.articles.length;
   const select = $("#links-source");
@@ -132,6 +145,7 @@ function renderDiscovery() {
 async function start() {
   try {
     const session = await api("/api/session");
+    state.passwordRequired = session.password_required;
     if (!session.authenticated) { showLogin(); return; }
     $("#login").hidden = true;
     $("#workspace").hidden = false;
@@ -211,7 +225,7 @@ function renderLinks(payload) {
       for (const [decision, label] of [["useful", "Useful candidate"], ["not_useful", "Not useful"], ["pending", "Clear decision"]]) {
         actions.append(el("button", { class: `button small ${saved?.decision === decision ? "selected-review" : ""}`, text: label, onclick: () => task("Saving your review…", async () => {
           const review = { source_id: state.sourceId, target_id: result.id, decision, note: note.value };
-          await api("/api/reviews", review);
+          await api("/api/reviews", review, "POST", payload.collection_revision);
           payload.reviews = payload.reviews.filter((row) => row.target_id !== result.id).concat(review);
           renderLinks(payload);
           toast("Review saved. No links were inserted.");
@@ -254,6 +268,7 @@ function formField(label, input) {
 }
 
 function openArticle(id) {
+  const openedRevision = state.revision;
   const article = state.articles.find((row) => row.id === id);
   if (!article) return;
   const title = el("input", { name: "title", autocomplete: "off", value: article.title, required: "", maxlength: "200" });
@@ -265,7 +280,7 @@ function openArticle(id) {
   const form = el("form", { onsubmit: (event) => {
     event.preventDefault();
     task("Saving article…", async () => {
-      await api(`/api/articles/${encodeURIComponent(id)}`, { ...article, title: title.value, body: body.value, topic: topic.value, url: url.value, eligible: eligible.checked, existing_links: existing.value.split(";").map((item) => item.trim()).filter(Boolean) }, "PUT");
+      await api(`/api/articles/${encodeURIComponent(id)}`, { ...article, title: title.value, body: body.value, topic: topic.value, url: url.value, eligible: eligible.checked, existing_links: existing.value.split(";").map((item) => item.trim()).filter(Boolean) }, "PUT", openedRevision);
       await loadCollection();
       invalidateResults();
       form.dataset.dirty = "false";

@@ -1,0 +1,55 @@
+{
+  "phase2a_commit": "3ea9b59",
+  "real_model": true,
+  "offline": true,
+  "torch_threads": 2,
+  "concurrent_import_wall_seconds": 8.15692920004949,
+  "two_queued_real_comparisons_wall_seconds": 17.2454062999459,
+  "model_constructions": 1,
+  "same_parameter_storage": true,
+  "independent_embedding_arrays": true,
+  "phase1b_top5_ids_scores_preserved": true,
+  "memory_after_preflight": {
+    "rss_bytes": 544591872,
+    "peak_rss_bytes": 544624640,
+    "private_bytes": 573112320,
+    "peak_commit_bytes": 645017600
+  },
+  "memory_after_two_indexes": {
+    "rss_bytes": 580362240,
+    "peak_rss_bytes": 753950720,
+    "private_bytes": 653238272,
+    "peak_commit_bytes": 857440256
+  },
+  "real_search_evidence_checked": 20,
+  "real_link_and_overlap_evidence": "passed",
+  "browser_stale_review_rejected": true,
+  "real_801_passage_rejection_preserves_revision_and_data": true,
+  "real_800_passage_import": "accepted",
+  "independent_browser_contexts": 2,
+  "cross_session_read_write_review_export_delete_checks": "passed",
+  "browser_errors": [],
+  "existing_browser_smoke": "passed in visitor mode",
+  "model_constructions_after_smoke": 1,
+  "final_process_memory": {
+    "rss_bytes": 590647296,
+    "peak_rss_bytes": 753950720,
+    "private_bytes": 663375872,
+    "peak_commit_bytes": 857440256
+  },
+  "protected_files_checked": 172,
+  "changed_protected_files": [],
+  "server_stopped": true,
+  "existing_local_database_opened": false,
+  "automated_suite": {
+    "passed": 71,
+    "skipped": 1,
+    "duration_seconds": 10.8,
+    "skip_reason": "Windows account cannot create symbolic links",
+    "phase2a_tests_included": 45
+  },
+  "verification_date": "2026-10-28 Australia/Sydney",
+  "production_readiness_claimed": false,
+  "javascript_syntax": "passed",
+  "existing_local_browser_smoke": "passed against disposable local mode on port 8014; server stopped"
+}

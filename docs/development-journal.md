@@ -7,9 +7,11 @@ Date: 28 October 2026 (Australia/Sydney).
 Baseline Git commit: `8e2c99198d42a05696b0b362ef851c1c8932e559`
 (`Redesign content review workspace and improve accessibility`), on
 `feature/deployable-aws-app`. Phase 1B fixtures/results were already present in the
-working tree when this phase started. Phase 2A is an **uncommitted working-tree
-implementation prepared for review**; there is no new implementation commit hash
-to report yet. No commit or push was performed for this phase.
+working tree when this phase started. Phase 2A was initially prepared as an uncommitted
+working-tree implementation. Before Phase 2B, its 45 tests were rerun (45 passed in
+3.56 seconds) and reviewed changes were committed as `3ea9b59` (`Validate collection
+admission atomically before persistence`). Supporting Phase 1B evidence was recorded
+separately as `bc72066`. Neither commit was pushed.
 
 ### Problem and user impact
 
@@ -193,3 +195,118 @@ workspaces, one shared model, bounded caches/queue and revision checks. Then imp
 and adversarially test the safe-fetch boundary before WordPress discovery/extraction.
 Website URL analysis remains a core release requirement; neither crawler nor visitor
 isolation, cloud infrastructure or deployment was implemented during Phase 2A.
+
+## Phase 2B — per-visitor isolation and bounded execution
+
+Date: 28 October 2026 (Australia/Sydney).
+
+Prerequisites verified and committed locally: Phase 1B evidence `bc72066`; Phase 2A
+`3ea9b59`. Phase 2A's reviewed source, tests, journal and verification record were staged
+explicitly after a fresh 45-test pass. No secrets, runtime databases or cloud state were
+staged. Neither commit was pushed. The Phase 2B development commit is titled
+`Isolate visitor workspaces and bound analysis execution`; this entry is included in
+that commit. Resolve its hash with `git log -1 --format=%H --grep="Isolate visitor workspaces"`.
+
+### Problem and decision
+
+The shared Store/engine meant every authorized visitor could replace the same collection
+and read/edit the same reviews. Engine locking prevented cache races but did not provide
+ownership. Unbounded submitted work could accumulate and stalled requests had no response
+deadline. A saved review had no collection revision identifying the evidence it judged.
+
+Selected design: preserve the persistent local mode, add explicit visitor mode with one
+temporary SQLite file per cookie-owned visitor, share one read-only loaded model and keep
+indexes separate. A finite single-worker executor bounds CPU/preflight work. Existing
+CollectionService and SQLite transactions remain the write boundary.
+
+Alternatives considered: shared tables with workspace IDs (more pervasive query scoping),
+one database/model/process per visitor (unnecessary memory/startup cost), external accounts
+or PostgreSQL/Redis (not required for this bounded single-node phase), and process-based
+inference with forced termination (stronger native deadlines, substantially more lifecycle
+and IPC complexity). Cookie-owned temporary files are the smallest fit for anonymous
+portfolio visitors. They are not a complex or horizontally scalable tenant platform.
+
+### Implementation and trade-offs
+
+- `workspaces.py`: 256-bit random IDs; purpose-specific HMAC-SHA256 signed HttpOnly,
+  SameSite cookies; production Secure/__Host- protection; cookie-only store selection.
+  Each visitor gets the original fictional demo. Missing/tampered/expired ownership is
+  rejected, and logout revokes it. No caller-provided path/ID selects another store.
+- `api.py`: request-scoped workspace leases, owned reads/exports/reviews/deletion,
+  revision preconditions, bounded execution, no-store API errors and expired-cookie
+  handling. Local mode remains compatible with existing API callers; the UI sends
+  revisions in both modes. Public visitors must use explicit visitor mode.
+- `storage.py`: opaque metadata revision changes atomically with imports/edits; SQLite
+  connections explicitly close; one-second busy wait; cancellation checks before commit.
+- `execution.py`: one worker plus two pending slots by default; controlled 503/Retry-After,
+  60-second response deadline, queued cancellation and leases retained for running native
+  work after HTTP timeout. Writes check deadlines/expiry before committing. A tiny
+  commit/acknowledgement race still requires client reconciliation, not automatic retries.
+- Manager lifecycle: one-hour idle/24-hour absolute expiry, 60-second sweeps, max 32
+  workspaces and four idle cached indexes. Active jobs protect their files. Safe cleanup
+  recognizes only owned SQLite/sidecar files and refuses unexpected/symlink contents.
+  An OS file lock prevents multiple application processes owning one root. Restart
+  reloads unexpired data/revisions, clears indexes and does not resume pending requests.
+- `engine.py`: only adds index eviction; passage segmentation, MiniLM normalization,
+  TF-IDF and ranking formulas are unchanged. Visitor engine factories return the same
+  loaded model object; their chunks/vectors are separate.
+- `web/app.js`: propagates If-Match, retains the original revision for an editor/review,
+  rejects stale results/actions and refreshes after conflicts. The interface and CSV
+  workflows remain in place, with a temporary-data notice in visitor mode.
+
+The original 250,000-character/800-passage limits remain. No crawler, visitor account
+provider, PostgreSQL, Redis, infrastructure change or deployment is included.
+
+### Test evidence and measurements
+
+The portable record is `docs/phase2b-verification.json`; detailed architecture and
+reproduction instructions are in `docs/phase2b-workspaces.md`. The final local suite
+and real-model measurements are recorded there after execution. Test databases and
+browser screenshots/logs live only under ignored runtime/phase2b.
+
+Tests cover two or more isolated cookie sessions, cross-session reads/edits/reviews/
+exports/deletion, malformed ownership, production cookie flags, exact revision conflicts,
+parallel same/different workspace imports and analysis, a queued stale analysis after
+an edit, overload, timed-out slot retention, queued cancellation, late-review rollback,
+active cleanup protection, idle/absolute expiry, restart data/revision recovery, expired
+restart cleanup, process locking and LRU eviction. A real Chromium stale review click
+is rejected after a collection edit, with no editorial decision applied.
+
+The real-model run uses two independent Chromium contexts and 36 articles each. It
+checks exactly one MiniLM construction and shared parameter storage with separate
+embedding arrays, Phase 1B ranking/score equivalence for one recorded query, exact
+passage evidence and real-tokenizer 800/801 admission. These are engineering checks
+on synthetic content, not a recommendation-quality or public-load evaluation.
+
+### Limitations and next phase
+
+Thread deadlines do not kill native PyTorch execution. Timed-out running work keeps its
+slot and lease; a permanently stuck call can require a hard process restart. Graceful
+shutdown waits for active work. There is no hard RAM sandbox, fair scheduling/per-IP
+abuse policy, identity recovery, storage-corruption repair or sustained multi-user
+capacity guarantee. Old tabs can show snapshot results until another request, but
+revisions prevent stale reviews/edits in visitor mode. Local legacy callers that omit
+If-Match retain their old trusted-demo semantics. Cleanup failures can need operator
+attention; the workspace root must be private to the application's OS account.
+
+Next: implement and adversarially test the bounded safe-fetch boundary before mandatory
+WordPress discovery/extraction and article selection. Do not declare public readiness
+from unit tests or the two-browser synthetic demonstration. No push is performed.
+
+### Recorded local results
+
+- Full suite: **71 passed, 1 skipped in 10.80 seconds**, including all 45 Phase 2A tests.
+- The skipped test requires actual symlink creation, unavailable to this Windows account.
+- Two independent Chromium contexts each imported 36 synthetic articles.
+- Their concurrent import requests completed in **8.157 seconds** total, including the first cached-file model load.
+- Two submitted real MiniLM/TF-IDF comparison requests completed in **17.245 seconds** total; native inference was intentionally serial.
+- Model construction count: **1**; model parameter storage shared; embedding arrays distinct.
+- Peak process working set after the two indexes: **719.02 MiB**; peak commit **817.72 MiB**. These exclude browser child processes and are not hosting-size guarantees.
+- Both methods retained Phase 1B top-five IDs/scores for the recorded query (with the second visitor's ID prefix mapped).
+- Exact search evidence: **20** returned passages checked, plus source/destination link and overlap evidence.
+- Actual model tokenizer: **800 passages imported**, **801 rejected** without changing data/revision.
+- Existing full browser smoke passed in both visitor mode and a separate disposable local-demo instance; no page errors.
+- Preservation: **172 files** unchanged, including benchmark/deployment data and **145 older SQLite/sidecar files**.
+- JavaScript syntax and Git whitespace checks passed. All verification servers were stopped.
+
+These are single-laptop observations (Phase 1B i5-11400H Windows environment, two PyTorch threads, offline cached model), not sustained traffic measurements or accuracy claims.

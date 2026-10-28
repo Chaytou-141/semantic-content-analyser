@@ -1,3 +1,4 @@
+import asyncio
 import csv
 import hashlib
 import hmac
@@ -17,37 +18,50 @@ from pydantic import ValidationError
 from starlette.concurrency import run_in_threadpool
 
 from .config import ROOT, Settings
-from .collections import CollectionService, PreflightUnavailable
+from .collections import PreflightUnavailable
 from .engine import AnalysisEngine
 from .schemas import (Article, ImportRequest, LinkRequest, LoginRequest, OverlapRequest,
                       ReviewRequest, SearchRequest)
 from .storage import Store, demo_articles, parse_csv
+from .execution import BoundedExecutor
+from .workspaces import COOKIE, Workspace, WorkspaceManager
 
 
 def create_app(settings=None, engine=None):
     settings = settings or Settings()
     settings.validate()
-    store = Store(settings.database_path)
     engine = engine or AnalysisEngine(settings.model_revision)
+    local = Workspace(Store(settings.database_path), engine) if settings.workspace_mode == "local" else None
+    store = local.store if local else None
+    manager = WorkspaceManager(settings, engine) if local is None else None
+    execution = BoundedExecutor(settings.analysis_queue_size, settings.analysis_timeout_seconds)
+    cookie_name = "__Host-" + COOKIE if settings.production else COOKIE
     signing_key = settings.secret or secrets.token_hex(32)
     signer = URLSafeTimedSerializer(signing_key, salt="semantic-workspace")
     password_tag = hashlib.sha256(settings.password.encode()).hexdigest()
     attempts = defaultdict(deque)
     attempts_lock = threading.Lock()
-    mutations_lock = threading.RLock()
-    collections = CollectionService(store, engine, mutations_lock)
 
     @asynccontextmanager
     async def lifespan(app):
-        if settings.preload_model:
-            await run_in_threadpool(engine.load)
-        yield
+        if manager:
+            await run_in_threadpool(manager.start)
+        try:
+            if settings.preload_model:
+                await run_in_threadpool(engine.load)
+            yield
+        finally:
+            await run_in_threadpool(execution.close)
+            if manager:
+                await run_in_threadpool(manager.close)
 
     app = FastAPI(title="Semantic Content Analyser", version="1.0.0", lifespan=lifespan,
                   docs_url=None, redoc_url=None, openapi_url=None)
     app.state.store = store
     app.state.engine = engine
-    app.state.collections = collections
+    app.state.collections = local.collections if local else None
+    app.state.workspaces = manager
+    app.state.execution = execution
 
     def authenticated(request):
         if not settings.password:
@@ -58,25 +72,58 @@ def create_app(settings=None, engine=None):
         except (BadSignature, SignatureExpired, AttributeError):
             return False
 
+    def rejected(detail, status, headers=None):
+        return JSONResponse({"detail": detail}, status_code=status,
+                            headers={"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff", **(headers or {})})
+
     @app.middleware("http")
     async def protect(request: Request, call_next):
         path = request.url.path
         length = request.headers.get("content-length", "0")
         if not length.isdigit() or int(length) > 2000000:
-            return JSONResponse({"detail": "Request exceeds the 2 MB limit."}, status_code=413)
+            return rejected("Request exceeds the 2 MB limit.", 413)
         # Bound chunked requests too; never buffer unbounded input before schema validation.
         if request.method in {"POST", "PUT", "PATCH", "DELETE"}:
             if request.headers.get("x-workspace-request") != "true":
-                return JSONResponse({"detail": "Missing workspace request header."}, status_code=403)
+                return rejected("Missing workspace request header.", 403)
             body = bytearray()
-            async for chunk in request.stream():
-                body.extend(chunk)
-                if len(body) > 2000000:
-                    return JSONResponse({"detail": "Request exceeds the 2 MB limit."}, status_code=413)
+            try:
+                async with asyncio.timeout(15):
+                    async for chunk in request.stream():
+                        body.extend(chunk)
+                        if len(body) > 2000000:
+                            return rejected("Request exceeds the 2 MB limit.", 413)
+            except TimeoutError:
+                return rejected("Request body timed out.", 408)
             request._body = bytes(body)
         if path.startswith("/api/") and path not in {"/api/session", "/api/login"} and not authenticated(request):
-            return JSONResponse({"detail": "Sign in to your workspace."}, status_code=401)
-        response = await call_next(request)
+            return rejected("Sign in to your workspace.", 401)
+        entry, visitor_token = local, None
+        leased = False
+        if path.startswith("/api/") and path not in {"/api/login", "/api/logout", "/api/schema", "/api/evaluation"} and authenticated(request):
+            if manager:
+                try:
+                    if path == "/api/session" and not request.cookies.get(cookie_name) and request.headers.get("x-workspace-request") != "true":
+                        return rejected("Missing workspace request header.", 403)
+                    entry, visitor_token = await run_in_threadpool(manager.acquire, request.cookies.get(cookie_name), path == "/api/session")
+                    leased = True
+                except HTTPException as error:
+                    response = rejected(error.detail, error.status_code, error.headers)
+                    if error.status_code in {401, 410}:
+                        response.delete_cookie(cookie_name, secure=settings.production, samesite="strict")
+                    return response
+        request.state.workspace = entry
+        try:
+            response = await call_next(request)
+            if manager:
+                if response.status_code in {401, 410}:
+                    response.delete_cookie(cookie_name, secure=settings.production, samesite="strict")
+                elif visitor_token and not getattr(request.state, "deleted_workspace", False):
+                    response.set_cookie(cookie_name, visitor_token, httponly=True, secure=settings.production,
+                                        samesite="strict", max_age=int(settings.workspace_lifetime_seconds))
+        finally:
+            if leased:
+                await run_in_threadpool(manager.release, entry)
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["X-Frame-Options"] = "DENY"
         response.headers["Referrer-Policy"] = "same-origin"
@@ -104,13 +151,42 @@ def create_app(settings=None, engine=None):
 
     @app.get("/health")
     def health():
-        with store.connect() as connection:
-            connection.execute("SELECT 1")
+        if store:
+            with store.connect() as connection:
+                connection.execute("SELECT 1")
         return {"status": "ok", "model_loaded": engine.model is not None}
+
+    def check_revision(request, entry):
+        expected = request.headers.get("if-match")
+        if manager and expected is None:
+            raise HTTPException(428, "Read the collection and supply its revision in If-Match.")
+        if expected is not None and expected.strip('"') != entry.store.revision():
+            raise HTTPException(409, "Collection changed. Reload it and run the analysis again.")
+
+    async def execute(request, operation):
+        entry = request.state.workspace
+
+        def work(control):
+            def ownership_guard():
+                if manager and manager._expired(entry):
+                    raise HTTPException(410, "Temporary workspace expired. Reload to start a new one.")
+            control.guard = ownership_guard
+            with entry.locked(settings.workspace_lock_seconds):
+                control.check()
+                check_revision(request, entry)
+                result = operation(entry, control)
+                control.check()
+                if manager and manager._expired(entry):
+                    raise HTTPException(410, "Temporary workspace expired. Reload to start a new one.")
+                return result
+
+        return await execution.run(work, (lambda: manager.pin(entry)) if manager else lambda: None,
+                                   (lambda: manager.release(entry)) if manager else lambda: None)
 
     @app.get("/api/session")
     def session(request: Request):
-        return {"authenticated": authenticated(request), "password_required": bool(settings.password)}
+        return {"authenticated": authenticated(request), "password_required": bool(settings.password),
+                "workspace_mode": settings.workspace_mode}
 
     @app.post("/api/login")
     def login(data: LoginRequest, request: Request, response: Response):
@@ -133,17 +209,24 @@ def create_app(settings=None, engine=None):
         return {"authenticated": True}
 
     @app.post("/api/logout")
-    def logout(response: Response):
+    async def logout(response: Response, request: Request):
+        if manager and request.cookies.get(cookie_name):
+            await run_in_threadpool(manager.revoke, request.cookies[cookie_name])
         response.delete_cookie("workspace_session", secure=settings.production, samesite="strict")
+        response.delete_cookie(cookie_name, secure=settings.production, samesite="strict")
         return {"authenticated": False}
 
     @app.get("/api/meta")
-    def meta():
-        articles = store.articles()
+    def meta(request: Request):
+        entry = request.state.workspace
+        with entry.locked(settings.workspace_lock_seconds):
+            articles = entry.store.articles()
+            reviews = entry.store.reviews()
         return {"version": "1.0.0", "model": "all-MiniLM-L6-v2", "revision": settings.model_revision,
                 "model_loaded": engine.model is not None, "dimensions": 384, "max_articles": 100,
                 "article_count": len(articles), "topics": sorted({a.topic for a in articles if a.topic}),
-                "review_count": len(store.reviews()), "single_workspace": True,
+                "review_count": len(reviews), "single_workspace": manager is None,
+                "workspace_mode": settings.workspace_mode, "idle_seconds": settings.workspace_idle_seconds,
                 "chunking": "192 body tokens, 32-token overlap; title capped at 40 tokens"}
 
     @app.get("/api/schema")
@@ -151,63 +234,107 @@ def create_app(settings=None, engine=None):
         return app.openapi()
 
     @app.get("/api/articles")
-    def articles():
-        return {"articles": [a.model_dump() for a in store.articles()]}
+    def articles(request: Request):
+        entry = request.state.workspace
+        with entry.locked(settings.workspace_lock_seconds):
+            return {"articles": [a.model_dump() for a in entry.store.articles()],
+                    "collection_revision": entry.store.revision()}
 
     @app.post("/api/articles/import")
-    def import_articles(data: ImportRequest):
+    async def import_articles(data: ImportRequest, request: Request):
         parsed = parse_csv(data.csv_text)
-        count = collections.replace(parsed)
-        return {"count": count, "message": "Collection replaced. Previous review decisions were cleared."}
+        def operation(entry, control):
+            count = entry.collections.replace(parsed, control.check)
+            return {"count": count, "collection_revision": entry.store.revision(),
+                    "message": "Collection replaced. Previous review decisions were cleared."}
+        return await execute(request, operation)
 
     @app.post("/api/articles/reset")
-    def reset_articles():
-        count = collections.replace(demo_articles())
-        return {"count": count}
+    async def reset_articles(request: Request):
+        def operation(entry, control):
+            count = entry.collections.replace(demo_articles(), control.check)
+            return {"count": count, "collection_revision": entry.store.revision()}
+        return await execute(request, operation)
 
     @app.put("/api/articles/{article_id}")
-    def update_article(article_id: str, data: Article):
+    async def update_article(article_id: str, data: Article, request: Request):
         if article_id != data.id:
             raise HTTPException(422, "Article IDs cannot be changed while editing.")
-        collections.save_article(data)
-        return data.model_dump()
+        def operation(entry, control):
+            entry.collections.save_article(data, control.check)
+            return {**data.model_dump(), "collection_revision": entry.store.revision()}
+        return await execute(request, operation)
 
     @app.get("/api/articles/export")
-    def export_articles():
-        return Response(store.export(), media_type="text/csv; charset=utf-8",
+    def export_articles(request: Request):
+        entry = request.state.workspace
+        with entry.locked(settings.workspace_lock_seconds):
+            exported = entry.store.export()
+        return Response(exported, media_type="text/csv; charset=utf-8",
                         headers={"Content-Disposition": 'attachment; filename="articles.csv"'})
 
     @app.post("/api/search")
-    def search(data: SearchRequest):
+    async def search(data: SearchRequest, request: Request):
         start = time.perf_counter()
-        collection = store.articles()
         methods = ["embeddings", "tfidf"] if data.method == "compare" else [data.method]
-        results = {method: engine.search(collection, data.query, method, data.top_k, data.min_score) for method in methods}
-        return {"results": results, "elapsed_ms": round((time.perf_counter() - start) * 1000),
-                "query": data.query, "article_count": len(collection)}
+        def operation(entry, control):
+            collection = entry.store.articles()
+            results = {}
+            for method in methods:
+                control.check()
+                results[method] = entry.engine.search(collection, data.query, method, data.top_k, data.min_score)
+            return {"results": results, "elapsed_ms": round((time.perf_counter() - start) * 1000),
+                    "query": data.query, "article_count": len(collection), "collection_revision": entry.store.revision()}
+        return await execute(request, operation)
 
     @app.post("/api/links")
-    def links(data: LinkRequest):
-        collection = store.articles()
+    async def links(data: LinkRequest, request: Request):
         methods = ["embeddings", "tfidf"] if data.method == "compare" else [data.method]
-        results = {method: engine.links(collection, data.source_id, method, data.top_k, data.min_score) for method in methods}
-        decisions = [r for r in store.reviews() if r["source_id"] == data.source_id]
-        return {"results": results, "reviews": decisions, "review_required": True}
+        def operation(entry, control):
+            collection = entry.store.articles()
+            results = {}
+            for method in methods:
+                control.check()
+                results[method] = entry.engine.links(collection, data.source_id, method, data.top_k, data.min_score)
+            decisions = [r for r in entry.store.reviews() if r["source_id"] == data.source_id]
+            return {"results": results, "reviews": decisions, "review_required": True,
+                    "collection_revision": entry.store.revision()}
+        return await execute(request, operation)
 
     @app.post("/api/overlaps")
-    def overlaps(data: OverlapRequest):
-        return {"pairs": engine.overlaps(store.articles(), data.method, data.threshold, data.limit),
-                "notice": "Similarity is a review signal. It does not establish identical intent, cannibalisation or merge eligibility."}
+    async def overlaps(data: OverlapRequest, request: Request):
+        def operation(entry, control):
+            return {"pairs": entry.engine.overlaps(entry.store.articles(), data.method, data.threshold, data.limit),
+                    "collection_revision": entry.store.revision(),
+                    "notice": "Similarity is a review signal. It does not establish identical intent, cannibalisation or merge eligibility."}
+        return await execute(request, operation)
 
     @app.get("/api/reviews")
-    def reviews():
-        return {"reviews": store.reviews()}
+    def reviews(request: Request):
+        entry = request.state.workspace
+        with entry.locked(settings.workspace_lock_seconds):
+            return {"reviews": entry.store.reviews(), "collection_revision": entry.store.revision()}
 
     @app.post("/api/reviews")
-    def save_review(data: ReviewRequest):
-        with mutations_lock:
-            store.review(data)
-        return {"saved": True}
+    async def save_review(data: ReviewRequest, request: Request):
+        def operation(entry, control):
+            control.check()
+            entry.store.review(data, control.check)
+            return {"saved": True, "collection_revision": entry.store.revision()}
+        return await execute(request, operation)
+
+    @app.delete("/api/workspace")
+    def delete_workspace(request: Request):
+        if not manager:
+            raise HTTPException(403, "Local demo workspace cannot be deleted through this endpoint.")
+        entry = request.state.workspace
+        with entry.locked(settings.workspace_lock_seconds):
+            check_revision(request, entry)
+            manager.delete(entry)
+        request.state.deleted_workspace = True
+        response = JSONResponse({"deleted": True})
+        response.delete_cookie(cookie_name, secure=settings.production, samesite="strict")
+        return response
 
     @app.get("/api/evaluation")
     def evaluation():

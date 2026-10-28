@@ -34,15 +34,19 @@ class CollectionService:
             raise PreflightUnavailable("Collection validation is temporarily unavailable. No changes were saved; try again later.") from error
         return candidates, summary
 
-    def replace(self, articles):
+    def replace(self, articles, before_commit=None):
         with self.lock:
             candidates, _ = self.preflight(articles)
-            return self.store.replace(candidates)
+            if before_commit:
+                before_commit()
+            return self.store.replace(candidates, before_commit)
 
-    def save_article(self, article):
+    def save_article(self, article, before_commit=None):
         with self.lock:
             collection = self.store.articles()
             if article.id not in {a.id for a in collection}:
                 raise KeyError(article.id)
             candidates, _ = self.preflight([article if a.id == article.id else a for a in collection])
-            self.store.save_article(next(a for a in candidates if a.id == article.id))
+            if before_commit:
+                before_commit()
+            self.store.save_article(next(a for a in candidates if a.id == article.id), before_commit)
