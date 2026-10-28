@@ -584,3 +584,94 @@ inspected in ignored runtime/phase3b. Portable follow-up evidence: `docs/ui-veri
 A separate loopback preview on port 8001 uses temporary visitor data under
 runtime/ui-preview. It does not open or replace the original development collection.
 Website import remains opt-in for other installations. No push or deployment.
+
+## Phase 3C - Real-site validation and bounded selection time
+
+29 October 2026 (Australia/Sydney). Baseline `278049d`. Local commit subject:
+**Validate real-site extraction and bound website selection time**.
+Resolve the containing commit using `git log -1 --format=%H --grep="Validate real-site extraction and bound website selection time"`.
+
+### Authorised observation and limitations
+
+The user supplied freezeedge.com.au. This WordPress site was accessed using production
+SafeFetcher, real DNS/pinning/TLS, robots and normal limits/pacing. No other domain was
+authorised/tested. Initial REST discovery found 110 posts in 19.609 seconds/8 requests.
+The advertised sitemap index returned 404; sitemap.xml and wp-sitemap.xml redirected
+to it, and post-sitemap.xml also returned 404. This is recorded as failed real sitemap
+discovery. Passing local XML fixtures is not a substitute for this missing coverage.
+An independent non-WordPress site and functioning real XML index remain unvalidated.
+
+A baseline 40-post run took 100.109 seconds/48 requests and prepared 31 articles;
+9 valid page extractions could not fit the 250,000-character collection. Offline replay
+of all 40 saved HTML responses confirmed structural extraction success. Their corrected
+text totals 330,836 characters before collection template removal, so the cap remains
+justified; it was not increased. The baseline left only 79.891 seconds for human
+selection/review before the old 180-second wall deadline.
+
+### Demonstrated compatibility fix
+
+The noise matcher interpreted WordPress has-post-comment state flags as a comment
+region and could hide the entire article. Fallback selected a broader post wrapper
+with category and author/date text. The fix ignores has-* state flags for noise
+classification and prefers a nested explicit entry-content/article-content body,
+retaining the outer article H1 as its title. Real paywall/comment/nav/footer protections
+remain. Original minimal fixtures reproduce the issue; no website prose was committed.
+
+Comparing the saved real pages with baseline/corrected extractors found title/source-H1
+and canonical/source-URL matches on 40/40 pages. Identified exact category/author blocks
+were present in 39 baseline outputs and zero corrected outputs. Five source spot reviews
+checked the content boundaries/headings/prose. Editorial marketing/contact text within
+entry-content can remain; this is partial heuristic boilerplate handling, not an
+independently labelled quality benchmark. No precision/recall or accuracy claim is made.
+
+### Timing decision and UX
+
+Website sessions now have a fixed 15-minute absolute lifetime and a separate cumulative
+180-second active fetch budget. SafeFetcher charges DNS/TLS/robots/pacing/response work,
+including failures, in finally under its session lock. Per-call deadlines take the
+minimum of remaining active time, absolute lifetime, the existing 20-second cap and
+executor control. The 60-request and 20 MiB wire/decoded counters do not reset.
+Human selection/review gaps do not consume active time. Diagnostic sessions keep their
+original wall-clock behaviour; only website sessions opt in. Fixed limits avoid a
+rolling timeout or renewed per-page quotas that could enable indefinite fetching.
+
+Ownership/revision/expiry guards still apply before final commit, and API admission
+expiry rolls back. Capacity exclusions now have a separate failure kind and are shown
+by article title; subset consent refers to the actual preview. Missing sitemap errors
+now show HTTP reasons. No ranking, model, storage schema or infrastructure was changed.
+
+### Measured corrected run and verification
+
+A second live run prepared all 30 selected posts: 15.469 seconds discovery, 60.766
+seconds extraction, **75.739 seconds active fetch time**, **38 requests**, 1,330,619 wire
+bytes and 6,134,579 decoded bytes. The collection has **232,919 characters**. A single
+offline cached real-tokenizer check through the existing preflight yielded **275 passages**;
+no MiniLM weights/inference were loaded. Script wall time including dependency import
+and this check was 87.641 seconds; the tokenizer/preflight block itself was 0.266 seconds.
+It mapped 37 existing selected-article links across 23 articles. The prepared articles
+were not imported into any development database.
+
+Focused tests covered the changed fetch/website behaviour during development. The final
+full suite ran once: **230 passed, 1 skipped in 30.24 seconds**. The skip requires Windows
+symlink privileges unavailable here. Tests cover an eight-minute selection gap with a
+controlled clock, fixed expiry at 900 seconds, spent time/request quotas, charging failed
+work, expiry during admission/rollback and the demonstrated extraction/sitemap errors.
+Existing SSRF/TLS/robots/timeout/isolation cases remain included. A separate deterministic
+three-article/two-browser UI check passed the website and CSV workflows/mobile layout
+with no page errors or model load. No synthetic check is claimed as real-site validation.
+
+**752 protected files** were unchanged, including saved SQLite/sidecars, historical
+benchmark artifacts and earlier evidence. JavaScript syntax and whitespace checks pass.
+No historical benchmark, cloud deployment, push, package installation or paid service.
+The previous local preview was not restarted or connected to the validation data.
+
+Detailed report: docs/phase3c-real-websites.md. Portable results:
+docs/phase3c-verification.json. Raw responses/plaintext and detailed logs remain ignored
+under runtime/phase3c. The real observation helper restricts hosts to the user-authorised
+site and refuses to overwrite earlier runs. Source hashes record each observed version.
+
+Next: review Phase 3C, obtain an authorised functioning sitemap/index and non-WordPress
+sample, then close extraction-quality/diversity, egress/abuse and sustained hosting
+capacity gaps. Fifteen minutes is a bounded UX policy choice, not a measured universal
+selection requirement. Public readiness is not established by one site's successful
+30-post preparation or the automated suite.

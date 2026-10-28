@@ -444,7 +444,10 @@ function renderWebsite(run) {
     results.append(el("div", { class: "website-selection-tools" }, filter, el("div", { class: "website-selection-actions" }, count, bulk, clear)), list, noMatches);
     updateSelection();
   }
-  for (const failure of run.failures) results.append(el("p", { class: "notice", text: `${failure.id}: ${failure.message}` }));
+  for (const failure of run.failures) {
+    const title = run.candidates.find((item) => item.id === failure.id)?.title || failure.id;
+    results.append(el("p", { class: "notice", text: `${title}: ${failure.message}` }));
+  }
   if (run.phase === "ready") {
     results.append(el("div", { class: "website-preview-summary" }, el("strong", { text: `${run.articles.length} articles ready to review` }), el("span", { text: `${new Intl.NumberFormat().format(run.characters)} characters of source text` })),
       el("p", { text: "Open an article to check what was extracted. Import checks the final collection size and model passage limits before saving." }));
@@ -452,7 +455,7 @@ function renderWebsite(run) {
       results.append(el("details", { class: "website-preview" }, el("summary", { text: `${article.title} (${article.body.length} characters)` }),
         el("p", { text: article.url }), el("p", { text: `${article.headings.length} headings; ${article.existing_links.length} links to selected articles` }), el("pre", { text: article.body })));
     }
-    if (run.failures.length) results.append(el("label", { class: "website-candidate" }, el("input", { id: "website-partial", type: "checkbox" }), "I accept importing only the successfully extracted articles."));
+    if (run.failures.length) results.append(el("label", { class: "website-candidate" }, el("input", { id: "website-partial", type: "checkbox" }), "I accept importing only the articles included in this preview."));
   }
 }
 

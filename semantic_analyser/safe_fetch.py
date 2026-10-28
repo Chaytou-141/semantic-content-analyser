@@ -154,6 +154,7 @@ class SafeFetcher:
             raise FetchError("owner")
         if not session.lock.acquire(blocking=False):
             raise FetchError("busy")
+        started = time.monotonic()
         try:
             budget = Budget(session, control)
             target = normalize_url(url)
@@ -189,4 +190,6 @@ class SafeFetcher:
                                    response.body, response.encoded_bytes, index, response.headers)
             raise FetchError("limit")
         finally:
+            if session.active_time_budget:
+                session.active_seconds += max(0, time.monotonic() - started)
             session.lock.release()

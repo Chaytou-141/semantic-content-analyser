@@ -14,6 +14,11 @@ from .schemas import Article
 from .storage import validate_collection
 
 MAX_CANDIDATES, MAX_SELECTED, MAX_DISCOVERY = 200, 40, 12
+WEBSITE_LIFETIME_SECONDS = 15 * 60
+
+
+class CollectionCapacityExceeded(ValueError):
+    """Valid article text cannot fit the selected collection; not a parser failure."""
 
 
 @dataclass
@@ -36,12 +41,17 @@ class WebsiteRun:
     discovery_count: int = 0
     seen_posts: set = field(default_factory=set)
 
+    def expired(self):
+        deadline = self.session.deadline()
+        return time.monotonic() >= deadline
+
     def view(self):
         return {'run_id': self.identifier, 'phase': self.phase, 'website': self.base,
                 'candidates': list(self.candidates.values()), 'selected': self.selected,
                 'processed': len(self.selected) if self.phase == 'ready' else len(self.extracted) + len(self.failures), 'failures': self.failures,
                 'warnings': self.warnings[-15:], 'requests_used': self.session.requests,
-                'seconds_remaining': max(0, round(self.session.started + self.session.limits.run_seconds - time.monotonic())),
+                'seconds_remaining': max(0, round((self.session.absolute_deadline or self.session.started + self.session.limits.run_seconds) - time.monotonic())),
+                'fetch_seconds_remaining': max(0, round(self.session.limits.run_seconds - self.session.active_seconds)),
                 'articles': [{**a.model_dump(), 'headings': next((e['headings'] for e in self.extracted if e['url'] == a.url), [])}
                              for a in self.articles],
                 'characters': sum(len(a.title) + len(a.body) for a in self.articles),
@@ -55,6 +65,8 @@ class WebsiteService:
     def start(self, owner, revision, url, method):
         target = normalize_url(url)
         session = self.fetcher.new_session(owner)
+        session.active_time_budget = True
+        session.absolute_deadline = session.started + WEBSITE_LIFETIME_SECONDS
         kind = 'map' if target.path.lower().endswith('.xml') or method == 'sitemap' else 'home'
         if method == 'sitemap' and not target.path.lower().endswith('.xml'):
             url = target.origin + '/sitemap.xml'
@@ -111,7 +123,7 @@ class WebsiteService:
                 item = extract(response.body, response.url, run.candidates[depth]['title'])
                 item['candidate_id'], item['source_url'] = depth, url
                 if sum(len(e['body']) + len(e['title']) for e in run.extracted) + len(item['body']) + len(item['title']) > 250000:
-                    raise ValueError('The selected collection exceeds 250,000 characters. Start again with fewer articles.')
+                    raise CollectionCapacityExceeded('Not included: this article would exceed the 250,000-character collection limit.')
                 run.extracted.append(item)
             else:
                 run.discovery_count += 1
@@ -141,6 +153,10 @@ class WebsiteService:
                 run.visited.add(url)
                 if kind == 'wp' and not run.candidates and run.method == 'auto':
                     self.fallback_maps(run)
+                elif kind == 'map':
+                    message = f'An XML sitemap was unavailable (HTTP {error.upstream_status}). Use a published sitemap URL if discovery finds no articles.'
+                    if message not in run.warnings:
+                        run.warnings.append(message)
             else:
                 run.phase = 'failed'
                 run.warnings.append(error.message)
@@ -148,7 +164,8 @@ class WebsiteService:
         except (ValueError, RecursionError) as error:
             message = str(error) if isinstance(error, ValueError) else 'The page structure is too complex.'
             if kind == 'article':
-                run.failures.append({'id': depth, 'message': message})
+                run.failures.append({'id': depth, 'message': message,
+                                     'kind': 'capacity' if isinstance(error, CollectionCapacityExceeded) else 'extraction'})
             else:
                 run.phase = 'failed'
                 raise ValueError('Discovery failed: ' + message) from error

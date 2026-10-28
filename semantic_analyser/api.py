@@ -348,9 +348,9 @@ def create_app(settings=None, engine=None, fetcher=None):
             raise HTTPException(404, 'Website run not found in this workspace.')
         if run.revision != entry.store.revision():
             raise HTTPException(409, 'Collection changed. Start website discovery again.')
-        if time.monotonic() >= run.session.started + run.session.limits.run_seconds:
+        if run.expired():
             entry.website_run = None
-            raise HTTPException(410, 'Website run expired. Start discovery again with fewer articles if needed.')
+            raise HTTPException(410, 'Website run expired or exhausted its fetch-time budget. Start a new discovery.')
         return run
 
     @app.post('/api/website/start')

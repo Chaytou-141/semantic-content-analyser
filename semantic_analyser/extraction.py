@@ -82,9 +82,12 @@ class Document(HTMLParser):
 
 def hidden(node):
     attrs = node.attrs
+    # WordPress uses has-post-comment/has-post-author as state flags on the
+    # entire article. They do not identify a comments/metadata content region.
+    classes = ' '.join(token for token in (attrs.get('class') or '').split() if not token.startswith('has-'))
     return (node.tag in SKIP or 'hidden' in attrs or attrs.get('aria-hidden') == 'true' or
             attrs.get('role') in {'navigation', 'banner', 'contentinfo', 'complementary'} or
-            bool(NOISE.search((attrs.get('class') or '') + ' ' + (attrs.get('id') or ''))))
+            bool(NOISE.search(classes + ' ' + (attrs.get('id') or ''))))
 
 
 def walk(node):
@@ -150,6 +153,12 @@ def extract(body, url, fallback=''):
     title = title or next((text(n) for n in nodes if n.tag == 'title' and text(n)), '') or fallback
     if not title or len(title) > 200:
         raise ValueError('The extracted title is missing or exceeds 200 characters.')
+    # Prefer an explicitly marked body inside the article, not its category,
+    # author/date header or other neighbouring post chrome. Keep the outer H1.
+    content_regions = [n for n in visible(root) if n is not root and
+                       {'entry-content', 'article-content'} & set((n.attrs.get('class') or '').split())]
+    if content_regions:
+        root = max(content_regions, key=lambda n: len(text(n)))
     canonical = site_url(url, url)
     for n in nodes:
         if n.tag == 'link' and 'canonical' in (n.attrs.get('rel') or '').lower().split():

@@ -185,12 +185,20 @@ class FetchSession:
     decoded_bytes: int = 0
     robots: dict = field(default_factory=dict)
     lock: threading.Lock = field(default_factory=threading.Lock)
+    active_time_budget: bool = False
+    active_seconds: float = 0
+    absolute_deadline: float | None = None
+
+    def deadline(self):
+        fetching_end = (time.monotonic() + max(0, self.limits.run_seconds - self.active_seconds)
+                        if self.active_time_budget else self.started + self.limits.run_seconds)
+        return min(fetching_end, self.absolute_deadline if self.absolute_deadline is not None else float('inf'))
 
 
 class Budget:
     def __init__(self, session, control=None):
         self.session, self.limits, self.control = session, session.limits, control
-        self.end = min(time.monotonic() + self.limits.total_seconds, session.started + self.limits.run_seconds,
+        self.end = min(time.monotonic() + self.limits.total_seconds, session.deadline(),
                        control.end if control else float("inf"))
 
     def check(self):

@@ -184,13 +184,18 @@ extracted text before replacing your collection. Existing CSV/sample workflows r
 
 Only public server-rendered UTF-8 pages with an article/main region are supported.
 No authentication, paywall bypass, JavaScript rendering or cross-host redirects are
-supported. Each bounded run lasts three minutes INCLUDING selection time, with 60
-network attempts. Oversized collections still fail the existing character/passage
+supported. Each run has a fixed 15-minute selection/review lifetime and a separate
+180-second cumulative fetch budget, with 60 network attempts. Waiting does not reset
+requests, bytes or fetch time. Oversized collections still fail the existing character/passage
 checks without replacing your articles or reviews. This is not a complete-site crawl.
 
 See [workflow, supported structures and limitations](docs/phase3b-websites.md),
 [verification evidence](docs/phase3b-verification.json) and the short
 [project context](docs/PROJECT_CONTEXT.md).
+
+Phase 3C [real-site findings and bounded selection-time changes](docs/phase3c-real-websites.md)
+record the authorised FreezeEdge sample. WordPress extraction was measured; that site's
+advertised sitemap returned 404, so independent real sitemap coverage is still missing.
 
 ## Website fetching foundation (Phase 3A)
 

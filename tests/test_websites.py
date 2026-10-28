@@ -103,7 +103,7 @@ def test_discovery_and_selection_caps_and_run_lifetime():
         with pytest.raises(ValueError):
             svc.select(run, ids)
     svc.select(run, list(run.candidates)[:1])
-    run.session.started -= 181
+    run.session.absolute_deadline = time.monotonic() - 1
     with pytest.raises(FetchError):
         svc.step(run, Deadline(10))
 
@@ -192,7 +192,7 @@ def test_expired_cancelled_and_replaced_runs_cannot_commit(website_api):
     post(client, token, rev, 'cancel', action)
     post(client, token, rev, 'import', action, 409)
     entry = next(iter(app.state.workspaces.entries.values()))
-    entry.website_run.session.started -= 181
+    entry.website_run.session.absolute_deadline = time.monotonic() - 1
     post(client, token, rev, 'import', action, 410)
 
 
@@ -243,6 +243,8 @@ def test_character_limits_and_no_silent_article_truncation():
         transport.routes[f'/posts/{i}'] = (200, article(i, ('Substantial paragraph about planning safe useful equipment for staff. ' * 260)), {'content-type': 'text/html'})
     run = prepare(svc, discover(svc), 15)
     assert run.failures and sum(len(a.title) + len(a.body) for a in run.articles) <= 250000
+    assert all(f['kind'] == 'capacity' for f in run.failures)
+    assert all('Not included' in f['message'] for f in run.failures)
 
 
 def test_cancelled_control_and_failed_commit_preserve_data(website_api):
@@ -281,7 +283,7 @@ def test_run_expiry_during_model_admission_rolls_back(website_api):
     original = entry.engine.preflight
     def expire(articles):
         summary = original(articles)
-        entry.website_run.session.started -= 181
+        entry.website_run.session.absolute_deadline = time.monotonic() - 1
         return summary
     entry.engine.preflight = expire
     before = entry.store.export()
@@ -293,3 +295,109 @@ def test_run_expiry_during_model_admission_rolls_back(website_api):
 def test_explicit_paywall_signals_rejected(marker):
     with pytest.raises(ValueError, match='restriction'):
         extract(article(1).replace(b'</body>', marker + b'</body>'), BASE)
+
+
+def test_selection_and_review_pause_keep_fixed_lifetime_and_fetch_counters(monkeypatch):
+    clock = [1000.0]
+    monkeypatch.setattr(time, 'monotonic', lambda: clock[0])
+    svc, transport = service('sitemap', 3)
+    original = transport.get
+    def timed(*args):
+        clock[0] += 1
+        return original(*args)
+    transport.get = timed
+    run = discover(svc)
+    deadline = run.session.absolute_deadline
+    requests, spent = run.session.requests, run.session.active_seconds
+    clock[0] += 480  # Human selection takes eight minutes; no new fetch quota granted.
+    assert not run.expired() and run.session.active_seconds == spent
+    prepare(svc, run, 3)
+    assert run.session.absolute_deadline == deadline and run.session.requests > requests
+    assert 0 < run.session.active_seconds - spent < 10
+    clock[0] = deadline - 1
+    assert not run.expired()
+    clock[0] = deadline
+    assert run.expired()
+
+
+def test_spent_active_time_and_request_limits_are_not_reset_by_selection():
+    svc, transport = service('sitemap', 3)
+    run = discover(svc)
+    prior = run.session.requests
+    run.session.active_seconds = 180
+    assert run.expired()
+    svc.select(run, list(run.candidates)[:1])
+    with pytest.raises(FetchError) as error:
+        svc.step(run, Deadline(10))
+    assert error.value.code == 'timeout' and run.session.requests == prior
+    svc, transport = service('sitemap', 3)
+    run = discover(svc)
+    run.session.requests = 60
+    svc.select(run, list(run.candidates)[:1])
+    with pytest.raises(FetchError) as error:
+        svc.step(run, Deadline(10))
+    assert error.value.code == 'limit' and run.session.requests == 60
+
+
+def test_active_fetch_deadline_and_failed_work_are_charged(monkeypatch):
+    from semantic_analyser.fetch_policy import Budget
+    clock = [1000.0]
+    monkeypatch.setattr(time, 'monotonic', lambda: clock[0])
+    svc, transport = service('sitemap', 3)
+    run = svc.start('owner', 'rev', BASE, 'auto')
+    run.session.active_seconds = 179
+    budget = Budget(run.session)
+    assert budget.end == 1001
+    def stall(*args):
+        clock[0] += 1
+        budget.check()
+    transport.get = stall
+    with pytest.raises(FetchError) as error:
+        svc.step(run, Deadline(10))
+    assert error.value.code == 'timeout' and run.session.active_seconds == 180
+
+
+def test_long_selection_and_expired_active_budget_preserve_api_ownership(website_api):
+    app, client, transport = website_api
+    token, rev = start(client)
+    action, _ = api_ready(client, token, rev)
+    entry = next(iter(app.state.workspaces.entries.values()))
+    before = entry.store.export()
+    entry.website_run.session.started -= 480
+    assert post(client, token, rev, 'import', action)['count'] == 3
+    assert entry.store.export() != before
+
+
+def test_exhausted_active_budget_blocks_import_without_data_changes(website_api):
+    app, client, transport = website_api
+    token, rev = start(client)
+    action, _ = api_ready(client, token, rev)
+    entry = next(iter(app.state.workspaces.entries.values()))
+    before = entry.store.export()
+    entry.website_run.session.active_seconds = 180
+    post(client, token, rev, 'import', action, 410)
+    assert entry.store.export() == before and entry.store.revision() == rev
+
+
+def test_wordpress_state_classes_do_not_hide_whole_article():
+    body = article(1).replace(b'<article>', b'<article class="post has-post-comment has-post-author">')
+    result = extract(body, BASE + '/posts/1')
+    assert result['title'] == 'Equipment guide 1' and 'Planning equipment' in result['body']
+    assert 'RELATED POISON' not in result['body']
+
+
+def test_wordpress_inner_body_excludes_header_chrome_but_keeps_outer_title():
+    body = article(1).replace(b'<article>', b'<article class="post has-post-comment">')
+    body = body.replace(b'<h2>', b'<p class="post-meta">Author and publication date</p><div class="entry-content"><h2>', 1)
+    body = body.replace(b'</article>', b'</div></article>')
+    result = extract(body, BASE + '/posts/1')
+    assert result['title'] == 'Equipment guide 1'
+    assert 'Author and publication date' not in result['body']
+    assert result['headings'] == ['Planning equipment 1'] and BASE + '/posts/2' in result['links']
+
+
+def test_missing_sitemap_reports_http_reason_without_route_bypass():
+    svc, transport = service('wordpress', 3)
+    run = discover(svc, BASE + '/missing-sitemap.xml', 'sitemap')
+    assert not run.candidates and any('HTTP 404' in message for message in run.warnings)
+    assert len(transport.calls) == 2  # robots and exactly the requested sitemap.
