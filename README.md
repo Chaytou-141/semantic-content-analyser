@@ -171,8 +171,23 @@ The frontend and API are served from the same origin. Authenticated callers can 
 | `POST /api/overlaps` | Passage overlap pairs |
 | `GET /api/reviews`, `POST /api/reviews` | Saved editorial decisions |
 | `GET /api/evaluation` | Saved original development metrics |
+| `POST /api/website/check` | Optional bounded fetch check; metadata only, disabled by default |
 
 All state-changing and analysis POST/PUT calls require `X-Workspace-Request: true`. This custom header, same-origin requests and strict same-site cookies prevent ordinary cross-site form submissions. Production requires a 12+ character `APP_PASSWORD` and 32+ character `SECRET_KEY`; the deployment helper enforces a longer password. Sessions expire after eight hours. The single-worker process throttles sign-in attempts; this is not a distributed abuse-prevention system.
+
+## Website fetching foundation (Phase 3A)
+
+The reusable safe-fetch service validates and pins public DNS destinations, checks
+robots.txt, and bounds time, bytes, redirects and requests. It does not discover posts,
+extract articles or add a website-import UI yet. `ENABLE_WEBSITE_FETCH=true` enables
+only the diagnostic API above; it uses the existing workspace cookie, request header
+and visitor collection revision. Keep public multi-visitor use in visitor mode.
+`FETCH_DENY_CIDRS` can add comma-separated operator infrastructure ranges to the deny
+policy. Existing data, semantic scoring and admission limits are unchanged.
+
+See [architecture, limits, security limitations and the Phase 3B plan](docs/phase3a-safe-fetch.md)
+and [measured verification evidence](docs/phase3a-verification.json). Local fixtures
+and offline regression checks do not establish public deployment readiness.
 
 ## Deploy to AWS
 

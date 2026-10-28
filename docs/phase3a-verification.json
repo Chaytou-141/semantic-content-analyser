@@ -1,0 +1,62 @@
+{
+  "baseline_commit": "6df9b1c",
+  "phase": "3A",
+  "verification_date": "2026-10-28 Australia/Sydney",
+  "automated_suite": {
+    "passed": 188,
+    "skipped": 1,
+    "seconds": 23.47
+  },
+  "network_scope": "Controlled loopback HTTP/TLS fixtures, mocked public DNS/transport; no public websites fetched",
+  "dns_worker": "Numeric loopback lookup and a deliberately stalled isolated subprocess; no external DNS required",
+  "real_regression_source_sha256": "5d32a7ede9c75da530bd7a0c781632abe6da9b2ec5bfce45c399fed2881654a8",
+  "real_regression_output": {
+    "phase2a_commit": "3ea9b59",
+    "real_model": true,
+    "offline": true,
+    "torch_threads": 2,
+    "concurrent_import_wall_seconds": 12.397032699999727,
+    "two_queued_real_comparisons_wall_seconds": 15.721589300000232,
+    "model_constructions": 1,
+    "same_parameter_storage": true,
+    "independent_embedding_arrays": true,
+    "phase1b_top5_ids_scores_preserved": true,
+    "memory_after_preflight": {
+      "rss_bytes": 544518144,
+      "peak_rss_bytes": 544681984,
+      "private_bytes": 572121088,
+      "peak_commit_bytes": 646676480
+    },
+    "memory_after_two_indexes": {
+      "rss_bytes": 604041216,
+      "peak_rss_bytes": 753537024,
+      "private_bytes": 676909056,
+      "peak_commit_bytes": 856121344
+    },
+    "real_search_evidence_checked": 20,
+    "real_link_and_overlap_evidence": "passed",
+    "browser_stale_review_rejected": true,
+    "real_801_passage_rejection_preserves_revision_and_data": true,
+    "real_800_passage_import": "accepted",
+    "independent_browser_contexts": 2,
+    "cross_session_read_write_review_export_delete_checks": "passed",
+    "browser_errors": [],
+    "existing_browser_smoke": "passed in visitor mode",
+    "model_constructions_after_smoke": 1,
+    "final_process_memory": {
+      "rss_bytes": 590413824,
+      "peak_rss_bytes": 753537024,
+      "private_bytes": 662683648,
+      "peak_commit_bytes": 856121344
+    },
+    "protected_files_checked": 518,
+    "changed_protected_files": [],
+    "server_stopped": true,
+    "existing_local_database_opened": false
+  },
+  "preserved_files": 518,
+  "changed_protected_files": [],
+  "javascript_syntax": "passed",
+  "public_deployment": false,
+  "production_readiness_claimed": false
+}

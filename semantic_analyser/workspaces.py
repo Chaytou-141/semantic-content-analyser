@@ -30,6 +30,8 @@ class Workspace:
     created: float = 0
     touched: float = 0
     active: int = 0
+    fetch_session: object = None
+    fetch_revision: str | None = None
 
     def __post_init__(self):
         self.collections = CollectionService(self.store, self.engine, self.lock)

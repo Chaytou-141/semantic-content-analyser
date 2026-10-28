@@ -24,6 +24,8 @@ class Settings:
     analysis_queue_size: int = int(os.getenv("ANALYSIS_QUEUE_SIZE", "2"))
     analysis_timeout_seconds: float = float(os.getenv("ANALYSIS_TIMEOUT_SECONDS", "60"))
     workspace_lock_seconds: float = float(os.getenv("WORKSPACE_LOCK_SECONDS", "1"))
+    website_fetch_enabled: bool = os.getenv("ENABLE_WEBSITE_FETCH", "false").lower() == "true"
+    fetch_deny_cidrs: tuple = tuple(part.strip() for part in os.getenv("FETCH_DENY_CIDRS", "").split(",") if part.strip())
 
     def validate(self):
         if self.workspace_mode not in {"local", "visitor"}:

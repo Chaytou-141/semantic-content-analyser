@@ -78,3 +78,8 @@ class ReviewRequest(BaseModel):
 
 class LoginRequest(BaseModel):
     password: str = Field(min_length=1, max_length=512)
+
+
+class FetchRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    url: str = Field(min_length=1, max_length=2048)

@@ -21,13 +21,15 @@ from .config import ROOT, Settings
 from .collections import PreflightUnavailable
 from .engine import AnalysisEngine
 from .schemas import (Article, ImportRequest, LinkRequest, LoginRequest, OverlapRequest,
-                      ReviewRequest, SearchRequest)
+                      ReviewRequest, SearchRequest, FetchRequest)
 from .storage import Store, demo_articles, parse_csv
 from .execution import BoundedExecutor
 from .workspaces import COOKIE, Workspace, WorkspaceManager
+from .safe_fetch import SafeFetcher
+from .fetch_policy import FetchError
 
 
-def create_app(settings=None, engine=None):
+def create_app(settings=None, engine=None, fetcher=None):
     settings = settings or Settings()
     settings.validate()
     engine = engine or AnalysisEngine(settings.model_revision)
@@ -35,6 +37,7 @@ def create_app(settings=None, engine=None):
     store = local.store if local else None
     manager = WorkspaceManager(settings, engine) if local is None else None
     execution = BoundedExecutor(settings.analysis_queue_size, settings.analysis_timeout_seconds)
+    fetcher = fetcher or SafeFetcher(denied_networks=settings.fetch_deny_cidrs)
     cookie_name = "__Host-" + COOKIE if settings.production else COOKIE
     signing_key = settings.secret or secrets.token_hex(32)
     signer = URLSafeTimedSerializer(signing_key, salt="semantic-workspace")
@@ -62,6 +65,7 @@ def create_app(settings=None, engine=None):
     app.state.collections = local.collections if local else None
     app.state.workspaces = manager
     app.state.execution = execution
+    app.state.fetcher = fetcher
 
     def authenticated(request):
         if not settings.password:
@@ -148,6 +152,11 @@ def create_app(settings=None, engine=None):
     @app.exception_handler(PreflightUnavailable)
     async def unavailable_preflight(request, error):
         return JSONResponse({"detail": str(error)}, status_code=503)
+
+    @app.exception_handler(FetchError)
+    async def rejected_fetch(request, error):
+        return JSONResponse({"detail": error.message, "code": error.code}, status_code=error.status,
+                            headers={"Retry-After": "60"} if error.status in {429, 503} else None)
 
     @app.get("/health")
     def health():
@@ -307,6 +316,24 @@ def create_app(settings=None, engine=None):
             return {"pairs": entry.engine.overlaps(entry.store.articles(), data.method, data.threshold, data.limit),
                     "collection_revision": entry.store.revision(),
                     "notice": "Similarity is a review signal. It does not establish identical intent, cannibalisation or merge eligibility."}
+        return await execute(request, operation)
+
+    @app.post("/api/website/check")
+    async def check_website(data: FetchRequest, request: Request):
+        if not settings.website_fetch_enabled:
+            raise HTTPException(404, "Website fetching is not enabled on this installation.")
+
+        def operation(entry, control):
+            revision = entry.store.revision()
+            owner = entry.identifier or "local"
+            if entry.fetch_session is None or entry.fetch_revision != revision:
+                entry.fetch_session = fetcher.new_session(owner)
+                entry.fetch_revision = revision
+            result = fetcher.fetch(entry.fetch_session, data.url, owner, control)
+            return {"fetch": result.metadata(), "collection_revision": revision,
+                    "requests_used": entry.fetch_session.requests,
+                    "notice": "Fetch check only; no articles were extracted or saved."}
+
         return await execute(request, operation)
 
     @app.get("/api/reviews")

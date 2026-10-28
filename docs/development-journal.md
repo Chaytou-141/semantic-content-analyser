@@ -310,3 +310,129 @@ from unit tests or the two-browser synthetic demonstration. No push is performed
 - JavaScript syntax and Git whitespace checks passed. All verification servers were stopped.
 
 These are single-laptop observations (Phase 1B i5-11400H Windows environment, two PyTorch threads, offline cached model), not sustained traffic measurements or accuracy claims.
+
+## Phase 3A - Secure, bounded website-fetching foundation
+
+Report date: 29 October 2026, Australia/Sydney. The verification runner recorded
+28 October on its local clock; measurements below are from that recorded run.
+Starting architecture reviewed: Phase 2B `6df9b1c`; admission baseline `3ea9b59`;
+historical benchmark `bc72066`.
+
+### Problem and user impact
+
+Website discovery is a core release requirement, but accepting visitor URLs introduces
+server-side request forgery (SSRF), network scanning and resource-exhaustion risks.
+A normal hostname check followed by a normal HTTP client request is insufficient:
+DNS could change between validation and connection, redirects could target metadata,
+and compressed or trickling responses could exhaust the shared analysis process.
+The existing project had no reviewed network boundary for WordPress/sitemap/RSS work.
+
+### Decision, alternatives and trade-offs
+
+Implement a separate standard-library `SafeFetcher`, with explicit DNS pinning and
+resource budgets, then integrate an opt-in metadata-only check through the existing
+workspace/executor. The production socket connects to a validated numeric address;
+TLS still verifies the original hostname. The complete DNS answer set must be public.
+
+A hostname allow/deny check followed by independently resolving HTTP requests was
+rejected because it leaves a rebinding gap. An ordinary thread-pool DNS lookup was
+rejected because timeout cannot terminate a stuck OS resolver call. DNS instead runs
+in a short-lived isolated, killable Python child. Adding a proxy service, Redis or
+new infrastructure would expand operations before there is a demonstrated need.
+
+A pinned third-party HTTP transport could be revisited after a separate dependency
+and security review. The selected small HTTP/1.x transport has no automatic redirects,
+proxy environment use, cookie jar or credential forwarding. This reduces implicit
+behaviour but adds parser/transport maintenance and deliberately rejects some valid
+websites. It is not a general-purpose browser or a claim of complete protocol support.
+
+### Implementation
+
+- `fetch_policy.py`: strict HTTP(S)/default-port URL admission, public IPv4/IPv6 rules,
+  operator CIDR denies, fixed user-safe error taxonomy, owner/run/request/byte budgets.
+- `fetch_transport.py`: per-request full DNS validation, numeric socket connection and
+  peer checks, verified TLS/SNI, bounded socket reads, strict headers/framing, supported
+  text MIME types and output-limited gzip/zlib-deflate decompression.
+- `robots_policy.py`: bounded UTF-8 parser, combined product groups, longest matching
+  rules, Allow ties, percent normalization and operation-capped wildcard matching.
+  Final review found and corrected blank-line handling so later rules remain active.
+- `safe_fetch.py`: same-host redirects only, robots handling/cache, one active request
+  per host shared across visitors, polite delay, bounded state and Retry-After backoff.
+- `/api/website/check`: disabled by default; enabled calls reuse signed workspace
+  ownership, visitor If-Match, workspace lock, bounded executor, deadlines and cleanup
+  leases. Only metadata is returned; no body or article is saved. Fetch runs and caches
+  belong to the workspace and reset with its collection revision/restart.
+
+Defaults: DNS/connect 3 seconds, read inactivity 5 seconds, total call 20 seconds,
+run 180 seconds/60 attempts, content/robots redirects 3/5, encoded/decoded response
+2 MiB each, headers 32 KiB, cumulative wire/decoded 20 MiB each, robots 512 KiB/4,096
+rules/200,000 matching steps. Host pacing is at least 1 second after completion; 256
+host states cap bookkeeping. These conservative policy choices need workload validation
+in Phase 3B; no throughput improvement is claimed.
+
+The MiniLM pipeline, TF-IDF, passage offsets, ranking, SQLite schema and existing UI
+are unchanged. Admission remains 250,000 characters/800 passages. No crawler, extraction,
+visitor-account system, cloud infrastructure or deployment was added.
+
+### Tests and measured evidence
+
+Portable evidence: `docs/phase3a-verification.json`. Reproduction:
+`./.venv/Scripts/python.exe -B scripts/verify_phase3a.py`. Detailed design, source
+references, policies and Phase 3B acceptance plan: `docs/phase3a-safe-fetch.md`.
+
+- Full suite: **188 passed, 1 skipped in 23.47 seconds**. This includes the original
+  71 passing Phase 2B tests and 117 new parameterized fetch/API cases. The skip needs
+  symlink creation unavailable to this Windows account.
+- Tests use controlled loopback HTTP/TLS fixtures and mocked DNS/transport, including
+  rebinding, mixed public/private answers, numeric IPv6 dialing, peer mismatch, redirects,
+  proxy variables, credentials, malformed HTTP, truncation, chunk framing, unsupported
+  MIME, real certificate trust/hostname checks and owner/revision/error isolation.
+- A 4 MiB decoded gzip fixture is rejected under a 1 KiB test cap. Slow headers and
+  body trickles are stopped by a 0.2-second test deadline; inactivity and stalled TLS
+  handshakes have separate checks. The deliberately stalled DNS child is terminated.
+  These tests assert bounded outcomes, not exact wall-time guarantees on all hosts.
+- Robots tests cover group/rule matching, blank lines, encodings, redirects, denial,
+  unavailable policies, work limits, Crawl-delay and Retry-After without automatic retry.
+- The fetch timeout test verifies that an occupied execution slot retains its workspace
+  lease, overload is controlled, cleanup waits, and saved data/revision remain unchanged.
+- Offline real MiniLM/Chromium regression passed: two independent browser contexts,
+  exactly one loaded model/shared parameter storage, separate embedding arrays, unchanged
+  recorded Phase 1B rankings, 20 exact returned passages, link/overlap evidence and stale
+  review rejection. Real tokenizer accepts 800 passages and rejects 801 atomically.
+- Two queued real comparisons took **15.722 seconds** combined. Peak process working
+  set **718.63 MiB**, excluding browser processes. These are local regression observations
+  on synthetic data, not recommendation accuracy, fetch throughput or a hosting guarantee.
+- JavaScript syntax and whitespace checks passed. **518 protected files** were unchanged,
+  including development SQLite/sidecars, UI, datasets, benchmark outputs and prior
+  verification/deployment artifacts. Historical verification uses a copied script with
+  isolated output/database paths; no original development database was opened by it.
+
+No packages were installed, no arbitrary public websites were fetched, and no public
+deployment or new model-quality evaluation occurred.
+
+### Limitations and next task
+
+Strict same-host redirects (including refusing www aliases), MIME/framing and robots
+policies reduce compatibility. The robots implementation is a conservative REP subset;
+HTTP/2/3, Brotli and JavaScript rendering are absent. Authentication-looking query
+names are heuristic; a 200 login page cannot be reliably classified as inaccessible.
+
+Application filtering does not protect operator-owned public IPs by itself, unusual
+routing or all future network environments. Deployment-specific deny ranges, egress
+controls, independent security review/fuzzing and sustained abuse/load testing remain.
+Per-host gates do not merge aliases. There is no per-IP fairness or long-term abuse
+quota; restarts/new runs reset transient counters. OS/native hangs are not hard-killed
+by the executor. The endpoint is not a complete website-run UX and remains off by default.
+Passing local tests does not establish production readiness.
+
+Next: Phase 3B explicit owner/revision-bound website runs, bounded WordPress pagination,
+candidate selection of approximately 30-40 posts, deduplication, safe text extraction
+and existing atomic collection preflight before confirmed import. See the detailed plan;
+do not weaken admission, hostname safety or workspace ownership to simplify discovery.
+
+### Git reference
+
+Local implementation commit subject: **Add bounded SSRF-protected website fetch foundation**.
+Use `git log -1 --format=%H --grep="Add bounded SSRF-protected website fetch foundation"`
+to resolve the commit containing this entry. The final review response records its hash.
+No push or deployment is authorized/performed in this phase.
