@@ -197,6 +197,11 @@ Phase 3C [real-site findings and bounded selection-time changes](docs/phase3c-re
 record the authorised FreezeEdge sample. WordPress extraction was measured; that site's
 advertised sitemap returned 404, so independent real sitemap coverage is still missing.
 
+The [Phase 3D offline editorial evaluation](docs/phase3d-real-content-evaluation.md)
+reuses those saved pages with provisional labels and human-review worksheets. Its
+research artifacts are separate from the application's original Evaluation page.
+See the [release-readiness checklist](docs/release-readiness.md) before planning public hosting.
+
 ## Website fetching foundation (Phase 3A)
 
 The reusable safe-fetch service validates and pins public DNS destinations, checks

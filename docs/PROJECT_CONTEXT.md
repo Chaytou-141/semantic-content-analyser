@@ -1,6 +1,6 @@
 # Semantic Content Analyser: current context
 
-Updated 29 October 2026 (Australia/Sydney). Phase 3C; no deployment or push.
+Updated 29 October 2026 (Australia/Sydney). Phase 3D; no deployment or push.
 
 - Stack: FastAPI + vanilla JS/CSS; SQLite; one shared CPU MiniLM
   `all-MiniLM-L6-v2` (384 dimensions, pinned revision), TF-IDF baseline.
@@ -47,6 +47,14 @@ Updated 29 October 2026 (Australia/Sydney). Phase 3C; no deployment or push.
   No model weights loaded. Advertised/native/post XML sitemap endpoints returned 404;
   no successful real sitemap/index or independent non-WordPress site is validated.
   See docs/phase3c-real-websites.md and docs/phase3c-verification.json; raw pages stay ignored.
-- Next: review Phase 3C; obtain an authorised functioning sitemap/non-WordPress sample,
-  then assess deployment-specific egress/abuse controls and hosting capacity.
+- Phase 3D: same saved 30 real articles, no refetch; one offline MiniLM construction,
+  275x384 embeddings, 140 exact evidence checks. Seven frozen tasks/210 assistant-only
+  labels: related mean P@3/P@5 83.3%/75%, links 55.6%/40% for both methods. No independent
+  labels; these are provisional, single-site development diagnostics, not accuracy.
+- Review set/worksheets: evaluations/phase3d; private human packet and full text:
+  runtime/phase3d/editorial-review.html. Details: docs/phase3d-real-content-evaluation.md.
+- Release blockers: docs/release-readiness.md. Existing production Compose defaults
+  to shared local mode with website fetching off; infrastructure egress is unrestricted.
+- Next: human-adjudicate 44 candidate rows/15 overlap pairs and obtain an authorised
+  functioning sitemap/non-WordPress sample; then close deployment/abuse/egress/capacity gaps.
   Not production-certified; no PostgreSQL, React, Redis or cloud changes are needed now.

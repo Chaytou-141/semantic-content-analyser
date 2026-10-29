@@ -675,3 +675,99 @@ sample, then close extraction-quality/diversity, egress/abuse and sustained host
 capacity gaps. Fifteen minutes is a bounded UX policy choice, not a measured universal
 selection requirement. Public readiness is not established by one site's successful
 30-post preparation or the automated suite.
+
+## Phase 3D - Real-content evaluation and release gap assessment
+
+29 October 2026, Australia/Sydney. Baseline `34b613d`. Local commit subject:
+**Evaluate saved real content and document release gaps**. Resolve the containing hash
+with `git log -1 --format=%H --grep="Evaluate saved real content and document release gaps"`.
+
+### Problem and protocol
+
+Real fetching had been measured, but source-text fidelity and recommendation quality
+needed review on the actual saved articles. This phase reuses the exact authorised
+Phase 3C snapshot instead of fetching pages again or changing the production pipeline.
+It adds offline assessment artifacts only; application, ranking, security and deployment
+source remain unchanged.
+
+Four related-content tasks and three source-specific internal-link tasks were defined
+before inspecting rankings. Each has an explicit provisional yes/no judgement for all
+30 articles: 210 assistant-provisional labels, not independent human labels or a held-out
+benchmark. Reasons, task criteria, corpus hashes and label provenance are versioned in
+evaluations/phase3d. An independent review round can start with the blank 44-row union
+of retrieved candidates and 15 overlap pairs; the full 210-row worksheet is also available.
+No completed independent review was received, and no independent metrics are claimed.
+
+### Extraction and actual model evidence
+
+An independent HTMLParser source view found title/source-H1 and canonical matches on
+all 30 articles; no body-heading or selected-link mapping differences were detected.
+The one missing word per page was Contents inside a navigation region, intentionally
+excluded by production extraction. Five source examples were spot reviewed in an inert
+source/extraction packet. Five pages have two source-authored H1s; contact/promotion
+signals appear in 24 bodies. These are review signals, not automatically incorrect text.
+Word counts do not prove order, image coverage or rendered-page completeness.
+
+The existing CollectionService admitted 30 real articles into a new disposable SQLite
+database under runtime/phase3d: 232,919 characters / 275 passages. One offline MiniLM
+construction produced (275, 384) embeddings and reused its index across all tasks and
+both overlap inspections. There were zero guarded network attempts and 140 exact
+source/target evidence substring checks, with self/existing-link exclusions preserved.
+
+Local timing after dependency imports: 0.562 seconds admission; 9.278 seconds total
+admission/analysis/evidence checking, 17.734 seconds process CPU with two PyTorch threads.
+These are single cached-file evaluation observations, not cold-start or hosting SLAs.
+The historical Phase 1B benchmark was not run. Cached rankings can be rescored and the
+human packet rebuilt without another model load.
+
+### Provisional results and trade-offs
+
+Both methods have the same relevant-result counts at these cutoffs despite different
+rankings. Related-task mean P@3/P@5: **83.3% / 75.0%** across four tasks. Internal-link
+mean P@3/P@5: **55.6% / 40.0%** across three tasks. These are assistant-provisional,
+single-site development diagnostics; independently reviewed judgements remain **0**.
+The sushi task has only two positive labels, and both methods find both at ranks 1-2.
+
+The frozen labels themselves have challenges: ice-build-up stock-line advice may satisfy
+the chest loading question, while the sushi-model overview is only a contextual answer
+to why no fan is used. Changing one contested label changes one method's measured score.
+These challenges are recorded separately rather than silently altering labels after
+observing scores. No model winner or fine-tuning recommendation follows from this sample.
+
+High scores expose intent risks: generic upright-cabinet buying text is a running-cost
+link suggestion (MiniLM 0.82363); fan-stock guidance appears from static/no-fan sushi
+content (TF-IDF 0.33587). Supplier promotion versus finance scores 0.86721 / 0.57169
+on a matching passage despite different main intent. Triple-glazed freezer articles
+are a substantive-overlap candidate (0.93711 / 0.58155), not an automatic merge case.
+The top TF-IDF overlap is below the existing 0.65 UI default; threshold calibration
+needs independent review. No scoring formula, threshold or boilerplate rule was changed.
+
+### Tests, preservation and release gaps
+
+Focused metric/source-audit tests passed. The milestone full suite ran once:
+**237 passed, 1 skipped in 30.68 seconds**. The skip requires Windows symlink permissions.
+Tests verify metric denominators, incomplete labels/results, provenance distinctions,
+invalid inputs and source-audit differences; existing security/isolation/admission
+cases remain included. The human HTML packet renders and opens source examples without
+HTTP/HTTPS resources. No model inference was repeated for verification or packet updates.
+
+**1,081 protected files** remain unchanged, including development SQLite files, all
+saved Phase 3C input/evidence and earlier benchmarks/results. No packages, public fetches,
+infrastructure changes, paid services, deployment or push. Full source bodies/passages
+remain ignored locally; only metadata, hashes and provisional review artifacts are tracked.
+
+The release checklist identifies concrete configuration gaps: current production Compose
+omits visitor mode and website enablement, so it defaults to the shared local workspace
+with fetching off. Terraform currently permits all IPv4 egress. Public session/run abuse
+fairness, egress/operator-address denies, retention notices, runtime patch posture and
+host load/hard limits still require assessment/implementation. Infrastructure was reviewed,
+not modified. Successful real sitemaps and independent non-WordPress platforms remain
+unvalidated; local fixture results do not close that gap.
+
+Details: docs/phase3d-real-content-evaluation.md, docs/release-readiness.md and
+docs/phase3d-verification.json. Review worksheets/results: evaluations/phase3d.
+Private source/ranking packet: runtime/phase3d/editorial-review.html.
+
+Next: independent adjudication of the small candidate/pair set and authorised real
+sitemap/platform validation, followed by a narrowly scoped deployment-readiness milestone.
+Keep the existing stack/ranking and do not infer public readiness from provisional scores.

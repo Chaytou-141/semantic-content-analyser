@@ -1,0 +1,1545 @@
+{
+  "baseline_commit": "34b613d",
+  "source_path": "runtime/phase3c/corrected30/prepared.json",
+  "source_sha256": "eae069cfd02b85d44c64c851fb2fdef65a38caa688c9ff7d6389a1eeab03eecc",
+  "authorisation": "User authorised Freeze Edge in Phase 3C; reuse saved sample only; no refetch.",
+  "label_provenance": "Assistant provisional, fixed from saved article text/section review before Phase 3D rankings; not independently reviewed or held out.",
+  "independently_reviewed_judgements": 0,
+  "articles": [
+    {
+      "id": "W1dd3e6cf9eb6189f",
+      "url": "https://freezeedge.com.au/deli-display-fridge-size-guide/",
+      "title": "How to Choose the Right Deli Display Fridge Size",
+      "body_sha256": "86db79bd64addce72e35f6a680b6e84e75bfe697080b4b750cf2845511347ec0"
+    },
+    {
+      "id": "Wcde14bde9c3a81b5",
+      "url": "https://freezeedge.com.au/heated-glass-fridge-doors/",
+      "title": "Heated Glass Fridge Doors: 7 Powerful Benefits for Retail",
+      "body_sha256": "fe2c1f1f7afcc012f8212827be439ef51276c44e9defe442f2d573eb56c9ac93"
+    },
+    {
+      "id": "W1d81d7c9e8f5f100",
+      "url": "https://freezeedge.com.au/self-service-display-fridge/",
+      "title": "Self Service Display Fridge: 7 Powerful Benefits for Food Retail",
+      "body_sha256": "a1ae5dbbe9c2cbb8aee5f47bdbcf366ed1b5eb0df82dbd87475d8fef0a659482"
+    },
+    {
+      "id": "Wb759d5121095c6e0",
+      "url": "https://freezeedge.com.au/commercial-fridge-freezer-combo/",
+      "title": "Commercial Fridge Freezer Combo: A Practical 2-in-1 Kitchen Solution",
+      "body_sha256": "99c68e7e886beb0aab7d74d441d6fe77edaa7bc632902abfe031ecd2571b3a8e"
+    },
+    {
+      "id": "W7979ae9d079cd4e8",
+      "url": "https://freezeedge.com.au/triple-glazed-display-freezer/",
+      "title": "Triple Glazed Display Freezer: Why Heated Glass Matters",
+      "body_sha256": "808057d43b41d84a484dce267ee51cf87d8c63d64a9bfc6cef4423044426aaa8"
+    },
+    {
+      "id": "W828054a379c6180c",
+      "url": "https://freezeedge.com.au/commercial-fridge-power-requirements/",
+      "title": "Commercial Fridge Power Requirements: 10 Amp vs 15 Amp",
+      "body_sha256": "4a52928118aefe6dbca9d5273e47292361bbf7cd520a1468a178289b9c306a47"
+    },
+    {
+      "id": "Wb092510eb9d3d03b",
+      "url": "https://freezeedge.com.au/triple-glazed-display-freezer-doors/",
+      "title": "Triple Glazed Display Freezer Doors: Why They Matter in Commercial Refrigeration",
+      "body_sha256": "b98eca07e3ee18b7f5e6ecb60cc6f53962feec050938b70b298f29e5bd48a63c"
+    },
+    {
+      "id": "W67e9020ad420ceaa",
+      "url": "https://freezeedge.com.au/self-evaporating-commercial-fridge/",
+      "title": "Self-Evaporating Commercial Fridge: 7 Essential Facts for Buyers",
+      "body_sha256": "6070c69ea3b34f0fac97bd56a80c00d807a6278d727483dbb76e867711eaa5ec"
+    },
+    {
+      "id": "W8dc1c0e1bb6139d2",
+      "url": "https://freezeedge.com.au/chest-display-freezer-baskets-vs-dividers/",
+      "title": "Chest Display Freezer Baskets vs Dividers: Which Setup Is Better for Retail?",
+      "body_sha256": "72c032d4c00803b93c3ddfa3f36811fea9f2c1c6ed0f9c22e0acce9563c0c848"
+    },
+    {
+      "id": "W0352ca07b1d5f7a4",
+      "url": "https://freezeedge.com.au/open-display-fridge-running-costs/",
+      "title": "Open Display Fridge Running Costs: 7 Factors That Affect Energy Use",
+      "body_sha256": "30f41941e1b6dc19df33b02b8808f8d780cf2a2004b1230374e652bd4b775925"
+    },
+    {
+      "id": "Wd20a8f0e6dce6f2e",
+      "url": "https://freezeedge.com.au/open-display-fridge-with-doors-vs-open-front/",
+      "title": "Open Display Fridge With Doors vs Open Front: Which Is Better for Your Store?",
+      "body_sha256": "968d2fefeaa5be0e4a607141dcc15cf4958c43ca3ba22d8831ba04979808e15d"
+    },
+    {
+      "id": "W0cdaa04e763c37db",
+      "url": "https://freezeedge.com.au/open-display-fridge-night-curtain/",
+      "title": "Open Display Fridge Night Curtain: Why It Matters After Closing Time",
+      "body_sha256": "9761567b83e2dbcb7d18d1c4ba50596e58a8757bb62f9618634c00332e9f6213"
+    },
+    {
+      "id": "We52d30e6b7490ab6",
+      "url": "https://freezeedge.com.au/triple-door-drinks-fridge-for-retailers/",
+      "title": "Triple Door Drinks Fridge for Retailers | Freeze Edge",
+      "body_sha256": "5f736d9198513ce6c36bf4ac8955396965ff0a2200c9d787e089eb64c7e4427e"
+    },
+    {
+      "id": "W62fab2566c9ce776",
+      "url": "https://freezeedge.com.au/commercial-refrigeration-upgrade/",
+      "title": "Commercial Refrigeration Upgrade: 7 Signs It\u2019s Time to Make a Change",
+      "body_sha256": "3335a7616a755bbff9514623a841b4dfbd35863c9760d3b9dbc9f603167999b9"
+    },
+    {
+      "id": "Wcaa7372aa01a6165",
+      "url": "https://freezeedge.com.au/commercial-refrigeration-equipment-sydney/",
+      "title": "Commercial Refrigeration Equipment Sydney: 7 Reasons to Choose Freeze Edge",
+      "body_sha256": "74a6eb28079943aa84f985b8a4e047949e211f677d798baf89ce516c363adee4"
+    },
+    {
+      "id": "W809d6443d972f88b",
+      "url": "https://freezeedge.com.au/chest-freezer-organisation/",
+      "title": "Chest Freezer Organisation: 7 Smart Storage Tips",
+      "body_sha256": "56e6136253c5a15c286f615c2a0dc8e96d8ff1b37f96a4ef4ee77445bc24daf8"
+    },
+    {
+      "id": "Wc8d0057aff79b0bf",
+      "url": "https://freezeedge.com.au/commercial-freezer-buying-guide-sydney/",
+      "title": "Commercial Freezer Buying Guide Sydney: 7 Essential Tips",
+      "body_sha256": "0985c030947b4ab5938f432dc961542e2345dd54b34d1e80034e63b044e28c22"
+    },
+    {
+      "id": "Wabdb55b581cec281",
+      "url": "https://freezeedge.com.au/static-cooling-sushi-display-fridge/",
+      "title": "Static Cooling Sushi Display Fridge: Why No-Fan Cooling Matters",
+      "body_sha256": "7f25af87c8042c6532cf8bcbcbd0b7162c6cab8863d53353781d5547ca1d7c93"
+    },
+    {
+      "id": "W53b407e9d806c4ed",
+      "url": "https://freezeedge.com.au/upright-freezer-vs-chest-freezer/",
+      "title": "Upright Freezer vs Chest Freezer: 7 Key Differences",
+      "body_sha256": "5c553408432044e31310f122f2de36fe031eaf8b4343924ff8f988f2238a7a6f"
+    },
+    {
+      "id": "W38e46c97bbbb0405",
+      "url": "https://freezeedge.com.au/commercial-upright-fridge-guide/",
+      "title": "Commercial Upright Fridge: 7 Essential Features for Better Display",
+      "body_sha256": "72da7f1f102adfca1da879c7aac7c6ad0b27c607e4315fb941fbf0356179039e"
+    },
+    {
+      "id": "Wf0519af068261b10",
+      "url": "https://freezeedge.com.au/how-to-load-a-chest-freezer/",
+      "title": "How to Load a Chest Freezer: 6 Essential Rules",
+      "body_sha256": "5c9997ed0f0d88848883436b20728fd22690d5a28e8cef6f324f3326cfa78399"
+    },
+    {
+      "id": "Wc201444bb806b11c",
+      "url": "https://freezeedge.com.au/sushi-display-fridge-6-tray/",
+      "title": "Sushi Display Fridge: 6-Tray New Arrival for Australian Businesses",
+      "body_sha256": "164f51f76941d63dcd8e9064a906718ce602166d172c15772b3bf7714b3942b0"
+    },
+    {
+      "id": "W59124efd4aebdc60",
+      "url": "https://freezeedge.com.au/commercial-refrigeration-supplier-sydney-guide/",
+      "title": "Commercial Refrigeration Supplier Sydney: 7 Essential Buying Checks",
+      "body_sha256": "e7e46bc88b6351e393a4b919393115cd77f5b3f7dda21173e91f115d106791b2"
+    },
+    {
+      "id": "W72fdaf17cd4c4232",
+      "url": "https://freezeedge.com.au/chest-freezer-ice-build-up/",
+      "title": "Chest Freezer Ice Build-Up: Causes, Prevention and When to Call a Technician",
+      "body_sha256": "bf3ea511aca3ad8a4fc176a071fbf4685311a84c6f53c461a436a07a021be309"
+    },
+    {
+      "id": "Wb1b62862200f9fab",
+      "url": "https://freezeedge.com.au/commercial-fridge-airflow/",
+      "title": "Commercial Fridge Airflow: 5 Critical Stocking Mistakes to Avoid",
+      "body_sha256": "bceb65e2704d293e137349ba45abe82288f5ed821d1d91de857b555790cdc521"
+    },
+    {
+      "id": "Wd2d18f408012125b",
+      "url": "https://freezeedge.com.au/chest-freezer-condensation/",
+      "title": "Chest Freezer Condensation: 5 Easy Ways to Prevent It",
+      "body_sha256": "2bdb1772c1f831d970e10eacc961bee3a054063f44e1be52fc9723e8a8ae02f9"
+    },
+    {
+      "id": "Wcbbba493a5bee591",
+      "url": "https://freezeedge.com.au/commercial-fridge-finance-payment-options/",
+      "title": "Commercial Fridge Finance: 5 Flexible Payment Options",
+      "body_sha256": "6d64f8726a582027879d93466283614de8d107a893cdf41d05721ebfa1e59086"
+    },
+    {
+      "id": "W4ccfbfbf7f453ddf",
+      "url": "https://freezeedge.com.au/commercial-fridge-dimensions-before-ordering/",
+      "title": "Commercial Fridge Dimensions: What to Measure Before You Order",
+      "body_sha256": "716080e849450d7de32befb4f78129d426ab756e6388fe2db61828e3dbb9bd0a"
+    },
+    {
+      "id": "W0264280d87a79512",
+      "url": "https://freezeedge.com.au/chest-display-freezer-buying-guide/",
+      "title": "Chest Display Freezer Buying Guide for Australian Retail Businesses",
+      "body_sha256": "5a19f313b5045415bc658f444339eccd4c59cb08bed8c293ac28ebaa5e2dda1d"
+    },
+    {
+      "id": "W772f1c46d825866c",
+      "url": "https://freezeedge.com.au/commercial-fridge-buying-mistakes-2/",
+      "title": "Commercial Fridge Buying Mistakes: 3 to Avoid Before You Buy",
+      "body_sha256": "313647d488e0b10f2174396f192b64e9631f1d08f855ef043642d39800c49e3f"
+    }
+  ],
+  "cases": [
+    {
+      "id": "R01",
+      "kind": "related",
+      "query": "How can I organise frozen stock and make products easier to reach in a retail chest freezer?",
+      "criterion": "Directly explains chest freezer stock organisation, loading, browsing access or a practical layout comparison.",
+      "source_id": null,
+      "judgements": [
+        {
+          "article_id": "W1dd3e6cf9eb6189f",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wcde14bde9c3a81b5",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W1d81d7c9e8f5f100",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wb759d5121095c6e0",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W7979ae9d079cd4e8",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W828054a379c6180c",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wb092510eb9d3d03b",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W67e9020ad420ceaa",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W8dc1c0e1bb6139d2",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Compares baskets/dividers for organisation, restocking and browsing."
+        },
+        {
+          "article_id": "W0352ca07b1d5f7a4",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wd20a8f0e6dce6f2e",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W0cdaa04e763c37db",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "We52d30e6b7490ab6",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W62fab2566c9ce776",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wcaa7372aa01a6165",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W809d6443d972f88b",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Explains stock zones, rotation and easy access."
+        },
+        {
+          "article_id": "Wc8d0057aff79b0bf",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wabdb55b581cec281",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W53b407e9d806c4ed",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Compares vertical and chest storage/access trade-offs."
+        },
+        {
+          "article_id": "W38e46c97bbbb0405",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wf0519af068261b10",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Explains basket use, safe load lines and stock rotation."
+        },
+        {
+          "article_id": "Wc201444bb806b11c",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W59124efd4aebdc60",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W72fdaf17cd4c4232",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wb1b62862200f9fab",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wd2d18f408012125b",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wcbbba493a5bee591",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W4ccfbfbf7f453ddf",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W0264280d87a79512",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Retail chest cabinet selection includes basket organisation and access."
+        },
+        {
+          "article_id": "W772f1c46d825866c",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        }
+      ]
+    },
+    {
+      "id": "R02",
+      "kind": "related",
+      "query": "What should I measure and check before installing a commercial fridge, including access routes, clearances and electrical connections?",
+      "criterion": "Offers specific pre-delivery space, access, clearance, drainage or electrical checks rather than general purchase promotion.",
+      "source_id": null,
+      "judgements": [
+        {
+          "article_id": "W1dd3e6cf9eb6189f",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Floor, counter, ventilation and complete delivery route checks."
+        },
+        {
+          "article_id": "Wcde14bde9c3a81b5",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W1d81d7c9e8f5f100",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wb759d5121095c6e0",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Floor-space and before-buying installation checks for a combined cabinet."
+        },
+        {
+          "article_id": "W7979ae9d079cd4e8",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W828054a379c6180c",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Explains checking the exact electrical connection before delivery."
+        },
+        {
+          "article_id": "Wb092510eb9d3d03b",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W67e9020ad420ceaa",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Explains drainage requirements and installation implications."
+        },
+        {
+          "article_id": "W8dc1c0e1bb6139d2",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W0352ca07b1d5f7a4",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wd20a8f0e6dce6f2e",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W0cdaa04e763c37db",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "We52d30e6b7490ab6",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W62fab2566c9ce776",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Includes measurement and workflow checks before upgrading."
+        },
+        {
+          "article_id": "Wcaa7372aa01a6165",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W809d6443d972f88b",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wc8d0057aff79b0bf",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Freezer selection includes location, ventilation and installation requirements."
+        },
+        {
+          "article_id": "Wabdb55b581cec281",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W53b407e9d806c4ed",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W38e46c97bbbb0405",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Upright cabinet checklist includes dimensions and ventilation."
+        },
+        {
+          "article_id": "Wf0519af068261b10",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wc201444bb806b11c",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W59124efd4aebdc60",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Includes installation-area and delivery-route measurements."
+        },
+        {
+          "article_id": "W72fdaf17cd4c4232",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wb1b62862200f9fab",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wd2d18f408012125b",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wcbbba493a5bee591",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W4ccfbfbf7f453ddf",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Dedicated dimensions, doorways, turning, ventilation and building access guide."
+        },
+        {
+          "article_id": "W0264280d87a79512",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W772f1c46d825866c",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Specific size, placement and ventilation buying mistakes."
+        }
+      ]
+    },
+    {
+      "id": "R03",
+      "kind": "related",
+      "query": "How can a retailer improve product visibility and choose between glass-door and open-front refrigerated displays?",
+      "criterion": "Explains customer visibility, glazing/fogging, lighting or display/access design choices.",
+      "source_id": null,
+      "judgements": [
+        {
+          "article_id": "W1dd3e6cf9eb6189f",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wcde14bde9c3a81b5",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Explains heated glass, fogging and product visibility."
+        },
+        {
+          "article_id": "W1d81d7c9e8f5f100",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Front customer access versus rear restocking supports retail display design."
+        },
+        {
+          "article_id": "Wb759d5121095c6e0",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W7979ae9d079cd4e8",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Explains heated triple glazing for frozen-product visibility."
+        },
+        {
+          "article_id": "W828054a379c6180c",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wb092510eb9d3d03b",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Explains triple glazed freezer door visibility and cabinet features."
+        },
+        {
+          "article_id": "W67e9020ad420ceaa",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W8dc1c0e1bb6139d2",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W0352ca07b1d5f7a4",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wd20a8f0e6dce6f2e",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Direct comparison of doors versus open-front shopping and visibility."
+        },
+        {
+          "article_id": "W0cdaa04e763c37db",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "We52d30e6b7490ab6",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Discusses a glass-door drinks display for retailers."
+        },
+        {
+          "article_id": "W62fab2566c9ce776",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wcaa7372aa01a6165",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W809d6443d972f88b",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wc8d0057aff79b0bf",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wabdb55b581cec281",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W53b407e9d806c4ed",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W38e46c97bbbb0405",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Explains glass, lighting and shelves for upright product display."
+        },
+        {
+          "article_id": "Wf0519af068261b10",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wc201444bb806b11c",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W59124efd4aebdc60",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W72fdaf17cd4c4232",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wb1b62862200f9fab",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wd2d18f408012125b",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wcbbba493a5bee591",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W4ccfbfbf7f453ddf",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W0264280d87a79512",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W772f1c46d825866c",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        }
+      ]
+    },
+    {
+      "id": "R04",
+      "kind": "related",
+      "query": "Why should delicate sushi be displayed in a cabinet without a fan?",
+      "criterion": "Directly addresses sushi-specific display/cooling needs; generic fan/airflow guidance is not a substitute.",
+      "source_id": null,
+      "judgements": [
+        {
+          "article_id": "W1dd3e6cf9eb6189f",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wcde14bde9c3a81b5",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W1d81d7c9e8f5f100",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wb759d5121095c6e0",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W7979ae9d079cd4e8",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W828054a379c6180c",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wb092510eb9d3d03b",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W67e9020ad420ceaa",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W8dc1c0e1bb6139d2",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W0352ca07b1d5f7a4",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wd20a8f0e6dce6f2e",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W0cdaa04e763c37db",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "We52d30e6b7490ab6",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W62fab2566c9ce776",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wcaa7372aa01a6165",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W809d6443d972f88b",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wc8d0057aff79b0bf",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wabdb55b581cec281",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Direct static/no-fan cooling explanation for delicate sushi."
+        },
+        {
+          "article_id": "W53b407e9d806c4ed",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W38e46c97bbbb0405",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wf0519af068261b10",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wc201444bb806b11c",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Sushi-specific display model and use requirements give supporting context."
+        },
+        {
+          "article_id": "W59124efd4aebdc60",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W72fdaf17cd4c4232",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wb1b62862200f9fab",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wd2d18f408012125b",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wcbbba493a5bee591",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W4ccfbfbf7f453ddf",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W0264280d87a79512",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W772f1c46d825866c",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        }
+      ]
+    },
+    {
+      "id": "L01",
+      "kind": "internal_link",
+      "query": "",
+      "criterion": "A useful additional destination from the baskets-versus-dividers article must deepen chest stock organisation, loading, access or cabinet-layout choice. Existing links and self are excluded by the unchanged engine.",
+      "source_id": "W8dc1c0e1bb6139d2",
+      "judgements": [
+        {
+          "article_id": "W1dd3e6cf9eb6189f",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wcde14bde9c3a81b5",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W1d81d7c9e8f5f100",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wb759d5121095c6e0",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W7979ae9d079cd4e8",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W828054a379c6180c",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wb092510eb9d3d03b",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W67e9020ad420ceaa",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W8dc1c0e1bb6139d2",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W0352ca07b1d5f7a4",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wd20a8f0e6dce6f2e",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W0cdaa04e763c37db",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "We52d30e6b7490ab6",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W62fab2566c9ce776",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wcaa7372aa01a6165",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W809d6443d972f88b",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Adds a practical stock organisation workflow."
+        },
+        {
+          "article_id": "Wc8d0057aff79b0bf",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wabdb55b581cec281",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W53b407e9d806c4ed",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Adds chest versus upright access/layout trade-offs."
+        },
+        {
+          "article_id": "W38e46c97bbbb0405",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wf0519af068261b10",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Adds loading and stock-rotation procedures."
+        },
+        {
+          "article_id": "Wc201444bb806b11c",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W59124efd4aebdc60",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W72fdaf17cd4c4232",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wb1b62862200f9fab",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wd2d18f408012125b",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wcbbba493a5bee591",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W4ccfbfbf7f453ddf",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W0264280d87a79512",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Adds retail chest cabinet selection context."
+        },
+        {
+          "article_id": "W772f1c46d825866c",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        }
+      ]
+    },
+    {
+      "id": "L02",
+      "kind": "internal_link",
+      "query": "",
+      "criterion": "From the open-display running-cost article, link to an actionable operating-load, electrical-rating interpretation or upgrade-cost consideration. Existing linked night-curtain/doors/dimensions pages remain excluded.",
+      "source_id": "W0352ca07b1d5f7a4",
+      "judgements": [
+        {
+          "article_id": "W1dd3e6cf9eb6189f",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wcde14bde9c3a81b5",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W1d81d7c9e8f5f100",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wb759d5121095c6e0",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W7979ae9d079cd4e8",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W828054a379c6180c",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Explains why plug rating does not equal constant energy consumption."
+        },
+        {
+          "article_id": "Wb092510eb9d3d03b",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W67e9020ad420ceaa",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W8dc1c0e1bb6139d2",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W0352ca07b1d5f7a4",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wd20a8f0e6dce6f2e",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W0cdaa04e763c37db",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "We52d30e6b7490ab6",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W62fab2566c9ce776",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Provides repair/upgrade context including running costs."
+        },
+        {
+          "article_id": "Wcaa7372aa01a6165",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W809d6443d972f88b",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wc8d0057aff79b0bf",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wabdb55b581cec281",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W53b407e9d806c4ed",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W38e46c97bbbb0405",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wf0519af068261b10",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wc201444bb806b11c",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W59124efd4aebdc60",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W72fdaf17cd4c4232",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wb1b62862200f9fab",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Adds detailed stocking and airflow practices affecting refrigeration load."
+        },
+        {
+          "article_id": "Wd2d18f408012125b",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wcbbba493a5bee591",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W4ccfbfbf7f453ddf",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W0264280d87a79512",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W772f1c46d825866c",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        }
+      ]
+    },
+    {
+      "id": "L03",
+      "kind": "internal_link",
+      "query": "",
+      "criterion": "From static-cooling sushi guidance, add sushi-model selection or concrete installation/electrical checks; avoid applying generic fan stocking rules to a no-fan cabinet.",
+      "source_id": "Wabdb55b581cec281",
+      "judgements": [
+        {
+          "article_id": "W1dd3e6cf9eb6189f",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wcde14bde9c3a81b5",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W1d81d7c9e8f5f100",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wb759d5121095c6e0",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W7979ae9d079cd4e8",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W828054a379c6180c",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Adds exact electrical-connection checking before ordering."
+        },
+        {
+          "article_id": "Wb092510eb9d3d03b",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W67e9020ad420ceaa",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W8dc1c0e1bb6139d2",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W0352ca07b1d5f7a4",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wd20a8f0e6dce6f2e",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W0cdaa04e763c37db",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "We52d30e6b7490ab6",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W62fab2566c9ce776",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wcaa7372aa01a6165",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W809d6443d972f88b",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wc8d0057aff79b0bf",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wabdb55b581cec281",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W53b407e9d806c4ed",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W38e46c97bbbb0405",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wf0519af068261b10",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wc201444bb806b11c",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Provides a specific sushi display model and tray/specification context."
+        },
+        {
+          "article_id": "W59124efd4aebdc60",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W72fdaf17cd4c4232",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wb1b62862200f9fab",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wd2d18f408012125b",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "Wcbbba493a5bee591",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W4ccfbfbf7f453ddf",
+          "relevant": true,
+          "review_status": "assistant_provisional",
+          "rationale": "Adds dimension, access and placement checks before installation."
+        },
+        {
+          "article_id": "W0264280d87a79512",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        },
+        {
+          "article_id": "W772f1c46d825866c",
+          "relevant": false,
+          "review_status": "assistant_provisional",
+          "rationale": "Does not directly satisfy this task criterion; shared refrigeration vocabulary alone is insufficient."
+        }
+      ]
+    }
+  ],
+  "overlap_judgements": [
+    {
+      "left": "W7979ae9d079cd4e8",
+      "right": "Wb092510eb9d3d03b",
+      "review_status": "assistant_provisional",
+      "judgement": "substantive_overlap_candidate",
+      "rationale": "Both explain triple glazed freezer doors and visibility; assess unique model/features before treating as duplicate."
+    },
+    {
+      "left": "W8dc1c0e1bb6139d2",
+      "right": "W809d6443d972f88b",
+      "review_status": "assistant_provisional",
+      "judgement": "complementary_topic",
+      "rationale": "Configuration comparison and daily organisation overlap in topic but serve distinct tasks."
+    },
+    {
+      "left": "Wabdb55b581cec281",
+      "right": "Wc201444bb806b11c",
+      "review_status": "assistant_provisional",
+      "judgement": "complementary_topic",
+      "rationale": "Cooling explanation versus a specific six-tray model; shared terminology does not establish duplication."
+    },
+    {
+      "left": "Wcbbba493a5bee591",
+      "right": "W4ccfbfbf7f453ddf",
+      "review_status": "assistant_provisional",
+      "judgement": "different_primary_intent",
+      "rationale": "Finance/payment versus physical dimensions; common purchase/contact passages could inflate max-passage similarity."
+    }
+  ]
+}
