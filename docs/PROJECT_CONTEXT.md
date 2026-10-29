@@ -1,6 +1,6 @@
 # Semantic Content Analyser: current context
 
-Updated 29 October 2026 (Australia/Sydney). Phase 3D; no deployment or push.
+Updated 29 October 2026 (Australia/Sydney). Phase 3E review preparation; no deployment or push.
 
 - Stack: FastAPI + vanilla JS/CSS; SQLite; one shared CPU MiniLM
   `all-MiniLM-L6-v2` (384 dimensions, pinned revision), TF-IDF baseline.
@@ -56,6 +56,11 @@ Updated 29 October 2026 (Australia/Sydney). Phase 3D; no deployment or push.
   labels; these are provisional, single-site development diagnostics, not accuracy.
 - Review set/worksheets: evaluations/phase3d; private human packet and full text:
   runtime/phase3d/editorial-review.html. Details: docs/phase3d-real-content-evaluation.md.
+- Phase 3E manual packet: runtime/phase3e/independent-review.html (open directly in browser).
+  44 candidates +15 overlap pairs; human choices/CSV remain separate from optional AI notes.
+  Guide: evaluations/phase3e/README.md. Export completed CSV, then scripts/score_phase3e.py
+  calculates human-only precision from saved rankings; Unsure/unreviewed stay unresolved.
+  No model/refetch/application changes. Actual independent human reviews received: 0.
 - Release blockers: docs/release-readiness.md. Existing production Compose defaults
   to shared local mode with website fetching off; infrastructure egress is unrestricted.
 - Next: human-adjudicate 44 candidate rows/15 overlap pairs and obtain an authorised

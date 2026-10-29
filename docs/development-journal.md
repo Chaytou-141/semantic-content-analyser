@@ -819,3 +819,51 @@ An opt-in local visitor preview runs at http://localhost:8002 with separate temp
 storage and a stable local signing key under ignored runtime/ux-home/preview. Existing
 servers/development data were left in place. Portable evidence: docs/home-ux-verification.json.
 No public deployment, paid service or push.
+
+## Phase 3E preparation - Independent SEO editorial review
+
+29 October 2026. Frozen evidence from `771c4cb`; later website-first application
+`036f173` retained. Local commit subject:
+**Prepare independent SEO review packet and human-label scoring**.
+
+Phase 3D had provisional AI judgements and blank worksheets but no convenient manual
+submission path. This phase creates a separate, offline 59-item packet: 44 task/article
+candidates and 15 overlap pairs, using only saved corpus/rankings. Source/target text,
+supporting passages, existing-link status and optional AI notes are available for review.
+Question-based tasks explicitly have no source article. No new AI labels were invented
+for unlabelled overlap pairs, and no answers are preselected.
+
+Useful/Not useful/Unsure plus optional reasons are human-only fields. AI notes never
+populate them; disclosure is tracked. Browser drafts and CSV resume/export make a long
+review recoverable. Packet fingerprints bind decisions to the frozen source/task/ranks.
+Invalid imports are validated before replacing a draft. CSV reasons retain quotes and
+newlines, and formula-sensitive free text is escaped. The private generated HTML uses
+escaped data, textContent, CSP and no external resources; tracked files contain no
+original article bodies. Application code/data and the earlier packet remain unchanged.
+
+The small scorer computes human-only Precision@3/@5 when every item at a cutoff has a
+resolved decision. Unsure and Unreviewed are reported rather than silently made negative.
+Group means show completed/total coverage; all-case means remain unavailable until
+complete. Overlap review precision is explicitly usefulness of investigation flags,
+not duplicate or merge accuracy. One reviewer is accepted per file, with self-reported
+identity/independence; external identity verification and multi-reviewer adjudication
+are outside scope. Viewing AI notes is reported rather than hidden from the protocol.
+
+Targeted verification only: 14 tests passed, plus offline browser checks for 59 initial
+unreviewed items, AI/human separation, ratings/reasons, draft reload, CSV export and
+fresh-browser resume, invalid-import rollback, filters and mobile layout. CSV/scorer
+checks cover incomplete labels, provenance, metadata tampering, duplicate/mixed reviewer
+rows, malformed quoting and refusing output overwrite. Test choices are synthetic;
+no actual independent human reviews or new accuracy measurements were received.
+The final CSV-focused run passed 14 tests in 0.54 seconds; browser verification had
+zero page errors and external HTTP requests. Evidence: docs/phase3e-verification.json.
+
+All 1,254 protected application/UI/data/history files remain unchanged. No model/tokenizer
+load, public refetch, historical benchmark, full suite, infrastructure, deployment,
+package installation or push. The earlier first-page UX was not reverted. The local
+HTML and any drafts are separate from app visitor data/expiry and should stay private.
+
+Guide: evaluations/phase3e/README.md. Open runtime/phase3e/independent-review.html,
+export CSV, then run scripts/score_phase3e.py against the completed file. Next is an
+actual independent reviewer round and adjudication of unresolved items, retaining the
+frozen model outputs. Preparing the review workflow is not evidence of public readiness.
