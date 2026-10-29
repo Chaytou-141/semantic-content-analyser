@@ -1,0 +1,30 @@
+# Disposable, local-only verification; never pulls an image or contacts a public site.
+services:
+  app:
+    image: ${LOCAL_IMAGE:?Supply an already-built local Linux image}
+    pull_policy: never
+    ports:
+      - "127.0.0.1:8020:8000"
+    environment:
+      APP_ENV: development
+      SECRET_KEY: disposable-local-cookie-key-not-for-public-use
+      WORKSPACE_MODE: visitor
+      VISITOR_WORKSPACE_ROOT: /app/runtime/visitors
+      ENABLE_WEBSITE_FETCH: "false"
+      PRELOAD_MODEL: "false"
+      DEMO_LIMITS_ENABLED: "true"
+    volumes:
+      - verification:/app/runtime
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    mem_limit: 4g
+    memswap_limit: 4g
+    cpus: 2.0
+    pids_limit: 128
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+volumes:
+  verification:

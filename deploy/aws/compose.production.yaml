@@ -11,6 +11,25 @@ services:
       WORKSPACE_MODE: visitor
       VISITOR_WORKSPACE_ROOT: /app/runtime/visitors
       ENABLE_WEBSITE_FETCH: "true"
+      DEMO_LIMITS_ENABLED: "true"
+      TRUSTED_PROXY_CIDRS: ${DEMO_PROXY_IP:-172.30.42.3}/32
+      FETCH_ALLOWED_HOSTS: ${FETCH_ALLOWED_HOSTS:-}
+      FETCH_DENY_CIDRS: ${FETCH_DENY_CIDRS:-}
+      MAX_VISITOR_WORKSPACES: ${MAX_VISITOR_WORKSPACES:-16}
+      MAX_CACHED_INDEXES: ${MAX_CACHED_INDEXES:-2}
+      DEMO_HTTP_CONCURRENCY: ${DEMO_HTTP_CONCURRENCY:-16}
+      DEMO_REQUESTS_PER_MINUTE: ${DEMO_REQUESTS_PER_MINUTE:-240}
+      DEMO_GLOBAL_REQUESTS_PER_MINUTE: ${DEMO_GLOBAL_REQUESTS_PER_MINUTE:-1200}
+      DEMO_SESSIONS_PER_HOUR: ${DEMO_SESSIONS_PER_HOUR:-4}
+      DEMO_GLOBAL_SESSIONS_PER_HOUR: ${DEMO_GLOBAL_SESSIONS_PER_HOUR:-32}
+      DEMO_OUTBOUND_PER_HOUR: ${DEMO_OUTBOUND_PER_HOUR:-120}
+      DEMO_GLOBAL_OUTBOUND_PER_HOUR: ${DEMO_GLOBAL_OUTBOUND_PER_HOUR:-600}
+      WORKSPACE_STORAGE_BYTES: ${WORKSPACE_STORAGE_BYTES:-16777216}
+      VISITOR_STORAGE_BYTES: ${VISITOR_STORAGE_BYTES:-134217728}
+      STORAGE_MIN_FREE_BYTES: ${STORAGE_MIN_FREE_BYTES:-134217728}
+      WORKSPACE_IDLE_SECONDS: ${WORKSPACE_IDLE_SECONDS:-3600}
+      WORKSPACE_LIFETIME_SECONDS: ${WORKSPACE_LIFETIME_SECONDS:-86400}
+      WORKSPACE_CLEANUP_SECONDS: ${WORKSPACE_CLEANUP_SECONDS:-60}
     volumes:
       - workspace:/app/runtime
     expose:
@@ -20,6 +39,16 @@ services:
       - no-new-privileges:true
     cap_drop:
       - ALL
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    mem_limit: ${APP_MEMORY_LIMIT:-4g}
+    memswap_limit: ${APP_MEMORY_LIMIT:-4g}
+    cpus: ${APP_CPU_LIMIT:-2.0}
+    pids_limit: 128
+    networks:
+      demo:
+        ipv4_address: ${DEMO_APP_IP:-172.30.42.2}
     logging:
       driver: json-file
       options:
@@ -40,6 +69,12 @@ services:
       app:
         condition: service_healthy
     restart: unless-stopped
+    mem_limit: 256m
+    cpus: 0.5
+    pids_limit: 128
+    networks:
+      demo:
+        ipv4_address: ${DEMO_PROXY_IP:-172.30.42.3}
     logging:
       driver: json-file
       options:
@@ -49,3 +84,8 @@ volumes:
   workspace:
   caddy_data:
   caddy_config:
+networks:
+  demo:
+    ipam:
+      config:
+        - subnet: ${DEMO_NETWORK_SUBNET:-172.30.42.0/29}

@@ -29,17 +29,21 @@ from .workspaces import COOKIE, Workspace, WorkspaceManager
 from .safe_fetch import SafeFetcher
 from .fetch_policy import FetchError
 from .websites import WebsiteService
+from .demo_limits import DemoLimits
+import sqlite3
 
 
 def create_app(settings=None, engine=None, fetcher=None):
     settings = settings or Settings()
     settings.validate()
+    demo = DemoLimits(settings)
     engine = engine or AnalysisEngine(settings.model_revision)
     local = Workspace(Store(settings.database_path), engine) if settings.workspace_mode == "local" else None
     store = local.store if local else None
     manager = WorkspaceManager(settings, engine) if local is None else None
     execution = BoundedExecutor(settings.analysis_queue_size, settings.analysis_timeout_seconds)
-    fetcher = fetcher or SafeFetcher(denied_networks=settings.fetch_deny_cidrs)
+    fetcher = fetcher or SafeFetcher(denied_networks=settings.fetch_deny_cidrs, allowed_hosts=settings.fetch_allowed_hosts)
+    fetcher.request_guard = demo.outbound
     websites = WebsiteService(fetcher)
     cookie_name = "__Host-" + COOKIE if settings.production else COOKIE
     signing_key = settings.secret or secrets.token_hex(32)
@@ -69,6 +73,7 @@ def create_app(settings=None, engine=None, fetcher=None):
     app.state.workspaces = manager
     app.state.execution = execution
     app.state.fetcher = fetcher
+    app.state.demo_limits = demo
 
     def authenticated(request):
         if not settings.password:
@@ -85,6 +90,25 @@ def create_app(settings=None, engine=None, fetcher=None):
 
     @app.middleware("http")
     async def protect(request: Request, call_next):
+        if not request.url.path.startswith('/api/'):
+            return await protect_impl(request, call_next)
+        entered = False
+        try:
+            request.state.demo_identity = demo.identity(request)
+            demo.enter(request.state.demo_identity)
+            entered = True
+            return await protect_impl(request, call_next)
+        except HTTPException as error:
+            return rejected(error.detail, error.status_code, error.headers)
+        except sqlite3.DatabaseError as error:
+            if getattr(error, 'sqlite_errorcode', None) == sqlite3.SQLITE_FULL:
+                return rejected('Temporary database storage is full. Export or delete your workspace.', 507)
+            raise
+        finally:
+            if entered:
+                demo.leave()
+
+    async def protect_impl(request: Request, call_next):
         path = request.url.path
         length = request.headers.get("content-length", "0")
         if not length.isdigit() or int(length) > 2000000:
@@ -112,6 +136,8 @@ def create_app(settings=None, engine=None, fetcher=None):
                 try:
                     if path == "/api/session" and not request.cookies.get(cookie_name) and request.headers.get("x-workspace-request") != "true":
                         return rejected("Missing workspace request header.", 403)
+                    if path == '/api/session' and not request.cookies.get(cookie_name):
+                        demo.session(request.state.demo_identity)
                     entry, visitor_token = await run_in_threadpool(manager.acquire, request.cookies.get(cookie_name), path == "/api/session")
                     leased = True
                 except HTTPException as error:
@@ -163,6 +189,9 @@ def create_app(settings=None, engine=None, fetcher=None):
 
     @app.get("/health")
     def health():
+        if (settings.preload_model and engine.model is None) or (manager and
+                (manager.file_lock is None or not manager.thread or not manager.thread.is_alive())):
+            raise HTTPException(503, 'Application is not ready.')
         if store:
             with store.connect() as connection:
                 connection.execute("SELECT 1")
@@ -182,6 +211,10 @@ def create_app(settings=None, engine=None, fetcher=None):
             def ownership_guard():
                 if manager and manager._expired(entry):
                     raise HTTPException(410, "Temporary workspace expired. Reload to start a new one.")
+                if manager and (request.url.path.startswith('/api/articles') or request.url.path in {'/api/reviews','/api/website/import'}):
+                    # May run inside a SQLite transaction. Never take manager.lock:
+                    # an acquiring request can hold it while updating last-used metadata.
+                    manager.check_storage(entry)
             control.guard = ownership_guard
             with entry.locked(settings.workspace_lock_seconds):
                 control.check()
@@ -202,12 +235,17 @@ def create_app(settings=None, engine=None, fetcher=None):
 
     @app.post("/api/login")
     def login(data: LoginRequest, request: Request, response: Response):
-        address = request.client.host if request.client else "unknown"
+        address = request.state.demo_identity
         now = time.monotonic()
         with attempts_lock:
-            # Bound the number of tracked addresses in a single-worker deployment.
-            if len(attempts) > 2000:
-                attempts.clear()
+            # Never clear live budgets to admit new identities.
+            for peer, queue in list(attempts.items()):
+                while queue and now - queue[0] > 60:
+                    queue.popleft()
+                if not queue:
+                    del attempts[peer]
+            if address not in attempts and len(attempts) >= 2000:
+                raise HTTPException(503, "Sign-in admission capacity is full.", headers={"Retry-After":"60"})
             entries = attempts[address]
             while entries and now - entries[0] > 60:
                 entries.popleft()

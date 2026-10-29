@@ -6,6 +6,7 @@ import re
 import secrets
 import threading
 import time
+import shutil
 from contextlib import contextmanager
 from dataclasses import dataclass, field
 
@@ -61,6 +62,46 @@ class WorkspaceManager:
         self.file_lock = None
         self.thread = None
 
+    def check_storage(self, entry=None):
+        """Soft physical-file admission bound; reads/export/deletion remain available."""
+        if not self.settings.demo_limits_enabled:
+            return
+        total, own = 0, 0
+        for directory in self.root.iterdir():
+            if directory.is_symlink():
+                raise HTTPException(507, 'Temporary storage requires operator attention.')
+            if directory.name == '.owner.lock' and not directory.is_symlink():
+                continue
+            if not directory.exists():
+                continue  # Another idle workspace may have just finished safe cleanup.
+            if directory.is_symlink() or not ID_PATTERN.fullmatch(directory.name) or not directory.is_dir():
+                raise HTTPException(507, 'Temporary storage requires operator attention.')
+            size = 0
+            try:
+                children = list(directory.iterdir())
+            except FileNotFoundError:
+                continue
+            for path in children:
+                if path.is_symlink():
+                    raise HTTPException(507, 'Temporary storage requires operator attention.')
+                if not path.exists():
+                    continue
+                if path.is_symlink() or path.name not in {'workspace.sqlite3','workspace.sqlite3-wal','workspace.sqlite3-shm'} or not path.is_file():
+                    raise HTTPException(507, 'Temporary storage requires operator attention.')
+                try:
+                    size += path.stat().st_size
+                except FileNotFoundError:
+                    pass  # SQLite may remove a journal between listing and stat.
+            total += size
+            if entry and directory == entry.store.path.parent:
+                own = size
+        if (total >= self.settings.visitor_storage_bytes or own >= self.settings.workspace_storage_bytes
+                or shutil.disk_usage(self.root).free < self.settings.storage_min_free_bytes):
+            raise HTTPException(507, 'Temporary storage budget reached. Export or delete your workspace, or try later.')
+
+    def _store(self, path):
+        return Store(path, max_bytes=self.settings.workspace_storage_bytes if self.settings.demo_limits_enabled else None)
+
     def start(self):
         self.root.mkdir(parents=True, exist_ok=True)
         lock_path = self.root / ".owner.lock"
@@ -85,7 +126,7 @@ class WorkspaceManager:
             if ID_PATTERN.fullmatch(directory.name) and directory.is_dir() and not directory.is_symlink():
                 path = directory / "workspace.sqlite3"
                 if path.is_file() and not path.is_symlink():
-                    store = Store(path)
+                    store = self._store(path)
                     with store.connect() as db:
                         meta = dict(db.execute("SELECT key,value FROM metadata"))
                     if "created_at" in meta and "last_used_at" in meta:
@@ -121,15 +162,27 @@ class WorkspaceManager:
                     raise HTTPException(410, "Temporary workspace expired. Reload to start a new one.")
             elif create:
                 self.cleanup()
+                self.check_storage()
                 if len(self.entries) >= self.settings.max_workspaces:
                     raise HTTPException(503, "Temporary workspace capacity is full. Try again later.", headers={"Retry-After": "60"})
                 identifier = secrets.token_hex(32)
                 directory = self.root / identifier
                 directory.mkdir()
-                store = Store(directory / "workspace.sqlite3")
-                now = self.clock()
-                with store.connect() as db:
-                    db.executemany("INSERT INTO metadata VALUES (?,?)", [("created_at", str(now)), ("last_used_at", str(now))])
+                try:
+                    store = self._store(directory / "workspace.sqlite3")
+                    now = self.clock()
+                    with store.connect() as db:
+                        db.executemany("INSERT INTO metadata VALUES (?,?)", [("created_at", str(now)), ("last_used_at", str(now))])
+                except BaseException:
+                    # Only a new, server-chosen direct child with known files is removable.
+                    if directory.parent.resolve() == self.root and not directory.is_symlink():
+                        children = list(directory.iterdir())
+                        if all(p.name in {'workspace.sqlite3','workspace.sqlite3-wal','workspace.sqlite3-shm'}
+                               and p.is_file() and not p.is_symlink() for p in children):
+                            for path in children:
+                                path.unlink()
+                            directory.rmdir()
+                    raise
                 entry = self._entry(store, identifier, now, now)
                 self.entries[identifier] = entry
                 token = self.signer.dumps({"id": identifier})

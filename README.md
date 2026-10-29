@@ -223,6 +223,26 @@ the password gate. The local Compose/demo defaults are unchanged. Docker has not
 run locally; the template is not approval to deploy or expose anonymous access.
 Further human editorial evaluation is intentionally deferred; existing evidence is preserved.
 
+Phase 4B adds opt-in demo admission and storage safeguards, enabled in production Compose:
+API/session/outbound budgets, bounded HTTP concurrency, SQLite page limits and physical
+storage admission thresholds. Trusted proxy identity uses exact peers and overwritten
+custom headers; Docker disables Uvicorn forwarded-header rewriting. Keep that
+`--no-proxy-headers` setting when enabling demo limits in a custom source launch.
+The image remains single-worker; existing rankings and model behaviour are unchanged.
+
+See [Phase 4B architecture, limits and reproduction steps](docs/phase4b-demo-operations.md).
+Docker verification was **skipped because Docker is unavailable**, not passed. No live
+sites, new editorial labels, real-model benchmarks, cloud services or public exposure
+were used. The optional loopback-only verifier uses an already-built local image:
+
+```powershell
+.\.venv\Scripts\python.exe -B scripts/verify_phase4b_docker.py --image semantic-demo:local
+```
+
+Read its JSON status: a skipped check is not container verification. It never pulls or
+builds an image. Network-layer egress, Linux/HTTPS behaviour, actual cgroup exhaustion and
+hosting capacity remain unverified; physical storage thresholds are not filesystem quotas.
+
 ## Website fetching foundation (Phase 3A)
 
 The reusable safe-fetch service validates and pins public DNS destinations, checks

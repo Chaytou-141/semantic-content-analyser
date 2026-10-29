@@ -72,12 +72,14 @@ class FetchResult:
 
 
 class SafeFetcher:
-    def __init__(self, limits=None, resolver=None, transport=None, denied_networks=()):
+    def __init__(self, limits=None, resolver=None, transport=None, denied_networks=(), allowed_hosts=(), request_guard=None):
         self.limits = limits or FetchLimits()
         self.resolver = resolver or ProcessResolver()
         self.transport = transport or SocketTransport()
         self.gate = SiteGate(self.limits)
         self.denied_networks = tuple(ipaddress.ip_network(value, strict=False) for value in denied_networks)
+        self.allowed_hosts = frozenset(allowed_hosts)
+        self.request_guard = request_guard
 
     def new_session(self, owner):
         if not owner:
@@ -86,6 +88,10 @@ class SafeFetcher:
 
     def _one(self, target, budget, decoded_limit, delay):
         budget.request()  # Failed DNS and denied addresses consume the run request budget too.
+        if self.allowed_hosts and target.host not in self.allowed_hosts:
+            raise FetchError('scope')
+        if self.request_guard:
+            self.request_guard(budget.session.owner)
         with self.gate.enter(target.host, delay, budget) as state:
             addresses = resolve_public(target, self.resolver, budget, self.denied_networks)
             response = self.transport.get(target, addresses, budget, decoded_limit)

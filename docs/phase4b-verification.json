@@ -1,0 +1,89 @@
+{
+  "phase": "4B",
+  "baseline_commit": "e08f8df",
+  "date_australia_sydney": "2026-10-30",
+  "commit_reference": "git log -1 --format=%H --grep=\"Bound demo admission storage and outbound operations with explicit proxy trust\"",
+  "relevant_regressions": {
+    "passed": 271,
+    "failed": 0,
+    "skipped": 1,
+    "pytest_seconds": 31.79,
+    "files": [
+      "tests/test_demo_operations.py",
+      "tests/test_application.py",
+      "tests/test_safe_fetch.py",
+      "tests/test_safe_fetch_api.py",
+      "tests/test_visitor_workspaces.py",
+      "tests/test_collection_admission.py",
+      "tests/test_websites.py",
+      "tests/test_website_compatibility.py"
+    ],
+    "skip": "tests/test_visitor_workspaces.py:295; this Windows account cannot create symbolic links"
+  },
+  "operations_followup_after_test_only_scheme_and_readiness_checks": {
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "pytest_seconds": 1.53,
+    "counts_overlap_regression_run": true
+  },
+  "initial_regression_issue": {
+    "passed": 270,
+    "failed": 1,
+    "skipped": 1,
+    "failure": "Concurrent edit/queued-analysis SQLite lock inversion introduced by taking manager lock inside quota transaction guard",
+    "resolution": "Filesystem quota guard no longer takes manager lock inside transaction; controlled cleanup races tolerated. Focused concurrency test and final relevant selection passed."
+  },
+  "checks": {
+    "proxy_spoof_and_duplicate_headers": "passed",
+    "session_concurrency_rolling_state_bounds": "passed",
+    "sql_full_rollback_and_failed_creation_cleanup": "passed",
+    "soft_storage_read_export_delete_and_retention_leases": "passed",
+    "restart_cookie_ownership": "passed",
+    "wire_quotas_across_runs_and_owners": "passed",
+    "optional_host_allowlist_and_ssrf_still_enforced": "passed",
+    "health_model_and_cleanup_readiness": "passed",
+    "static_yaml_network_peer_and_image_command": "passed",
+    "installed_uvicorn_cli_flags": "present in local CLI help; no server/container launched"
+  },
+  "docker": {
+    "linux_container_verified": false,
+    "model_inference_runs": 0,
+    "public_fetches": 0,
+    "status": "skipped",
+    "reason": "Docker CLI not found; no Linux container ran."
+  },
+  "kernel_egress_enforced_or_verified": false,
+  "actual_cgroup_exhaustion_tested": false,
+  "https_caddy_runtime_tested": false,
+  "preservation": {
+    "files_checked": 1775,
+    "changed": []
+  },
+  "source_sha256": {
+    "semantic_analyser/api.py": "3f2f5681c9a96b40077fc798c102913aed61dd9faa99e8d96628117e0b7d1f40",
+    "semantic_analyser/config.py": "58b83dee44ffcc778bb92eb927eef837f11c9a451c6edfcad23a9163bb58451f",
+    "semantic_analyser/demo_limits.py": "598903a8cfeefb1693c0a087fa80274c04d22edacc39965f0393f58fff925272",
+    "semantic_analyser/workspaces.py": "58f6b2a49a840396a550f30f7936778bd3a852c9d20e5c4c6b027f1943ec417d",
+    "semantic_analyser/storage.py": "c1650c4b1bae48b5650ed879f7497182d9ccd1fd15a22f1267f11001cf60dd57",
+    "semantic_analyser/safe_fetch.py": "a779d45c8c0a60356d0f65699f0e56db1ffa6a084406c8b1ecb79809ef5609c8",
+    "Dockerfile": "77a63debb20955b43e31c0bb4f57b50de219f0c6eb860853768a02335ce80d00",
+    "deploy/aws/Caddyfile": "732c252f4639101dd3db76e4dc31e613f4968a7415552f686c5678ff31db35eb",
+    "deploy/aws/compose.production.yaml": "2c1aceb71636a4b070a688eb85b1d6f4f5e005e8f69454630388d2700e2adabf",
+    "deploy/local/compose.verify.yaml": "33cc2d87e602154cc51aadb2892ec5b38af699e1ec77fa7ac8e368114e0911f1",
+    "scripts/verify_phase4b_docker.py": "53b8ce03c427824d6fbb52ccbd359ba0d41346eb83015b3754411a3acd905bd2",
+    "tests/test_demo_operations.py": "42cd7252240d91381d0619c0bd53678297c82e987de90475ef06e0bf8e28a78f"
+  },
+  "full_suite_run": false,
+  "real_model_benchmarks_or_inference_runs": 0,
+  "new_editorial_tasks": 0,
+  "live_website_fetches": 0,
+  "packages_installed": 0,
+  "push_or_public_deployment": false,
+  "limits_of_claim": [
+    "Process-local budgets reset on restart; single worker only.",
+    "Physical SQLite/WAL totals are soft admission thresholds, not a host filesystem quota.",
+    "Native task cancellation remains cooperative.",
+    "No actual Docker/Linux/HTTPS/egress or host capacity pass claim."
+  ]
+}

@@ -1,6 +1,6 @@
 # Semantic Content Analyser: current context
 
-Updated 29 October 2026 (Australia/Sydney). Phase 4A compatibility/readiness; no deployment or push.
+Updated 30 October 2026 (Australia/Sydney). Phase 4B bounded demo operations; no deployment or push.
 
 - Stack: FastAPI + vanilla JS/CSS; SQLite; one shared CPU MiniLM
   `all-MiniLM-L6-v2` (384 dimensions, pinned revision), TF-IDF baseline.
@@ -82,10 +82,17 @@ Updated 29 October 2026 (Australia/Sydney). Phase 4A compatibility/readiness; no
   Evidence and operational gaps: docs/phase4a-compatibility-readiness.md and verification.
 - Human evaluation is intentionally deferred. Do not generate more packets or ask for
   labels during deployment-readiness work; earlier provenance/quality limitations remain.
-- Release blockers: docs/release-readiness.md. Docker CLI unavailable locally; image/
-  HTTPS visitor-mode smoke still needed. Infrastructure egress is unrestricted, proxy
-  trusts all forwarded peers, and ingress fairness/container quotas need assessment.
-- Next: Phase 4B bounded abuse/proxy/egress/resource/retention controls and disposable
-  local Linux container verification. Real XML/non-WordPress sites remain unvalidated;
+- Phase 4B (`e08f8df` baseline): opt-in bounded DemoLimits, enabled in production Compose.
+  Rolling API/client/global/session/wire-attempt budgets, concurrency and finite state;
+  exact proxy-peer identity/scheme headers with Uvicorn proxy rewriting disabled.
+  Optional exact fetch hosts retain DNS/SSRF checks; new runs do not reset outbound quotas.
+  SQLite main-file page cap and soft file/free-space admission checks; reads/export/delete
+  remain available. Docker app read-only/4GiB/2CPU/PID128 configured, not kernel-verified.
+  Guide: docs/phase4b-demo-operations.md. New tests use fake encoders/local fixtures only.
+- Release blockers: docs/release-readiness.md. Docker CLI unavailable; verifier explicitly
+  skipped. Actual Linux/HTTPS/proxy/UID/quota/egress enforcement needs verification;
+  counters reset on restart, storage totals are soft and native cancellation cooperative.
+- Next: Phase 4C disposable local Linux release rehearsal and verified operational
+  controls. Real XML/non-WordPress sites remain unvalidated;
   future live fetches require explicit authorisation. No deployment or push authorised.
   Not production-certified; no PostgreSQL, React, Redis or cloud changes are needed now.

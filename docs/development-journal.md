@@ -1043,3 +1043,81 @@ non-WordPress validation is still absent; earlier Freeze Edge evidence remains u
 Next Phase 4B: bounded demo operations, trusted-proxy/abuse/egress/resource/retention
 controls and disposable local container verification when Docker is available. Do not
 resume editorial work or infer permission to deploy from that recommendation.
+
+## Phase 4B — Bounded demo operations and local Linux Docker verification
+
+30 October 2026 (Australia/Sydney). Baseline `e08f8df`, retaining the Phase 4A
+test-only advertised-map assertion. Local commit subject:
+**Bound demo admission storage and outbound operations with explicit proxy trust**.
+Resolve with `git log -1 --format=%H --grep="Bound demo admission storage and outbound operations with explicit proxy trust"`.
+
+Existing per-run fetch/collection/executor bounds did not prevent repeatedly creating
+visitor identities or fresh runs. Production also trusted all forwarded peers and had
+no container resource or file-admission budgets. This phase adds a small single-process
+policy layer rather than replacing SQLite, authentication, models or ranking. New limits
+are opt-in for local source use and enabled explicitly in the production template.
+Further editorial work, real-model evaluation and historical benchmarks remain deferred.
+
+DemoLimits applies rolling per-client/global API and session admission, HTTP concurrency,
+and per-owner/global wire-attempt budgets across runs. Accounting is locked and bounded;
+full state does not evict/reset live buckets. Robots, redirects and failed DNS attempts
+consume outbound budgets before transport. 429/503 responses have Retry-After. Budgets
+are process-local and reset on restart; claiming durable or distributed abuse prevention
+would be incorrect. Existing persisted workspace capacity/expiry and bounded executor
+still apply. Login accounting likewise no longer clears all live entries at capacity.
+
+Docker disables Uvicorn proxy rewriting, bounds connection concurrency/backlog/keep-alive,
+and retains one worker. A configurable private bridge fixes an exact trusted Caddy peer.
+Caddy overwrites client-identity/scheme headers; the app rejects malformed trusted headers,
+ignores arbitrary forwarded headers and only restores scheme from that exact peer.
+This preserves API HTTPS redirect behaviour without trusting client-controlled IP lists.
+Broad proxy networks are rejected. A different upstream proxy/CDN requires a new review.
+
+Visitor SQLite connections apply a main-file page cap. Actual database/WAL/SHM totals
+and minimum free space guard creation/mutation; thresholds are soft, not filesystem
+quotas. SQLite-full failures safely roll back and return 507, including after article/
+review deletion inside a failed replacement. New partial database creation removes only
+known regular files in the new server-chosen direct child. Existing reads/export/deletion
+remain available at admission thresholds; actual disk failure may still need operator
+recovery. Idle/absolute expiry, active leases, revision and cleanup policies are reused.
+
+Optional exact fetch-host admission adds no exception to DNS/IP/SSRF/robots policy.
+Application restrictions were tested; no kernel egress rule was applied or verified.
+The network policy contract in docs/phase4b-demo-operations.md covers public HTTP(S),
+controlled resolver access, private/metadata denial and operator-owned infrastructure.
+A Docker bridge and application allowlist are not represented as a firewall.
+
+Production Compose now declares app read-only root, private writable workspace volume,
+bounded tmpfs, 4 GiB/no extra swap, two CPUs and PID 128; the proxy has smaller quotas.
+These are containment defaults, not measured model capacity. Existing health checks now
+also reject missing required model or visitor-cleanup readiness. No cold/warm inference
+or memory benchmark was run. A disposable loopback-only local Compose/verifier uses an
+already-built current-source image without pulls/builds, disables real model preload/
+website fetching, checks owned review separation/restart and cgroup configuration, then
+removes only its uniquely named verification project's volumes.
+
+Actual Docker result: **skipped**, because no accessible Docker CLI was found (including
+the standard Desktop location). No Linux container, Caddy HTTPS path, image-cache startup,
+kernel quota exhaustion or network firewall test passed. Static YAML/network/command
+consistency checks passed; they do not substitute for Docker execution. The verifier
+writes linux_container_verified=false and a reason rather than claiming success.
+
+Verification: the first relevant run found a SQLite lock inversion introduced by the
+quota guard taking manager.lock inside a write transaction while acquisition held that
+lock waiting to touch SQLite. The guard now scans without taking that lock and tolerates
+another workspace's safe cleanup. Focused concurrency and the final relevant selection
+passed: **271 passed, one existing Windows symlink test skipped, 31.79 seconds**. A test-
+only strengthening of scheme/readiness checks then passed all **22 operations tests in
+1.53 seconds**. Runs overlap, not additive. Tests use fake encoders and controlled local/
+mock DNS/transport; coverage includes spoofing, rolling/global bounds, storage rollback,
+partial-creation cleanup, expiry/leases, restart ownership, overload and late-write safety.
+All 1,775 protected tracked/runtime files remain unchanged. Evidence and reproduction:
+docs/phase4b-verification.json and docs/phase4b-demo-operations.md.
+
+Remaining: durable/restart-resistant fairness, NAT/IPv6 and host load assessment, hard
+volume limits, actual Linux/symlink/HTTPS/proxy enforcement, dependency/image validation,
+monitored retention and kernel egress proof. Native cancellation remains cooperative.
+Next Phase 4C is a disposable local Linux release rehearsal, not deployment or editorial
+evaluation. No packages, public sites, AWS resources, paid services, push or public
+exposure were used in this phase; saved development data and prior evaluation evidence
+were preserved.

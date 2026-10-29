@@ -61,8 +61,8 @@ def demo_articles():
 
 
 class Store:
-    def __init__(self, path: Path):
-        self.path = path
+    def __init__(self, path: Path, max_bytes=None):
+        self.path, self.max_bytes = path, max_bytes
         path.parent.mkdir(parents=True, exist_ok=True)
         with self.connect() as connection:
             connection.executescript("""
@@ -85,6 +85,9 @@ class Store:
     def connect(self):
         connection = sqlite3.connect(self.path, timeout=1)
         try:
+            if self.max_bytes:
+                page_size = connection.execute('PRAGMA page_size').fetchone()[0]
+                connection.execute(f'PRAGMA max_page_count={max(1, self.max_bytes // page_size)}')
             with connection:
                 yield connection
         finally:
