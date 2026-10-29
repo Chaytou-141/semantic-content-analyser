@@ -1,0 +1,35 @@
+{
+  "phase": "3F",
+  "baseline_commit": "5453900",
+  "date_australia_sydney": "2026-10-29",
+  "targeted_tests": {
+    "command": ".venv/Scripts/python.exe -B -m pytest -q tests/test_phase3f_evaluation.py tests/test_phase3e_review.py",
+    "passed": 45,
+    "failed": 0,
+    "skipped": 0,
+    "pytest_elapsed_seconds": 0.54
+  },
+  "reproduction_matches_tracked_results": true,
+  "original_input_copies_byte_identical": {
+    "phase3e_user_decisions_14.csv": "ba0fbe2b0ddda2d100e8717e84bb244a0bc89f6f21f230f013bdfba354104103",
+    "phase3e_reconciled_mixed_review.csv": "00328aadff2adb46cc1a5ea794eac60694f237268a3c4066b8a49ffd46e5966b"
+  },
+  "protected_files_checked": 1662,
+  "protected_files_changed": [],
+  "private_ranking_cache_hash_verified": true,
+  "frozen_registry_and_passages_reproduced": true,
+  "user_decisions": 14,
+  "ai_assisted_assessments": 45,
+  "independence_attested_user_decisions": 0,
+  "complete_human_cutoffs_of_28": 0,
+  "new_model_runs": 0,
+  "new_website_requests": 0,
+  "skipped_checks": {
+    "full_application_suite": "Only offline evaluator and documentation changed; focused Phase 3E/3F tests cover affected behaviour.",
+    "browser": "No UI/browser code changed.",
+    "historical_benchmarks_and_inference": "Frozen rankings reused; no model or ranking change.",
+    "public_sites": "Saved evidence sufficient; no permission expansion or network request needed."
+  },
+  "deployment_or_push": false,
+  "commit_reference": "git log -1 --format=%H --grep=\"Consolidate screened editorial reviews and document evaluation gaps\""
+}

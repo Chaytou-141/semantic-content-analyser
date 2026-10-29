@@ -867,3 +867,57 @@ Guide: evaluations/phase3e/README.md. Open runtime/phase3e/independent-review.ht
 export CSV, then run scripts/score_phase3e.py against the completed file. Next is an
 actual independent reviewer round and adjudication of unresolved items, retaining the
 frozen model outputs. Preparing the review workflow is not evidence of public readiness.
+
+## Phase 3F — Evaluation consolidation and error analysis
+
+29 October 2026 (Australia/Sydney). Baseline `5453900`; Phase 3D frozen inference
+`771c4cb`. Local commit subject: **Consolidate screened editorial reviews and document
+evaluation gaps**. Resolve the commit with
+`git log -1 --format=%H --grep="Consolidate screened editorial reviews and document evaluation gaps"`.
+
+The supplied review files combine 14 reported user decisions after AI screening and
+45 AI-assisted assessments. Treating the whole completed-looking worksheet as human
+ground truth would misstate recommendation quality. Every row explicitly has false
+independent attestation. The existing Phase 3E scorer intentionally rejects these inputs:
+the user file lacks attestation; the mixed file also adds provenance and multiple
+reviewers. Neither file nor the original independent-review validator was weakened.
+
+A separate standard-library consolidation script checks exact schemas, frozen
+case/article/pair identities and ranking orders, supported values, duplicate/missing
+rows and equality of every user field across the two files. The original Downloads
+bytes are preserved under evaluations/phase3f/inputs for reproducibility, with hashes.
+Alternative approaches—coercing false attestations, removing review_origin, or filling
+human gaps from the 45 AI assessments—were rejected because they erase provenance.
+
+Actual coverage: eight user-labelled candidates out of 44, six user-labelled overlap
+pairs out of 15. User decisions are seven Useful / seven Not useful. Zero of 28
+case/method/top-3-or-5 cutoffs is fully user-labelled; requiring independent attestation
+also yields zero. MiniLM/TF-IDF human P@3 and P@5 therefore remain unavailable. The
+mixed labels are only descriptive diagnostics, not an independently validated benchmark.
+No new precision improvement, duplicate accuracy or method superiority is claimed.
+
+The report compares frozen ranking disagreements and records 12 selected negative
+examples: seven user-derived, five AI-assisted, with explicit annotation provenance and
+method/rank/score/passage hashes. Examples cover generic commercial/buying language,
+topic/technical-application mismatch and search-intent mismatch. Positive counterexamples
+show why a global destination blacklist or freezer/chiller keyword filter is unsafe.
+Maximum-passage scoring is consistent with shared commercial sections dominating some
+matches, but there is no causal ablation or independently measured fix. The proposed
+next experiment is narrow repeated-promotion evidence handling, after complete comparable
+independent labels, with current rankings and positive cases retained as controls.
+
+Verification: 45 targeted tests passed, zero failed/skipped, in 0.54 seconds (pytest
+reported duration). Cases cover human-only denominators, unresolved/missing/AI labels,
+CSV schema/value/identity tampering, reconciliation conflicts, frozen ranking/pair
+changes, annotation evidence hashes, strict original scorer and output overwrite
+protection. CLI reproduction exactly matches tracked results. All 1,662 protected
+application/UI/data/history/runtime files remain unchanged; original Downloads CSVs
+remain byte-identical. Portable evidence: docs/phase3f-verification.json. No full suite,
+browser run, historical benchmark, model/tokenizer inference, website request, new
+package, infrastructure, deployment or push. Scope did not justify those checks.
+
+Detailed results and reproducible commands: docs/phase3f-evaluation.md and
+evaluations/phase3f/README.md. Release-readiness and PROJECT_CONTEXT are updated;
+security, hosting, abuse and unvalidated non-WordPress/sitemap blockers remain open.
+Next: obtain complete independent labels under clear task-specific criteria, then
+evaluate any targeted ranking experiment without training/tuning on the same test set.

@@ -1,0 +1,1492 @@
+{
+  "packet_id": "a69e68a586f75a8f344a448dd75f6e6ab16e5affb275c867a171481a627b8815",
+  "ground_truth_status": "Mixed screened-user and AI-assisted review; not independently validated",
+  "provenance_counts": {
+    "chatgpt_ai_assisted": 45,
+    "user_decision_after_ai_screening": 14
+  },
+  "user_decision_counts": {
+    "not_useful": 7,
+    "useful": 7
+  },
+  "mixed_decision_counts_descriptive_only": {
+    "useful": 29,
+    "not_useful": 30
+  },
+  "coverage": {
+    "candidate": {
+      "total": 44,
+      "user_provided": 8,
+      "ai_assisted": 36
+    },
+    "overlap": {
+      "total": 15,
+      "user_provided": 6,
+      "ai_assisted": 9
+    }
+  },
+  "independence_attested_user_decisions": 0,
+  "provisional_revealed_flags": 0,
+  "protocol_note": "false disclosure flags do not establish blindness; user origin explicitly says after AI screening. Identity and attestation are not externally verified.",
+  "candidate_metrics": [
+    {
+      "case_id": "R01",
+      "kind": "related",
+      "methods": {
+        "embeddings": {
+          "human_screened_only": {
+            "precision@3": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 3,
+              "unresolved_item_ids": [
+                "C-R01-W809d6443d972f88b",
+                "C-R01-Wf0519af068261b10",
+                "C-R01-W72fdaf17cd4c4232"
+              ],
+              "missing_result_slots": 0
+            },
+            "precision@5": {
+              "value": null,
+              "resolved_eligible": 1,
+              "required": 5,
+              "unresolved_item_ids": [
+                "C-R01-W809d6443d972f88b",
+                "C-R01-Wf0519af068261b10",
+                "C-R01-W72fdaf17cd4c4232",
+                "C-R01-W53b407e9d806c4ed"
+              ],
+              "missing_result_slots": 0
+            }
+          },
+          "independence_attested_only": {
+            "precision@3": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 3,
+              "unresolved_item_ids": [
+                "C-R01-W809d6443d972f88b",
+                "C-R01-Wf0519af068261b10",
+                "C-R01-W72fdaf17cd4c4232"
+              ],
+              "missing_result_slots": 0
+            },
+            "precision@5": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 5,
+              "unresolved_item_ids": [
+                "C-R01-W809d6443d972f88b",
+                "C-R01-Wf0519af068261b10",
+                "C-R01-W72fdaf17cd4c4232",
+                "C-R01-W53b407e9d806c4ed",
+                "C-R01-Wc8d0057aff79b0bf"
+              ],
+              "missing_result_slots": 0
+            }
+          }
+        },
+        "tfidf": {
+          "human_screened_only": {
+            "precision@3": {
+              "value": null,
+              "resolved_eligible": 1,
+              "required": 3,
+              "unresolved_item_ids": [
+                "C-R01-W53b407e9d806c4ed",
+                "C-R01-Wf0519af068261b10"
+              ],
+              "missing_result_slots": 0
+            },
+            "precision@5": {
+              "value": null,
+              "resolved_eligible": 1,
+              "required": 5,
+              "unresolved_item_ids": [
+                "C-R01-W53b407e9d806c4ed",
+                "C-R01-Wf0519af068261b10",
+                "C-R01-W809d6443d972f88b",
+                "C-R01-Wb759d5121095c6e0"
+              ],
+              "missing_result_slots": 0
+            }
+          },
+          "independence_attested_only": {
+            "precision@3": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 3,
+              "unresolved_item_ids": [
+                "C-R01-W53b407e9d806c4ed",
+                "C-R01-Wf0519af068261b10",
+                "C-R01-Wc8d0057aff79b0bf"
+              ],
+              "missing_result_slots": 0
+            },
+            "precision@5": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 5,
+              "unresolved_item_ids": [
+                "C-R01-W53b407e9d806c4ed",
+                "C-R01-Wf0519af068261b10",
+                "C-R01-Wc8d0057aff79b0bf",
+                "C-R01-W809d6443d972f88b",
+                "C-R01-Wb759d5121095c6e0"
+              ],
+              "missing_result_slots": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "case_id": "R02",
+      "kind": "related",
+      "methods": {
+        "embeddings": {
+          "human_screened_only": {
+            "precision@3": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 3,
+              "unresolved_item_ids": [
+                "C-R02-W4ccfbfbf7f453ddf",
+                "C-R02-W59124efd4aebdc60",
+                "C-R02-W1dd3e6cf9eb6189f"
+              ],
+              "missing_result_slots": 0
+            },
+            "precision@5": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 5,
+              "unresolved_item_ids": [
+                "C-R02-W4ccfbfbf7f453ddf",
+                "C-R02-W59124efd4aebdc60",
+                "C-R02-W1dd3e6cf9eb6189f",
+                "C-R02-W772f1c46d825866c",
+                "C-R02-W62fab2566c9ce776"
+              ],
+              "missing_result_slots": 0
+            }
+          },
+          "independence_attested_only": {
+            "precision@3": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 3,
+              "unresolved_item_ids": [
+                "C-R02-W4ccfbfbf7f453ddf",
+                "C-R02-W59124efd4aebdc60",
+                "C-R02-W1dd3e6cf9eb6189f"
+              ],
+              "missing_result_slots": 0
+            },
+            "precision@5": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 5,
+              "unresolved_item_ids": [
+                "C-R02-W4ccfbfbf7f453ddf",
+                "C-R02-W59124efd4aebdc60",
+                "C-R02-W1dd3e6cf9eb6189f",
+                "C-R02-W772f1c46d825866c",
+                "C-R02-W62fab2566c9ce776"
+              ],
+              "missing_result_slots": 0
+            }
+          }
+        },
+        "tfidf": {
+          "human_screened_only": {
+            "precision@3": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 3,
+              "unresolved_item_ids": [
+                "C-R02-W4ccfbfbf7f453ddf",
+                "C-R02-W59124efd4aebdc60",
+                "C-R02-W62fab2566c9ce776"
+              ],
+              "missing_result_slots": 0
+            },
+            "precision@5": {
+              "value": null,
+              "resolved_eligible": 1,
+              "required": 5,
+              "unresolved_item_ids": [
+                "C-R02-W4ccfbfbf7f453ddf",
+                "C-R02-W59124efd4aebdc60",
+                "C-R02-W62fab2566c9ce776",
+                "C-R02-Wc8d0057aff79b0bf"
+              ],
+              "missing_result_slots": 0
+            }
+          },
+          "independence_attested_only": {
+            "precision@3": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 3,
+              "unresolved_item_ids": [
+                "C-R02-W4ccfbfbf7f453ddf",
+                "C-R02-W59124efd4aebdc60",
+                "C-R02-W62fab2566c9ce776"
+              ],
+              "missing_result_slots": 0
+            },
+            "precision@5": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 5,
+              "unresolved_item_ids": [
+                "C-R02-W4ccfbfbf7f453ddf",
+                "C-R02-W59124efd4aebdc60",
+                "C-R02-W62fab2566c9ce776",
+                "C-R02-W38e46c97bbbb0405",
+                "C-R02-Wc8d0057aff79b0bf"
+              ],
+              "missing_result_slots": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "case_id": "R03",
+      "kind": "related",
+      "methods": {
+        "embeddings": {
+          "human_screened_only": {
+            "precision@3": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 3,
+              "unresolved_item_ids": [
+                "C-R03-Wd20a8f0e6dce6f2e",
+                "C-R03-Wcde14bde9c3a81b5",
+                "C-R03-We52d30e6b7490ab6"
+              ],
+              "missing_result_slots": 0
+            },
+            "precision@5": {
+              "value": null,
+              "resolved_eligible": 1,
+              "required": 5,
+              "unresolved_item_ids": [
+                "C-R03-Wd20a8f0e6dce6f2e",
+                "C-R03-Wcde14bde9c3a81b5",
+                "C-R03-We52d30e6b7490ab6",
+                "C-R03-W1d81d7c9e8f5f100"
+              ],
+              "missing_result_slots": 0
+            }
+          },
+          "independence_attested_only": {
+            "precision@3": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 3,
+              "unresolved_item_ids": [
+                "C-R03-Wd20a8f0e6dce6f2e",
+                "C-R03-Wcde14bde9c3a81b5",
+                "C-R03-We52d30e6b7490ab6"
+              ],
+              "missing_result_slots": 0
+            },
+            "precision@5": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 5,
+              "unresolved_item_ids": [
+                "C-R03-Wd20a8f0e6dce6f2e",
+                "C-R03-Wcde14bde9c3a81b5",
+                "C-R03-We52d30e6b7490ab6",
+                "C-R03-W1d81d7c9e8f5f100",
+                "C-R03-W7979ae9d079cd4e8"
+              ],
+              "missing_result_slots": 0
+            }
+          }
+        },
+        "tfidf": {
+          "human_screened_only": {
+            "precision@3": {
+              "value": null,
+              "resolved_eligible": 1,
+              "required": 3,
+              "unresolved_item_ids": [
+                "C-R03-Wd20a8f0e6dce6f2e",
+                "C-R03-W1d81d7c9e8f5f100"
+              ],
+              "missing_result_slots": 0
+            },
+            "precision@5": {
+              "value": null,
+              "resolved_eligible": 1,
+              "required": 5,
+              "unresolved_item_ids": [
+                "C-R03-Wd20a8f0e6dce6f2e",
+                "C-R03-W1d81d7c9e8f5f100",
+                "C-R03-Wcde14bde9c3a81b5",
+                "C-R03-We52d30e6b7490ab6"
+              ],
+              "missing_result_slots": 0
+            }
+          },
+          "independence_attested_only": {
+            "precision@3": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 3,
+              "unresolved_item_ids": [
+                "C-R03-Wd20a8f0e6dce6f2e",
+                "C-R03-Wb092510eb9d3d03b",
+                "C-R03-W1d81d7c9e8f5f100"
+              ],
+              "missing_result_slots": 0
+            },
+            "precision@5": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 5,
+              "unresolved_item_ids": [
+                "C-R03-Wd20a8f0e6dce6f2e",
+                "C-R03-Wb092510eb9d3d03b",
+                "C-R03-W1d81d7c9e8f5f100",
+                "C-R03-Wcde14bde9c3a81b5",
+                "C-R03-We52d30e6b7490ab6"
+              ],
+              "missing_result_slots": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "case_id": "R04",
+      "kind": "related",
+      "methods": {
+        "embeddings": {
+          "human_screened_only": {
+            "precision@3": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 3,
+              "unresolved_item_ids": [
+                "C-R04-Wabdb55b581cec281",
+                "C-R04-Wc201444bb806b11c",
+                "C-R04-W38e46c97bbbb0405"
+              ],
+              "missing_result_slots": 0
+            },
+            "precision@5": {
+              "value": null,
+              "resolved_eligible": 1,
+              "required": 5,
+              "unresolved_item_ids": [
+                "C-R04-Wabdb55b581cec281",
+                "C-R04-Wc201444bb806b11c",
+                "C-R04-W38e46c97bbbb0405",
+                "C-R04-Wcde14bde9c3a81b5"
+              ],
+              "missing_result_slots": 0
+            }
+          },
+          "independence_attested_only": {
+            "precision@3": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 3,
+              "unresolved_item_ids": [
+                "C-R04-Wabdb55b581cec281",
+                "C-R04-Wc201444bb806b11c",
+                "C-R04-W38e46c97bbbb0405"
+              ],
+              "missing_result_slots": 0
+            },
+            "precision@5": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 5,
+              "unresolved_item_ids": [
+                "C-R04-Wabdb55b581cec281",
+                "C-R04-Wc201444bb806b11c",
+                "C-R04-W38e46c97bbbb0405",
+                "C-R04-Wb1b62862200f9fab",
+                "C-R04-Wcde14bde9c3a81b5"
+              ],
+              "missing_result_slots": 0
+            }
+          }
+        },
+        "tfidf": {
+          "human_screened_only": {
+            "precision@3": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 3,
+              "unresolved_item_ids": [
+                "C-R04-Wabdb55b581cec281",
+                "C-R04-Wc201444bb806b11c",
+                "C-R04-W38e46c97bbbb0405"
+              ],
+              "missing_result_slots": 0
+            },
+            "precision@5": {
+              "value": null,
+              "resolved_eligible": 1,
+              "required": 5,
+              "unresolved_item_ids": [
+                "C-R04-Wabdb55b581cec281",
+                "C-R04-Wc201444bb806b11c",
+                "C-R04-W38e46c97bbbb0405",
+                "C-R04-W1d81d7c9e8f5f100"
+              ],
+              "missing_result_slots": 0
+            }
+          },
+          "independence_attested_only": {
+            "precision@3": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 3,
+              "unresolved_item_ids": [
+                "C-R04-Wabdb55b581cec281",
+                "C-R04-Wc201444bb806b11c",
+                "C-R04-W38e46c97bbbb0405"
+              ],
+              "missing_result_slots": 0
+            },
+            "precision@5": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 5,
+              "unresolved_item_ids": [
+                "C-R04-Wabdb55b581cec281",
+                "C-R04-Wc201444bb806b11c",
+                "C-R04-W38e46c97bbbb0405",
+                "C-R04-Wb1b62862200f9fab",
+                "C-R04-W1d81d7c9e8f5f100"
+              ],
+              "missing_result_slots": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "case_id": "L01",
+      "kind": "internal_link",
+      "methods": {
+        "embeddings": {
+          "human_screened_only": {
+            "precision@3": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 3,
+              "unresolved_item_ids": [
+                "C-L01-W0264280d87a79512",
+                "C-L01-W809d6443d972f88b",
+                "C-L01-Wf0519af068261b10"
+              ],
+              "missing_result_slots": 0
+            },
+            "precision@5": {
+              "value": null,
+              "resolved_eligible": 1,
+              "required": 5,
+              "unresolved_item_ids": [
+                "C-L01-W0264280d87a79512",
+                "C-L01-W809d6443d972f88b",
+                "C-L01-Wf0519af068261b10",
+                "C-L01-W53b407e9d806c4ed"
+              ],
+              "missing_result_slots": 0
+            }
+          },
+          "independence_attested_only": {
+            "precision@3": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 3,
+              "unresolved_item_ids": [
+                "C-L01-W0264280d87a79512",
+                "C-L01-W809d6443d972f88b",
+                "C-L01-Wf0519af068261b10"
+              ],
+              "missing_result_slots": 0
+            },
+            "precision@5": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 5,
+              "unresolved_item_ids": [
+                "C-L01-W0264280d87a79512",
+                "C-L01-W809d6443d972f88b",
+                "C-L01-Wf0519af068261b10",
+                "C-L01-W53b407e9d806c4ed",
+                "C-L01-Wc8d0057aff79b0bf"
+              ],
+              "missing_result_slots": 0
+            }
+          }
+        },
+        "tfidf": {
+          "human_screened_only": {
+            "precision@3": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 3,
+              "unresolved_item_ids": [
+                "C-L01-W53b407e9d806c4ed",
+                "C-L01-Wf0519af068261b10",
+                "C-L01-W0264280d87a79512"
+              ],
+              "missing_result_slots": 0
+            },
+            "precision@5": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 5,
+              "unresolved_item_ids": [
+                "C-L01-W53b407e9d806c4ed",
+                "C-L01-Wf0519af068261b10",
+                "C-L01-W0264280d87a79512",
+                "C-L01-W809d6443d972f88b",
+                "C-L01-Wd20a8f0e6dce6f2e"
+              ],
+              "missing_result_slots": 0
+            }
+          },
+          "independence_attested_only": {
+            "precision@3": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 3,
+              "unresolved_item_ids": [
+                "C-L01-W53b407e9d806c4ed",
+                "C-L01-Wf0519af068261b10",
+                "C-L01-W0264280d87a79512"
+              ],
+              "missing_result_slots": 0
+            },
+            "precision@5": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 5,
+              "unresolved_item_ids": [
+                "C-L01-W53b407e9d806c4ed",
+                "C-L01-Wf0519af068261b10",
+                "C-L01-W0264280d87a79512",
+                "C-L01-W809d6443d972f88b",
+                "C-L01-Wd20a8f0e6dce6f2e"
+              ],
+              "missing_result_slots": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "case_id": "L02",
+      "kind": "internal_link",
+      "methods": {
+        "embeddings": {
+          "human_screened_only": {
+            "precision@3": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 3,
+              "unresolved_item_ids": [
+                "C-L02-W62fab2566c9ce776",
+                "C-L02-W38e46c97bbbb0405",
+                "C-L02-Wcde14bde9c3a81b5"
+              ],
+              "missing_result_slots": 0
+            },
+            "precision@5": {
+              "value": null,
+              "resolved_eligible": 1,
+              "required": 5,
+              "unresolved_item_ids": [
+                "C-L02-W62fab2566c9ce776",
+                "C-L02-W38e46c97bbbb0405",
+                "C-L02-Wcde14bde9c3a81b5",
+                "C-L02-W59124efd4aebdc60"
+              ],
+              "missing_result_slots": 0
+            }
+          },
+          "independence_attested_only": {
+            "precision@3": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 3,
+              "unresolved_item_ids": [
+                "C-L02-W62fab2566c9ce776",
+                "C-L02-W38e46c97bbbb0405",
+                "C-L02-Wcde14bde9c3a81b5"
+              ],
+              "missing_result_slots": 0
+            },
+            "precision@5": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 5,
+              "unresolved_item_ids": [
+                "C-L02-W62fab2566c9ce776",
+                "C-L02-W38e46c97bbbb0405",
+                "C-L02-Wcde14bde9c3a81b5",
+                "C-L02-W1d81d7c9e8f5f100",
+                "C-L02-W59124efd4aebdc60"
+              ],
+              "missing_result_slots": 0
+            }
+          }
+        },
+        "tfidf": {
+          "human_screened_only": {
+            "precision@3": {
+              "value": null,
+              "resolved_eligible": 1,
+              "required": 3,
+              "unresolved_item_ids": [
+                "C-L02-W62fab2566c9ce776",
+                "C-L02-Wcde14bde9c3a81b5"
+              ],
+              "missing_result_slots": 0
+            },
+            "precision@5": {
+              "value": null,
+              "resolved_eligible": 1,
+              "required": 5,
+              "unresolved_item_ids": [
+                "C-L02-W62fab2566c9ce776",
+                "C-L02-Wcde14bde9c3a81b5",
+                "C-L02-W59124efd4aebdc60",
+                "C-L02-Wb759d5121095c6e0"
+              ],
+              "missing_result_slots": 0
+            }
+          },
+          "independence_attested_only": {
+            "precision@3": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 3,
+              "unresolved_item_ids": [
+                "C-L02-W62fab2566c9ce776",
+                "C-L02-Wcde14bde9c3a81b5",
+                "C-L02-W1d81d7c9e8f5f100"
+              ],
+              "missing_result_slots": 0
+            },
+            "precision@5": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 5,
+              "unresolved_item_ids": [
+                "C-L02-W62fab2566c9ce776",
+                "C-L02-Wcde14bde9c3a81b5",
+                "C-L02-W1d81d7c9e8f5f100",
+                "C-L02-W59124efd4aebdc60",
+                "C-L02-Wb759d5121095c6e0"
+              ],
+              "missing_result_slots": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "case_id": "L03",
+      "kind": "internal_link",
+      "methods": {
+        "embeddings": {
+          "human_screened_only": {
+            "precision@3": {
+              "value": null,
+              "resolved_eligible": 1,
+              "required": 3,
+              "unresolved_item_ids": [
+                "C-L03-Wc201444bb806b11c",
+                "C-L03-W0352ca07b1d5f7a4"
+              ],
+              "missing_result_slots": 0
+            },
+            "precision@5": {
+              "value": null,
+              "resolved_eligible": 1,
+              "required": 5,
+              "unresolved_item_ids": [
+                "C-L03-Wc201444bb806b11c",
+                "C-L03-W0352ca07b1d5f7a4",
+                "C-L03-W38e46c97bbbb0405",
+                "C-L03-Wb759d5121095c6e0"
+              ],
+              "missing_result_slots": 0
+            }
+          },
+          "independence_attested_only": {
+            "precision@3": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 3,
+              "unresolved_item_ids": [
+                "C-L03-Wc201444bb806b11c",
+                "C-L03-W0352ca07b1d5f7a4",
+                "C-L03-Wb1b62862200f9fab"
+              ],
+              "missing_result_slots": 0
+            },
+            "precision@5": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 5,
+              "unresolved_item_ids": [
+                "C-L03-Wc201444bb806b11c",
+                "C-L03-W0352ca07b1d5f7a4",
+                "C-L03-Wb1b62862200f9fab",
+                "C-L03-W38e46c97bbbb0405",
+                "C-L03-Wb759d5121095c6e0"
+              ],
+              "missing_result_slots": 0
+            }
+          }
+        },
+        "tfidf": {
+          "human_screened_only": {
+            "precision@3": {
+              "value": null,
+              "resolved_eligible": 1,
+              "required": 3,
+              "unresolved_item_ids": [
+                "C-L03-Wc201444bb806b11c",
+                "C-L03-W1dd3e6cf9eb6189f"
+              ],
+              "missing_result_slots": 0
+            },
+            "precision@5": {
+              "value": null,
+              "resolved_eligible": 1,
+              "required": 5,
+              "unresolved_item_ids": [
+                "C-L03-Wc201444bb806b11c",
+                "C-L03-W1dd3e6cf9eb6189f",
+                "C-L03-W1d81d7c9e8f5f100",
+                "C-L03-W38e46c97bbbb0405"
+              ],
+              "missing_result_slots": 0
+            }
+          },
+          "independence_attested_only": {
+            "precision@3": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 3,
+              "unresolved_item_ids": [
+                "C-L03-Wc201444bb806b11c",
+                "C-L03-Wb1b62862200f9fab",
+                "C-L03-W1dd3e6cf9eb6189f"
+              ],
+              "missing_result_slots": 0
+            },
+            "precision@5": {
+              "value": null,
+              "resolved_eligible": 0,
+              "required": 5,
+              "unresolved_item_ids": [
+                "C-L03-Wc201444bb806b11c",
+                "C-L03-Wb1b62862200f9fab",
+                "C-L03-W1dd3e6cf9eb6189f",
+                "C-L03-W1d81d7c9e8f5f100",
+                "C-L03-W38e46c97bbbb0405"
+              ],
+              "missing_result_slots": 0
+            }
+          }
+        }
+      }
+    }
+  ],
+  "available_candidate_cutoffs_of_28": {
+    "human_screened_only": 0,
+    "independence_attested_only": 0
+  },
+  "overlap_usefulness_not_duplicate_accuracy": {
+    "embeddings": {
+      "precision@3": {
+        "value": null,
+        "resolved_eligible": 2,
+        "required": 3,
+        "unresolved_item_ids": [
+          "O11"
+        ],
+        "missing_result_slots": 0
+      },
+      "precision@5": {
+        "value": null,
+        "resolved_eligible": 2,
+        "required": 5,
+        "unresolved_item_ids": [
+          "O11",
+          "O09",
+          "O07"
+        ],
+        "missing_result_slots": 0
+      }
+    },
+    "tfidf": {
+      "precision@3": {
+        "value": null,
+        "resolved_eligible": 0,
+        "required": 3,
+        "unresolved_item_ids": [
+          "O11",
+          "O15",
+          "O05"
+        ],
+        "missing_result_slots": 0
+      },
+      "precision@5": {
+        "value": null,
+        "resolved_eligible": 1,
+        "required": 5,
+        "unresolved_item_ids": [
+          "O11",
+          "O15",
+          "O05",
+          "O04"
+        ],
+        "missing_result_slots": 0
+      }
+    }
+  },
+  "ranking_disagreements": [
+    {
+      "case_id": "R01",
+      "cutoff": 3,
+      "shared_count": 1,
+      "same_order": false,
+      "minilm_only": [
+        "W809d6443d972f88b",
+        "W72fdaf17cd4c4232"
+      ],
+      "tfidf_only": [
+        "W53b407e9d806c4ed",
+        "Wc8d0057aff79b0bf"
+      ]
+    },
+    {
+      "case_id": "R01",
+      "cutoff": 5,
+      "shared_count": 4,
+      "same_order": false,
+      "minilm_only": [
+        "W72fdaf17cd4c4232"
+      ],
+      "tfidf_only": [
+        "Wb759d5121095c6e0"
+      ]
+    },
+    {
+      "case_id": "R02",
+      "cutoff": 3,
+      "shared_count": 2,
+      "same_order": false,
+      "minilm_only": [
+        "W1dd3e6cf9eb6189f"
+      ],
+      "tfidf_only": [
+        "W62fab2566c9ce776"
+      ]
+    },
+    {
+      "case_id": "R02",
+      "cutoff": 5,
+      "shared_count": 3,
+      "same_order": false,
+      "minilm_only": [
+        "W1dd3e6cf9eb6189f",
+        "W772f1c46d825866c"
+      ],
+      "tfidf_only": [
+        "W38e46c97bbbb0405",
+        "Wc8d0057aff79b0bf"
+      ]
+    },
+    {
+      "case_id": "R03",
+      "cutoff": 3,
+      "shared_count": 1,
+      "same_order": false,
+      "minilm_only": [
+        "Wcde14bde9c3a81b5",
+        "We52d30e6b7490ab6"
+      ],
+      "tfidf_only": [
+        "Wb092510eb9d3d03b",
+        "W1d81d7c9e8f5f100"
+      ]
+    },
+    {
+      "case_id": "R03",
+      "cutoff": 5,
+      "shared_count": 4,
+      "same_order": false,
+      "minilm_only": [
+        "W7979ae9d079cd4e8"
+      ],
+      "tfidf_only": [
+        "Wb092510eb9d3d03b"
+      ]
+    },
+    {
+      "case_id": "R04",
+      "cutoff": 3,
+      "shared_count": 3,
+      "same_order": true,
+      "minilm_only": [],
+      "tfidf_only": []
+    },
+    {
+      "case_id": "R04",
+      "cutoff": 5,
+      "shared_count": 4,
+      "same_order": false,
+      "minilm_only": [
+        "Wcde14bde9c3a81b5"
+      ],
+      "tfidf_only": [
+        "W1d81d7c9e8f5f100"
+      ]
+    },
+    {
+      "case_id": "L01",
+      "cutoff": 3,
+      "shared_count": 2,
+      "same_order": false,
+      "minilm_only": [
+        "W809d6443d972f88b"
+      ],
+      "tfidf_only": [
+        "W53b407e9d806c4ed"
+      ]
+    },
+    {
+      "case_id": "L01",
+      "cutoff": 5,
+      "shared_count": 4,
+      "same_order": false,
+      "minilm_only": [
+        "Wc8d0057aff79b0bf"
+      ],
+      "tfidf_only": [
+        "Wd20a8f0e6dce6f2e"
+      ]
+    },
+    {
+      "case_id": "L02",
+      "cutoff": 3,
+      "shared_count": 2,
+      "same_order": false,
+      "minilm_only": [
+        "W38e46c97bbbb0405"
+      ],
+      "tfidf_only": [
+        "W1d81d7c9e8f5f100"
+      ]
+    },
+    {
+      "case_id": "L02",
+      "cutoff": 5,
+      "shared_count": 4,
+      "same_order": false,
+      "minilm_only": [
+        "W38e46c97bbbb0405"
+      ],
+      "tfidf_only": [
+        "Wb759d5121095c6e0"
+      ]
+    },
+    {
+      "case_id": "L03",
+      "cutoff": 3,
+      "shared_count": 2,
+      "same_order": false,
+      "minilm_only": [
+        "W0352ca07b1d5f7a4"
+      ],
+      "tfidf_only": [
+        "W1dd3e6cf9eb6189f"
+      ]
+    },
+    {
+      "case_id": "L03",
+      "cutoff": 5,
+      "shared_count": 3,
+      "same_order": false,
+      "minilm_only": [
+        "W0352ca07b1d5f7a4",
+        "Wb759d5121095c6e0"
+      ],
+      "tfidf_only": [
+        "W1dd3e6cf9eb6189f",
+        "W1d81d7c9e8f5f100"
+      ]
+    }
+  ],
+  "negative_candidates": [
+    {
+      "item_id": "C-R01-W72fdaf17cd4c4232",
+      "review_origin": "chatgpt_ai_assisted",
+      "reason": "Main focus is ice build-up; stock placement is incidental.",
+      "ranking_evidence": [
+        {
+          "method": "embeddings",
+          "rank": 3,
+          "id": "W72fdaf17cd4c4232",
+          "score": 0.69579,
+          "passage_start": 2433,
+          "passage_end": 3411,
+          "passage_sha256": "ad2689934ab3027c46ea9dd0f774b6cf7f5759f03e7db2bb0ecc657455fbba63"
+        }
+      ]
+    },
+    {
+      "item_id": "C-R01-Wb759d5121095c6e0",
+      "review_origin": "chatgpt_ai_assisted",
+      "reason": "Combination fridge-freezer storage does not address retail chest layout.",
+      "ranking_evidence": [
+        {
+          "method": "tfidf",
+          "rank": 5,
+          "id": "Wb759d5121095c6e0",
+          "score": 0.31974,
+          "passage_start": 2665,
+          "passage_end": 3764,
+          "passage_sha256": "1435b44a7bb80235f49ff996dd4f24fc380bf8e2890623238e8c9c9d529caa63"
+        }
+      ]
+    },
+    {
+      "item_id": "C-R01-Wc8d0057aff79b0bf",
+      "review_origin": "user_decision_after_ai_screening",
+      "reason": "User rejected general freezer buying guide for this specific chest-freezer organisation question.",
+      "ranking_evidence": [
+        {
+          "method": "embeddings",
+          "rank": 5,
+          "id": "Wc8d0057aff79b0bf",
+          "score": 0.68303,
+          "passage_start": 2720,
+          "passage_end": 3774,
+          "passage_sha256": "1b3ed78925d406d191b988b8e3551c1bc37a156485ba8cf5f7fcbc14ae9378e6"
+        },
+        {
+          "method": "tfidf",
+          "rank": 3,
+          "id": "Wc8d0057aff79b0bf",
+          "score": 0.34728,
+          "passage_start": 1759,
+          "passage_end": 2919,
+          "passage_sha256": "3a9a00ce61eb9f66fa64cb40267d19f1975ef9b47518877bbcd8afcdd47b5591"
+        }
+      ]
+    },
+    {
+      "item_id": "C-R02-W38e46c97bbbb0405",
+      "review_origin": "user_decision_after_ai_screening",
+      "reason": "User rejected broad upright-fridge features article for detailed installation checks.",
+      "ranking_evidence": [
+        {
+          "method": "tfidf",
+          "rank": 4,
+          "id": "W38e46c97bbbb0405",
+          "score": 0.20709,
+          "passage_start": 4678,
+          "passage_end": 5877,
+          "passage_sha256": "38fd6a41f4e2b3dd0df6e55c0c363cbf6ed56cc12220a60007dfcec54a6e5b48"
+        }
+      ]
+    },
+    {
+      "item_id": "C-R02-W62fab2566c9ce776",
+      "review_origin": "chatgpt_ai_assisted",
+      "reason": "Focuses on replacement decisions rather than pre-install measurements.",
+      "ranking_evidence": [
+        {
+          "method": "embeddings",
+          "rank": 5,
+          "id": "W62fab2566c9ce776",
+          "score": 0.66713,
+          "passage_start": 7951,
+          "passage_end": 8439,
+          "passage_sha256": "39bf937730ca477cafc2415cd4719a7c080b3c3c9e8b3ef5b44083540f5cc89a"
+        },
+        {
+          "method": "tfidf",
+          "rank": 3,
+          "id": "W62fab2566c9ce776",
+          "score": 0.21271,
+          "passage_start": 7951,
+          "passage_end": 8439,
+          "passage_sha256": "39bf937730ca477cafc2415cd4719a7c080b3c3c9e8b3ef5b44083540f5cc89a"
+        }
+      ]
+    },
+    {
+      "item_id": "C-R03-W7979ae9d079cd4e8",
+      "review_origin": "user_decision_after_ai_screening",
+      "reason": "User rejected freezer glazing article for a chilled-display comparison question.",
+      "ranking_evidence": [
+        {
+          "method": "embeddings",
+          "rank": 5,
+          "id": "W7979ae9d079cd4e8",
+          "score": 0.66855,
+          "passage_start": 2605,
+          "passage_end": 3638,
+          "passage_sha256": "e4dc39ee64a60a89aee2026573dcd1d9f10334719d3f73daf734c1c2ef87ec31"
+        }
+      ]
+    },
+    {
+      "item_id": "C-R04-W1d81d7c9e8f5f100",
+      "review_origin": "chatgpt_ai_assisted",
+      "reason": "Self-service workflow does not explain delicate sushi and low-airflow cooling.",
+      "ranking_evidence": [
+        {
+          "method": "tfidf",
+          "rank": 5,
+          "id": "W1d81d7c9e8f5f100",
+          "score": 0.1046,
+          "passage_start": 6080,
+          "passage_end": 7113,
+          "passage_sha256": "96518f922c9addf4bf4e48461b084d640bde36a50494ea66efe4d33c0585e995"
+        }
+      ]
+    },
+    {
+      "item_id": "C-R04-W38e46c97bbbb0405",
+      "review_origin": "chatgpt_ai_assisted",
+      "reason": "General upright fridge features omit sushi-specific cooling effects.",
+      "ranking_evidence": [
+        {
+          "method": "embeddings",
+          "rank": 3,
+          "id": "W38e46c97bbbb0405",
+          "score": 0.46484,
+          "passage_start": 2839,
+          "passage_end": 3931,
+          "passage_sha256": "8514b48b4924608bde74a206584fda542a492c3c55b504e23d464292ab25700c"
+        },
+        {
+          "method": "tfidf",
+          "rank": 3,
+          "id": "W38e46c97bbbb0405",
+          "score": 0.20372,
+          "passage_start": 2839,
+          "passage_end": 3931,
+          "passage_sha256": "8514b48b4924608bde74a206584fda542a492c3c55b504e23d464292ab25700c"
+        }
+      ]
+    },
+    {
+      "item_id": "C-R04-Wb1b62862200f9fab",
+      "review_origin": "user_decision_after_ai_screening",
+      "reason": "User rejected general forced-air stocking advice for a static-cooled sushi display question.",
+      "ranking_evidence": [
+        {
+          "method": "embeddings",
+          "rank": 4,
+          "id": "Wb1b62862200f9fab",
+          "score": 0.41123,
+          "passage_start": 836,
+          "passage_end": 1831,
+          "passage_sha256": "2ab3851f60512f4364020493b018c3a8e4aa18ec467825962c1e5688e43f6402"
+        },
+        {
+          "method": "tfidf",
+          "rank": 4,
+          "id": "Wb1b62862200f9fab",
+          "score": 0.15709,
+          "passage_start": 836,
+          "passage_end": 1831,
+          "passage_sha256": "2ab3851f60512f4364020493b018c3a8e4aa18ec467825962c1e5688e43f6402"
+        }
+      ]
+    },
+    {
+      "item_id": "C-R04-Wcde14bde9c3a81b5",
+      "review_origin": "chatgpt_ai_assisted",
+      "reason": "Heated glass discussion is unrelated to delicate sushi drying and cooling.",
+      "ranking_evidence": [
+        {
+          "method": "embeddings",
+          "rank": 5,
+          "id": "Wcde14bde9c3a81b5",
+          "score": 0.4079,
+          "passage_start": 1794,
+          "passage_end": 2855,
+          "passage_sha256": "639e424181d702188b5c3e83780aa073c155ed0950feb969185c9f0dfe95bbaf"
+        }
+      ]
+    },
+    {
+      "item_id": "C-L01-Wd20a8f0e6dce6f2e",
+      "review_origin": "chatgpt_ai_assisted",
+      "reason": "Open refrigerated display doors are a different cabinet and cooling application.",
+      "ranking_evidence": [
+        {
+          "method": "tfidf",
+          "rank": 5,
+          "id": "Wd20a8f0e6dce6f2e",
+          "score": 0.30791,
+          "passage_start": 6111,
+          "passage_end": 7145,
+          "passage_sha256": "c2a38afb968bd79e9c874d5d5675496cfd6ae432bb35c15b6a4bff7f81629a7f"
+        }
+      ]
+    },
+    {
+      "item_id": "C-L02-W1d81d7c9e8f5f100",
+      "review_origin": "user_decision_after_ai_screening",
+      "reason": "User rejected self-service product article as a link from an operating-cost guide.",
+      "ranking_evidence": [
+        {
+          "method": "embeddings",
+          "rank": 4,
+          "id": "W1d81d7c9e8f5f100",
+          "score": 0.79497,
+          "passage_start": 6080,
+          "passage_end": 7113,
+          "passage_sha256": "96518f922c9addf4bf4e48461b084d640bde36a50494ea66efe4d33c0585e995"
+        },
+        {
+          "method": "tfidf",
+          "rank": 3,
+          "id": "W1d81d7c9e8f5f100",
+          "score": 0.36226,
+          "passage_start": 7837,
+          "passage_end": 8849,
+          "passage_sha256": "ebfd6cdb67687ccc7acce8ac7c620cac0b418c0ce0fc3423f5b4a9cd0f1f338a"
+        }
+      ]
+    },
+    {
+      "item_id": "C-L02-W38e46c97bbbb0405",
+      "review_origin": "chatgpt_ai_assisted",
+      "reason": "General upright display features do not meaningfully expand energy-cost analysis.",
+      "ranking_evidence": [
+        {
+          "method": "embeddings",
+          "rank": 2,
+          "id": "W38e46c97bbbb0405",
+          "score": 0.82363,
+          "passage_start": 4678,
+          "passage_end": 5877,
+          "passage_sha256": "38fd6a41f4e2b3dd0df6e55c0c363cbf6ed56cc12220a60007dfcec54a6e5b48"
+        }
+      ]
+    },
+    {
+      "item_id": "C-L02-W59124efd4aebdc60",
+      "review_origin": "chatgpt_ai_assisted",
+      "reason": "Supplier overview is primarily generic promotional content.",
+      "ranking_evidence": [
+        {
+          "method": "embeddings",
+          "rank": 5,
+          "id": "W59124efd4aebdc60",
+          "score": 0.78581,
+          "passage_start": 2553,
+          "passage_end": 3696,
+          "passage_sha256": "a8dd6a66867a56b89320ee5213032cba242523c03b364dca20a196f35868471d"
+        },
+        {
+          "method": "tfidf",
+          "rank": 4,
+          "id": "W59124efd4aebdc60",
+          "score": 0.36002,
+          "passage_start": 2553,
+          "passage_end": 3696,
+          "passage_sha256": "a8dd6a66867a56b89320ee5213032cba242523c03b364dca20a196f35868471d"
+        }
+      ]
+    },
+    {
+      "item_id": "C-L02-W62fab2566c9ce776",
+      "review_origin": "chatgpt_ai_assisted",
+      "reason": "Replacement decision content is too broad for this running-cost passage.",
+      "ranking_evidence": [
+        {
+          "method": "embeddings",
+          "rank": 1,
+          "id": "W62fab2566c9ce776",
+          "score": 0.86472,
+          "passage_start": 3546,
+          "passage_end": 4589,
+          "passage_sha256": "193c334ea6f69653360474c9b8ef7e87548aecf0e3cbcc80fdf57c82b0935037"
+        },
+        {
+          "method": "tfidf",
+          "rank": 1,
+          "id": "W62fab2566c9ce776",
+          "score": 0.40693,
+          "passage_start": 3546,
+          "passage_end": 4589,
+          "passage_sha256": "193c334ea6f69653360474c9b8ef7e87548aecf0e3cbcc80fdf57c82b0935037"
+        }
+      ]
+    },
+    {
+      "item_id": "C-L02-Wb759d5121095c6e0",
+      "review_origin": "chatgpt_ai_assisted",
+      "reason": "Fridge/freezer combination is not a direct follow-on to open-display running costs.",
+      "ranking_evidence": [
+        {
+          "method": "tfidf",
+          "rank": 5,
+          "id": "Wb759d5121095c6e0",
+          "score": 0.35643,
+          "passage_start": 4497,
+          "passage_end": 5616,
+          "passage_sha256": "b8ed6668ae0df48597b9906806d47b922121f53ee333f42b0d86052dbc7cc57d"
+        }
+      ]
+    },
+    {
+      "item_id": "C-L03-W0352ca07b1d5f7a4",
+      "review_origin": "chatgpt_ai_assisted",
+      "reason": "Open display energy-cost guide shares maintenance wording but not sushi static cooling.",
+      "ranking_evidence": [
+        {
+          "method": "embeddings",
+          "rank": 2,
+          "id": "W0352ca07b1d5f7a4",
+          "score": 0.64323,
+          "passage_start": 4524,
+          "passage_end": 5671,
+          "passage_sha256": "ba1cc45f13911f369931b5b1dac664d0f4a5c87444b7723f3f99b926bfdf335a"
+        }
+      ]
+    },
+    {
+      "item_id": "C-L03-W1d81d7c9e8f5f100",
+      "review_origin": "chatgpt_ai_assisted",
+      "reason": "Self-service retail display has only generic cooling and presentation overlap.",
+      "ranking_evidence": [
+        {
+          "method": "tfidf",
+          "rank": 4,
+          "id": "W1d81d7c9e8f5f100",
+          "score": 0.28036,
+          "passage_start": 4370,
+          "passage_end": 5394,
+          "passage_sha256": "9e2a704dcaf4a4b7392779c9160a7adfab65f56a7583deb5bd30b3be778d2f9c"
+        }
+      ]
+    },
+    {
+      "item_id": "C-L03-W1dd3e6cf9eb6189f",
+      "review_origin": "chatgpt_ai_assisted",
+      "reason": "Deli cabinet sizing is a different decision from sushi static cooling design.",
+      "ranking_evidence": [
+        {
+          "method": "tfidf",
+          "rank": 3,
+          "id": "W1dd3e6cf9eb6189f",
+          "score": 0.29811,
+          "passage_start": 2499,
+          "passage_end": 3547,
+          "passage_sha256": "e33416f1572a76536c521e19b7fa91545bc564aadbf64bfb7942548036b6ea91"
+        }
+      ]
+    },
+    {
+      "item_id": "C-L03-W38e46c97bbbb0405",
+      "review_origin": "chatgpt_ai_assisted",
+      "reason": "General upright fridge article does not explain sushi-sensitive direct airflow.",
+      "ranking_evidence": [
+        {
+          "method": "embeddings",
+          "rank": 4,
+          "id": "W38e46c97bbbb0405",
+          "score": 0.63395,
+          "passage_start": 5710,
+          "passage_end": 6810,
+          "passage_sha256": "813b74dcd9e923c06515ebaf3af6bc5d50ac92e37caa2bf7723f416af0b7a69b"
+        },
+        {
+          "method": "tfidf",
+          "rank": 5,
+          "id": "W38e46c97bbbb0405",
+          "score": 0.27877,
+          "passage_start": 2839,
+          "passage_end": 3931,
+          "passage_sha256": "8514b48b4924608bde74a206584fda542a492c3c55b504e23d464292ab25700c"
+        }
+      ]
+    },
+    {
+      "item_id": "C-L03-Wb1b62862200f9fab",
+      "review_origin": "user_decision_after_ai_screening",
+      "reason": "User rejected general airflow guidance as a link from static-cooled sushi explanation.",
+      "ranking_evidence": [
+        {
+          "method": "embeddings",
+          "rank": 3,
+          "id": "Wb1b62862200f9fab",
+          "score": 0.64037,
+          "passage_start": 0,
+          "passage_end": 979,
+          "passage_sha256": "f23fa33309850f168ab1c769e7aab74002f6e45ef623044dc6ab74fac6b52c3e"
+        },
+        {
+          "method": "tfidf",
+          "rank": 2,
+          "id": "Wb1b62862200f9fab",
+          "score": 0.33587,
+          "passage_start": 0,
+          "passage_end": 979,
+          "passage_sha256": "f23fa33309850f168ab1c769e7aab74002f6e45ef623044dc6ab74fac6b52c3e"
+        }
+      ]
+    },
+    {
+      "item_id": "C-L03-Wb759d5121095c6e0",
+      "review_origin": "chatgpt_ai_assisted",
+      "reason": "Combination fridge/freezer is not relevant to static sushi display cooling.",
+      "ranking_evidence": [
+        {
+          "method": "embeddings",
+          "rank": 5,
+          "id": "Wb759d5121095c6e0",
+          "score": 0.6217,
+          "passage_start": 5443,
+          "passage_end": 6434,
+          "passage_sha256": "b2b4d3f1c036ceda48c1e06896afa5ee7450f401f1ecf5029b30edb2f238e04a"
+        }
+      ]
+    }
+  ],
+  "mixed_precision_computed": false,
+  "model_runs": 0,
+  "network_requests": 0,
+  "compatibility_findings": [
+    "User CSV uses the original Phase 3E columns but all current decisions lack independent-human attestation.",
+    "Mixed CSV adds review_origin and contains different reviewers; deliberately incompatible with the single independent-reviewer Phase 3E scorer.",
+    "Phase 3F explicitly accepts the mixed schema for provenance/diagnostics only; AI rows never fill human metric gaps."
+  ],
+  "private_ranking_cache_checked": true,
+  "input_sha256": {
+    "registry": "ebf4e4fc3708851b38aba24cf412aad12be832522f5d870c37255ead2fbdd184",
+    "manifest": "67cd2c62725d1f6ccdb508258a7bd323bc6f9922a53a2b603be39be1e1fc6e65",
+    "rankings": "87a03f203d6798095e04e2bdca0b8dfe80aec58ab7d3c6fe0c7c1594c0ab0cd1",
+    "user_csv": "ba0fbe2b0ddda2d100e8717e84bb244a0bc89f6f21f230f013bdfba354104103",
+    "mixed_csv": "00328aadff2adb46cc1a5ea794eac60694f237268a3c4066b8a49ffd46e5966b"
+  }
+}

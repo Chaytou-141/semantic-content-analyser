@@ -1,6 +1,6 @@
 # Semantic Content Analyser: current context
 
-Updated 29 October 2026 (Australia/Sydney). Phase 3E review preparation; no deployment or push.
+Updated 29 October 2026 (Australia/Sydney). Phase 3F evaluation consolidation; no deployment or push.
 
 - Stack: FastAPI + vanilla JS/CSS; SQLite; one shared CPU MiniLM
   `all-MiniLM-L6-v2` (384 dimensions, pinned revision), TF-IDF baseline.
@@ -60,9 +60,15 @@ Updated 29 October 2026 (Australia/Sydney). Phase 3E review preparation; no depl
   44 candidates +15 overlap pairs; human choices/CSV remain separate from optional AI notes.
   Guide: evaluations/phase3e/README.md. Export completed CSV, then scripts/score_phase3e.py
   calculates human-only precision from saved rankings; Unsure/unreviewed stay unresolved.
-  No model/refetch/application changes. Actual independent human reviews received: 0.
+  No model/refetch/application changes. Actual independently attested human reviews: 0.
+- Phase 3F (`5453900` baseline): supplied CSVs reconcile 14 screened user decisions
+  (8/44 candidates, 6/15 overlap pairs) +45 AI-assisted assessments. All attestations
+  are false; no complete user-only P@3/P@5 cutoff, no independent accuracy claim.
+  Offline evaluator: scripts/phase3f_evaluation.py; portable inputs/results/error
+  examples: evaluations/phase3f; report docs/phase3f-evaluation.md. No ranking changes.
 - Release blockers: docs/release-readiness.md. Existing production Compose defaults
   to shared local mode with website fetching off; infrastructure egress is unrestricted.
-- Next: human-adjudicate 44 candidate rows/15 overlap pairs and obtain an authorised
+- Next: obtain independent complete top-five-union labels, clarify contextual-link
+  versus answer/overlap intent, and obtain an authorised
   functioning sitemap/non-WordPress sample; then close deployment/abuse/egress/capacity gaps.
   Not production-certified; no PostgreSQL, React, Redis or cloud changes are needed now.
