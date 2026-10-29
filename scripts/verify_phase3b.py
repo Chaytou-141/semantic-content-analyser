@@ -150,7 +150,13 @@ def browser_and_model(real_model=True):
             for page in [pa, pb]:
                 page.on('pageerror', lambda error: result['browser_errors'].append(str(error)))
                 page.on('dialog', lambda dialog: dialog.accept())
-                page.goto(base + '/#collection')
+                page.goto(base)
+                expect(page.locator('#view-home')).to_be_visible()
+                expect(page.locator('#home-website-url')).to_be_visible()
+                expect(page.locator('#home-website-url')).to_be_enabled()
+                expect(page.locator('#analysis-nav')).to_be_hidden()
+                page.keyboard.press('/')
+                expect(page.locator('#home-website-url')).to_be_focused()
                 expect(page.locator('#collection-count')).to_have_text('21 articles in your collection')
             if not real_model:
                 pa.screenshot(path=str(OUT / 'ui-collection.png'), full_page=True)
@@ -164,9 +170,8 @@ def browser_and_model(real_model=True):
 
             def workflow(page, context, host):
                 original = collection(context)
-                page.locator('#website-open').click()
-                page.locator('#website-url').fill('http://' + host + '/')
-                page.locator('#website-form button[type=submit]').click()
+                page.locator('#home-website-url').fill('http://' + host + '/')
+                page.locator('#home-website-submit').click()
                 expect(page.locator('.website-candidates input')).to_have_count(count, timeout=30000)
                 page.locator('#website-filter').fill('/posts/1')
                 expect(page.locator('.website-candidates label:visible')).to_have_count(11 if count == 36 else 1)
@@ -209,6 +214,8 @@ def browser_and_model(real_model=True):
             pa.locator('#website-commit').click()
             expect(pa.locator('#collection-count')).to_have_text(f'{count} articles in your collection', timeout=60000)
             expect(pa.locator('#website-dialog')).not_to_be_visible()
+            expect(pa.locator('#view-search')).to_be_visible()
+            expect(pa.locator('#analysis-nav')).to_be_visible()
             imported = collection(a)
             assert all('POISON' not in x['body'] and 'window.evil' not in x['body'] for x in imported['articles'])
             assert len(collection(b)['articles']) == 21
@@ -247,7 +254,8 @@ def browser_and_model(real_model=True):
             assert shared.constructions == 1
 
             # Existing CSV interface: invalid replacement leaves all website articles intact.
-            pa.locator('#import-collection').click()
+            pa.get_by_role('link', name='Semantic Content Analyser home', exact=True).click()
+            pa.locator('#home-import').click()
             pa.locator('#csv-text').fill('id,title,body\nx,One,first\nx,Two,second')
             pa.locator('#import-form button[type=submit]').click()
             expect(pa.locator('#import-dialog .dialog-error')).to_be_visible()
@@ -255,18 +263,58 @@ def browser_and_model(real_model=True):
             pa.locator('#csv-text').fill('id,title,body\nx,Coffee equipment,Plan counter equipment for a small cafe.\ny,Refrigerator layout,Measure display refrigerator ventilation clearance.')
             pa.locator('#import-form button[type=submit]').click()
             expect(pa.locator('#collection-count')).to_have_text('2 articles in your collection', timeout=60000)
+            expect(pa.locator('#view-search')).to_be_visible()
+            pa.get_by_role('link', name='Your articles', exact=False).click()
             with pa.expect_download() as download:
                 pa.get_by_role('link', name='Export CSV', exact=True).click()
             rows = list(csv.DictReader(io.StringIO(Path(download.value.path()).read_text(encoding='utf-8-sig'))))
             assert len(rows) == 2 and {r['id'] for r in rows} == {'x', 'y'}
             result['csv_browser'] = 'Invalid import rollback; valid import and actual CSV download passed'
             pa.set_viewport_size({'width': 390, 'height': 844})
+            pa.get_by_role('link', name='Semantic Content Analyser home', exact=True).click()
+            expect(pa.locator('#view-home')).to_be_visible()
+            assert pa.evaluate('document.documentElement.scrollWidth <= innerWidth')
+            pa.screenshot(path=str(OUT / 'home-mobile.png'), full_page=True)
+            pa.get_by_role('link', name='Your articles', exact=False).click()
             pa.locator('#website-open').click()
             expect(pa.locator('#website-commit')).to_be_hidden()
             assert pa.evaluate('document.documentElement.scrollWidth <= innerWidth')
             pa.screenshot(path=str(OUT / 'website-mobile.png'), full_page=True)
             result['model_constructions'] = shared.constructions
             result['visitor_contexts'] = 2
+            # Feature-disabled installs must keep a usable home and article tools.
+            # In particular an unrelated task must not re-enable the URL submit.
+            if not real_model:
+                settings.website_fetch_enabled = False
+                disabled = browser.new_context(viewport={'width':390,'height':844})
+                pd = disabled.new_page()
+                pd.on('pageerror', lambda error: result['browser_errors'].append(str(error)))
+                pd.goto(base)
+                expect(pd.locator('#home-website-unavailable')).to_be_visible()
+                expect(pd.locator('#home-website-submit')).to_be_disabled()
+                pd.locator('#home-explore').click()
+                pd.locator('.search-settings > summary').click()
+                pd.locator('#search-method').select_option('tfidf')
+                pd.locator('#search-query').fill('coffee')
+                pd.locator('#search-form button[type=submit]').click()
+                expect(pd.locator('#search-results .result-card')).to_have_count(4, timeout=10000)
+                pd.get_by_role('link', name='Semantic Content Analyser home', exact=True).click()
+                expect(pd.locator('#home-website-submit')).to_be_disabled()
+                pd.locator('.utility-menu > summary').click()
+                pd.get_by_role('link', name='Development evaluation', exact=True).click()
+                expect(pd.locator('#evaluation-content .metric-panel')).to_have_count(2)
+                result['feature_disabled_home'] = 'passed after an article search task; advanced evaluation reachable'
+                result['visitor_contexts'] = 3
+                disabled.close()
+                settings.website_fetch_enabled = True
+                legacy = subprocess.run([sys.executable, '-B', str(ROOT / 'scripts/browser_smoke.py'),
+                                         '--url', base, '--output', str(OUT / 'legacy-browser')], cwd=ROOT,
+                                        capture_output=True, text=True, encoding='utf-8', errors='replace')
+                (OUT / 'legacy-browser.log').write_text(legacy.stdout + legacy.stderr, encoding='utf-8')
+                assert legacy.returncode == 0, 'Legacy browser workflows failed; see legacy-browser.log'
+                result['existing_browser_workflows'] = 'passed with deterministic encoder in another isolated browser session'
+                result['visitor_contexts'] = 4
+                assert shared.constructions == 1
             assert not result['browser_errors']
             browser.close()
     finally:

@@ -771,3 +771,51 @@ Private source/ranking packet: runtime/phase3d/editorial-review.html.
 Next: independent adjudication of the small candidate/pair set and authorised real
 sitemap/platform validation, followed by a narrowly scoped deployment-readiness milestone.
 Keep the existing stack/ranking and do not infer public readiness from provisional scores.
+
+## Website-first UX follow-up
+
+29 October 2026. Baseline `771c4cb`. User requested removing the complicated dashboard
+entry and explicitly chose a website URL as the first-page input. Local commit subject:
+**Replace dashboard entry with website-first workflow**.
+
+The landing page now has one main action: enter a website and find articles. It submits
+through the existing discovery form/API, with selection/preview/atomic confirmation
+unchanged. The five-tab dashboard navigation is removed from the home screen. After
+website or CSV import, users go directly to search/link/overlap tools. Your articles
+opens management; More contains CSV utilities/development evaluation. Topic browsing
+and search settings are collapsed. Sample prompts disappear for imported sites, source
+selectors show titles, and generated IDs are omitted from ordinary result metadata.
+Real collections without topic labels still get up to four preview articles.
+
+The existing typography/palette was retained using the frontend-design skill. This was
+a flow simplification rather than a framework/backend rewrite. No data or evaluation
+functionality was deleted. Deep links still work; unknown routes return to the home page.
+The existing website feature flag remains enforced, with a clear disabled-installation
+fallback to CSV/sample tools.
+
+Checks found/fixed an early-loading search shortcut switching to the old search view,
+and task completion now restores each submit button's original disabled state instead
+of accidentally enabling disabled website entry. Home URL controls stay disabled until
+configuration is loaded. The / shortcut focuses the URL on home and article queries in
+the analysis area.
+
+Focused verification: 15 application tests passed in 0.99 seconds. Browser checks with
+a deterministic encoder passed homepage URL -> WordPress/sitemap discovery -> selection
+-> import -> analysis, CSV invalid-import rollback/valid import/export, four independent
+browser sessions, disabled website installs after a search task, advanced evaluation,
+editing/unsaved-change prompts, search/link/overlap and mobile navigation. No MiniLM
+weights or public websites were used. One fixture assertion was corrected to expect
+the existing four TF-IDF coffee matches rather than assuming every query returns five.
+JavaScript syntax and Git whitespace checks passed. Desktop/390px mobile screenshots
+were inspected; the real local preview also passed homepage/sample-entry/layout checks.
+
+Existing verifier assertions were updated to the intentional new routes and disclosures;
+their output was isolated under runtime/ux-home to preserve previous artifacts. The
+application backend/security, original data, benchmarks and editorial history remain
+unchanged. All 1,200 protected files passed the preservation check. The full model and
+historical benchmark suites were not repeated for this client-only change.
+
+An opt-in local visitor preview runs at http://localhost:8002 with separate temporary
+storage and a stable local signing key under ignored runtime/ux-home/preview. Existing
+servers/development data were left in place. Portable evidence: docs/home-ux-verification.json.
+No public deployment, paid service or push.

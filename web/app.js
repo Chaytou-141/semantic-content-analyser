@@ -1,7 +1,7 @@
 "use strict";
 
 const $ = (selector) => document.querySelector(selector);
-const state = { articles: [], meta: null, view: "search", busy: false, lastLinks: null, sourceId: null, hasSearched: false, pendingEvaluation: false };
+const state = { articles: [], meta: null, view: "home", busy: false, lastLinks: null, sourceId: null, hasSearched: false, pendingEvaluation: false };
 
 function el(tag, attrs = {}, ...children) {
   const node = document.createElement(tag);
@@ -57,8 +57,8 @@ async function task(message, action) {
   document.querySelectorAll(".dialog-error").forEach((error) => error.remove());
   $("#busy-message").textContent = message;
   $("#busy").hidden = false;
-  const submitButtons = [...document.querySelectorAll("button[type=submit]")];
-  submitButtons.forEach((button) => { button.disabled = true; });
+  const submitButtons = [...document.querySelectorAll("button[type=submit]")].map((button) => ({ button, disabled: button.disabled }));
+  submitButtons.forEach(({ button }) => { button.disabled = true; });
   try { await action(); }
   catch (error) {
     $("#app-error").textContent = error.message;
@@ -73,7 +73,7 @@ async function task(message, action) {
   } finally {
     state.busy = false;
     $("#busy").hidden = true;
-    submitButtons.forEach((button) => { button.disabled = false; });
+    submitButtons.forEach(({ button, disabled }) => { button.disabled = disabled; });
     if (state.pendingEvaluation) {
       state.pendingEvaluation = false;
       if (state.view === "evaluation") task("Loading saved evaluation results…", renderEvaluation);
@@ -89,6 +89,13 @@ async function loadCollection() {
   state.meta = meta;
   $("#website-open").hidden = !meta.website_fetch_enabled;
   $("#website-availability").hidden = Boolean(meta.website_fetch_enabled);
+  $("#home-website-url").disabled = !meta.website_fetch_enabled;
+  $("#home-website-submit").disabled = !meta.website_fetch_enabled;
+  $("#home-website-unavailable").hidden = Boolean(meta.website_fetch_enabled);
+  const sampleCollection = state.articles.length === 21 && state.articles.every((article) => article.url.startsWith("https://example.com/articles/"));
+  $("#home-explore").textContent = sampleCollection ? "Try the sample articles" : `Continue with your ${state.articles.length} articles`;
+  $("#analysis-collection-note").textContent = `${state.articles.length} articles ready. Search by topic, review link opportunities or compare overlap.`;
+  $(".examples").hidden = !state.articles.every((article) => article.url.startsWith("https://example.com/articles/"));
   $("#workspace-notice").textContent = meta.workspace_mode === "visitor"
     ? `This browser has its own temporary workspace. Data expires after ${Math.round(meta.idle_seconds / 60)} minutes without activity. Import only content you are authorised to process.`
     : "Demo articles are fictional. Import only content you are authorised to process. This installation has one shared workspace.";
@@ -96,7 +103,7 @@ async function loadCollection() {
   $("#nav-article-count").textContent = state.articles.length;
   const select = $("#links-source");
   const previous = select.value;
-  select.replaceChildren(...state.articles.map((article) => el("option", { value: article.id, text: `${article.id} — ${article.title}` })));
+  select.replaceChildren(...state.articles.map((article) => el("option", { value: article.id, text: article.title })));
   if (state.articles.some((article) => article.id === previous)) select.value = previous;
   renderCollection();
   renderCollectionRail();
@@ -136,10 +143,14 @@ function renderDiscovery() {
     if (!topics.has(article.topic)) { featured.push(article); topics.add(article.topic); }
     if (featured.length === 4) break;
   }
+  for (const article of state.articles) {
+    if (featured.length === 4) break;
+    if (!featured.includes(article)) featured.push(article);
+  }
   const list = el("div", { class: "collection-preview" });
-  for (const article of featured) {
+  for (const [index, article] of featured.entries()) {
     const excerpt = article.body.length > 160 ? article.body.slice(0, 160).replace(/\s+\S*$/u, "") + "…" : article.body;
-    list.append(el("button", { class: "preview-row", "aria-label": `Open ${article.title}`, onclick: () => openArticle(article.id) }, el("span", { class: "preview-id", text: article.id }), el("span", {}, el("span", { class: "preview-title", text: article.title }), el("span", { class: "preview-excerpt", text: excerpt }), el("span", { class: "preview-topic", text: article.topic.replaceAll("_", " ") || "Uncategorised" })), el("span", { class: "preview-arrow", "aria-hidden": "true", text: "↗" })));
+    list.append(el("button", { class: "preview-row", "aria-label": `Open ${article.title}`, onclick: () => openArticle(article.id) }, el("span", { class: "preview-id", text: index + 1 }), el("span", {}, el("span", { class: "preview-title", text: article.title }), el("span", { class: "preview-excerpt", text: excerpt }), article.topic ? el("span", { class: "preview-topic", text: article.topic.replaceAll("_", " ") }) : null), el("span", { class: "preview-arrow", "aria-hidden": "true", text: "↗" })));
   }
   $("#search-results").replaceChildren(el("div", { class: "result-heading" }, el("h2", { text: "From your collection" }), el("span", { text: `${featured.length} of ${state.articles.length} articles` })), list);
 }
@@ -153,14 +164,16 @@ async function start() {
     $("#workspace").hidden = false;
     $("#sign-out").hidden = !session.password_required;
     await loadCollection();
-    navigate(location.hash.slice(1) || "search");
+    navigate(location.hash.slice(1) || "home");
   } catch (error) { $("#app-error").textContent = error.message; $("#app-error").hidden = false; $("#workspace").hidden = false; }
 }
 
 function navigate(view) {
-  if (!["search", "links", "overlap", "collection", "evaluation"].includes(view)) view = "search";
+  if (!["home", "search", "links", "overlap", "collection", "evaluation"].includes(view)) view = "home";
   state.view = view;
   document.querySelectorAll(".view").forEach((section) => { section.hidden = section.id !== `view-${view}`; });
+  $("#analysis-nav").hidden = !["search", "links", "overlap"].includes(view);
+  document.querySelectorAll(".utility-menu").forEach((menu) => { menu.open = false; });
   document.querySelectorAll(".nav-item").forEach((button) => {
     const active = button.dataset.view === view;
     button.classList.toggle("active", active);
@@ -183,7 +196,11 @@ function articleTitle(result) {
 }
 
 function scoreBadge(score) { return el("span", { class: "score", text: `Similarity ${score.toFixed(3)}` }); }
-function metadata(result) { return el("div", { class: "article-meta" }, el("span", { text: result.id }), result.topic ? el("span", { class: "topic-tag", text: result.topic.replaceAll("_", " ") }) : null); }
+function metadata(result) {
+  const generatedId = /^W[a-f0-9]{16}$/.test(result.id);
+  if (generatedId && !result.topic) return null;
+  return el("div", { class: "article-meta" }, generatedId ? null : el("span", { text: result.id }), result.topic ? el("span", { class: "topic-tag", text: result.topic.replaceAll("_", " ") }) : null);
+}
 function methodName(method) { return method === "embeddings" ? "Embeddings" : "TF-IDF"; }
 
 function renderSearch(payload) {
@@ -356,7 +373,19 @@ $("#overlap-form").addEventListener("submit", (event) => {
   });
 });
 $("#article-filter").addEventListener("input", renderCollection);
-for (const id of ["#import-top", "#import-collection"]) $(id).addEventListener("click", () => $("#import-dialog").showModal());
+for (const id of ["#import-top", "#import-collection", "#home-import"]) $(id).addEventListener("click", () => {
+  $(".utility-menu").open = false;
+  $("#import-dialog").showModal();
+});
+$("#home-explore").addEventListener("click", () => { navigate("search"); $("#search-query").focus(); });
+$("#home-website-form").addEventListener("submit", (event) => {
+  event.preventDefault();
+  if (state.busy || !state.meta?.website_fetch_enabled) return;
+  $("#website-url").value = $("#home-website-url").value.trim();
+  $("#website-method").value = "auto";
+  $("#website-dialog").showModal();
+  $("#website-form").requestSubmit();
+});
 $("#csv-file").addEventListener("change", async (event) => {
   const file = event.target.files[0];
   if (!file) return;
@@ -373,7 +402,7 @@ $("#import-form").addEventListener("submit", (event) => {
     invalidateResults();
     $("#import-form").dataset.dirty = "false";
     $("#import-dialog").close();
-    navigate("collection");
+    navigate("search");
     toast(`Imported ${result.count} articles.`);
   });
 });
@@ -497,7 +526,7 @@ $("#website-commit").addEventListener("click", () => {
     websiteRun.phase = "imported";
     renderWebsite(websiteRun); // Reopening must not offer a stale replacement action.
     $("#website-dialog").close();
-    await loadCollection(); invalidateResults(); navigate("collection");
+    await loadCollection(); invalidateResults(); navigate("search");
     toast(`Imported ${result.count} website articles. You can now search, review links and compare overlap.`);
   });
 });
@@ -505,7 +534,9 @@ $("#website-commit").addEventListener("click", () => {
 window.addEventListener("hashchange", () => navigate(location.hash.slice(1)));
 document.addEventListener("keydown", (event) => {
   if (event.key === "/" && !["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement.tagName) && !$("#workspace").hidden && !document.querySelector("dialog[open]")) {
-    event.preventDefault(); navigate("search"); $("#search-query").focus();
+    event.preventDefault();
+    if (state.view === "home") $("#home-website-url").focus();
+    else { navigate("search"); $("#search-query").focus(); }
   }
 });
 start();

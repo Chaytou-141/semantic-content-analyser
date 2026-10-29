@@ -19,6 +19,9 @@ Updated 29 October 2026 (Australia/Sydney). Phase 3D; no deployment or push.
   Current implementation commit subject: `Add bounded website discovery and staged article import`.
 - UI follow-up: website/CSV entry points, three-stage import workspace, searchable
   candidates, bounded bulk selection and persistent confirmation controls.
+- Website-first UX: root/#home shows the URL form; it starts existing discovery directly.
+  Import leads to article analysis (search/links/overlap). Management stays under Your
+  articles, evaluation/CSV utilities under More; settings/topic overview are collapsed.
 - Enable website UI/API explicitly with `ENABLE_WEBSITE_FETCH=true` before startup.
   Every network request uses SafeFetcher: full public DNS validation, numeric-IP pinning,
   verified TLS, robots, same-host redirects, byte/decompression/deadline limits.

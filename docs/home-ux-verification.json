@@ -1,0 +1,47 @@
+{
+  "baseline_commit": "771c4cb",
+  "scope": "Website URL first; progressive disclosure; no backend changes",
+  "application_tests": {
+    "passed": 15,
+    "seconds": 0.99,
+    "scope": "tests/test_application.py"
+  },
+  "browser_checks": {
+    "real_model": false,
+    "offline": true,
+    "public_websites_fetched": false,
+    "transport": "Actual loopback HTTP with mocked DNS/test-only numeric connector",
+    "test_delay_seconds": 0,
+    "browser_errors": [],
+    "real_compare_seconds": 0.078,
+    "real_collection": {
+      "articles": 3,
+      "characters": 3501,
+      "passages": 3,
+      "embedding_shape": [
+        3,
+        384
+      ]
+    },
+    "wordpress_workflow": "3 articles: discovery -> selection -> preview -> atomic import -> both-method search/link evidence and overlap",
+    "sitemap_workflow": "3 articles: REST 404 fallback -> sitemap index -> URL set -> selection -> preview -> import",
+    "csv_browser": "Invalid import rollback; valid import and actual CSV download passed",
+    "model_constructions": 1,
+    "visitor_contexts": 4,
+    "feature_disabled_home": "passed after an article search task; advanced evaluation reachable",
+    "existing_browser_workflows": "passed with deterministic encoder in another isolated browser session",
+    "servers_stopped": true,
+    "protected_files_checked": 822
+  },
+  "protected_files_checked": 1200,
+  "changed_protected_files": [],
+  "real_minilm_loaded": false,
+  "public_websites_fetched": false,
+  "latest_preview": {
+    "url": "http://localhost:8002/",
+    "desktop_mobile_home_checked": true,
+    "sample_entry_checked": true
+  },
+  "full_suite_repeated": false,
+  "historical_benchmark_repeated": false
+}
