@@ -1,6 +1,6 @@
 # Semantic Content Analyser: current context
 
-Updated 29 October 2026 (Australia/Sydney). Phase 3F evaluation consolidation; no deployment or push.
+Updated 29 October 2026 (Australia/Sydney). Phase 3G new editorial packet; no deployment or push.
 
 - Stack: FastAPI + vanilla JS/CSS; SQLite; one shared CPU MiniLM
   `all-MiniLM-L6-v2` (384 dimensions, pinned revision), TF-IDF baseline.
@@ -66,6 +66,13 @@ Updated 29 October 2026 (Australia/Sydney). Phase 3F evaluation consolidation; n
   are false; no complete user-only P@3/P@5 cutoff, no independent accuracy claim.
   Offline evaluator: scripts/phase3f_evaluation.py; portable inputs/results/error
   examples: evaluations/phase3f; report docs/phase3f-evaluation.md. No ranking changes.
+- Phase 3G (`cad5b4a` baseline): runtime/phase3g/blind-review.html has 44 new unselected
+  task/destination judgements (23 distinct destinations) across seven tasks; excludes
+  the 15 overlap pairs. No method/rank/score/old judgement data in reviewer HTML.
+  Coordinator mapping: evaluations/phase3g; build/score via scripts.build_phase3g and
+  scripts.phase3g_review. Requires new human/exposure declarations; old CSVs incompatible.
+  Complete eligible cutoffs only, paired complete-case comparisons; no formal blinded
+  independence certification or new human accuracy results. Guide: evaluations/phase3g/README.md.
 - Release blockers: docs/release-readiness.md. Existing production Compose defaults
   to shared local mode with website fetching off; infrastructure egress is unrestricted.
 - Next: obtain independent complete top-five-union labels, clarify contextual-link

@@ -921,3 +921,62 @@ evaluations/phase3f/README.md. Release-readiness and PROJECT_CONTEXT are updated
 security, hosting, abuse and unvalidated non-WordPress/sitemap blockers remain open.
 Next: obtain complete independent labels under clear task-specific criteria, then
 evaluate any targeted ranking experiment without training/tuning on the same test set.
+
+## Phase 3G — New editorial evaluation packet
+
+29 October 2026 (Australia/Sydney). Baseline `cad5b4a`; frozen rankings `771c4cb`.
+Local commit subject: **Prepare metadata-blind editorial round for complete ranking evaluation**.
+Resolve with `git log -1 --format=%H --grep="Prepare metadata-blind editorial round for complete ranking evaluation"`.
+
+Phase 3F's 14 user decisions after AI screening and 45 AI-assisted assessments did not
+complete any eligible human cutoff. Phase 3E also allowed optional retrieval/AI disclosure.
+The new round needs a packet that covers the complete top-five union without exposing
+that information while a reviewer decides. Editing old attestations, hiding labels with
+CSS or filling the gaps from AI assessments would not solve the provenance problem.
+
+The new builder reuses frozen evidence checks and original passages, then creates a
+strictly whitelisted reviewer payload. There are 44 task/destination judgements across
+R01–R04/L01–L03 (23 distinct destinations, 24 articles including sources). The 15 existing
+overlap-investigation cases remain untouched and outside recommendation metrics.
+The browser gets only question/criterion, source/destination text, original supporting
+passages and saved existing-link facts. Method names, ranks, scores, earlier judgements
+and coordinator mappings are not embedded. Opaque aliases, hash-based ordering and
+deduplicated unattributed passages avoid presenting either method's order. Complete
+saved articles remain available for checking selective passage evidence.
+
+This is a new packet fingerprint/schema/draft namespace; no previous decision is imported
+or preselected. Useful/Not useful/Unsure, optional reasons, CSV export/resume, task/status
+filters and browser draft recovery are provided. Invalid imports validate completely
+before replacing a draft. Untrusted text uses textContent/escaped JSON and hashed-script
+CSP; no resources load over the network. Prior exposure and human attestation are explicit
+and initially unset. Earlier screened participants must report exposure, not claim a fresh
+review. They can still submit preserved judgements, but cannot supply eligible labels
+for the new no-prior-exposure metric scope.
+
+The separate scorer checks the coordinator mapping against frozen rankings, strict CSV
+schema/identities and consistent reviewer/provenance. All k results need eligible
+resolved human labels before P@k is reported. Unsure/missing/ineligible entries remain
+explicit gaps. Related and internal-link groups stay separate; comparative subset means
+use the same paired complete cases. Original Phase 3E/3F evaluators are unchanged.
+No overlap duplicate/merge accuracy, current human precision or model improvement is
+claimed. The coordinator protocol asks for preserving submitted CSV bytes/hash before
+revealing results and separately versioning any later adjudication.
+
+Verification: 68 targeted Phase 3E/3F/3G tests passed in 1.39 seconds in the final run,
+zero failed/skipped. The mobile import control was widened after visual inspection;
+the targeted tests and browser checks were rerun after this offline-template adjustment.
+Offline desktop/390px browser checks passed for 44 initially unanswered cards, no retrieval
+or AI controls, separate prior-draft storage, export/new-browser resume, quotes/newlines/
+formula-safe reasons, invalid-import rollback, old-schema rejection, filters, reload and
+mobile width. Screenshots were inspected. Test choices are explicitly synthetic; no new
+human decisions were received. Browser errors and external HTTP requests were zero.
+All 1,758 protected tracked/runtime files remain unchanged. Evidence:
+docs/phase3g-verification.json; guide and protocol: evaluations/phase3g/README.md.
+
+The delivered file supports blindness to retrieval metadata, not formal blinded
+independence: identity/exposure are self-reported; external access/discussion cannot be
+prevented; source/task/passage selection remains model-derived and limited to one site.
+No application/model/ranking/security change, inference, website fetch, historical
+benchmark, full suite, package installation, infrastructure, deployment or push.
+Next: give only the standalone private HTML to a genuinely unexposed reviewer, collect
+all 44 judgements and score complete eligible cutoffs without filling uncertainty.
