@@ -1,6 +1,6 @@
 # Semantic Content Analyser: current context
 
-Updated 29 October 2026 (Australia/Sydney). Phase 3G new editorial packet; no deployment or push.
+Updated 29 October 2026 (Australia/Sydney). Phase 4A compatibility/readiness; no deployment or push.
 
 - Stack: FastAPI + vanilla JS/CSS; SQLite; one shared CPU MiniLM
   `all-MiniLM-L6-v2` (384 dimensions, pinned revision), TF-IDF baseline.
@@ -73,9 +73,19 @@ Updated 29 October 2026 (Australia/Sydney). Phase 3G new editorial packet; no de
   scripts.phase3g_review. Requires new human/exposure declarations; old CSVs incompatible.
   Complete eligible cutoffs only, paired complete-case comparisons; no formal blinded
   independence certification or new human accuracy results. Guide: evaluations/phase3g/README.md.
-- Release blockers: docs/release-readiness.md. Existing production Compose defaults
-  to shared local mode with website fetching off; infrastructure egress is unrestricted.
-- Next: obtain independent complete top-five-union labels, clarify contextual-link
-  versus answer/overlap intent, and obtain an authorised
-  functioning sitemap/non-WordPress sample; then close deployment/abuse/egress/capacity gaps.
+- Phase 4A (`1a276af` baseline): explicit extensionless/query sitemap endpoints preserved;
+  XML mode at a bare root uses advertised maps/defaults without REST probing. Namespace-
+  qualified loc paths prevent image/foreign extensions becoming articles; empty loc/href
+  entries are ignored; queue/depth/200-location truncation warns. Fetch limits unchanged.
+  Production Compose explicitly selects visitor mode/private root/website import while
+  retaining password/secret gate; local demo defaults unchanged. No Docker/live fetch.
+  Evidence and operational gaps: docs/phase4a-compatibility-readiness.md and verification.
+- Human evaluation is intentionally deferred. Do not generate more packets or ask for
+  labels during deployment-readiness work; earlier provenance/quality limitations remain.
+- Release blockers: docs/release-readiness.md. Docker CLI unavailable locally; image/
+  HTTPS visitor-mode smoke still needed. Infrastructure egress is unrestricted, proxy
+  trusts all forwarded peers, and ingress fairness/container quotas need assessment.
+- Next: Phase 4B bounded abuse/proxy/egress/resource/retention controls and disposable
+  local Linux container verification. Real XML/non-WordPress sites remain unvalidated;
+  future live fetches require explicit authorisation. No deployment or push authorised.
   Not production-certified; no PostgreSQL, React, Redis or cloud changes are needed now.

@@ -67,11 +67,11 @@ class WebsiteService:
         session = self.fetcher.new_session(owner)
         session.active_time_budget = True
         session.absolute_deadline = session.started + WEBSITE_LIFETIME_SECONDS
-        kind = 'map' if target.path.lower().endswith('.xml') or method == 'sitemap' else 'home'
-        if method == 'sitemap' and not target.path.lower().endswith('.xml'):
-            url = target.origin + '/sitemap.xml'
-        else:
-            url = target.url
+        # Explicit sitemap endpoints may be extensionless or query-based. A bare
+        # website root instead discovers its advertised maps without probing REST.
+        kind = 'map' if (target.path.lower().endswith('.xml') or
+                         (method == 'sitemap' and (target.path != '/' or target.query))) else 'home'
+        url = target.url
         return WebsiteRun(secrets.token_hex(16), owner, revision, session, target.url, method,
                           pending=[(kind, url, 0, 1)])
 
@@ -97,7 +97,13 @@ class WebsiteService:
                 url = self.reference(run, value)
             except FetchError:
                 continue
-            if depth <= 3 and url not in run.visited and url not in queued and len(run.pending) < MAX_DISCOVERY:
+            if url in run.visited or url in queued:
+                continue
+            if depth > 3 or len(run.pending) >= MAX_DISCOVERY:
+                warning = 'Sitemap discovery reached its bounded depth or queue limit; this is not the complete website.'
+                if warning not in run.warnings:
+                    run.warnings.append(warning)
+            else:
                 run.pending.append(('map', url, depth, 1))
                 queued.add(url)
 
@@ -133,14 +139,18 @@ class WebsiteService:
                         self.read_map(run, response.body, depth)
                     else:
                         api, maps = homepage_metadata(response.body, response.url)
-                        if run.method == 'auto':
+                        if run.method in {'auto', 'sitemap'}:
                             self.queue_maps(run, maps)
                             for _, policy in run.session.robots.values():
                                 self.queue_maps(run, policy.sitemaps)
-                        origin = normalize_url(response.url).origin
-                        api = api or origin + '/wp-json/'
-                        api = api.rstrip('/') + '/wp/v2/posts'
-                        run.pending.insert(0, ('wp', api + '?per_page=20&page=1&_fields=id,link,title,content.protected', 0, 1))
+                        if run.method == 'sitemap':
+                            if not run.pending:
+                                self.fallback_maps(run)
+                        else:
+                            origin = normalize_url(response.url).origin
+                            api = api or origin + '/wp-json/'
+                            api = api.rstrip('/') + '/wp/v2/posts'
+                            run.pending.insert(0, ('wp', api + '?per_page=20&page=1&_fields=id,link,title,content.protected', 0, 1))
                 elif kind == 'wp':
                     self.read_wp(run, response, url, page)
                 else:
@@ -227,6 +237,10 @@ class WebsiteService:
 
     def read_map(self, run, body, depth):
         root, urls = sitemap(body)
+        if len(urls) >= MAX_CANDIDATES:
+            warning = 'A sitemap reached its bounded 200-location limit; this may not be the complete website.'
+            if warning not in run.warnings:
+                run.warnings.append(warning)
         if root == 'sitemapindex':
             self.queue_maps(run, urls, depth + 1)
         else:

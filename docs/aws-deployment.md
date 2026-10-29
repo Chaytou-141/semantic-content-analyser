@@ -2,6 +2,12 @@
 
 This guide prepares a single-server, password-protected demo. No AWS resources were created during development. Run the local application first, then work through these steps deliberately; `terraform apply` creates chargeable resources.
 
+Phase 4A preparation does **not** authorise deployment: first review
+[the compatibility/container assessment](phase4a-compatibility-readiness.md) and
+[release blockers](release-readiness.md). The production Compose template now uses
+isolated temporary visitor workspaces and enables bounded website import behind the
+existing password gate. The local source/Compose demo retains its persistent collection.
+
 ## What each piece does
 
 | Piece | Purpose |
@@ -124,11 +130,26 @@ sudo docker compose --project-name semantic --env-file .env --env-file release.e
 
 Check `/health` for process/database health. A healthy process is not a full quality or latency check; also run a real query after deployment. Docker logs rotate at 10 MB with three files per service. The app logs request paths/statuses rather than article text or passwords. Set up external HTTPS uptime monitoring and CPU/memory/disk alerts for any ongoing use; this first template does not automatically configure those services.
 
-The workspace password protects one shared collection. It does not provide individual accounts, tenant isolation, password recovery or an administrative audit trail. Treat imported data according to your own authorisation and retention requirements.
+The password gates entry; each browser then owns an isolated temporary SQLite workspace
+under `/app/runtime/visitors`, with signed ownership cookies and revision checks. This
+is browser ownership, not individual accounts, password recovery or an administrative
+audit trail. Sign-in expiry is separate from visitor idle expiry (one hour), absolute
+workspace expiry (24 hours) and cleanup (normally every 60 seconds, deferred while work
+is active). Keep signing secrets stable and volume permissions private. The previous
+local `/app/runtime/workspace.sqlite3` is not deleted or migrated by changing the mode.
 
 ## 8. Back up before replacing or terminating the server
 
-Article CSV export is useful but does not contain saved review decisions. Make a consistent SQLite backup through SQLite's backup API rather than copying a database while its WAL is active:
+Article CSV export is useful but does not contain saved review decisions. Temporary
+visitor collections are not promised durable storage. Decide and disclose a retention/
+backup policy before collecting public visitor data; copying all visitor directories
+indiscriminately can retain data beyond its intended expiry. Visitor recovery/retention
+and whole-volume operations require a separately tested procedure.
+
+**The following legacy single-database commands apply only to an intentionally configured
+local workspace. Do not run them for the current visitor deployment:** they do not back
+up its visitor databases. For an authorised persistent local workspace, make a consistent
+SQLite backup through the backup API rather than copying a database while its WAL is active:
 
 ```bash
 cd /opt/semantic

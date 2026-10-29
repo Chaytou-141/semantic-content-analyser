@@ -179,14 +179,22 @@ The frontend and API are served from the same origin. Authenticated callers can 
 | `GET /api/evaluation` | Saved original development metrics |
 | `POST /api/website/check` | Optional bounded fetch check; metadata only, disabled by default |
 
-All state-changing and analysis POST/PUT calls require `X-Workspace-Request: true`. This custom header, same-origin requests and strict same-site cookies prevent ordinary cross-site form submissions. Production requires a 12+ character `APP_PASSWORD` and 32+ character `SECRET_KEY`; the deployment helper enforces a longer password. Sessions expire after eight hours. The single-worker process throttles sign-in attempts; this is not a distributed abuse-prevention system.
+All state-changing and analysis POST/PUT calls require `X-Workspace-Request: true`. This custom header, same-origin requests and strict same-site cookies prevent ordinary cross-site form submissions. The production deployment template requires a 12+ character `APP_PASSWORD` and 32+ character `SECRET_KEY`; the deployment helper enforces a longer password. Sign-in sessions expire after eight hours; visitor ownership and idle-expiry limits are separate. The single-worker process throttles sign-in attempts; this is not a distributed abuse-prevention system.
 
 ## Website import (Phase 3B)
 
-Set `$env:ENABLE_WEBSITE_FETCH = 'true'` before launching Uvicorn to enable **Import
-website** on the Article collection screen. Enter a public website or `.xml` sitemap,
+Set `$env:ENABLE_WEBSITE_FETCH = 'true'` before launching Uvicorn to enable the website
+URL workflow on the first page. Enter a public website or published XML sitemap URL,
 discover WordPress posts or sitemap URLs, select up to 40 articles, and review the
 extracted text before replacing your collection. Existing CSV/sample workflows remain.
+
+Phase 4A fixes explicit extensionless/query-based sitemap URLs and namespace extensions.
+In **XML sitemap** discovery mode, a bare website root uses homepage/robots-advertised
+maps (or conventional defaults) without probing WordPress. A non-root/query URL is
+treated as the explicit sitemap endpoint and is preserved. Standard namespace-qualified
+URL sets/indexes and legacy namespace-free maps are supported; image/alternate-language
+extensions do not become article candidates. Discovery-limit warnings describe partial
+results. This is offline-fixture coverage, not new live-site validation.
 
 Only public server-rendered UTF-8 pages with an article/main region are supported.
 No authentication, paywall bypass, JavaScript rendering or cross-host redirects are
@@ -207,6 +215,13 @@ The [Phase 3D offline editorial evaluation](docs/phase3d-real-content-evaluation
 reuses those saved pages with provisional labels and human-review worksheets. Its
 research artifacts are separate from the application's original Evaluation page.
 See the [release-readiness checklist](docs/release-readiness.md) before planning public hosting.
+
+[Phase 4A compatibility and container assessment](docs/phase4a-compatibility-readiness.md)
+records the targeted tests and remaining deployment blockers. The production Compose
+template now explicitly enables visitor isolation and website import while retaining
+the password gate. The local Compose/demo defaults are unchanged. Docker has not been
+run locally; the template is not approval to deploy or expose anonymous access.
+Further human editorial evaluation is intentionally deferred; existing evidence is preserved.
 
 ## Website fetching foundation (Phase 3A)
 

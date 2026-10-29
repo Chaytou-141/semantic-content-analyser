@@ -980,3 +980,66 @@ No application/model/ranking/security change, inference, website fetch, historic
 benchmark, full suite, package installation, infrastructure, deployment or push.
 Next: give only the standalone private HTML to a genuinely unexposed reviewer, collect
 all 44 judgements and score complete eligible cutoffs without filling uncertainty.
+
+## Phase 4A — Website compatibility and deployment readiness
+
+29 October 2026 (Australia/Sydney). Baseline `1a276af`. Local commit subject:
+**Fix bounded XML sitemap compatibility and prepare isolated demo configuration**.
+Resolve with `git log -1 --format=%H --grep="Fix bounded XML sitemap compatibility and prepare isolated demo configuration"`.
+Further human editorial evaluation is intentionally deferred. No new packet, request for
+labels, inference, historical benchmark or ranking adjustment was made.
+
+Inspection found explicit non-.xml sitemap URLs being replaced by /sitemap.xml, XML
+mode ignoring advertised maps at a bare website root, and namespace stripping that could
+mistake image extension loc fields for article destinations. Empty loc/href values could
+also resolve to the homepage; depth/queue truncation was not always visible. These are
+compatibility/data-quality problems before semantic analysis, not model-quality findings.
+Original synthetic controlled-network fixtures reproduced ten failures and three passes
+before fixes. No new public website was contacted and no live compatibility was claimed.
+
+The selected changes preserve explicit endpoint URLs, use homepage/robots-advertised maps
+without REST probing in root XML mode, match fully qualified standard sitemap element
+paths, ignore empty references and show bounded-discovery warnings. Standard prefixed/
+default namespaces, legacy no-namespace maps, UTF-8/UTF-16 XML and escaped queries remain
+supported. Foreign extension entries cannot become articles; malformed primary loc
+markup/foreign roots fail clearly. Existing DTD/entity rejection, byte/node/depth/URL
+bounds and all SafeFetcher/DNS/robots controls remain. Limits were not raised, and no
+gzip-file parsing, cross-host allowance, generic crawler or speculative extraction rule
+was introduced. Existing auto/WordPress absence fallback stays restricted to genuine
+404/410; explicit XML mode handles sites with an HTML catch-all REST route.
+
+The production Compose template previously selected shared local mode implicitly and
+disabled website import. It now explicitly selects visitor mode, /app/runtime/visitors
+and bounded website fetching, retaining required password/secret, private app port,
+privilege settings and proxy/volume configuration. Local source/Compose defaults remain.
+No existing database was migrated or deleted and no runtime was reconfigured. The AWS
+guide now identifies legacy single-database backup instructions as local-only; they do
+not back up temporary visitor directories. Static YAML and production Settings validation
+passed with dummy credentials. Docker CLI was absent, so no image pull/build/run, resolved
+Compose validation or HTTPS/proxy claim was made.
+
+Relevant regression tests: 235 passed, one existing Windows symlink test skipped, in
+30.85 seconds (pytest duration). Selection covers website workflows, SafeFetcher/transport
+adversarial cases, API ownership, visitor isolation/revisions/timeout/cleanup and atomic
+collection admission/rollback. After a test-only route assertion was tightened, all 20
+new compatibility tests passed in 1.32 seconds; production code was unchanged after the
+broader relevant run. A controlled XML-root/index/URL-set workflow extracted 40 articles
+using 44 requests including robots. Fake DNS/transport, zero pacing and test encoders
+mean this is workflow evidence, not live performance, hosting capacity or model evaluation.
+
+Preservation compared 1,773 snapshotted tracked/runtime files: 1,772 unchanged plus the
+intentional AWS guide update, no unexpected changes. Planned website/parser/config and
+current-documentation edits were excluded from that baseline as described in the phase
+evidence; application ranking, security components, saved development data and historical
+benchmark/evaluation artifacts were unchanged. Details: docs/phase4a-verification.json
+and docs/phase4a-compatibility-readiness.md. No full suite, browser suite, package
+installation, live fetch, cloud operation, expense, push or deployment occurred.
+
+The template is an incremental basis for a password-gated limited demo, not a public
+readiness certification. Network egress is still unrestricted at infrastructure level,
+forwarded peers are broadly trusted, ingress/session fairness and container quotas need
+work, and Linux/HTTPS/volume/cleanup verification is pending. Successful real XML/index/
+non-WordPress validation is still absent; earlier Freeze Edge evidence remains unchanged.
+Next Phase 4B: bounded demo operations, trusted-proxy/abuse/egress/resource/retention
+controls and disposable local container verification when Docker is available. Do not
+resume editorial work or infer permission to deploy from that recommendation.

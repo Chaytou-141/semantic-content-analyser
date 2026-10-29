@@ -119,6 +119,8 @@ def homepage_metadata(body, base):
         if n.tag != 'link':
             continue
         rel, href = (n.attrs.get('rel') or '').lower(), n.attrs.get('href') or ''
+        if not href.strip():
+            continue
         try:
             url = site_url(href, base)
         except FetchError:
@@ -218,33 +220,42 @@ def sitemap(body):
     parser = expat.ParserCreate(namespace_separator='}')
     stack, locations, current = [], [], []
     count, root, current_length = 0, None, 0
+    location_path = []
 
     def reject(*args):
         raise ValueError('Sitemaps with DTDs or entities are not supported.')
 
     def start(name, attrs):
         nonlocal count, root, current, current_length
-        name = name.rsplit('}', 1)[-1]
+        if stack == location_path and location_path:
+            raise ValueError('A sitemap URL must contain text, not nested markup.')
         count += 1
         stack.append(name)
-        root = root or name
+        if len(stack) == 1:
+            namespace, _, root = name.rpartition('}')
+            if namespace not in {'', 'http://www.sitemaps.org/schemas/sitemap/0.9'} or root not in {'sitemapindex', 'urlset'}:
+                raise ValueError('Expected a sitemap index or URL set in the sitemap namespace.')
+            prefix = namespace + '}' if namespace else ''
+            location_path[:] = [name, prefix + ('sitemap' if root == 'sitemapindex' else 'url'), prefix + 'loc']
         if count > 20000 or len(stack) > 32 or len(attrs) > 100:
             raise ValueError('The sitemap structure exceeds supported limits.')
-        if name == 'loc':
+        if stack == location_path:
             current = []
             current_length = 0
 
     def data(value):
         nonlocal current_length
-        if stack[-1:] == ['loc']:
+        if stack == location_path:
             current_length += len(value)
             if current_length > 2048:
                 raise ValueError('A sitemap URL exceeds 2,048 characters.')
             current.append(value)
 
     def end(name):
-        if stack == [root, 'sitemap' if root == 'sitemapindex' else 'url', 'loc'] and len(locations) < 200:
-            locations.append(''.join(current).strip())
+        if stack == location_path and len(locations) < 200:
+            value = ''.join(current).strip()
+            if value:
+                locations.append(value)
         stack.pop()
 
     parser.StartElementHandler, parser.EndElementHandler, parser.CharacterDataHandler = start, end, data

@@ -7,6 +7,10 @@ services:
       SECRET_KEY: ${SECRET_KEY:?Set SECRET_KEY}
       PRELOAD_MODEL: "true"
       DATABASE_PATH: /app/runtime/workspace.sqlite3
+      # The password gate remains; each admitted browser owns a temporary collection.
+      WORKSPACE_MODE: visitor
+      VISITOR_WORKSPACE_ROOT: /app/runtime/visitors
+      ENABLE_WEBSITE_FETCH: "true"
     volumes:
       - workspace:/app/runtime
     expose:
