@@ -99,6 +99,13 @@ Updated 1 November 2026 (Australia/Sydney). UI/UX refinement after Phase 4B; no 
   Saved 32-article /249,162-character Freeze Edge collection untouched. Browser QA uses
   disposable visitor apps, fake encoder and controlled network; no real inference/fetch.
   Learning/evidence: docs/ux-refinement-learning-guide.md and docs/ux-refinement-verification.json.
+- Homepage follow-up (`5e3ec22` baseline): imported-collection continuation has its own
+  section; sample action says View sample options. Three accessible tool navigation
+  cards use separate headings/descriptions with explicit gaps. About disclosure has a
+  contained SVG/label and responsive gutters; no clipping reproduced in fresh Chromium
+  before changes, so this is layout hardening rather than a proved fixed-position fix.
+  Six static/mocked browser cases (sample/imported x1440/390/320), enlarged text and
+  restoration cancellation pass with zero writes/inference. See docs/homepage-fixes-verification.json.
 - Next: Phase 4C disposable local Linux release rehearsal and verified operational
   controls. Real XML/non-WordPress sites remain unvalidated;
   future live fetches require explicit authorisation. No deployment or push authorised.

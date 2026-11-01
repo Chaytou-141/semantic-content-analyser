@@ -127,7 +127,11 @@ async function loadCollection() {
   $("#home-website-submit").disabled = !meta.website_fetch_enabled;
   $("#home-website-unavailable").hidden = Boolean(meta.website_fetch_enabled);
   const sampleCollection = isSampleCollection();
-  $("#home-current-note").textContent = sampleCollection ? "The current collection is fictional demonstration data. No website is needed." : `Your ${state.articles.length}-article collection will not be replaced by opening sample options.`;
+  $("#home-current-collection").hidden = sampleCollection || !state.articles.length;
+  $("#home-current-note").textContent = `Your ${state.articles.length} articles and saved reviews stay in this workspace. Continue analysis without importing or restoring a collection.`;
+  $("#home-sample-note").textContent = sampleCollection ? "The current collection is fictional demonstration data. No website is needed." : "Sample options explain how to try fictional data. Opening them never replaces your collection.";
+  $("#home-explore").textContent = sampleCollection ? "Explore sample analysis" : "View sample options";
+  $("#home-explore").classList.toggle("primary", sampleCollection);
   $("#home-continue").hidden = sampleCollection || !state.articles.length;
   $("#home-continue").textContent = `Continue with your ${state.articles.length} articles`;
   $("#collection-origin").textContent = sampleCollection ? "Fictional sample collection · demonstration data" : state.articles.some((a) => /^W[a-f0-9]{16}$/u.test(a.id) && /^https?:\/\//iu.test(a.url)) ? "Your website-linked collection · inspect the original URLs and extracted text" : "Your collection · imported or edited articles";

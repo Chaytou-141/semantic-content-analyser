@@ -1212,3 +1212,52 @@ pending from Phase 4B. Restart counters, soft storage and cooperative timeout li
 remain. No real model benchmark, new editorial label/packet, live website request,
 LinkedIn publication, paid resource, AWS deployment or GitHub push occurred. Public release
 readiness is not established by UI QA; the next operational milestone remains Phase 4C.
+
+## Targeted homepage follow-up after UX commit 5e3ec22
+
+Baseline `5e3ec22`. Local commit subject:
+**Separate homepage continuation samples and accessible tool navigation**.
+Resolve with `git log -1 --format=%H --grep="Separate homepage continuation samples and accessible tool navigation"`.
+
+The imported collection's continuation link was inside a section headed Explore sample
+analysis, mixing distinct choices. It now has its own labelled continuation section with
+the current article count and primary action. Samples remain a separate section: existing
+collections get View sample options as a secondary action; fresh sample collections can
+explore directly. No backend/reset contract changed; restoration still delegates to the
+existing explicit confirmation. Tests dismiss that confirmation and observe zero writes.
+
+The three feature descriptions previously shared paragraph nodes with strong headings.
+Fresh Chromium computed block headings and a 5px gap, rather than a literal missing gap.
+They now use separate h2/p elements within named, keyboard-operable navigation cards,
+with explicit 12px flex gaps and a one-column layout at narrow widths. Routes/history,
+focus styling, fonts and palette are reused. Sample/current section headings also align.
+
+The reported footer clipping was not reproduced in fresh Chromium at 1440/390/320:
+computed summary bounds were already within the viewport width and no horizontal overflow
+was present. No fixed-position or overflow-hiding root cause was verified. Instead of
+claiming one, the native-marker layout was hardened: an aria-hidden contained SVG and
+wrapping label replace browser-specific marker placement; explicit gutters, minimum
+target height and in-flow layout retain the native details keyboard/expanded behaviour.
+Both closed/open and 30px enlarged-summary text were tested. The first harness check
+hit fractional nearest-scroll rounding; centring the focused disclosure before measuring
+removed that measurement artefact without changing the production layout to mask it.
+Different browser/cache-specific reports remain unverified, not claimed resolved by proof.
+
+Changes are limited to web/index.html, web/app.js, web/styles.css, the focused standalone
+scripts/verify_homepage_fixes.py and current documentation. The script fulfils API/assets
+inside the browser from read-only saved 32-article data and fictional sample fixtures;
+it starts no backend, runs no encoder, performs no public requests and rejects any write.
+Six collection/viewport cases passed (sample and imported x1440/390/320), including all
+three cards via keyboard/Back, continuation versus sample choices, dismissed restoration,
+and normal/enlarged About bounds/Enter/Space toggling. Browser errors, write requests and
+external/unhandled requests were zero. Three existing targeted UX tests passed in 0.07s;
+Node syntax passed. Screenshots were inspected. No broad suite or model inference ran.
+
+All 1,819 protected files, including the main saved SQLite file, are unchanged. Inspection
+also confirmed the saved collection remains 32 articles /249,162 title/body characters.
+Transient live SQLite WAL/SHM files were excluded from the baseline; normal read-only
+connection closure can remove them. Existing untracked .vscode files were untouched.
+Evidence: docs/homepage-fixes-verification.json; private before/after screenshots and
+layout measurements: runtime/homepage-fixes. No backend, security, numerical limits,
+analysis logic, model/evaluation evidence, deployment, live-site fetching or GitHub push
+changed. Docker/public-launch blockers remain those recorded after Phase 4B.
