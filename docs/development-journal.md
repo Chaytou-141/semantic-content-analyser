@@ -1,5 +1,61 @@
 # Development journal
 
+## Discovery diagnostics and extraction progress follow-up
+
+Date: 1 November 2026 (Australia/Sydney). Baseline `4f04563`.
+Commit subject: **Clarify discovery failures and extraction progress**.
+Resolve with `git log -1 --format=%H --grep="Clarify discovery failures and extraction progress"`.
+
+Users could not distinguish remote access denial from an absent endpoint, temporary
+failure or application limits; a reported repeated Urban Turf discovery failure had
+no saved site-specific endpoint/status evidence. The root cause of that live failure
+remains unconfirmed. No live requests were made. Auto discovery probes REST even for
+non-WordPress homepages and only falls back after 404/410. Automatically falling back
+after 403 or bypassing restrictions was rejected. Explicit XML sitemap mode already
+supports standard namespaced indexes/blog maps, verified with a Wix-shaped fixture.
+
+The minimal change retains existing status codes, budgets and network policies while
+adding safe HTTP-specific error text, resource/stage metadata and opaque diagnostic
+references. Server warnings contain static stage/resource/code, known numeric status
+and count, without URLs, response bodies, IPs or ownership tokens. This improves
+future diagnosis, not a claim that a blocked website will become accessible. Offline
+tests reproduce a possible successful first run (REST404 then XML) followed by REST403
+on a new run, confirming that the latter stops safely; this is synthetic evidence.
+
+The baseline extraction-specific progress element did render in fresh Chromium but
+used a thin 12px track with only 2.78% fill at 1/36; total absence was not reproduced.
+Independent sidebar and content scrollbars were confirmed. The bar now has explicit
+18px track/fill painting below status, live backend counts and stopped/cancelled
+last-confirmed wording. No synthetic progress or minimum percentage is introduced.
+Cancellation clears backend previews, so the UI retains only the previous count for
+the same run and explicitly labels it discarded/last confirmed. A separate capacity
+meter stays hidden while accepted text totals are still unknown. One modal body
+scroll replaces separate panel/text scrolling; source settings are collapsible and
+the existing confirmation/cancel action bar remains outside the scroll region.
+
+Validation: 256 targeted automated tests passed, one existing Windows symlink-privilege
+test skipped, in 31.06s. This includes network/SSRF/DNS/robots/redirect/budget, workspace,
+revision and atomic-import regressions. No historical benchmarks or real model ran.
+After the final cancellation-only UI adjustment, the affected three UX tests and Node
+syntax check passed again. Four offline Chromium viewport cases passed: 1440x900,
+1366x768, 1024x600 and 390x844. Actual WebsiteService fixture snapshots show 110 found,
+36 selected, 1/36, 2/36, then 36 processed/35 accepted/1 failed. Screenshot pixel checks
+confirm a painted bar; stopped/cancelled states, partial acknowledgement, long lists,
+open article reviews and visible action buttons passed. Zero browser exceptions,
+unexpected/write/public requests or inference runs. This is snapshot-to-renderer
+integration; not live-site verification or an entire server-driven browser workflow.
+
+All 1,835 protected file hashes remain unchanged, including saved development SQLite,
+evaluation data and benchmarks. The saved collection is still 32 articles /249,162
+title/body characters. Existing untracked .vscode files are untouched. Detailed
+diagnostics, alternatives, residual risks and reproduction commands are recorded in
+docs/discovery-progress-fixes.md; portable results in docs/discovery-progress-verification.json;
+private snapshots/screenshots in runtime/discovery-progress-fixes. No deployment/push.
+Real Wix behaviour, the original browser-specific absence, Firefox paint rendering
+and public deployment readiness remain unverified. Next: retain a failed response's
+safe reference/stage/status if an authorised incident recurs; continue the existing
+local Linux operational rehearsal rather than changing extraction or ML speculatively.
+
 ## Phase 2A — atomic collection validation and reliability
 
 Date: 28 October 2026 (Australia/Sydney).

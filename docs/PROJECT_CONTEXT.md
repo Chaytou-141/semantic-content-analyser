@@ -110,3 +110,12 @@ Updated 1 November 2026 (Australia/Sydney). UI/UX refinement after Phase 4B; no 
   controls. Real XML/non-WordPress sites remain unvalidated;
   future live fetches require explicit authorisation. No deployment or push authorised.
   Not production-certified; no PostgreSQL, React, Redis or cloud changes are needed now.
+- Discovery/progress follow-up (`4f04563` baseline): unsuccessful HTTP responses now
+  retain safe source status/resource/stage/reference diagnostics; auth/robots/backoff
+  and limits remain distinct, with no bypass fallback. Urban Turf's reported failure
+  has no saved site-specific response evidence and was not live-tested. Wix-shaped
+  standard sitemap indexes pass offline; real Wix extraction remains unvalidated.
+  Extraction uses a painted 18px actual-count bar, last-confirmed stopped/cancelled
+  counts, one modal body scroll and fixed actions. Four offline viewport cases pass;
+  256 targeted tests pass, one Windows symlink privilege skip. Saved32 collection and
+  historical evidence unchanged. See docs/discovery-progress-fixes.md.

@@ -63,6 +63,7 @@ async function api(path, data, method = "POST", expectedRevision = state.revisio
     if (response.status === 409) { await loadCollection(); invalidateResults(); }
     if ([401, 410].includes(response.status) && !state.passwordRequired) message += " Reload to start a new temporary session; expired data may no longer be available.";
     if ([429, 503].includes(response.status)) message += " Wait before retrying. Repeated attempts do not reset the service budget.";
+    if (/^[a-f0-9]{12}$/u.test(payload.diagnostic_reference || "")) message += ` Reference: ${payload.diagnostic_reference}.`;
     throw new Error(message);
   }
   if (path === "/api/articles" || (data !== undefined && (path.startsWith("/api/articles/") || path === "/api/articles/import" || path === "/api/website/import"))) {
@@ -98,8 +99,12 @@ async function task(message, action) {
     $("#app-error").hidden = false;
     const dialog = document.querySelector("dialog[open]");
     if (dialog) {
+      if (dialog.id === "website-dialog" && websiteRun && ["discovering", "extracting"].includes(websiteRun.phase)) {
+        renderExtractionProgress(websiteRun, true);
+        $("#website-progress").textContent = "Request stopped. Counts below reflect the last confirmed response.";
+      }
       const inlineError = el("p", { class: "dialog-error", role: "alert", tabindex: "-1", text: error.message });
-      (dialog.querySelector("form") || dialog).append(inlineError);
+      (dialog.querySelector(".website-content-panel") || dialog.querySelector("form") || dialog).append(inlineError);
       inlineError.focus();
     } else $("#app-error").focus();
     toast(error.message);
@@ -479,6 +484,26 @@ $("#login-form").addEventListener("submit", async (event) => {
 $("#sign-out").addEventListener("click", () => task("Signing out…", async () => { await api("/api/logout", {}); showLogin(); }));
 let websiteRun = null;
 let websiteCancelled = false;
+let websiteLastExtractionCount = null;
+
+function renderExtractionProgress(run, interrupted = false) {
+  const total = run.selected.length;
+  // Cancellation deliberately discards the server's extracted previews. Retain only
+  // the last reported count for this run, never text from another run or a timer.
+  if (websiteLastExtractionCount?.runId !== run.run_id || run.phase !== "cancelled") {
+    websiteLastExtractionCount = { runId: run.run_id, processed: run.processed };
+  }
+  const processed = Math.min(run.phase === "cancelled" ? websiteLastExtractionCount.processed : run.processed, total);
+  const stopped = interrupted || ["cancelled", "failed"].includes(run.phase);
+  $("#extraction-progress").hidden = !total;
+  $("#extraction-progress").dataset.state = stopped ? "stopped" : ["ready", "imported"].includes(run.phase) ? "complete" : "active";
+  $("#extraction-meter").max = total || 1;
+  $("#extraction-meter").value = processed;
+  const prefix = run.phase === "cancelled" ? "Cancelled. Preview discarded. Last confirmed: " : stopped ? "Stopped. Last confirmed: " : "";
+  const label = `${prefix}${processed} of ${total} selected articles processed. This includes excluded or failed articles; it does not mean they were imported.`;
+  $("#extraction-count").textContent = label;
+  $("#extraction-meter").setAttribute("aria-valuetext", label);
+}
 
 function renderWebsite(run) {
   websiteRun = run;
@@ -489,14 +514,13 @@ function renderWebsite(run) {
   });
   const labels = { discovering: "Finding public articles", selecting: "Choose your articles", extracting: "Extracting article text", ready: "Review your collection", imported: "Collection imported", cancelled: "Import cancelled", failed: "This run could not finish" };
   $("#website-progress").textContent = `${labels[run.phase] || run.phase} · ${run.candidates.length} found${run.phase === "extracting" ? ` · ${run.processed} of ${run.selected.length} processed` : ""}`;
-  const processed = Math.min(run.processed, run.selected.length);
-  $("#extraction-progress").hidden = !run.selected.length;
-  $("#extraction-meter").max = run.selected.length || 1;
-  $("#extraction-meter").value = processed;
-  $("#extraction-count").textContent = `${processed} of ${run.selected.length} selected articles processed. This includes excluded or failed articles.`;
+  renderExtractionProgress(run);
+  const settings = $("#website-source-settings");
+  if (settings.dataset.phase !== run.phase) { settings.open = run.phase === "discovering"; settings.dataset.phase = run.phase; }
   $("#collection-capacity").hidden = !["extracting", "ready", "imported"].includes(run.phase);
   $("#capacity-meter").max = LIMITS.characters;
   $("#capacity-meter").value = run.characters;
+  $("#capacity-meter").hidden = run.phase === "extracting";
   $("#capacity-label").textContent = `Collection capacity: ${number(run.characters)} / ${number(LIMITS.characters)} characters`;
   if (run.phase === "extracting") {
     $("#capacity-meter").removeAttribute("value");

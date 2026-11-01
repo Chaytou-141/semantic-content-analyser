@@ -107,7 +107,7 @@
   <dialog id="website-dialog" aria-labelledby="website-title">
     <div class="dialog-header website-header"><div><h2 id="website-title">From website to collection</h2><p>Choose the source material for your next analysis.</p></div><button class="icon-button close-dialog" aria-label="Close website import">×</button></div>
     <ol class="website-steps" aria-label="Website import progress"><li data-stage="0" aria-current="step"><span>1</span>Find articles</li><li data-stage="1"><span>2</span>Choose articles</li><li data-stage="2"><span>3</span>Review &amp; import</li></ol>
-    <div class="website-workspace"><aside class="website-source-panel">
+    <div class="website-workspace"><aside class="website-source-panel"><details id="website-source-settings" open><summary>Website source and settings</summary>
     <h3>Your source</h3><p>Use a public website or sitemap you are authorised to analyse.</p>
     <form id="website-form">
       <label for="website-url">Website or XML sitemap URL</label><input id="website-url" type="url" required maxlength="2048" placeholder="https://your-website.com/">
@@ -116,9 +116,10 @@
       <button class="button primary" type="submit">Discover articles</button>
     </form>
     <div class="website-retention"><strong>Your collection stays intact.</strong><p>Discovery and preview do not change your articles or reviews. You confirm the replacement at the end.</p></div>
-    </aside><div class="website-content-panel">
+    </details></aside><div class="website-content-panel"><div class="website-status-area">
     <p id="website-progress" role="status" aria-live="polite">Add a website to find its articles.</p>
     <div id="extraction-progress" hidden><label for="extraction-meter">Selected articles processed</label><progress id="extraction-meter" max="40" value="0"></progress><p id="extraction-count" class="context-note"></p></div>
+    </div>
     <div id="collection-capacity" hidden><label id="capacity-label" for="capacity-meter">Collection capacity</label><progress id="capacity-meter" max="250000" value="0"></progress><p class="context-note">This application budget protects memory and processing time. Excluded articles are not imported; select a smaller set in a new run if needed. Final validation also checks article and tokenizer passage limits.</p></div>
     <div id="website-results"><div class="website-empty"><div class="website-page-symbol" aria-hidden="true"><span></span><span></span><span></span></div><h3>Pick the articles worth comparing.</h3><p>Find public posts through WordPress or a sitemap, then choose up to 40. You can inspect every extracted article before importing.</p></div></div>
     </div></div>

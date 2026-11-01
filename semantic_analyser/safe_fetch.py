@@ -161,6 +161,7 @@ class SafeFetcher:
         if not session.lock.acquire(blocking=False):
             raise FetchError("busy")
         started = time.monotonic()
+        resource = 'request'
         try:
             budget = Budget(session, control)
             target = normalize_url(url)
@@ -174,9 +175,11 @@ class SafeFetcher:
             for index in range(self.limits.redirects + 1):
                 budget.check()
                 visited.add(target.url)
+                resource = 'robots'
                 policy = RobotsPolicy() if target.path == "/robots.txt" and not target.query else self._robots(target, session, budget)
                 if not policy.allows(target.request_target, budget.check, self.limits.robots_match_steps):
                     raise FetchError("robots")
+                resource = 'content'
                 response = self._one(target, budget, self.limits.decoded_bytes, policy.delay)
                 if response.status in {301, 302, 303, 307, 308}:
                     if index >= self.limits.redirects:
@@ -184,17 +187,18 @@ class SafeFetcher:
                     target = self._redirect(target, response, visited)
                     continue
                 if response.status == 429:
-                    raise FetchError("backoff")
+                    raise FetchError("backoff").http_status(429)
                 if response.status != 200:
-                    error = FetchError("inaccessible")
-                    error.upstream_status = response.status  # Internal adapter fallback; not exposed to visitors.
-                    raise error
+                    raise FetchError("inaccessible").http_status(response.status)
                 if not response.body:
                     raise FetchError("content")
                 budget.check()
                 return FetchResult(target.url, response.status, response.headers.get("content-type", "").split(";", 1)[0].strip().lower(),
                                    response.body, response.encoded_bytes, index, response.headers)
             raise FetchError("limit")
+        except FetchError as error:
+            error.fetch_resource = resource
+            raise
         finally:
             if session.active_time_budget:
                 session.active_seconds += max(0, time.monotonic() - started)

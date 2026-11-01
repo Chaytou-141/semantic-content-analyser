@@ -17,7 +17,7 @@ MESSAGES = {
     "limit": (413, "The website response or fetch run exceeds the supported resource limits."),
     "invalid_response": (502, "The website returned an unsupported or malformed response."),
     "content": (415, "The website did not return supported public text content."),
-    "inaccessible": (502, "The requested public content is unavailable or requires authentication."),
+    "inaccessible": (502, "The website returned an unsuccessful HTTP response."),
     "network": (502, "The website could not be reached securely."),
     "robots": (403, "The website's robots policy does not permit this request."),
     "robots_unavailable": (503, "The website's robots policy could not be checked. Try again later."),
@@ -33,6 +33,19 @@ class FetchError(Exception):
         self.code = code
         self.status, self.message = MESSAGES[code]
         super().__init__(self.message)
+
+    def http_status(self, status):
+        self.upstream_status = status
+        messages = {
+            401: 'The website returned HTTP 401: authentication is required. Access was not bypassed.',
+            403: 'The website returned HTTP 403: automated access was denied. Access restrictions were not bypassed.',
+            404: 'The website returned HTTP 404: this endpoint was not found.',
+            410: 'The website returned HTTP 410: this endpoint is no longer available.',
+            429: 'The website returned HTTP 429: it requested a pause. No automatic retry was made.',
+            503: 'The website returned HTTP 503: it is temporarily unavailable. Respect its requested pause before trying later.'}
+        self.message = messages.get(status, f'The website returned HTTP {status}. This does not by itself establish an authentication requirement.')
+        self.args = (self.message,)
+        return self
 
 
 @dataclass(frozen=True)

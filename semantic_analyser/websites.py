@@ -4,6 +4,7 @@ import hashlib
 import json
 import secrets
 import time
+import logging
 from collections import Counter
 from dataclasses import dataclass, field
 from urllib.parse import urlsplit
@@ -15,6 +16,7 @@ from .storage import validate_collection
 
 MAX_CANDIDATES, MAX_SELECTED, MAX_DISCOVERY = 200, 40, 12
 WEBSITE_LIFETIME_SECONDS = 15 * 60
+LOG = logging.getLogger(__name__)
 
 
 class CollectionCapacityExceeded(ValueError):
@@ -169,6 +171,14 @@ class WebsiteService:
                         run.warnings.append(message)
             else:
                 run.phase = 'failed'
+                labels = {'home':'Homepage discovery', 'wp':'WordPress discovery', 'map':'XML sitemap discovery', 'article':'Article extraction'}
+                error.discovery_stage = labels[kind]
+                error.diagnostic_reference = secrets.token_hex(6)
+                error.message = labels[kind] + ': ' + error.message
+                error.args = (error.message,)
+                LOG.warning('Website fetch stopped reference=%s stage=%s resource=%s code=%s source_http_status=%s requests=%s',
+                            error.diagnostic_reference, kind, getattr(error, 'fetch_resource', 'request'),
+                            error.code, getattr(error, 'upstream_status', None), run.session.requests)
                 run.warnings.append(error.message)
                 raise
         except (ValueError, RecursionError) as error:

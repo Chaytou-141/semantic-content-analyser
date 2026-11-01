@@ -1,0 +1,135 @@
+{
+  "cases": [
+    {
+      "viewport": [
+        1440,
+        900
+      ],
+      "bar_bounds": {
+        "x": 484,
+        "y": 338.21875,
+        "width": 752,
+        "height": 18
+      },
+      "painted_fill_pixels": 262,
+      "checks": [
+        "1/36",
+        "2/36",
+        "cancelled",
+        "failed request",
+        "36/36 with one failed",
+        "long selection/review single scroll",
+        "fixed actions",
+        "saved collection unchanged"
+      ]
+    },
+    {
+      "viewport": [
+        1366,
+        768
+      ],
+      "bar_bounds": {
+        "x": 447,
+        "y": 332.9375,
+        "width": 752,
+        "height": 18
+      },
+      "painted_fill_pixels": 262,
+      "checks": [
+        "1/36",
+        "2/36",
+        "cancelled",
+        "failed request",
+        "36/36 with one failed",
+        "long selection/review single scroll",
+        "fixed actions",
+        "saved collection unchanged"
+      ]
+    },
+    {
+      "viewport": [
+        1024,
+        600
+      ],
+      "bar_bounds": {
+        "x": 348,
+        "y": 326.21875,
+        "width": 608,
+        "height": 18
+      },
+      "painted_fill_pixels": 204,
+      "checks": [
+        "1/36",
+        "2/36",
+        "cancelled",
+        "failed request",
+        "36/36 with one failed",
+        "long selection/review single scroll",
+        "fixed actions",
+        "saved collection unchanged"
+      ]
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "bar_bounds": {
+        "x": 44,
+        "y": 398.65625,
+        "width": 302,
+        "height": 18
+      },
+      "painted_fill_pixels": 116,
+      "checks": [
+        "1/36",
+        "2/36",
+        "cancelled",
+        "failed request",
+        "36/36 with one failed",
+        "long selection/review single scroll",
+        "fixed actions",
+        "saved collection unchanged"
+      ]
+    }
+  ],
+  "browser_errors": [],
+  "blocked_requests": [],
+  "protected_files": 1835,
+  "unexpected_changes": [],
+  "live_requests": 0,
+  "model_runs": 0,
+  "database_writes": 0,
+  "baseline": "4f04563",
+  "commit_subject": "Clarify discovery failures and extraction progress",
+  "targeted_tests": {
+    "passed": 256,
+    "skipped": 1,
+    "seconds": 31.06,
+    "skip_reason": "Existing Windows account cannot create symbolic links",
+    "files": [
+      "test_discovery_diagnostics.py",
+      "test_safe_fetch.py",
+      "test_safe_fetch_api.py",
+      "test_websites.py",
+      "test_website_compatibility.py",
+      "test_demo_operations.py",
+      "test_visitor_workspaces.py",
+      "test_ux_display.py",
+      "test_application.py"
+    ]
+  },
+  "post_cancellation_adjustment": {
+    "ux_tests_passed": 3,
+    "seconds": 0.07,
+    "browser_viewports_passed": 4,
+    "node_syntax": "passed"
+  },
+  "incident_cause": "Unconfirmed: no saved site-specific outbound status or endpoint evidence; no live requests authorised.",
+  "baseline_findings": {
+    "bar_rendered_in_fresh_chromium": true,
+    "height_px": 12,
+    "independent_sidebar_content_scrolls": true,
+    "reported_total_absence_reproduced": false
+  }
+}

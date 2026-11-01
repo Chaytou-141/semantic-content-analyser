@@ -184,7 +184,12 @@ def create_app(settings=None, engine=None, fetcher=None):
 
     @app.exception_handler(FetchError)
     async def rejected_fetch(request, error):
-        return JSONResponse({"detail": error.message, "code": error.code}, status_code=error.status,
+        details = {"detail": error.message, "code": error.code}
+        for attr, field in [('upstream_status','source_http_status'), ('fetch_resource','fetch_resource'),
+                            ('discovery_stage','discovery_stage'), ('diagnostic_reference','diagnostic_reference')]:
+            if hasattr(error, attr):
+                details[field] = getattr(error, attr)
+        return JSONResponse(details, status_code=error.status,
                             headers={"Retry-After": "60"} if error.status in {429, 503} else None)
 
     @app.get("/health")

@@ -388,8 +388,9 @@ dialog textarea { min-height: 130px; font-family: var(--reading); font-size: 15p
 .website-steps [aria-current=step] { color: var(--ink); font-weight: 650; }
 .website-steps [aria-current=step] span { background: var(--accent-dark); color: white; border-color: var(--accent-dark); }
 .website-steps .complete span { background: #edf3ed; border-color: #bccdc1; color: var(--positive); }
-.website-workspace { display: grid; grid-template-columns: 280px minmax(0, 1fr); min-height: 0; }
-.website-source-panel { padding: 25px; background: #faf9fc; border-right: 1px solid var(--line); overflow: auto; }
+.website-workspace { display: grid; grid-template-columns: 280px minmax(0, 1fr); min-height: 0; overflow: auto; }
+.website-source-panel { padding: 25px; background: #faf9fc; border-right: 1px solid var(--line); overflow: visible; }
+#website-source-settings > summary { padding: 5px 0 14px; cursor: pointer; font-weight: 550; font-size: 13px; }
 .website-source-panel h3 { font-size: 15px; margin: 0; }
 .website-source-panel > p { font-size: 12px; margin: 8px 0 20px; }
 #website-form { display: grid; gap: 8px; }
@@ -398,7 +399,14 @@ dialog textarea { min-height: 130px; font-family: var(--reading); font-size: 15p
 #website-form .button { justify-self: start; margin-top: 12px; }
 .website-retention { margin-top: 28px; border-top: 1px solid var(--line); padding-top: 18px; font-size: 12px; }
 .website-retention p { font-size: 12px; margin: 7px 0 0; }
-.website-content-panel { padding: 25px 28px; overflow: auto; min-width: 0; }
+.website-content-panel { padding: 25px 28px; overflow: visible; min-width: 0; }
+.website-status-area { position: sticky; top: 0; z-index: 1; background: var(--white); padding-bottom: 1px; }
+#extraction-meter { appearance: none; -webkit-appearance: none; display: block; width: 100%; height: 18px; border: 0; border-radius: 9px; background: var(--line); color: var(--accent); }
+#extraction-meter::-webkit-progress-bar { background: var(--line); border-radius: 9px; }
+#extraction-meter::-webkit-progress-value { background: var(--accent); border-radius: 9px; }
+#extraction-meter::-moz-progress-bar { background: var(--accent); border-radius: 9px; }
+#extraction-progress[data-state=stopped] #extraction-meter::-webkit-progress-value { background: var(--muted); }
+#extraction-progress[data-state=stopped] #extraction-meter::-moz-progress-bar { background: var(--muted); }
 #website-progress { margin: 0 0 20px; padding-bottom: 15px; border-bottom: 1px solid var(--line); font-size: 14px; color: var(--ink); font-weight: 600; }
 .website-empty { max-width: 47ch; margin: 55px auto; }
 .website-empty h3 { font-size: 22px; font-weight: 550; letter-spacing: -.5px; }
@@ -425,7 +433,7 @@ dialog textarea { min-height: 130px; font-family: var(--reading); font-size: 15p
 .website-preview summary { padding: 15px; cursor: pointer; font-size: 13px; font-weight: 550; }
 .website-preview[open] summary { border-bottom: 1px solid var(--line); background: #f7f5fa; }
 .website-preview > p { margin: 12px 17px; overflow-wrap: anywhere; }
-.website-preview pre { white-space: pre-wrap; overflow-wrap: anywhere; font: 15px/1.85 var(--reading); max-height: 300px; overflow: auto; padding: 4px 17px 20px; margin: 0; }
+.website-preview pre { white-space: pre-wrap; overflow-wrap: anywhere; font: 15px/1.85 var(--reading); padding: 4px 17px 20px; margin: 0; }
 .website-action-bar { padding: 16px 25px; display: flex; align-items: center; justify-content: space-between; gap: 20px; border-top: 1px solid var(--line); background: #fff; }
 .website-action-bar > p { font-size: 12px; margin: 0; max-width: 35ch; line-height: 1.65; }
 .website-action-bar .heading-actions { flex-wrap: wrap; justify-content: end; }
