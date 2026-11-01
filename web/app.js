@@ -622,16 +622,23 @@ $("#website-stop").addEventListener("click", () => {
   if (!state.busy) task("Cancelling website run…", advanceWebsite);
 });
 $("#website-dialog").addEventListener("close", () => { websiteCancelled = true; });
-$("#website-commit").addEventListener("click", () => {
-  if (!confirm("Replace the collection with these extracted articles and clear its editorial reviews? Export first if needed.")) return;
-  task("Validating article and model passage limits…", async () => {
-    const result = await api("/api/website/import", { run_id: websiteRun.run_id, accept_partial: Boolean($("#website-partial")?.checked) }, "POST", websiteRun.collection_revision);
-    websiteRun.phase = "imported";
-    renderWebsite(websiteRun); // Reopening must not offer a stale replacement action.
-    $("#website-dialog").close();
-    await loadCollection(); invalidateResults(); importComplete(result.count, "Website");
-    toast(`Imported ${result.count} website articles. You can now search, review links and compare overlap.`);
-  });
+$("#website-commit").addEventListener("click", async () => {
+  if (state.busy || websiteRun?.phase !== "ready") return;
+  const button = $("#website-commit");
+  button.disabled = true;
+  try {
+    await task("Validating article and model passage limits…", async () => {
+      if (!confirm("Replace the collection with these extracted articles and clear its editorial reviews? Export first if needed.")) return;
+      const result = await api("/api/website/import", { run_id: websiteRun.run_id, accept_partial: Boolean($("#website-partial")?.checked) }, "POST", websiteRun.collection_revision);
+      websiteRun.phase = "imported";
+      renderWebsite(websiteRun); // Reopening must not offer a stale replacement action.
+      $("#website-dialog").close();
+      await loadCollection(); invalidateResults(); importComplete(result.count, "Website");
+      toast(`Imported ${result.count} website articles. You can now search, review links and compare overlap.`);
+    });
+  } finally {
+    button.disabled = false;
+  }
 });
 
 window.addEventListener("hashchange", () => navigate(location.hash.slice(1)));

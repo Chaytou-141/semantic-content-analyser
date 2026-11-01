@@ -1,5 +1,34 @@
 # Development journal
 
+## Prevent repeated website-import confirmation
+
+1 November 2026 (Australia/Sydney), baseline `c859346`. Commit subject:
+**Prevent repeated confirmation during website imports**.
+The replacement handler called confirm before the shared task checked state.busy.
+It also left the type=button action enabled while admission/import was pending.
+Offline Chromium reproduced two native prompts from repeated click events during
+one outstanding request, with one mock import request. No duplicate database write
+was observed or claimed. Only one listener exists; duplicate listener registration
+was not the root cause established by this reproduction.
+
+The handler now checks busy/ready before showing confirmation, disables the action,
+and invokes confirmation inside the task's busy period. Finally re-enables the button
+after cancel/failure; success marks the run imported and stale events are ignored.
+The original destructive-action warning, partial acknowledgement, API revision and
+atomic admission are retained. A versioned script reference refreshes cached clients.
+
+65 focused UI/website/compatibility tests passed (7.27s). Six offline native-dialog
+browser cases at 1440 and 390px cover repeated activation, cancellation with zero
+requests, failure followed by intentional retry, unrelated busy work, and stale events
+after success. Repeated activation now yields one prompt and one mock request. A
+deliberate retry after failure may correctly produce a new prompt. Browser exceptions,
+unexpected/public requests and real encoder runs were zero. Saved SQLite SHA-256
+is unchanged. No website fetching, actual import, deployment or push occurred.
+Reproduce: `.\.venv\Scripts\python.exe -B scripts/verify_import_confirmation.py`;
+`--baseline` serves the frozen c859346 JavaScript locally to reproduce the former bug.
+Private before/after results: runtime/import-confirmation; portable summary:
+docs/import-confirmation-verification.json. No backend restart is required.
+
 ## Homepage-first automatic blog discovery
 
 1 November 2026 (Australia/Sydney), baseline `8aeb44c`. Commit subject:

@@ -1,0 +1,78 @@
+{
+  "baseline_commit": "c859346",
+  "commit_subject": "Prevent repeated confirmation during website imports",
+  "before": {
+    "baseline": true,
+    "cases": [
+      {
+        "width": 1440,
+        "case": "accept",
+        "confirmations": 2,
+        "intentional_retry_confirmation": false,
+        "mock_import_requests": 1
+      }
+    ],
+    "browser_errors": [],
+    "blocked_requests": [],
+    "development_database_unchanged": true,
+    "live_requests": 0,
+    "real_model_runs": 0
+  },
+  "after": {
+    "baseline": false,
+    "cases": [
+      {
+        "width": 1440,
+        "case": "accept",
+        "confirmations": 1,
+        "intentional_retry_confirmation": false,
+        "mock_import_requests": 1
+      },
+      {
+        "width": 1440,
+        "case": "cancel",
+        "confirmations": 1,
+        "intentional_retry_confirmation": false,
+        "mock_import_requests": 0
+      },
+      {
+        "width": 1440,
+        "case": "failure",
+        "confirmations": 2,
+        "intentional_retry_confirmation": true,
+        "mock_import_requests": 1
+      },
+      {
+        "width": 390,
+        "case": "accept",
+        "confirmations": 1,
+        "intentional_retry_confirmation": false,
+        "mock_import_requests": 1
+      },
+      {
+        "width": 390,
+        "case": "cancel",
+        "confirmations": 1,
+        "intentional_retry_confirmation": false,
+        "mock_import_requests": 0
+      },
+      {
+        "width": 390,
+        "case": "failure",
+        "confirmations": 2,
+        "intentional_retry_confirmation": true,
+        "mock_import_requests": 1
+      }
+    ],
+    "browser_errors": [],
+    "blocked_requests": [],
+    "development_database_unchanged": true,
+    "live_requests": 0,
+    "real_model_runs": 0
+  },
+  "targeted_tests": {
+    "passed": 65,
+    "seconds": 7.27
+  },
+  "node_syntax": "passed"
+}
