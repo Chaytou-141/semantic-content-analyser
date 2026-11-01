@@ -79,6 +79,13 @@ class Document(HTMLParser):
             raise ValueError('The HTML structure exceeds the parsing limit.')
         self.stack[-1].children.append(text)
 
+    def unknown_decl(self, data):
+        # Newer HTMLParser patches silently ignore unknown marked sections. Keep
+        # our existing rejection contract; recognised legacy sections stay inert.
+        status = re.match(r'[a-z]+', data, re.I)
+        if not status or status.group().lower() not in {'temp', 'cdata', 'ignore', 'include', 'rcdata', 'if', 'else', 'endif'}:
+            raise ValueError('This page contains an unsupported HTML marked section.')
+
 
 def hidden(node):
     attrs = node.attrs

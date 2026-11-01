@@ -59,6 +59,18 @@ def test_extraction_title_headings_canonical_and_inert_markup():
     assert site_url('/posts/1?utm_source=x#part', BASE) == BASE + '/posts/1'
 
 
+@pytest.mark.parametrize('status', ['bogus', 'unknown'])
+def test_unknown_html_marked_sections_are_rejected_across_python_patches(status):
+    with pytest.raises(ValueError, match='HTML'):
+        Document(f'<![{status}[malformed]]>'.encode())
+
+
+@pytest.mark.parametrize('section', ['CDATA[ignored]', 'IGNORE[ignored]', 'if IE', 'endif'])
+def test_known_html_marked_sections_remain_inert(section):
+    doc=Document(f'<![{section}]><article><p>Visible text</p></article>'.encode())
+    assert doc.root.children[-1].tag=='article'
+
+
 @pytest.mark.parametrize('payload', [b'<html><p>Not a main region</p></html>', b'<article><p>short</p></article>', b'<article>' + b'a' * 20001 + b'</article>', b'<main>' * 99, b'<main>\xff</main>', b'<meta itemprop="isAccessibleForFree" content="false"><article>text</article>'])
 def test_unsupported_or_restricted_html_rejected(payload):
     with pytest.raises(ValueError):
@@ -301,6 +313,10 @@ def test_selection_and_review_pause_keep_fixed_lifetime_and_fetch_counters(monke
     clock = [1000.0]
     monkeypatch.setattr(time, 'monotonic', lambda: clock[0])
     svc, transport = service('sitemap', 3)
+    # The dataclass factory captured the real clock at import; anchor its
+    # creation timestamp to the simulated clock used by this test instead.
+    real_session = svc.fetcher.new_session
+    monkeypatch.setattr(svc.fetcher, 'new_session', lambda owner: replace(real_session(owner), started=clock[0]))
     original = transport.get
     def timed(*args):
         clock[0] += 1

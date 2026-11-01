@@ -2,6 +2,17 @@
 
 Updated 1 November 2026 (Australia/Sydney). UI/UX refinement after Phase 4B; no deployment or push.
 
+Latest: Phase 4C ran real Linux Docker verification (baseline `1f8ec8c`). Release image,
+Caddy local-CA HTTPS, visitor separation, expiry/cleanup, cgroupv1 limits and offline UI
+fixtures passed. 309 targeted Linux tests pass, no skips. Newer Python HTML declaration
+validation needed a minimal explicit rejection fix; one test's fake-clock origin was fixed.
+Only lab ingress/networking/tooling changed otherwise; no new UI/AI work. Current saved
+collection remains32 articles /249,162 characters. All lab resources/image tags cleaned;
+shared BuildKit cache retained. See docs/phase4c-local-docker.md for exact limits/proofs.
+Older Docker-unavailable entries below describe their milestone, not current status.
+Next: Phase4D tested public-import-compatible egress/ops/build audit. Public firewall,
+host capacity, public ACME and anonymous-release readiness remain unverified. No deployment.
+
 - Stack: FastAPI + vanilla JS/CSS; SQLite; one shared CPU MiniLM
   `all-MiniLM-L6-v2` (384 dimensions, pinned revision), TF-IDF baseline.
 - Local mode retains the persistent demo. Visitor mode uses signed owner cookies,

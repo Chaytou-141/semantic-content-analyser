@@ -1,5 +1,53 @@
 # Development journal
 
+## Phase 4C — actual local Linux Docker rehearsal
+
+1 November 2026 (Australia/Sydney). Baseline `1f8ec8c` retains the requested `7079926`
+and subsequent verified UI fixes. Commit subject:
+**Verify local Linux Docker release rehearsal and parser compatibility**.
+Docker Desktop now supports Linux containers. The unchanged release Dockerfile built
+successfully, downloading its base, pinned CPU dependencies and pinned MiniLM weights.
+The final image is 2,328,114,663 bytes; Python3.12.16. No encode/benchmark/evaluation ran.
+The real offline model preload was verified by app health in the gated Compose runtime.
+
+Initial Linux regression: 301 passed, two failed. Python's newer HTMLParser ignored an
+unsupported marked section; Document now explicitly rejects unknown keywords while
+retaining recognised inert legacy sections. This verified contract fix is the only app
+code change. A mocked-clock test was anchored to its simulated session origin because
+its dataclass factory had captured the real clock. Application clocks/limits are unchanged.
+Six new declaration cases plus the corrected tests passed; final Linux selection:
+**309 passed /0 skipped in16.92s**, including the Windows-skipped symlink case, actual
+loopback transport/TLS, SQLite quota rollback, ownership, lease/timeout and atomic workflows.
+
+The existing Phase4B smoke passed again on the final image. It now accepts --output-dir
+so earlier evidence is preserved. A local-only override merges the production app/proxy
+configuration with loopback8080/8443, local CA TLS, disposable volumes and lab healthchecks.
+Internal-only Caddy had healthy processes but inactive published ports on Docker Desktop;
+a Caddy-only ingress bridge corrected this. The app stays on an internal network.
+No production firewall/security template was changed.
+
+Nine extended runtime checks passed: source/UI hashes, real cgroup limits, non-root and
+read-only root, trusted local TLS/redirects, secure sessions and isolated disposable
+sentinel rows, current UI/extraction1→2/36 through real HTTPS with injected snapshots,
+actual short-retention cleanup/410, controlled network boundaries, CPU throttling,
+reduced-limit OOM/PID enforcement and spoof-resistant HTTPS API budget exhaustion.
+App4GiB/2CPU/PID128 was inspected in cgroupv1; snapshot working set376.6MiB, proxy19.5MiB.
+Reduced probes used0.25CPU,32MiB andPID16, not full production exhaustion or capacity tests.
+Browser and real backend fixture tests are separate, not a live website-to-model claim.
+
+Harness assumptions (cgroupv2-only paths, missing If-Match in one negative check, slow
+per-call Windows connections) were corrected without relaxing app limits. The interrupted
+first attempt's owned resources were removed; the final run and cleanup passed. No new
+live website/public-target requests, editorial evaluation, AWS changes or push occurred.
+The app had no default IPv4 route; raw access to an internal fixture on18081 succeeded,
+while SafeFetcher denied its private destination. Thus no production-compatible kernel
+egress firewall is claimed. Public ingress/ACME, operator quotas/monitoring and target
+load remain release blockers. Builder cache is retained; all recorded lab containers,
+volumes, networks and image tags were removed. Full results/reproduction/learning:
+docs/phase4c-local-docker.md and docs/phase4c-verification.json; private logs/screenshots:
+runtime/phase4c. The original32-article /249,162-character SQLite and earlier evidence
+remain preserved. Next: local Phase4D egress/operations and build-input audit, not deployment.
+
 ## Link Opportunities editorial workbench
 
 1 November 2026 (Australia/Sydney), baseline `0d10d70`. Commit subject:

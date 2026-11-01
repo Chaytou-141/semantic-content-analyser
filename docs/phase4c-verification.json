@@ -1,0 +1,384 @@
+{
+  "phase": "4C",
+  "date_australia_sydney": "2026-11-01",
+  "baseline": {
+    "baseline_commit": "1f8ec8c332383f795ba0042313c093a2c46a7d18",
+    "saved_articles": 32,
+    "saved_characters": 249162,
+    "saved_reviews": 0,
+    "protected_files": 1933,
+    "preexisting_containers": [],
+    "preexisting_images": [],
+    "preexisting_volumes": []
+  },
+  "commit_subject": "Verify local Linux Docker release rehearsal and parser compatibility",
+  "build": {
+    "succeeded": true,
+    "build_failures": 0,
+    "linux_python": "3.12.16",
+    "model_weights_cached_and_preloaded": true,
+    "model_encode_calls": 0,
+    "image_records": [
+      {
+        "tag": "semantic-demo:phase4c-1f8ec8c",
+        "id": "sha256:64e76e84c08323c403fd83b04ec1185c2245b9da504dbc8cae952dd9b47038b0",
+        "size_bytes": 2328114479,
+        "os": "linux",
+        "architecture": "amd64"
+      },
+      {
+        "tag": "semantic-demo:phase4c-verified",
+        "id": "sha256:3c01e321ae09424859cdc93c48369bc473b79bd28cde43cb28794d9223acbcdb",
+        "size_bytes": 2328114663,
+        "os": "linux",
+        "architecture": "amd64"
+      },
+      {
+        "tag": "semantic-demo:phase4c-tests",
+        "id": "sha256:f1cd9fc85d91368ec85501bc90d74b918475f758b2e1de05c92dcf67b938b26f",
+        "size_bytes": 2335554539,
+        "os": "linux",
+        "architecture": "amd64"
+      },
+      {
+        "tag": "semantic-demo:phase4c-tests-verified",
+        "id": "sha256:544569a9266598befa9c7cec40ea9bffe71ce613377ae207cd6d50e5b6ac15c5",
+        "size_bytes": 2335554684,
+        "os": "linux",
+        "architecture": "amd64"
+      },
+      {
+        "tag": "caddy:2.10.2-alpine",
+        "id": "sha256:4c6e91c6ed0e2fa03efd5b44747b625fec79bc9cd06ac5235a779726618e530d",
+        "size_bytes": 82849287,
+        "os": "linux",
+        "architecture": "amd64"
+      }
+    ]
+  },
+  "initial_linux_tests": {
+    "passed": 301,
+    "failed": 2,
+    "root_causes": [
+      "HTMLParser patch silently ignored an unsupported marked section",
+      "Test mixed mocked monotonic clock with captured native factory"
+    ]
+  },
+  "final_linux_tests": {
+    "passed": 309,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 16.92
+  },
+  "host_focused_parser_tests": {
+    "passed": 8,
+    "deselected": 40,
+    "seconds": 0.27
+  },
+  "phase4b_final": {
+    "linux_container_verified": true,
+    "model_inference_runs": 0,
+    "public_fetches": 0,
+    "status": "passed",
+    "checks": [
+      "current application source hashes",
+      "cookie visitor separation",
+      "review write/restart persistence",
+      "configured cgroup limits",
+      "app health"
+    ],
+    "not_exercised": [
+      "actual cgroup exhaustion",
+      "HTTPS/Caddy path",
+      "outbound kernel firewall",
+      "real model startup"
+    ]
+  },
+  "runtime": {
+    "project": "semantic-phase4c-4b80732e",
+    "checks": {
+      "configuration_sources_cgroups": {
+        "app": {
+          "image_id": "sha256:3c01e321ae09424859cdc93c48369bc473b79bd28cde43cb28794d9223acbcdb",
+          "user": "appuser",
+          "memory_bytes": 4294967296,
+          "memory_swap_bytes": 4294967296,
+          "nano_cpus": 2000000000,
+          "pids_limit": 128,
+          "read_only": true,
+          "cap_drop": [
+            "ALL"
+          ],
+          "security_opt": [
+            "no-new-privileges:true"
+          ],
+          "ports": {
+            "8000/tcp": null
+          },
+          "health": "healthy",
+          "restart_policy": "no"
+        },
+        "proxy": {
+          "image_id": "sha256:4c6e91c6ed0e2fa03efd5b44747b625fec79bc9cd06ac5235a779726618e530d",
+          "user": "",
+          "memory_bytes": 268435456,
+          "memory_swap_bytes": 536870912,
+          "nano_cpus": 500000000,
+          "pids_limit": 128,
+          "read_only": false,
+          "cap_drop": null,
+          "security_opt": null,
+          "ports": {
+            "80/tcp": [
+              {
+                "HostIp": "127.0.0.1",
+                "HostPort": "8080"
+              }
+            ],
+            "8443/tcp": [
+              {
+                "HostIp": "127.0.0.1",
+                "HostPort": "8443"
+              }
+            ]
+          },
+          "health": "healthy",
+          "restart_policy": "no"
+        },
+        "cgroups": {
+          "version": 1,
+          "cpu_quota": "200000",
+          "cpu_period": "100000",
+          "memory_limit": "4294967296",
+          "swap_or_memsw_limit": "4294967296",
+          "memory_current": "403259392",
+          "memory_peak": "410058752",
+          "pids_max": "128"
+        },
+        "matching_source_files": 22,
+        "filesystem": {
+          "root_write_errno": 30,
+          "tmp_writable": true,
+          "uid": 10001,
+          "hardening": [
+            "CapEff:\t0000000000000000",
+            "NoNewPrivs:\t1"
+          ]
+        }
+      },
+      "tls_auth_isolation_errors": {
+        "health": {
+          "status": "ok",
+          "model_loaded": true
+        },
+        "visitors": 2,
+        "isolation_sentinel_rows": 1,
+        "cross_revision_status": 409,
+        "cookies": [
+          {
+            "name": "workspace_session",
+            "secure": true,
+            "http_only": true,
+            "same_site": "strict"
+          },
+          {
+            "name": "__Host-semantic_visitor",
+            "secure": true,
+            "http_only": true,
+            "same_site": "strict"
+          }
+        ],
+        "tls": {
+          "version": "TLSv1.3",
+          "subject_alt_names": [
+            [
+              "DNS",
+              "localhost"
+            ]
+          ],
+          "issuer": [
+            [
+              [
+                "commonName",
+                "Caddy Local Authority - ECC Intermediate"
+              ]
+            ]
+          ]
+        },
+        "http_redirect": "https://localhost:8443/health",
+        "public_certificate": false
+      },
+      "container_https_ui_offline_fixtures": {
+        "cases": [
+          {
+            "viewport": [
+              1440,
+              1000
+            ],
+            "visible_progress": {
+              "x": 484,
+              "y": 377.21875,
+              "width": 752,
+              "height": 18
+            },
+            "counts": [
+              1,
+              2
+            ],
+            "candidates": 5,
+            "browser_errors": []
+          },
+          {
+            "viewport": [
+              390,
+              844
+            ],
+            "visible_progress": {
+              "x": 44,
+              "y": 398.65625,
+              "width": 302,
+              "height": 18
+            },
+            "counts": [
+              1,
+              2
+            ],
+            "candidates": 5,
+            "browser_errors": []
+          }
+        ],
+        "browser_tls": "Local CA warning bypassed in browser only; Python client independently verified trusted localhost TLS.",
+        "fixture_analysis_endpoints_called": 0,
+        "real_backend_sessions": true,
+        "unexpected_requests": []
+      },
+      "actual_network_boundaries": {
+        "app_internal_network": true,
+        "app_no_ipv4_default_route": true,
+        "controlled_private_port_access": 200,
+        "safe_fetch_private_code": "blocked_destination",
+        "raw_routes": {
+          "private_nonstandard_port_status": 200,
+          "safe_fetch_private_code": "blocked_destination",
+          "ipv4_routes": "Iface\tDestination\tGateway \tFlags\tRefCnt\tUse\tMetric\tMask\t\tMTU\tWindow\tIRTT                                                       \neth0\t002A1EAC\t00000000\t0001\t0\t0\t0\tF8FFFFFF\t0\t0\t0                                                                               \n",
+          "ipv6_routes": "00000000000000000000000000000000 00 00000000000000000000000000000000 00 00000000000000000000000000000000 ffffffff 00000001 00000000 00200200       lo\n00000000000000000000000000000001 80 00000000000000000000000000000000 00 00000000000000000000000000000000 00000000 00000003 00000000 80200001       lo\n00000000000000000000000000000000 00 00000000000000000000000000000000 00 00000000000000000000000000000000 ffffffff 00000001 00000000 00200200       lo\n"
+        },
+        "production_bridge_firewall_verified": false,
+        "public_dns_or_external_destinations_tested": false,
+        "limitation": "Private peers and nonstandard ports are reachable by raw sockets. Only the app is offline-isolated; Caddy has a separate localhost ingress bridge. This is not a public-import-compatible firewall."
+      },
+      "cpu_quota_reduced_probe": {
+        "cpu_max": "25000 100000",
+        "cgroup_version": 1,
+        "throttled_periods": 20,
+        "cpu_seconds": 0.498,
+        "wall_seconds": 2.071
+      },
+      "memory_hard_limit_reduced_probe": {
+        "probe_limit_bytes": 33554432,
+        "allocation_attempt_bytes": 134217728,
+        "exit_code": 137,
+        "oom_killed": true,
+        "production_app_4g_exhaustion": false
+      },
+      "pid_hard_limit_reduced_probe": {
+        "children": 15,
+        "fork_errno": 11
+      },
+      "actual_idle_expiry_cleanup": {
+        "created_directories": 1,
+        "remaining_directories": 0,
+        "expired_cookie_status": 410,
+        "idle_seconds": 3,
+        "cleanup_seconds": 0.2
+      },
+      "https_proxy_request_budget_spoofing": {
+        "first_limit": {
+          "attempt": 220,
+          "retry_after": "2"
+        },
+        "attempted": 220,
+        "spoofed_headers_did_not_reset_budget": true,
+        "health_after_overload": 200,
+        "process_restart_budget_reset": "Known boundary; separately covered in Linux regression and Phase4B restart smoke."
+      }
+    },
+    "errors": {},
+    "real_model_inference_runs": 0,
+    "public_test_requests": 0,
+    "host_database_mounts": 0,
+    "docker_stats": "semantic-phase4c-4b80732e-app-1|376.6MiB / 4GiB|0.34%\nsemantic-phase4c-4b80732e-proxy-1|19.5MiB / 256MiB|3.98%",
+    "cleanup": {
+      "owned_helper_containers_removed": [
+        "f07e39d6f0d5",
+        "d7108f577154",
+        "8aaeccefc1ab",
+        "0ded1e77f457",
+        "93fa74281edc"
+      ],
+      "compose_project_removed_with_volumes": true
+    },
+    "status": "passed"
+  },
+  "cleanup": {
+    "removed_only_recorded_image_ids": [
+      {
+        "tag": "semantic-demo:phase4c-tests",
+        "id": "sha256:f1cd9fc85d91368ec85501bc90d74b918475f758b2e1de05c92dcf67b938b26f"
+      },
+      {
+        "tag": "semantic-demo:phase4c-tests-verified",
+        "id": "sha256:544569a9266598befa9c7cec40ea9bffe71ce613377ae207cd6d50e5b6ac15c5"
+      },
+      {
+        "tag": "semantic-demo:phase4c-1f8ec8c",
+        "id": "sha256:64e76e84c08323c403fd83b04ec1185c2245b9da504dbc8cae952dd9b47038b0"
+      },
+      {
+        "tag": "semantic-demo:phase4c-verified",
+        "id": "sha256:3c01e321ae09424859cdc93c48369bc473b79bd28cde43cb28794d9223acbcdb"
+      },
+      {
+        "tag": "caddy:2.10.2-alpine",
+        "id": "sha256:4c6e91c6ed0e2fa03efd5b44747b625fec79bc9cd06ac5235a779726618e530d"
+      }
+    ],
+    "remaining": {
+      "containers": "",
+      "volumes": "",
+      "networks": "bridge\nhost\nnone",
+      "images": "",
+      "cache": "TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE\nImages          0         0         0B        0B\nContainers      0         0         0B        0B\nLocal Volumes   0         0         0B        0B\nBuild Cache     26        0         2.521GB   2.521GB"
+    },
+    "global_prune_used": false,
+    "builder_cache_retained": "No global/shared-builder cache prune was performed.",
+    "disposable_env_files_removed": [
+      "rehearsal.env",
+      "prepare-cli-check/rehearsal.env"
+    ]
+  },
+  "preservation": {
+    "baseline_files": 1933,
+    "intentional_changes": [
+      "docs/PROJECT_CONTEXT.md",
+      "docs/development-journal.md",
+      "docs/release-readiness.md",
+      "scripts/verify_phase4b_docker.py",
+      "semantic_analyser/extraction.py",
+      "tests/test_websites.py"
+    ],
+    "unchanged_files": 1927,
+    "unexpected_changes": [],
+    "development_sqlite_unchanged": true,
+    "benchmark_and_historical_evidence_unchanged": true
+  },
+  "limits_of_claim": [
+    "No live website imports or external network test targets",
+    "Only local-CA TLS, not public ACME",
+    "Only cgroupv1 actually executed",
+    "No real inference, model benchmark, editorial evaluation or public load test",
+    "Offline app bridge is not a public-import-compatible firewall",
+    "Full host disk/production memory ceiling not exhausted",
+    "Public image advisory audit and cloud runtime not tested"
+  ]
+}

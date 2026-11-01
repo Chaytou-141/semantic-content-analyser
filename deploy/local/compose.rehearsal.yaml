@@ -1,0 +1,36 @@
+# Merge AFTER deploy/aws/compose.production.yaml; local rehearsal only.
+# Requires Compose supporting !override. Never use this override publicly.
+services:
+  app:
+    pull_policy: never
+    restart: "no"
+    healthcheck:
+      interval: 3s
+      timeout: 5s
+      start_period: 180s
+      retries: 3
+  proxy:
+    pull_policy: never
+    restart: "no"
+    ports: !override
+      - "127.0.0.1:8080:80"
+      - "127.0.0.1:8443:8443"
+    environment:
+      # Caddy automatically uses its local CA for localhost. No public ACME.
+      DOMAIN: localhost:8443
+    networks:
+      demo: {}
+      local_ingress: {}
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "--no-check-certificate", "https://localhost:8443/health"]
+      interval: 3s
+      timeout: 5s
+      start_period: 30s
+      retries: 5
+networks:
+  demo:
+    # This is an offline rehearsal, NOT a public-import-compatible egress policy.
+    internal: true
+  # Docker Desktop does not publish ports from an internal-only network. Only
+  # Caddy joins this bridge; the app stays on the isolated demo network.
+  local_ingress: {}

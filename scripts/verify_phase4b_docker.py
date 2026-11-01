@@ -16,8 +16,10 @@ ROOT=Path(__file__).resolve().parents[1]
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--image',default='semantic-demo:local')
+    parser.add_argument('--output-dir',type=Path,default=ROOT/'runtime/phase4b',
+                        help='Evidence directory; use a new directory to preserve earlier results.')
     args=parser.parse_args()
-    out=ROOT/'runtime/phase4b';out.mkdir(parents=True,exist_ok=True)
+    out=args.output_dir;out.mkdir(parents=True,exist_ok=True)
     result={'linux_container_verified':False,'model_inference_runs':0,'public_fetches':0}
     def command(parts, **kwargs):
         return subprocess.run(parts,capture_output=True,text=True,timeout=kwargs.pop('timeout',20),**kwargs)
