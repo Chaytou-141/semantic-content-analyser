@@ -129,3 +129,12 @@ Updated 1 November 2026 (Australia/Sydney). UI/UX refinement after Phase 4B; no 
   is 14 articles /39,693 characters and remains unchanged. 275 targeted tests pass,
   one Windows privilege skip; three offline browser viewports pass. See
   docs/homepage-discovery.md. Real-model and historical benchmarks were not rerun.
+- Link Opportunities presentation (`0d10d70` baseline): per-method ranked destination
+  tablist + selected evidence panel, stacked on mobile. Exact short Unicode-safe excerpts,
+  expandable originals/offsets, source/destination URLs, prominent raw similarity with
+  limitations, and review actions before evidence. Decisions/notes keep the existing API;
+  source/revision-scoped drafts and selection survive navigation/saves and clear on
+  collection invalidation. No AI/ranking/backend/database changes. 47 targeted tests
+  pass, one Windows privilege skip; five offline browser viewports pass with mock reviews,
+  zero actual writes/inference/fetch. All 1,899 protected hashes match. See
+  docs/link-opportunities-ui.md; manual assistive-technology and other browsers untested.

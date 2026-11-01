@@ -1,5 +1,41 @@
 # Development journal
 
+## Link Opportunities editorial workbench
+
+1 November 2026 (Australia/Sydney), baseline `0d10d70`. Commit subject:
+**Redesign link opportunities as an editorial workbench**.
+The old five-card renderer repeated lengthy passage columns before review actions.
+A master-detail layout was chosen over a carousel or repeated accordions so all ranked
+destinations remain scannable. Each method retains a separate list, selected detail,
+raw score and review count. Source-to-destination direction, short exact quotations,
+original URLs, native full-passage/offset expansion and score limitations are explicit.
+The existing purple/white palette and fonts are reused; human decisions have restrained
+text/border states, rather than model-confidence colours. Actions sit above evidence.
+
+The renderer keeps selection and note drafts scoped by source/revision, synchronises
+pair notes across methods, preserves focus/selection after saving, and handles navigation
+during a pending review without selecting the old item again. Drafts clear on collection
+invalidation; persistence still uses the existing review API and If-Match contract.
+No ranking, scores, model, APIs, SQLite data, saved review values or backend files changed.
+Exact prefixes are bounded at 220 Unicode characters and prefer sentence/word boundaries;
+full original text/offsets remain untouched. A test initially used an incorrect sentence
+length assumption and was corrected. A Unicode boundary case informed safe truncation.
+
+47 targeted tests passed, one existing Windows symlink-privilege skip (7.55s). Five
+offline Chromium viewports passed, including five-candidate keyboard navigation, exact
+raw evidence/URLs/offsets, inert untrusted markup, all review decisions/notes, failed saves,
+navigation during save, mock reload persistence, two-method pair state and zero/one result
+boundaries. No horizontal overflow, browser errors, unexpected/live requests, real model
+runs or actual review writes occurred. Saved ARIA snapshots supplement keyboard checks;
+formal assistive-technology and Firefox/Safari testing remain limitations.
+
+In the desktop synthetic fixture, the first action's offset from its recommendation top
+changed from 476.67px to 310.31px. This is a measured layout change, not a usability or
+performance claim. All 1,899 protected file hashes match, including current development
+SQLite/reviews, evaluation evidence and benchmarks. Screenshots and detailed decisions:
+docs/link-opportunities-ui.md and runtime/link-opportunities-ui; portable results:
+docs/link-opportunities-verification.json. No website fetching, deployment or push.
+
 ## Prevent repeated website-import confirmation
 
 1 November 2026 (Australia/Sydney), baseline `c859346`. Commit subject:

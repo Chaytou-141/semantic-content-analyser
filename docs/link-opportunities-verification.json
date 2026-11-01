@@ -1,0 +1,112 @@
+{
+  "baseline_commit": "0d10d70",
+  "commit_subject": "Redesign link opportunities as an editorial workbench",
+  "before": {
+    "baseline": true,
+    "cases": [
+      {
+        "width": 1440,
+        "before_result_cards": 5,
+        "review_action_offset_px": 476.67
+      }
+    ],
+    "browser_errors": [],
+    "blocked_requests": [],
+    "protected_files": 1899,
+    "unexpected_changes": [],
+    "live_requests": 0,
+    "real_model_runs": 0,
+    "actual_review_writes": 0,
+    "fixture_scores": "Synthetic display values, not model-quality measurements"
+  },
+  "after": {
+    "baseline": false,
+    "cases": [
+      {
+        "viewport": [
+          1440,
+          1000
+        ],
+        "five_candidate_navigation": true,
+        "exact_raw_evidence_and_offsets": true,
+        "review_posts": 5,
+        "keyboard": true,
+        "compare_pair_state": true,
+        "overflow": false,
+        "review_action_offset_px": 310.31
+      },
+      {
+        "viewport": [
+          1024,
+          768
+        ],
+        "five_candidate_navigation": true,
+        "exact_raw_evidence_and_offsets": true,
+        "review_posts": 5,
+        "keyboard": true,
+        "compare_pair_state": true,
+        "overflow": false,
+        "review_action_offset_px": 293.31
+      },
+      {
+        "viewport": [
+          768,
+          1024
+        ],
+        "five_candidate_navigation": true,
+        "exact_raw_evidence_and_offsets": true,
+        "review_posts": 5,
+        "keyboard": true,
+        "compare_pair_state": true,
+        "overflow": false,
+        "review_action_offset_px": 337.91
+      },
+      {
+        "viewport": [
+          390,
+          844
+        ],
+        "five_candidate_navigation": true,
+        "exact_raw_evidence_and_offsets": true,
+        "review_posts": 5,
+        "keyboard": true,
+        "compare_pair_state": true,
+        "overflow": false,
+        "review_action_offset_px": 411.31
+      },
+      {
+        "viewport": [
+          320,
+          800
+        ],
+        "five_candidate_navigation": true,
+        "exact_raw_evidence_and_offsets": true,
+        "review_posts": 5,
+        "keyboard": true,
+        "compare_pair_state": true,
+        "overflow": false,
+        "review_action_offset_px": 427.91
+      }
+    ],
+    "browser_errors": [],
+    "blocked_requests": [],
+    "protected_files": 1899,
+    "unexpected_changes": [],
+    "live_requests": 0,
+    "real_model_runs": 0,
+    "actual_review_writes": 0,
+    "fixture_scores": "Synthetic display values, not model-quality measurements"
+  },
+  "targeted_tests": {
+    "passed": 47,
+    "skipped": 1,
+    "seconds": 7.55,
+    "skip_reason": "Existing Windows symbolic-link privilege restriction"
+  },
+  "node_syntax": "passed",
+  "limitations": [
+    "Chromium only; no formal screen-reader audit",
+    "Synthetic display scores are not model-quality measurements",
+    "Browser feedback persistence uses controlled API responses; existing API persistence covered by targeted tests"
+  ]
+}

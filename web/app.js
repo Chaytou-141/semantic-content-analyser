@@ -287,34 +287,126 @@ function renderLinks(payload) {
   state.lastLinks = payload;
   const container = $("#links-results");
   container.className = "";
-  const methods = Object.entries(payload.results);
+  const sourceId = state.sourceId;
+  const source = state.articles.find((article) => article.id === sourceId);
+  if (state.linkView?.sourceId !== sourceId || state.linkView?.revision !== payload.collection_revision) {
+    state.linkView = { sourceId, revision: payload.collection_revision, selected: {}, drafts: {} };
+  }
+  const view = state.linkView;
+  const reviewFor = (id) => payload.reviews.find((review) => review.target_id === id);
+  const reviewLabel = (review) => review?.decision === "useful" ? "Useful" : review?.decision === "not_useful" ? "Not useful" : "Unreviewed";
   const sections = [];
-  for (const [method, group] of methods) {
-    const section = el("section", { class: "method-section" }, el("div", { class: "result-heading" }, el("h2", { text: `${methodName(method)} candidates` }), el("span", { text: `${group.results.length} destinations · review required` })));
+  for (const [method, group] of Object.entries(payload.results)) {
+    const reviewed = group.results.filter((result) => ["useful", "not_useful"].includes(reviewFor(result.id)?.decision)).length;
+    const section = el("section", { class: "method-section link-method", "aria-label": `${methodName(method)} link opportunities` },
+      el("div", { class: "result-heading" }, el("h2", { text: `${methodName(method)} candidates` }), el("span", { class: "link-review-count", text: `${reviewed} of ${group.results.length} reviewed` })));
     section.append(el("div", { class: "exclusions" }, el("span", { text: `Self: ${group.excluded.self}` }), el("span", { text: `Existing links excluded: ${group.excluded.existing.length}` }), el("span", { text: `Ineligible pages excluded: ${group.excluded.disallowed.length}` })));
-    const list = el("div", { class: "result-list" });
-    if (!group.results.length) empty(list, "No eligible candidates found.", "Check destination eligibility, existing links and the text in this collection.");
-    for (const result of group.results) {
+    if (!group.results.length) {
+      const emptyList = el("div");
+      empty(emptyList, "No eligible candidates found.", "Check destination eligibility, existing links and the text in this collection.");
+      section.append(emptyList);
+      sections.push(section);
+      continue;
+    }
+    const tabs = el("div", { class: "link-candidates", role: "tablist", "aria-label": `${methodName(method)} destinations`, "aria-orientation": "vertical" });
+    const panel = el("article", { id: `link-panel-${method}`, class: "link-detail", role: "tabpanel", tabindex: "0" });
+    const buttons = [];
+    const focusDetail = () => { panel.focus({ preventScroll: true }); panel.scrollIntoView({ block: "start" }); };
+    const sidebar = el("div", { class: "link-overview" }, el("h3", { text: "Suggested destinations" }),
+      el("p", { text: "Ranked by similarity. Select one to inspect the connection." }), tabs,
+      el("button", { class: "text-button link-inspect", text: "Inspect selected evidence", onclick: focusDetail }));
+    function selectCandidate(index, focusTab = false, inspect = false) {
+      const result = group.results[index];
+      view.selected[method] = result.id;
+      buttons.forEach((button, position) => {
+        button.setAttribute("aria-selected", String(position === index));
+        button.tabIndex = position === index ? 0 : -1;
+      });
       const saved = payload.reviews.find((review) => review.target_id === result.id);
-      const note = el("input", { type: "text", name: `review_note_${method}_${result.id}`, autocomplete: "off", maxlength: "1000", placeholder: "Why would this link help the reader?…", value: saved?.note || "", "aria-label": `Review note for ${result.id}` });
-      const actions = el("div", { class: "review-actions" });
+      const draftKey = result.id; // Reviews belong to an article pair, shared by both methods.
+      const note = el("input", { type: "text", name: `review_note_${method}_${result.id}`, autocomplete: "off", maxlength: "1000", placeholder: "Why would this link help the reader?…", value: view.drafts[draftKey] ?? saved?.note ?? "", "aria-label": `Editorial note for ${result.title}` });
+      note.dataset.targetId = result.id;
+      note.addEventListener("input", () => {
+        view.drafts[draftKey] = note.value;
+        document.querySelectorAll(".link-note-editor input").forEach((other) => {
+          if (other.dataset.targetId === result.id) other.value = note.value;
+        });
+      });
+      const actions = el("div", { class: "review-actions", role: "group", "aria-label": `Editorial decision for ${result.title}` });
       for (const [decision, label] of [["useful", "Useful candidate"], ["not_useful", "Not useful"], ["pending", "Clear decision"]]) {
-        actions.append(el("button", { class: `button small ${saved?.decision === decision ? "selected-review" : ""}`, "aria-pressed": String(saved?.decision === decision), text: label, onclick: () => task("Saving your review…", async () => {
-          const review = { source_id: state.sourceId, target_id: result.id, decision, note: note.value };
+        actions.append(el("button", { id: `link-review-${method}-${decision}`, class: `button small ${saved?.decision === decision ? "link-decision-selected" : ""}`, "aria-pressed": String(saved?.decision === decision), text: label, onclick: () => task("Saving your review…", async () => {
+          const review = { source_id: sourceId, target_id: result.id, decision, note: note.value };
           await api("/api/reviews", review, "POST", payload.collection_revision);
           payload.reviews = payload.reviews.filter((row) => row.target_id !== result.id).concat(review);
+          if (view.drafts[draftKey] === review.note) delete view.drafts[draftKey];
           renderLinks(payload);
+          if (view.selected[method] === result.id) $(`#link-review-${method}-${decision}`)?.focus({ preventScroll: true });
+          else document.querySelector(`#link-list-${method} [aria-selected=true]`)?.focus({ preventScroll: true });
           toast("Review saved. No links were inserted.");
         }) }));
       }
-      actions.append(el("span", { class: "review-label", text: saved && saved.decision !== "pending" ? `Review saved: ${saved.decision === "useful" ? "Useful" : "Not useful"}` : "Awaiting your review" }));
-      const source = state.articles.find((a) => a.id === state.sourceId);
-      list.append(el("article", { class: "result-card" }, el("div", { class: "result-topline" }, el("h3", {}, articleTitle(result)), scoreBadge(result.score)), metadata(result), el("p", { class: "context-note", text: "A passage match suggests a possible connection, not proof that this link will help. Review both contexts." }), el("div", { class: "evidence" }, el("div", {}, el("span", { class: "evidence-label", text: `From: ${source?.title || "Source article"}` }), evidence(result.source_passage, "source passage", result.source_start, result.source_end)), el("div", {}, el("span", { class: "evidence-label", text: "Suggested destination evidence" }), evidence(result.passage, "destination passage", result.passage_start, result.passage_end))), el("div", { class: "result-footer" }, safeTarget(result.url)), el("label", { class: "review-note" }, "Editorial note", note), el("div", { class: "result-footer" }, actions)));
+      const back = el("button", { class: "text-button link-back", text: "Back to destinations", onclick: () => { buttons[index].focus({ preventScroll: true }); sidebar.scrollIntoView({ block: "start" }); } });
+      const route = el("div", { class: "link-route" },
+        el("div", { class: "link-route-source" }, el("span", { class: "link-route-label", text: "Link from" }), source ? articleTitle(source) : el("span", { text: sourceId })),
+        el("span", { class: "link-route-arrow", "aria-hidden": "true", text: "↓" }),
+        el("div", { class: "link-route-target" }, el("span", { class: "link-route-label", text: "Suggested destination" }), el("h3", {}, articleTitle(result))));
+      const help = el("details", { class: "link-score-help" }, el("summary", { text: "About this score" }), el("p", { text: "Cosine similarity measures mathematical closeness between passages. It is not accuracy, a probability or editorial confidence. MiniLM and TF-IDF scores are not directly comparable." }));
+      const noteEditor = el("details", { class: "link-note-editor", ...(note.value ? { open: "" } : {}) }, el("summary", { text: "Editorial note" }), el("label", {}, "Saved with your next decision", note));
+      panel.dataset.review = saved?.decision || "pending";
+      panel.setAttribute("aria-labelledby", buttons[index].id);
+      panel.replaceChildren(back,
+        el("div", { class: "link-detail-topline" }, el("span", { text: `Recommendation ${index + 1} of ${group.results.length}` }), el("span", { class: "link-review-state", role: "status", text: reviewLabel(saved) })),
+        el("div", { class: "link-detail-heading" }, route, el("div", { class: "link-similarity", "aria-label": `Cosine similarity ${result.score.toFixed(3)}` }, el("strong", { text: result.score.toFixed(3) }), el("span", { text: "Cosine similarity" })), help),
+        el("section", { class: "link-editorial", "aria-label": "Your editorial review" }, el("p", { text: "Would this destination help the reader?" }), actions, noteEditor),
+        el("div", { class: "link-evidence-heading" }, el("h4", { text: "Matching passage evidence" }), el("p", { text: "These are the passages compared, not an explanation of usefulness. Review the article intent before adding a link." })),
+        linkPassage(result.source_passage, "Source passage", result.source_start, result.source_end, source?.url),
+        linkPassage(result.passage, "Destination passage", result.passage_start, result.passage_end, result.url));
+      if (focusTab) buttons[index].focus({ preventScroll: true });
+      if (inspect) focusDetail();
     }
-    section.append(list);
+    tabs.id = `link-list-${method}`;
+    group.results.forEach((result, index) => {
+      const saved = reviewFor(result.id);
+      const button = el("button", { id: `link-tab-${method}-${result.id}`, class: "link-candidate", type: "button", role: "tab", "aria-controls": panel.id,
+        "aria-label": `${index + 1}. ${result.title}. Similarity ${result.score.toFixed(3)}. ${reviewLabel(saved)}`,
+        "data-review": saved?.decision || "pending", onclick: (event) => selectCandidate(index, true, event.detail > 0 && matchMedia("(max-width: 760px)").matches) },
+      el("span", { class: "link-candidate-rank", "aria-hidden": "true", text: String(index + 1) }),
+      el("span", { class: "link-candidate-copy" }, el("span", { class: "link-candidate-title", text: result.title }), el("span", { class: "link-candidate-state", text: reviewLabel(saved) })),
+      el("span", { class: "link-candidate-score", "aria-hidden": "true", text: result.score.toFixed(3) }));
+      button.addEventListener("keydown", (event) => {
+        const next = { ArrowDown: (index + 1) % group.results.length, ArrowUp: (index + group.results.length - 1) % group.results.length, Home: 0, End: group.results.length - 1 }[event.key];
+        if (next !== undefined) { event.preventDefault(); selectCandidate(next, true); }
+      });
+      buttons.push(button);
+      tabs.append(button);
+    });
+    const chosen = group.results.findIndex((result) => result.id === view.selected[method]);
+    selectCandidate(chosen >= 0 ? chosen : 0);
+    section.append(el("div", { class: "link-workbench" }, sidebar, panel));
     sections.push(section);
   }
   container.replaceChildren(...sections);
+}
+
+function linkPassage(text, label, start, end, url) {
+  // Exact prefix from the returned passage: never paraphrase or remove markers.
+  const excerpt = linkExcerpt(text);
+  const full = el("details", { class: "full-evidence" }, el("summary", { text: `Read full ${label.toLowerCase()}` }), el("pre", { text }));
+  if (Number.isInteger(start) && Number.isInteger(end)) full.append(el("p", { class: "link-offsets", text: `Original character offsets: ${start}–${end}` }));
+  const original = safeTarget(url);
+  if (original.tagName === "A") original.textContent = label === "Source passage" ? "Open source article" : "Open destination article";
+  return el("section", { class: "link-passage", "aria-label": label }, el("h4", { text: label }), el("blockquote", { class: "link-excerpt", text: excerpt }),
+    excerpt.length < text.length ? el("p", { class: "link-excerpt-note", text: "Exact excerpt. Open the full passage for context." }) : null,
+    el("div", { class: "link-passage-links" }, full, original));
+}
+
+function linkExcerpt(text) {
+  const characters = Array.from(text);
+  if (characters.length <= 220) return text;
+  const prefix = characters.slice(0, 220).join("").replace(/\s+\S*$/u, "");
+  const endings = [...prefix.matchAll(/[.!?](?=\s|$)/gu)];
+  const end = endings.at(-1)?.index;
+  return end >= 80 ? prefix.slice(0, end + 1) : prefix;
 }
 
 function renderOverlaps(payload) {
@@ -371,6 +463,7 @@ function openArticle(id) {
 
 function invalidateResults() {
   state.lastLinks = null;
+  state.linkView = null;
   state.hasSearched = false;
   renderDiscovery();
   empty($("#links-results"), "Collection updated.", "Run link discovery again to use the current text and rules.");
