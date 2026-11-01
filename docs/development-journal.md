@@ -1,5 +1,27 @@
 # Development journal
 
+## Footer sizing and frontend cache follow-up
+
+1 November 2026 (Australia/Sydney), baseline `7079926`. Commit subject:
+**Bound footer icon and refresh frontend asset references**.
+The footer SVG relied exclusively on stylesheet sizing. Its oversized appearance
+was reproduced offline after removing the sizing rules: 1280x1280 at the default
+test viewport. Explicit HTML width/height now bound it to 18x18 even with missing
+footer CSS; eight current/missing-CSS cases passed at 1440/1024/390/320 widths,
+including native disclosure keyboard toggling. Existing stylesheet URL is versioned.
+
+A subsequent screenshot placed discovery errors in the sidebar while still showing
+Finding public articles, matching older JavaScript rather than the current task
+handler. Local access logs showed no new app.js transfer, which supports but does
+not prove a cached-script cause. The app.js URL now includes an explicit release
+version. The served homepage was checked for that reference. Offline browser checks
+now explicitly require errors in the content panel, none in the sidebar, and Request
+stopped status; all four viewport cases pass. Three focused UX tests pass (0.08s).
+No new website requests, model runs or saved-collection writes occurred during this
+UI follow-up; all 1,835 protected-file hashes still match. Private screenshots/results
+are in runtime/footer-icon-fix and runtime/discovery-progress-fixes. Remote sitemap
+HTTP400 remains a separate issue; refreshing frontend assets does not fix that response.
+
 ## Discovery diagnostics and extraction progress follow-up
 
 Date: 1 November 2026 (Australia/Sydney). Baseline `4f04563`.

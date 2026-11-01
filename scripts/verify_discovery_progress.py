@@ -102,6 +102,10 @@ def main():
             render(views['one'])
             page.evaluate('async()=>{await task("Controlled offline failure",async()=>{throw Error("Controlled request failure");});}')
             expect(page.locator('#extraction-count')).to_contain_text('Stopped. Last confirmed: 1 of 36')
+            expect(page.locator('.website-source-panel .dialog-error')).to_have_count(0)
+            expect(page.locator('.website-content-panel .dialog-error')).to_be_visible()
+            expect(page.locator('#website-progress')).to_contain_text('Request stopped.')
+            page.screenshot(path=str(OUT/f'request-stopped-{width}.png'))
             assert meter.evaluate('p=>p.value')==1
             for name in ['selecting','ready']:
                 render(views[name])
