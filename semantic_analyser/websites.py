@@ -5,6 +5,7 @@ import json
 import secrets
 import time
 import logging
+import re
 from collections import Counter
 from dataclasses import dataclass, field
 from urllib.parse import urlsplit
@@ -17,6 +18,16 @@ from .storage import validate_collection
 MAX_CANDIDATES, MAX_SELECTED, MAX_DISCOVERY = 200, 40, 12
 WEBSITE_LIFETIME_SECONDS = 15 * 60
 LOG = logging.getLogger(__name__)
+
+
+def article_sitemap_hint(url):
+    """A filename hint for automatic scope, never evidence of article content."""
+    try:
+        parts = set(re.split(r'[^a-z0-9]+', urlsplit(url).path.lower()))
+    except ValueError:
+        return False
+    return bool(parts & {'blog', 'post', 'posts', 'article', 'articles'}) and not bool(
+        parts & {'category', 'categories', 'tag', 'tags', 'product', 'products', 'event', 'events', 'author', 'authors'})
 
 
 class CollectionCapacityExceeded(ValueError):
@@ -145,7 +156,7 @@ class WebsiteService:
                             self.queue_maps(run, maps)
                             for _, policy in run.session.robots.values():
                                 self.queue_maps(run, policy.sitemaps)
-                        if run.method == 'sitemap':
+                        if run.method == 'sitemap' or (run.method == 'auto' and not api and run.pending):
                             if not run.pending:
                                 self.fallback_maps(run)
                         else:
@@ -252,6 +263,23 @@ class WebsiteService:
             if warning not in run.warnings:
                 run.warnings.append(warning)
         if root == 'sitemapindex':
+            # Select a published branch before making requests, never as a retry
+            # or fallback after a denial. Explicit XML mode still scans all types.
+            preferred = []
+            for url in urls:
+                try:
+                    safe_url = self.reference(run, url)
+                except FetchError:
+                    continue
+                if article_sitemap_hint(safe_url):
+                    preferred.append(safe_url)
+            if run.method == 'auto' and preferred and len(preferred) < len(urls):
+                urls = preferred
+                warning = ('Automatic discovery focused on sitemap sections whose names suggest blog posts or articles. '
+                           'Other sections were not scanned, so this is not the complete website. '
+                           'Choose All sitemap pages to include other page types.')
+                if warning not in run.warnings:
+                    run.warnings.append(warning)
             self.queue_maps(run, urls, depth + 1)
         else:
             for url in urls:

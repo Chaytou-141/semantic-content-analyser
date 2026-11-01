@@ -1,0 +1,87 @@
+{
+  "cases": [
+    {
+      "viewport": [
+        1440,
+        900
+      ],
+      "candidates": 14,
+      "mock_wire_requests": 6,
+      "api_posts": [
+        "/api/website/start",
+        "/api/website/step",
+        "/api/website/step",
+        "/api/website/step"
+      ],
+      "collection_unchanged": true
+    },
+    {
+      "viewport": [
+        1024,
+        600
+      ],
+      "candidates": 14,
+      "mock_wire_requests": 6,
+      "api_posts": [
+        "/api/website/start",
+        "/api/website/step",
+        "/api/website/step",
+        "/api/website/step"
+      ],
+      "collection_unchanged": true
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "candidates": 14,
+      "mock_wire_requests": 6,
+      "api_posts": [
+        "/api/website/start",
+        "/api/website/step",
+        "/api/website/step",
+        "/api/website/step"
+      ],
+      "collection_unchanged": true
+    }
+  ],
+  "browser_errors": [],
+  "blocked_requests": [],
+  "protected_files": 1835,
+  "unexpected_changes": [],
+  "saved_articles": 14,
+  "saved_characters": 39693,
+  "live_requests": 0,
+  "real_model_runs": 0,
+  "saved_database_writes": 0,
+  "baseline": "8aeb44c",
+  "commit_subject": "Discover blog sitemaps automatically from homepage URLs",
+  "targeted_tests": {
+    "passed": 275,
+    "skipped": 1,
+    "seconds": 29.81,
+    "skip_reason": "Existing Windows symbolic-link privilege restriction"
+  },
+  "cached_real_replay": {
+    "input": "authorised saved homepage, robots, sitemap index and blog map; no refetch",
+    "phase": "selecting",
+    "candidates": 14,
+    "mock_wire_requests": 6,
+    "outbound_urls_replayed": [
+      "https://www.urbanturfsolutions.com.au/robots.txt",
+      "https://www.urbanturfsolutions.com.au/",
+      "https://www.urbanturfsolutions.com.au/robots.txt",
+      "https://www.urbanturfsolutions.com.au/sitemap.xml",
+      "https://www.urbanturfsolutions.com.au/robots.txt",
+      "https://www.urbanturfsolutions.com.au/blog-posts-sitemap.xml"
+    ],
+    "warnings": [
+      "Automatic discovery focused on sitemap sections whose names suggest blog posts or articles. Other sections were not scanned, so this is not the complete website. Choose All sitemap pages to include other page types."
+    ],
+    "additional_live_requests": 0,
+    "original_http400_reproduced": false,
+    "real_article_extraction_retested": false
+  },
+  "original_live_http400_cause": "Unconfirmed; not reproduced by the prior one authorised run"
+}

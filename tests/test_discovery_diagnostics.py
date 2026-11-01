@@ -43,7 +43,9 @@ def test_wix_shaped_standard_index_and_blog_map_work_without_wordpress():
 
 
 def test_same_auto_configuration_can_succeed_then_fail_if_upstream_changes(caplog):
-    wire=FakeTransport(wix_like_routes());svc=WebsiteService(SafeFetcher(FetchLimits(delay_seconds=0),FakeDNS(),wire))
+    data=wix_like_routes()
+    data['/']=(200,b'<link rel="https://api.w.org/" href="/wp-json/">',{'content-type':'text/html'})
+    wire=FakeTransport(data);svc=WebsiteService(SafeFetcher(FetchLimits(delay_seconds=0),FakeDNS(),wire))
     first=discover(svc);assert len(first.candidates)==3  # REST 404 permits existing fallback.
     wire.routes[WP]=(403,b'Do not expose: 10.0.0.1 token=secret',{})
     before=len(wire.calls)
@@ -58,7 +60,7 @@ def test_api_diagnostics_are_safe_and_auth_failures_do_not_fallback(visitor_sett
     app=create_app(replace(visitor_settings,website_fetch_enabled=True),engine,fetch)
     with TestClient(app,headers={'X-Workspace-Request':'true'}) as client:
         token,rev=start(client)
-        run=client.post('/api/website/start',headers=headers(token,rev),json={'url':BASE}).json()
+        run=client.post('/api/website/start',headers=headers(token,rev),json={'url':BASE,'method':'wordpress'}).json()
         client.post('/api/website/step',headers=headers(token,rev),json={'run_id':run['run_id']})
         response=client.post('/api/website/step',headers=headers(token,rev),json={'run_id':run['run_id']})
         assert response.status_code==502

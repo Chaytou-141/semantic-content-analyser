@@ -9,7 +9,7 @@
   <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
   <link rel="preload" href="/static/fonts/InstrumentSans.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="stylesheet" href="/static/styles.css?v=footer-icon-20261101">
-  <script src="/static/app.js?v=7079926-progress" defer></script>
+  <script src="/static/app.js?v=homepage-discovery-20261101" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -111,8 +111,8 @@
     <h3>Your source</h3><p>Use a public website or sitemap you are authorised to analyse.</p>
     <form id="website-form">
       <label for="website-url">Website or XML sitemap URL</label><input id="website-url" type="url" required maxlength="2048" placeholder="https://your-website.com/">
-      <label for="website-method">Discovery</label><select id="website-method"><option value="auto">WordPress, then XML sitemaps</option><option value="wordpress">WordPress REST API</option><option value="sitemap">XML sitemap</option></select>
-      <p class="context-note">Automatic: try the site's blog feed, then its page maps. WordPress: use a WordPress blog's published posts. XML sitemap: use a published page list or index, including sites without WordPress.</p>
+      <label for="website-method">Find content</label><select id="website-method"><option value="auto">Automatic (recommended)</option><option value="wordpress">WordPress posts only</option><option value="sitemap">All sitemap pages</option></select>
+      <p class="context-note">Enter your homepage; you do not need to know its sitemap address. Automatic uses a published WordPress feed or page map and focuses on clearly named blog/article sections when available. All sitemap pages can also include products and categories. You review the results before importing.</p>
       <button class="button primary" type="submit">Discover articles</button>
     </form>
     <div class="website-retention"><strong>Your collection stays intact.</strong><p>Discovery and preview do not change your articles or reviews. You confirm the replacement at the end.</p></div>

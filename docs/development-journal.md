@@ -1,5 +1,37 @@
 # Development journal
 
+## Homepage-first automatic blog discovery
+
+1 November 2026 (Australia/Sydney), baseline `8aeb44c`. Commit subject:
+**Discover blog sitemaps automatically from homepage URLs**.
+Normal users should not need to locate a sitemap manually. Auto mode now uses advertised
+XML maps when no REST API is advertised, retaining advertised WordPress preference and
+the existing no-metadata fallback. Mixed indexes focus on conservatively named blog/
+post/article sections in automatic mode, with a visible incomplete-website warning.
+All sitemap pages retains the previous explicit XML behaviour. Filename scope hints
+are heuristic, not verified content classification; ambiguous names still traverse
+normally, multiple post maps survive and unsafe hints cannot displace safe maps.
+
+Continuing to other endpoints after HTTP400/401/403/429/503 was rejected. The chosen
+scope decision precedes network requests; failures on chosen endpoints remain fatal.
+No robots cache relaxation, retries, limit increases, AI changes or collection writes.
+The previously authorised site's HTTP400 was not reproduced, so no root-cause claim
+is made. A cached-response replay now finds 14 posts directly from that site's homepage
+in six mocked requests, including no-cache robots checks. No further live requests ran.
+
+275 targeted tests passed, one existing Windows symlink-privilege skip (29.81s).
+Three offline browser viewport checks submit the real homepage form through the real
+WebsiteService with controlled DNS/transport; 14 candidates, warning, selection and
+visible extraction action pass. Node syntax and diff checks passed. No real model ran.
+An earlier fixture's hardcoded 32-article assertion failed read-only because the live
+collection now contains 14 articles /39,693 characters. Verification now reads the
+current saved data and takes a fresh baseline; no data was restored or replaced.
+All 1,835 protected-file hashes match. Details and reproduction commands are in
+docs/homepage-discovery.md; current measurements in docs/homepage-discovery-verification.json.
+Raw authorised responses and browser screenshots remain private under runtime. The
+original transient HTTP400, actual extraction quality and public deployment remain
+unverified. No push/deploy. Next: broader authorised compatibility testing when requested.
+
 ## Footer sizing and frontend cache follow-up
 
 1 November 2026 (Australia/Sydney), baseline `7079926`. Commit subject:

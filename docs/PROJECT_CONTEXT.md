@@ -119,3 +119,13 @@ Updated 1 November 2026 (Australia/Sydney). UI/UX refinement after Phase 4B; no 
   counts, one modal body scroll and fixed actions. Four offline viewport cases pass;
   256 targeted tests pass, one Windows symlink privilege skip. Saved32 collection and
   historical evidence unchanged. See docs/discovery-progress-fixes.md.
+- Homepage discovery follow-up (`8aeb44c` baseline): Auto prefers advertised maps when
+  no REST API is advertised and focuses mixed indexes on conservative post/article
+  filename hints, with an incomplete-website warning. All sitemap pages preserves
+  explicit full XML mode; denials still fail closed without retries or changed limits.
+  One separately authorised Urban Turf diagnostic found a public index/blog map, not
+  the reported HTTP400. Cached replay now finds 14 posts from its homepage in six mock
+  requests. No new live requests or extraction-quality claim. Current saved collection
+  is 14 articles /39,693 characters and remains unchanged. 275 targeted tests pass,
+  one Windows privilege skip; three offline browser viewports pass. See
+  docs/homepage-discovery.md. Real-model and historical benchmarks were not rerun.
