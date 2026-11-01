@@ -2,6 +2,34 @@
 
 const $ = (selector) => document.querySelector(selector);
 const state = { articles: [], meta: null, view: "home", busy: false, lastLinks: null, sourceId: null, hasSearched: false, pendingEvaluation: false };
+const LIMITS = Object.freeze({ characters: 250000, articles: 100, body: 20000, passages: 800, selected: 40 });
+const number = (value) => new Intl.NumberFormat("en-AU").format(value);
+
+function isSampleCollection() {
+  return state.articles.length === 21 && state.articles.every((a) => a.url.startsWith("https://example.com/articles/"));
+}
+
+// Display only. Never change the saved body, passage text or source offsets.
+function displayText(text) { return text.replace(/:?(?:\bcontentReference\[oaicite:\d+\]\{index=\d+\})/gu, ""); }
+
+function evidence(text, label, start, end) {
+  const clean = displayText(text);
+  const preview = clean.length > 320 ? clean.slice(0, 320).replace(/\s+\S*$/u, "") + "…" : clean;
+  const full = el("details", { class: "full-evidence" }, el("summary", { text: `Read full ${label.toLowerCase()}` }), el("pre", { text }));
+  if (Number.isInteger(start) && Number.isInteger(end)) full.append(el("p", { class: "context-note", text: `Saved source character offsets: ${start}–${end}.` }));
+  return el("div", { class: "evidence-block" }, el("p", { class: "passage evidence-preview", text: preview }),
+    clean !== text ? el("p", { class: "context-note", text: "A source citation marker is hidden in this preview. Full saved evidence is unchanged." }) : null, full);
+}
+
+function importComplete(count, source) {
+  state.lastImport = { count, source, revision: state.revision };
+  $("#import-success-title").textContent = `${count} articles imported`;
+  $("#import-success-description").textContent = `${source} collection ready. Search articles, inspect link opportunities or compare content overlap.`;
+  $("#import-success").hidden = false;
+  $("#collection-imports").open = false;
+  navigate("search");
+  $("#search-query").focus();
+}
 
 function el(tag, attrs = {}, ...children) {
   const node = document.createElement(tag);
@@ -23,14 +51,18 @@ async function api(path, data, method = "POST", expectedRevision = state.revisio
   if (data !== undefined) headers["Content-Type"] = "application/json";
   if (data !== undefined && expectedRevision && path !== "/api/login" && path !== "/api/logout") headers["If-Match"] = expectedRevision;
   const options = data === undefined ? { headers } : { method, headers, body: JSON.stringify(data) };
-  const response = await fetch(path, options);
+  let response;
+  try { response = await fetch(path, options); }
+  catch { throw new Error("The service could not be reached. Check your connection and refresh the collection before retrying."); }
   let payload;
-  try { payload = await response.json(); } catch { throw new Error("The server returned an unexpected response. Check the server logs."); }
+  try { payload = await response.json(); } catch { throw new Error("The service returned an unreadable result. Refresh the collection to check its state before retrying."); }
   if (!response.ok) {
     if (response.status === 401 && path !== "/api/login" && state.passwordRequired) showLogin();
     let message = payload.detail || "The request could not be completed.";
     if (Array.isArray(message)) message = message.map((issue) => `${issue.loc.slice(1).join(".")}: ${issue.msg}`).join("; ");
     if (response.status === 409) { await loadCollection(); invalidateResults(); }
+    if ([401, 410].includes(response.status) && !state.passwordRequired) message += " Reload to start a new temporary session; expired data may no longer be available.";
+    if ([429, 503].includes(response.status)) message += " Wait before retrying. Repeated attempts do not reset the service budget.";
     throw new Error(message);
   }
   if (path === "/api/articles" || (data !== undefined && (path.startsWith("/api/articles/") || path === "/api/articles/import" || path === "/api/website/import"))) {
@@ -53,6 +85,7 @@ function toast(message) {
 async function task(message, action) {
   if (state.busy) return;
   state.busy = true;
+  $("#workspace").setAttribute("aria-busy", "true");
   $("#app-error").hidden = true;
   document.querySelectorAll(".dialog-error").forEach((error) => error.remove());
   $("#busy-message").textContent = message;
@@ -72,6 +105,7 @@ async function task(message, action) {
     toast(error.message);
   } finally {
     state.busy = false;
+    $("#workspace").setAttribute("aria-busy", "false");
     $("#busy").hidden = true;
     submitButtons.forEach(({ button, disabled }) => { button.disabled = disabled; });
     if (state.pendingEvaluation) {
@@ -92,15 +126,22 @@ async function loadCollection() {
   $("#home-website-url").disabled = !meta.website_fetch_enabled;
   $("#home-website-submit").disabled = !meta.website_fetch_enabled;
   $("#home-website-unavailable").hidden = Boolean(meta.website_fetch_enabled);
-  const sampleCollection = state.articles.length === 21 && state.articles.every((article) => article.url.startsWith("https://example.com/articles/"));
-  $("#home-explore").textContent = sampleCollection ? "Try the sample articles" : `Continue with your ${state.articles.length} articles`;
+  const sampleCollection = isSampleCollection();
+  $("#home-current-note").textContent = sampleCollection ? "The current collection is fictional demonstration data. No website is needed." : `Your ${state.articles.length}-article collection will not be replaced by opening sample options.`;
+  $("#home-continue").hidden = sampleCollection || !state.articles.length;
+  $("#home-continue").textContent = `Continue with your ${state.articles.length} articles`;
+  $("#collection-origin").textContent = sampleCollection ? "Fictional sample collection · demonstration data" : state.articles.some((a) => /^W[a-f0-9]{16}$/u.test(a.id) && /^https?:\/\//iu.test(a.url)) ? "Your website-linked collection · inspect the original URLs and extracted text" : "Your collection · imported or edited articles";
   $("#analysis-collection-note").textContent = `${state.articles.length} articles ready. Search by topic, review link opportunities or compare overlap.`;
-  $(".examples").hidden = !state.articles.every((article) => article.url.startsWith("https://example.com/articles/"));
+  const examples = sampleCollection ? ["Choosing a display fridge for a cafe", "Why does bread dough expand while resting?", "How can I arrange a cafe coffee station?"] : state.articles.slice(0, 3).map((a) => a.title);
+  $(".examples").replaceChildren(el("span", { text: sampleCollection ? "Try a sample question" : "Try a title from your collection" }), ...examples.map((query) => el("button", { type: "button", "data-example": query, text: query })));
+  $(".examples").hidden = !examples.length;
   $("#workspace-notice").textContent = meta.workspace_mode === "visitor"
     ? `This browser has its own temporary workspace. Data expires after ${Math.round(meta.idle_seconds / 60)} minutes without activity. Import only content you are authorised to process.`
-    : "Demo articles are fictional. Import only content you are authorised to process. This installation has one shared workspace.";
+    : "This local installation uses one shared workspace. Import only authorised content; sample restoration requires confirmation.";
+  if (state.lastImport && state.lastImport.revision !== state.revision) { state.lastImport = null; $("#import-success").hidden = true; }
   $("#collection-count").textContent = `${state.articles.length} articles in your collection`;
   $("#nav-article-count").textContent = state.articles.length;
+  if (!state.articles.length) $("#collection-imports").open = true;
   const select = $("#links-source");
   const previous = select.value;
   select.replaceChildren(...state.articles.map((article) => el("option", { value: article.id, text: article.title })));
@@ -137,6 +178,7 @@ function renderCollectionRail() {
 }
 
 function renderDiscovery() {
+  if (!state.articles.length) { empty($("#search-results"), "No articles to analyse yet.", "Use Import to add a website or CSV collection, or restore the fictional samples with confirmation."); return; }
   const topics = new Set();
   const featured = [];
   for (const article of state.articles) {
@@ -164,6 +206,7 @@ async function start() {
     $("#workspace").hidden = false;
     $("#sign-out").hidden = !session.password_required;
     await loadCollection();
+    if (!location.hash) history.replaceState(null, "", "#home");
     navigate(location.hash.slice(1) || "home");
   } catch (error) { $("#app-error").textContent = error.message; $("#app-error").hidden = false; $("#workspace").hidden = false; }
 }
@@ -179,7 +222,11 @@ function navigate(view) {
     button.classList.toggle("active", active);
     if (active) button.setAttribute("aria-current", "page"); else button.removeAttribute("aria-current");
   });
-  history.replaceState(null, "", `#${view}`);
+  document.querySelectorAll(".masthead-actions a[data-view]").forEach((link) => {
+    const active = link.dataset.view === view || (link.dataset.view === "search" && ["links", "overlap"].includes(view));
+    if (active) link.setAttribute("aria-current", "page"); else link.removeAttribute("aria-current");
+  });
+  if (location.hash !== `#${view}`) history.pushState(null, "", `#${view}`);
   $("#app-error").hidden = true;
   if (view === "evaluation") {
     if (state.busy) state.pendingEvaluation = true;
@@ -201,7 +248,7 @@ function metadata(result) {
   if (generatedId && !result.topic) return null;
   return el("div", { class: "article-meta" }, generatedId ? null : el("span", { text: result.id }), result.topic ? el("span", { class: "topic-tag", text: result.topic.replaceAll("_", " ") }) : null);
 }
-function methodName(method) { return method === "embeddings" ? "Embeddings" : "TF-IDF"; }
+function methodName(method) { return method === "embeddings" ? "MiniLM" : "TF-IDF"; }
 
 function renderSearch(payload) {
   state.hasSearched = true;
@@ -213,7 +260,7 @@ function renderSearch(payload) {
     const list = el("div", { class: "result-list" });
     if (!results.length) empty(list, "No matches above this score.", "Try a lower minimum score or a different question. A keyword query may not share any vocabulary with this collection.");
     for (const [index, result] of results.entries()) {
-      list.append(el("article", { class: "result-card" }, el("div", { class: "result-topline" }, el("div", { class: "ranked-title" }, el("span", { class: "result-rank", "aria-label": `Rank ${index + 1}`, text: index + 1 }), el("h3", {}, articleTitle(result))), scoreBadge(result.score)), metadata(result), el("p", { class: "passage", text: result.passage }), el("div", { class: "result-footer" }, el("span", { text: "Matching passage" }), el("button", { class: "text-button", text: "Read article", onclick: () => openArticle(result.id) }))));
+      list.append(el("article", { class: "result-card" }, el("div", { class: "result-topline" }, el("div", { class: "ranked-title" }, el("span", { class: "result-rank", "aria-label": `Rank ${index + 1}`, text: index + 1 }), el("h3", {}, articleTitle(result))), scoreBadge(result.score)), metadata(result), evidence(result.passage, "matching passage", result.passage_start, result.passage_end), el("div", { class: "result-footer" }, safeTarget(result.url), el("button", { class: "text-button", text: "Read article", onclick: () => openArticle(result.id) }))));
     }
     section.append(list);
     grid.append(section);
@@ -222,8 +269,9 @@ function renderSearch(payload) {
 }
 
 function safeTarget(url) {
-  if (!url) return el("span", { text: "No destination URL provided. Add one in Article collection." });
-  return el("a", { href: url, target: "_blank", rel: "noopener noreferrer", text: url });
+  if ((url || "").startsWith("https://example.com/articles/")) return el("span", { text: "Fictional sample URL; not a published article." });
+  if (!/^https?:\/\//iu.test(url || "")) return el("span", { text: "No public article URL provided. Add one in Articles." });
+  return el("a", { href: url, target: "_blank", rel: "noopener noreferrer", title: url, text: "Open original article" });
 }
 
 function renderLinks(payload) {
@@ -242,7 +290,7 @@ function renderLinks(payload) {
       const note = el("input", { type: "text", name: `review_note_${method}_${result.id}`, autocomplete: "off", maxlength: "1000", placeholder: "Why would this link help the reader?…", value: saved?.note || "", "aria-label": `Review note for ${result.id}` });
       const actions = el("div", { class: "review-actions" });
       for (const [decision, label] of [["useful", "Useful candidate"], ["not_useful", "Not useful"], ["pending", "Clear decision"]]) {
-        actions.append(el("button", { class: `button small ${saved?.decision === decision ? "selected-review" : ""}`, text: label, onclick: () => task("Saving your review…", async () => {
+        actions.append(el("button", { class: `button small ${saved?.decision === decision ? "selected-review" : ""}`, "aria-pressed": String(saved?.decision === decision), text: label, onclick: () => task("Saving your review…", async () => {
           const review = { source_id: state.sourceId, target_id: result.id, decision, note: note.value };
           await api("/api/reviews", review, "POST", payload.collection_revision);
           payload.reviews = payload.reviews.filter((row) => row.target_id !== result.id).concat(review);
@@ -250,8 +298,9 @@ function renderLinks(payload) {
           toast("Review saved. No links were inserted.");
         }) }));
       }
-      actions.append(el("span", { class: "review-label", text: saved && saved.decision !== "pending" ? "Review saved" : "Awaiting your review" }));
-      list.append(el("article", { class: "result-card" }, el("div", { class: "result-topline" }, el("h3", {}, articleTitle(result)), scoreBadge(result.score)), metadata(result), el("div", { class: "evidence" }, el("div", {}, el("span", { class: "evidence-label", text: "Source passage" }), el("p", { text: result.source_passage })), el("div", {}, el("span", { class: "evidence-label", text: "Destination evidence" }), el("p", { text: result.passage }))), el("div", { class: "result-footer" }, safeTarget(result.url)), el("label", { class: "review-note" }, "Editorial note", note), el("div", { class: "result-footer" }, actions)));
+      actions.append(el("span", { class: "review-label", text: saved && saved.decision !== "pending" ? `Review saved: ${saved.decision === "useful" ? "Useful" : "Not useful"}` : "Awaiting your review" }));
+      const source = state.articles.find((a) => a.id === state.sourceId);
+      list.append(el("article", { class: "result-card" }, el("div", { class: "result-topline" }, el("h3", {}, articleTitle(result)), scoreBadge(result.score)), metadata(result), el("p", { class: "context-note", text: "A passage match suggests a possible connection, not proof that this link will help. Review both contexts." }), el("div", { class: "evidence" }, el("div", {}, el("span", { class: "evidence-label", text: `From: ${source?.title || "Source article"}` }), evidence(result.source_passage, "source passage", result.source_start, result.source_end)), el("div", {}, el("span", { class: "evidence-label", text: "Suggested destination evidence" }), evidence(result.passage, "destination passage", result.passage_start, result.passage_end))), el("div", { class: "result-footer" }, safeTarget(result.url)), el("label", { class: "review-note" }, "Editorial note", note), el("div", { class: "result-footer" }, actions)));
     }
     section.append(list);
     sections.push(section);
@@ -266,7 +315,7 @@ function renderOverlaps(payload) {
   const list = el("div", { class: "result-list" });
   for (const pair of payload.pairs) {
     const columns = el("div", { class: "pair-grid" });
-    for (const article of [pair.left, pair.right]) columns.append(el("div", {}, el("h3", {}, articleTitle(article)), metadata(article), el("p", { class: "passage", text: article.passage })));
+    for (const article of [pair.left, pair.right]) columns.append(el("div", {}, el("h3", {}, articleTitle(article)), metadata(article), evidence(article.passage, "overlap passage", article.passage_start, article.passage_end), safeTarget(article.url)));
     list.append(el("article", { class: "result-card" }, el("div", { class: "pair-heading" }, el("span", { text: "Possible topic overlap · editorial review" }), scoreBadge(pair.score)), columns, el("div", { class: "result-footer" }, el("span", { text: "Check whether the pages answer different reader questions and contain unique information." }))));
   }
   container.replaceChildren(el("div", { class: "result-heading" }, el("h2", { text: `${payload.pairs.length} pairs to inspect` })), list);
@@ -336,6 +385,7 @@ document.querySelectorAll("[data-view]").forEach((link) => link.addEventListener
   if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
   event.preventDefault();
   navigate(link.dataset.view);
+  $("#main-content").focus({ preventScroll: true });
 }));
 function mayClose(dialog) {
   return dialog.querySelector("form")?.dataset.dirty !== "true" || confirm("Discard the unsaved changes in this form?");
@@ -351,7 +401,7 @@ document.querySelectorAll("dialog").forEach((dialog) => {
 window.addEventListener("beforeunload", (event) => {
   if (document.querySelector('dialog[open] form[data-dirty="true"]')) { event.preventDefault(); event.returnValue = ""; }
 });
-document.querySelectorAll("[data-example]").forEach((button) => button.addEventListener("click", () => { $("#search-query").value = button.dataset.example; $("#search-form").requestSubmit(); }));
+$(".examples").addEventListener("click", (event) => { const button = event.target.closest("[data-example]"); if (button) { $("#search-query").value = button.dataset.example; $("#search-form").requestSubmit(); } });
 $("#search-form").addEventListener("submit", (event) => {
   event.preventDefault();
   task("Searching your collection… The first run loads the model and may take a little longer.", async () => {
@@ -373,11 +423,15 @@ $("#overlap-form").addEventListener("submit", (event) => {
   });
 });
 $("#article-filter").addEventListener("input", renderCollection);
-for (const id of ["#import-top", "#import-collection", "#home-import"]) $(id).addEventListener("click", () => {
+for (const id of ["#import-collection", "#home-import"]) $(id).addEventListener("click", () => {
   $(".utility-menu").open = false;
   $("#import-dialog").showModal();
 });
-$("#home-explore").addEventListener("click", () => { navigate("search"); $("#search-query").focus(); });
+$("#import-top").addEventListener("click", () => { navigate("collection"); $("#collection-imports").open = true; $("#collection-imports").scrollIntoView({ block: "start" }); $("#collection-imports summary").focus(); });
+$("#home-explore").addEventListener("click", () => { if (isSampleCollection()) { navigate("search"); $("#search-query").focus(); } else $("#sample-dialog").showModal(); });
+$("#sample-keep").addEventListener("click", (event) => { event.preventDefault(); $("#sample-dialog").close(); navigate("search"); $("#search-query").focus(); });
+$("#sample-restore").addEventListener("click", () => $("#reset-demo").click());
+$("#dismiss-import-success").addEventListener("click", () => { state.lastImport = null; $("#import-success").hidden = true; });
 $("#home-website-form").addEventListener("submit", (event) => {
   event.preventDefault();
   if (state.busy || !state.meta?.website_fetch_enabled) return;
@@ -402,13 +456,13 @@ $("#import-form").addEventListener("submit", (event) => {
     invalidateResults();
     $("#import-form").dataset.dirty = "false";
     $("#import-dialog").close();
-    navigate("search");
+    importComplete(result.count, "CSV");
     toast(`Imported ${result.count} articles.`);
   });
 });
 $("#reset-demo").addEventListener("click", () => {
   if (!confirm("Replace the current collection with the 21 fictional demo articles and clear reviews?")) return;
-  task("Restoring demo articles…", async () => { await api("/api/articles/reset", {}); await loadCollection(); invalidateResults(); toast("Demo collection restored."); });
+  task("Restoring demo articles…", async () => { await api("/api/articles/reset", {}); if ($("#sample-dialog").open) $("#sample-dialog").close(); await loadCollection(); invalidateResults(); navigate("search"); toast("Fictional sample collection restored."); });
 });
 $("#login-form").addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -431,6 +485,20 @@ function renderWebsite(run) {
   });
   const labels = { discovering: "Finding public articles", selecting: "Choose your articles", extracting: "Extracting article text", ready: "Review your collection", imported: "Collection imported", cancelled: "Import cancelled", failed: "This run could not finish" };
   $("#website-progress").textContent = `${labels[run.phase] || run.phase} · ${run.candidates.length} found${run.phase === "extracting" ? ` · ${run.processed} of ${run.selected.length} processed` : ""}`;
+  const processed = Math.min(run.processed, run.selected.length);
+  $("#extraction-progress").hidden = !run.selected.length;
+  $("#extraction-meter").max = run.selected.length || 1;
+  $("#extraction-meter").value = processed;
+  $("#extraction-count").textContent = `${processed} of ${run.selected.length} selected articles processed. This includes excluded or failed articles.`;
+  $("#collection-capacity").hidden = !["extracting", "ready", "imported"].includes(run.phase);
+  $("#capacity-meter").max = LIMITS.characters;
+  $("#capacity-meter").value = run.characters;
+  $("#capacity-label").textContent = `Collection capacity: ${number(run.characters)} / ${number(LIMITS.characters)} characters`;
+  if (run.phase === "extracting") {
+    $("#capacity-meter").removeAttribute("value");
+    $("#capacity-label").textContent = `Collection capacity: calculating accepted text (${number(LIMITS.characters)}-character budget)`;
+  }
+  $("#capacity-label").title = run.phase === "extracting" ? "Final accepted text total is available after extraction and duplicate/template handling finish." : "Accepted title and body characters";
   $("#website-action-note").textContent = run.phase === "ready" ? "Import replaces your collection and clears its editorial reviews." : run.phase === "imported" ? "Import complete. Start another discovery to build a new collection." : "Your saved collection is unchanged until you confirm.";
   const results = $("#website-results");
   results.replaceChildren();
@@ -470,19 +538,26 @@ function renderWebsite(run) {
     const clear = el("button", { type: "button", class: "text-button", text: "Clear selection", onclick: () => {
       list.querySelectorAll("input").forEach((input) => { input.checked = false; }); updateSelection();
     } });
-    results.append(el("div", { class: "website-selection-tools" }, filter, el("div", { class: "website-selection-actions" }, count, bulk, clear)), list, noMatches);
+    results.append(el("div", { class: "website-selection-tools" }, filter, el("p", { class: "context-note", text: "Select first 40 shown replaces the selection with up to 40 articles matching the current filter, in the order displayed. Hidden matches are not selected. Choose fewer or shorter articles to leave room in the collection." }), el("div", { class: "website-selection-actions" }, count, bulk, clear)), list, noMatches);
     updateSelection();
   }
-  for (const failure of run.failures) {
-    const title = run.candidates.find((item) => item.id === failure.id)?.title || failure.id;
-    results.append(el("p", { class: "notice", text: `${title}: ${failure.message}` }));
+  const excluded = run.failures.filter((failure) => failure.kind === "capacity");
+  const failed = run.failures.filter((failure) => failure.kind !== "capacity");
+  for (const [items, label] of [[excluded, "Excluded by application capacity"], [failed, "Extraction failed"]]) {
+    if (!items.length) continue;
+    results.append(el("details", { class: "import-exclusions" }, el("summary", { text: `${label}: ${items.length} articles` }),
+      ...items.map((failure) => el("p", { text: `${run.candidates.find((item) => item.id === failure.id)?.title || failure.id}: ${failure.message}` }))));
   }
   if (run.phase === "ready") {
-    results.append(el("div", { class: "website-preview-summary" }, el("strong", { text: `${run.articles.length} articles ready to review` }), el("span", { text: `${new Intl.NumberFormat().format(run.characters)} characters of source text` })),
+    const other = Math.max(0, run.selected.length - run.articles.length - run.failures.length);
+    results.prepend(el("div", { class: "website-preview-summary", role: "status" }, el("strong", { text: `${run.articles.length} articles ready · ${excluded.length} excluded · ${failed.length} failed` }),
+      other ? el("span", { text: `${other} other articles not included; check warnings for duplicate or content-specific reasons.` }) : null));
+    results.append(el("div", { class: "website-preview-summary" }, el("span", { text: `${number(run.characters)} title/body characters in the accepted preview` })),
       el("p", { text: "Open an article to check what was extracted. Import checks the final collection size and model passage limits before saving." }));
     for (const article of run.articles) {
       results.append(el("details", { class: "website-preview" }, el("summary", { text: `${article.title} (${article.body.length} characters)` }),
-        el("p", { text: article.url }), el("p", { text: `${article.headings.length} headings; ${article.existing_links.length} links to selected articles` }), el("pre", { text: article.body })));
+        el("p", { text: article.url }), el("p", { text: `${article.headings.length} headings; ${article.existing_links.length} links to selected articles` }), el("pre", { text: displayText(article.body) }),
+        displayText(article.body) !== article.body ? el("details", {}, el("summary", { text: "Show original extracted text, including source citation markers" }), el("p", { class: "context-note", text: "Only this display preview is cleaned. Import and analysis retain the original text." }), el("pre", { text: article.body })) : null));
     }
     if (run.failures.length) results.append(el("label", { class: "website-candidate" }, el("input", { id: "website-partial", type: "checkbox" }), "I accept importing only the articles included in this preview."));
   }
@@ -526,7 +601,7 @@ $("#website-commit").addEventListener("click", () => {
     websiteRun.phase = "imported";
     renderWebsite(websiteRun); // Reopening must not offer a stale replacement action.
     $("#website-dialog").close();
-    await loadCollection(); invalidateResults(); navigate("search");
+    await loadCollection(); invalidateResults(); importComplete(result.count, "Website");
     toast(`Imported ${result.count} website articles. You can now search, review links and compare overlap.`);
   });
 });

@@ -28,11 +28,20 @@ py -3.12 -m venv .venv
 
 Open **http://127.0.0.1:8000**. The 21 fictional demo articles load automatically into an ignored SQLite database at `runtime/workspace.sqlite3`. The first import/edit preflight or analysis loads the model. Imports and edits check real-tokenizer passage limits before saving; collection embeddings are built on the first semantic analysis and reused until the collection changes. Model files are fetched from Hugging Face if not cached. Article/query text is processed on the machine running the app, not sent to a hosted inference API.
 
-The first page asks for a website URL. Enable website import with
+The first page offers sample analysis or your website. Existing custom collections have
+a non-destructive continuation path; restoring samples always requires confirmation.
+Enable website import with
 `$env:ENABLE_WEBSITE_FETCH = 'true'` before starting the server, as described below.
 You can also choose **Try the sample articles** or import CSV. After import, the app
-opens article analysis; collection management is under **Your articles** and development
+opens article analysis; collection management is under **Articles** and development
 evaluation is under **More**. Starting discovery does not replace saved data.
+
+Analysis, Articles and Import are visible in the main navigation. Website/CSV imports
+show a count-bearing success state with Explore analysis and Manage articles. Matching
+passages start short and expand to unchanged full evidence. The import wizard groups
+capacity exclusions separately from extraction failures and shows the accepted character
+budget. [UI workflow and frontend learning guide](docs/ux-refinement-learning-guide.md)
+explains state, events, API interactions and the resource-management rationale.
 
 Local mode has no password by default and binds to the loopback address. To test sign-in locally, set environment variables before launching:
 

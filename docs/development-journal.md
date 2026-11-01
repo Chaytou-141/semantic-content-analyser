@@ -1121,3 +1121,94 @@ Next Phase 4C is a disposable local Linux release rehearsal, not deployment or e
 evaluation. No packages, public sites, AWS resources, paid services, push or public
 exposure were used in this phase; saved development data and prior evaluation evidence
 were preserved.
+
+## UI/UX refinement and portfolio presentation after Phase 4B
+
+1 November 2026 (Australia/Sydney). Baseline `f93aed4`; Phase 4A/4B work and existing
+untracked .vscode files retained. Local commit subject:
+**Refine onboarding import guidance and readable article evidence**.
+Resolve with `git log -1 --format=%H --grep="Refine onboarding import guidance and readable article evidence"`.
+
+The user reported a successful Freeze Edge journey: 110 discovered, 40 selected, 32
+imported and eight excluded by the character budget. Read-only inspection independently
+confirmed the current saved collection contains 32 articles /249,162 title/body characters.
+Live discovery/inference was not repeated. The identified problem was discoverability,
+navigation and evidence density, not a missing model/application pipeline.
+
+The frontend-design skill was used to preserve the Instrument Sans/plum/paper identity
+and existing components. The homepage now explains the three tools and offers sample
+or website paths. Fresh seeded visitor workspaces can explore samples directly; custom
+collections receive non-destructive continuation/sample options. An explicit restore
+confirmation remains necessary. A parallel read-only sample backend was rejected as
+unnecessary duplication; a fresh private browser isolates samples only in visitor mode,
+not shared local mode. No saved real collection was restored or replaced by this work.
+
+Analysis, Articles and Import are prominent navigation entries; Development evaluation
+stays technical. Changed hashes are pushed rather than replacing browser history, with
+existing routes, keyboard focus, aria-current, aria-busy and modal confirmations retained.
+Successful imports show a persistent revision-bound article count and Explore analysis /
+Manage articles actions. Collection management keeps table/filter/edit/export controls
+while replacement choices are collapsed. Success state is frontend memory, not a new
+persisted provenance field or a promise to survive reload.
+
+The existing website wizard now explains discovery and filtered bulk selection, shows
+native processed/capacity progress, and groups individual reasons into capacity exclusions
+versus extraction failures. Accepted character totals are shown only when the backend
+provides them; extraction uses an explicit calculating state. Other omitted articles are
+not assigned fabricated duplicate reasons. Partial acceptance, cancellation, deadlines,
+final admission and revision protection remain authoritative. No numerical limit changed.
+The About section and learning guide explain 250k characters /100 articles /20k body
+characters /800 passages /40 selected as application resource-management safeguards,
+not MiniLM-imposed collection limits or accuracy claims.
+
+Search/link/overlap evidence starts with short excerpts and expands to exact original
+passages/offsets. Source/destination context and original HTTP(S) links are clearer;
+fictional sample URLs are identified rather than presented as published articles.
+Link decisions/notes still use the same API and persist on rerequest. Custom search
+examples use loaded article titles, not generated recommendations. Overlap has no saved
+review contract, so unsupported feedback/merge controls were not added. Similarity stays
+a raw mathematical score, not confidence; historical synthetic evaluation is unchanged
+and explicitly does not update for imported collections.
+
+Citation investigation found the exact oaicite/contentReference markers in saved source
+HTML response-012.bin/response-015.bin and corresponding stored articles. They originated
+in cached site content, not a newly invented extractor token. Only labelled display
+previews remove the narrow numeric pattern; full raw text is expandable. Saved bodies,
+model input, offsets and historical evidence remain unchanged. Editing/stripping stored
+content was rejected because it would change evidence and analysis outside this scope.
+
+Changes concentrate in web/index.html, app.js and styles.css: entry/navigation/success
+components; loadCollection, navigate, renderWebsite, renderSearch, renderLinks and
+renderOverlaps; new evidence/displayText/importComplete helpers. scripts/browser_smoke.py
+selectors reflect the new labels. docs/ux-refinement-learning-guide.md explains events,
+API calls, revision/state handling, why limits exist and practical learning exercises.
+No new framework, backend contract, ranking formula, second model or cloud service.
+
+Verification: 163 relevant tests passed, one existing Windows symlink case skipped,
+in 15.80 seconds. New tests bind UI values to backend limits, validate exact display-only
+marker cleanup and prove raw extractor evidence remains. Node syntax passed. The complete
+disposable browser walkthrough passed using the existing deterministic fake encoder and
+controlled DNS/transport: sample analysis/compare, saved review-note persistence, overlaps,
+development provenance, 110/40/32/8 WordPress fixture, XML import, filtered selection,
+partial acceptance, success navigation, article edit/export, valid CSV replacement and
+invalid CSV rollback, independent visitors, Back/keyboard/390px layout and empty/error
+states. Budget/expiry/empty-link/overlap presentation checks use explicit simulated
+responses, not claims of additional backend failures. Screenshots were inspected.
+
+The first browser run completed its journeys but preservation hit disappearing live
+SQLite sidecars; these are now separately excluded from byte comparisons because normal
+connection closure removes them. A later test-harness response callback signature was
+corrected before the final full walkthrough. Final browser errors/external requests are
+zero. 1,793 protected files and the main SQLite hash are unchanged, with logical saved
+32/249,162 state confirmed. A read-only check of the running localhost UI also preserved
+sample options and current analysis navigation, without search/reset/import/review calls.
+Detailed evidence: docs/ux-refinement-verification.json; private screenshots/logs remain
+under runtime/ux-refinement. No historical benchmark/evaluation artifacts were rewritten.
+
+Remaining: imported/source classification is an existing ID/URL-based UI distinction;
+success status is not durable across reload; a separate sample workspace for shared local
+mode was not introduced. Docker/Linux/HTTPS/UID/quota/egress and hosting verification remain
+pending from Phase 4B. Restart counters, soft storage and cooperative timeout limitations
+remain. No real model benchmark, new editorial label/packet, live website request,
+LinkedIn publication, paid resource, AWS deployment or GitHub push occurred. Public release
+readiness is not established by UI QA; the next operational milestone remains Phase 4C.

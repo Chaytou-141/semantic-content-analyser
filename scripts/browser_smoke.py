@@ -32,7 +32,7 @@ with sync_playwright() as playwright:
     expect(page.locator("#article-table tr")).to_have_count(5)
     page.locator("#article-filter").fill("")
     expect(page.locator("#article-table tr")).to_have_count(21)
-    page.get_by_role("link", name="Back to article analysis", exact=True).click()
+    page.get_by_role("link", name="Explore analysis", exact=True).click()
     page.keyboard.press("/")
     expect(page.locator("#search-query")).to_be_focused()
     page.locator("#search-query").blur()
@@ -54,7 +54,7 @@ with sync_playwright() as playwright:
     text = page.locator("#links-results .result-list").inner_text()
     assert "A04" not in text and "A20" not in text
     page.locator("#links-results .result-card").first.get_by_role("button", name="Useful candidate", exact=True).click()
-    expect(page.locator("#links-results .review-label").first).to_have_text("Review saved", timeout=10000)
+    expect(page.locator("#links-results .review-label").first).to_contain_text("Review saved", timeout=10000)
     page.screenshot(path=str(output / "link-opportunities.png"), full_page=True)
     print("PASS: link exclusions, source/target evidence and saved review")
 
@@ -64,7 +64,7 @@ with sync_playwright() as playwright:
     page.screenshot(path=str(output / "overlap.png"), full_page=True)
     print("PASS: overlap review")
 
-    page.get_by_role("link", name="Your articles", exact=False).click()
+    page.locator(".masthead-actions").get_by_role("link", name="Articles", exact=False).click()
     expect(page.locator("#article-table tr")).to_have_count(21)
     page.locator("#article-filter").fill("A12")
     expect(page.locator("#article-table tr")).to_have_count(1)
@@ -93,8 +93,8 @@ with sync_playwright() as playwright:
     page.locator("#home-explore").click()
     assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth")
     page.screenshot(path=str(output / "mobile.png"), full_page=True)
-    page.locator(".utility-menu > summary").click()
     page.locator("#import-top").click()
+    page.locator("#import-collection").click()
     expect(page.locator("#import-dialog")).to_be_visible()
     page.locator("#import-dialog").get_by_role("button", name="Close import").click()
     print("PASS: mobile layout and import dialog")

@@ -1,6 +1,6 @@
 # Semantic Content Analyser: current context
 
-Updated 30 October 2026 (Australia/Sydney). Phase 4B bounded demo operations; no deployment or push.
+Updated 1 November 2026 (Australia/Sydney). UI/UX refinement after Phase 4B; no deployment or push.
 
 - Stack: FastAPI + vanilla JS/CSS; SQLite; one shared CPU MiniLM
   `all-MiniLM-L6-v2` (384 dimensions, pinned revision), TF-IDF baseline.
@@ -92,6 +92,13 @@ Updated 30 October 2026 (Australia/Sydney). Phase 4B bounded demo operations; no
 - Release blockers: docs/release-readiness.md. Docker CLI unavailable; verifier explicitly
   skipped. Actual Linux/HTTPS/proxy/UID/quota/egress enforcement needs verification;
   counters reset on restart, storage totals are soft and native cancellation cooperative.
+- UX refinement (`f93aed4` baseline): sample/website entry, visible Analysis/Articles/Import,
+  persistent import-success actions, expandable evidence and grouped capacity exclusions.
+  Limits unchanged; frontend/API/ranking isolation preserved. Source-origin citation
+  markers are removed from labelled previews only; raw full text/offsets remain.
+  Saved 32-article /249,162-character Freeze Edge collection untouched. Browser QA uses
+  disposable visitor apps, fake encoder and controlled network; no real inference/fetch.
+  Learning/evidence: docs/ux-refinement-learning-guide.md and docs/ux-refinement-verification.json.
 - Next: Phase 4C disposable local Linux release rehearsal and verified operational
   controls. Real XML/non-WordPress sites remain unvalidated;
   future live fetches require explicit authorisation. No deployment or push authorised.
