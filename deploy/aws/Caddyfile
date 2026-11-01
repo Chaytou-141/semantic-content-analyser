@@ -3,8 +3,8 @@
     request_body {
         max_size 2MB
     }
-    reverse_proxy app:8000 {
-        # Overwrite client input. The app trusts this only from the exact proxy peer.
+    reverse_proxy 127.0.0.1:8000 {
+        # Overwrite client input. The app trusts this only from the root-only loopback proxy peer.
         header_up X-Demo-Client {remote_host}
         header_up X-Demo-Scheme {scheme}
     }

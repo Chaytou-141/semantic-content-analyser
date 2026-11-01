@@ -9,6 +9,7 @@ from urllib.parse import parse_qsl, quote, urlsplit, urlunsplit
 
 
 MESSAGES = {
+    "egress_unavailable": (503, "Website fetching is temporarily unavailable because outbound protections are not ready."),
     "unsafe_url": (400, "Use a public HTTP or HTTPS URL without credentials or an unsafe port."),
     "blocked_destination": (400, "The destination is not permitted for website fetching."),
     "scope": (400, "The URL or redirect leaves the selected website. Start a separate website run."),

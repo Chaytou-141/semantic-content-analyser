@@ -25,6 +25,8 @@ class Settings:
     analysis_timeout_seconds: float = float(os.getenv("ANALYSIS_TIMEOUT_SECONDS", "60"))
     workspace_lock_seconds: float = float(os.getenv("WORKSPACE_LOCK_SECONDS", "1"))
     website_fetch_enabled: bool = os.getenv("ENABLE_WEBSITE_FETCH", "false").lower() == "true"
+    egress_policy_required: bool = os.getenv("EGRESS_POLICY_REQUIRED", "false").lower() == "true"
+    egress_state_path: Path = Path(os.getenv("EGRESS_STATE_PATH", "/run/egress/status.json"))
     fetch_deny_cidrs: tuple = tuple(part.strip() for part in os.getenv("FETCH_DENY_CIDRS", "").split(",") if part.strip())
     fetch_allowed_hosts: tuple = tuple(p.strip().lower() for p in os.getenv("FETCH_ALLOWED_HOSTS", "").split(",") if p.strip())
     trusted_proxy_cidrs: tuple = tuple(p.strip() for p in os.getenv("TRUSTED_PROXY_CIDRS", "").split(",") if p.strip())
@@ -45,6 +47,12 @@ class Settings:
         import ipaddress
         import math
         from .fetch_policy import normalize_url
+        if self.production and self.website_fetch_enabled and not self.egress_policy_required:
+            raise ValueError('Production website imports require the enforced egress policy.')
+        if self.production and self.egress_policy_required and __import__('sys').platform!='linux':
+            raise ValueError('Production egress enforcement requires the verified Linux container stack.')
+        if self.egress_policy_required and not self.egress_state_path.is_absolute():
+            raise ValueError('Egress readiness needs an absolute local file path.')
         for value in self.trusted_proxy_cidrs + self.fetch_deny_cidrs:
             network = ipaddress.ip_network(value, strict=False)
             if value in self.trusted_proxy_cidrs and network.prefixlen != network.max_prefixlen:

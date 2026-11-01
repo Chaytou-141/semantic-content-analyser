@@ -1,4 +1,4 @@
-FROM python:3.12-slim
+FROM python:3.12-slim@sha256:aa943ce411423c7582288f18707ff66eddcbaeb510502d747a72aeb34f30d159
 
 ARG MODEL_REVISION=1110a243fdf4706b3f48f1d95db1a4f5529b4d41
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 \
@@ -7,10 +7,14 @@ ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 \
 WORKDIR /app
 
 # CPU-only PyTorch avoids shipping CUDA libraries to the EC2 CPU instance.
-RUN pip install --no-cache-dir torch==2.14.1 --index-url https://download.pytorch.org/whl/cpu
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements.txt requirements-linux.lock ./
+RUN pip install --no-cache-dir pip==26.2.2 setuptools==84.1.0
+RUN pip install --no-cache-dir -c requirements-linux.lock torch==2.14.1+cpu --index-url https://download.pytorch.org/whl/cpu
+RUN pip install --no-cache-dir -c requirements-linux.lock -r requirements.txt
 RUN python -c "import os; from sentence_transformers import SentenceTransformer; SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2', revision=os.environ['MODEL_REVISION'], device='cpu')"
+# Runtime never installs packages. Keep setuptools (a torch dependency), remove
+# the installer and bundled bootstrap wheel after the trusted build is complete.
+RUN python -m pip uninstall -y pip && rm -rf /usr/local/lib/python3.12/ensurepip
 
 COPY semantic_analyser ./semantic_analyser
 COPY web ./web

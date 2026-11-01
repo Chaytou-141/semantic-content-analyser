@@ -1,17 +1,22 @@
 # Semantic Content Analyser: current context
 
-Updated 1 November 2026 (Australia/Sydney). UI/UX refinement after Phase 4B; no deployment or push.
+Updated 2 November 2026 (Australia/Sydney). No deployment or push.
 
-Latest: Phase 4C ran real Linux Docker verification (baseline `1f8ec8c`). Release image,
-Caddy local-CA HTTPS, visitor separation, expiry/cleanup, cgroupv1 limits and offline UI
-fixtures passed. 309 targeted Linux tests pass, no skips. Newer Python HTML declaration
-validation needed a minimal explicit rejection fix; one test's fake-clock origin was fixed.
-Only lab ingress/networking/tooling changed otherwise; no new UI/AI work. Current saved
-collection remains32 articles /249,162 characters. All lab resources/image tags cleaned;
-shared BuildKit cache retained. See docs/phase4c-local-docker.md for exact limits/proofs.
-Older Docker-unavailable entries below describe their milestone, not current status.
-Next: Phase4D tested public-import-compatible egress/ops/build audit. Public firewall,
-host capacity, public ACME and anonymous-release readiness remain unverified. No deployment.
+Latest: Phase4D adds an actual IPv4/IPv6 kernel egress boundary. App and Caddy share
+an owner namespace; only its small monitor has NET_ADMIN. Public TCP80/443 and narrow
+Docker DNS/own-health/IPv6-neighbour exceptions work; private/metadata/loopback and
+other ports are blocked. SafeFetcher DNS pinning/budgets remain unchanged. Production
+imports require fresh root-owned namespace-bound readiness; drift quarantines traffic.
+288 targeted Linux tests and eight controlled container checks passed. Python audit:
+50 packages/zero known findings; image scans still report app39/owner40/Caddy48 advisory
+rules, including high/critical findings. Public release remains blocked pending triage,
+intended-host network/quotas/load/recovery/ACME checks. See docs/phase4d-local-egress.md
+and docs/phase4d-verification.json. Phase4C evidence remains historical and unchanged.
+Current Phase4D preservation baseline:10 saved articles/29,303 chars/4 reviews; historical
+Phase4C had32 articles. No collection was restored or replaced. UI/ML/benchmarks unchanged.
+Next: Phase4E patched-artifact/advisory triage and intended-host deployment plan, without
+implying authorisation to deploy. Current local verifier: scripts/verify_phase4d_egress.py;
+Phase4C's verifier/override describe its earlier two-service networking topology.
 
 - Stack: FastAPI + vanilla JS/CSS; SQLite; one shared CPU MiniLM
   `all-MiniLM-L6-v2` (384 dimensions, pinned revision), TF-IDF baseline.

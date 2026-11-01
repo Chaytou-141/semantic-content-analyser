@@ -1484,3 +1484,61 @@ Evidence: docs/homepage-fixes-verification.json; private before/after screenshot
 layout measurements: runtime/homepage-fixes. No backend, security, numerical limits,
 analysis logic, model/evaluation evidence, deployment, live-site fetching or GitHub push
 changed. Docker/public-launch blockers remain those recorded after Phase 4B.
+
+
+## Phase4D - independently enforced local egress and operational audit
+
+2 November 2026 (Australia/Sydney). Baseline `1ef3578`; Phase4D commit subject:
+`Enforce container egress policy and record local security verification` (this entry
+ships in that commit; resolve with `git log -1 --format="%h %s" -- docs/phase4d-local-egress.md`).
+
+Problem: Phase4C's bridge allowed a raw private-peer connection despite SafeFetcher
+URL checks. Visitors need public website imports without making private services or
+metadata reachable. An application-only policy or an isolated no-egress bridge did
+not meet both requirements; a forward proxy would risk losing existing DNS pinning.
+Selected a small root namespace/firewall owner shared by unprivileged app and Caddy.
+Only the owner has NET_ADMIN; public TCP80/443, Docker DNS, own root health/backend and
+narrow IPv6 neighbour discovery are admitted. Other new traffic defaults closed.
+The app's read-only, root-owned, namespace-bound status interlock expires after5s;
+production imports require it. Filter drift seals both families and remains unhealthy.
+
+Actual container tests exposed required Docker resolver INPUT/DNAT, IPv6 ND and Caddy
+bind/health exceptions; these were narrowed and verified, not solved by opening all
+loopback/private traffic. An initially duplicated fixture was correctly collapsed
+by existing article deduplication; only fixture text changed. Eight final controlled
+runtime checks pass, including independent reachable controls for raw private/v4/v6/
+metadata/loopback/alternate-port denials, verified-TLS sitemap discovery/two extracted
+pages, cross-visitor404, app restart, seven-second stale-owner503, drift quarantine and
+missing-NET_ADMIN failure. Real Internet test targets and model inference: zero.
+The Docker build retains its existing pinned model-cache preparation step; runtime
+network verification disables preloading and stops at extraction preview.
+
+264 targeted Linux security/operations/admission tests pass in17.63s as app user;
+24 policy/root-owned readiness tests pass in0.36s separately as root. No skips.
+No full historical suite, new browser redesign test or performance benchmark ran.
+Existing expiry/leases, safe cleanup, SQLite page/storage admission and logging were
+reviewed; no unsupported retention improvement is claimed. Owner events and bounded
+status storage were added; Caddy's implicit extra swap allowance was removed.
+
+Supported audits executed: pip-audit2.10.1 and Docker Scout1.27.0. Python baseline51
+packages has17 raw findings across pip/setuptools, nine distinct advisory IDs, including
+duplicates and platform/build-time qualifications. Patched build tools and removed
+runtime pip/ensurepip yield50 installed packages/zero known Python findings. The final
+image snapshots still report39 app rules (5high),40 owner rules (5high),48 current
+Caddy rules (10critical/27high). Newer official Caddy2.11.7 is pinned and locally tested,
+but no public security clearance is claimed. A feed reclassification changed one
+intermediate count without a dependency change. Some findings have no listed vendor
+fix; exploitability remains unproven. Complete logs/SARIF/inventories stay private;
+portable hashes/counts and source references are committed in phase4d-verification.json.
+
+Trade-offs/remaining work: trusted NET_ADMIN owner and root Caddy, Docker/host/DNS trust,
+Linux-only boundary, correct shared-namespace recreation, kernel/version compatibility,
+soft WAL/aggregate disk ceilings, restart-reset in-memory quotas, access-log retention,
+image OS/proxy advisories, hashed artifacts and intended-host/ACME/load testing. No
+host/AWS firewall or default24h wall-clock test is claimed. Production stays gated.
+The current preservation baseline is10 articles/29,303 characters/4 reviews, distinct
+from Phase4C's historical32 articles; no developer data, UI, ML/rankings or benchmark
+history was replaced. Cleanup targets only phase-owned containers/volumes/tags;
+BuildKit and unrelated resources are retained. Detailed architecture, limits, audit
+interpretation and reproduction: docs/phase4d-local-egress.md. Next: Phase4E advisory
+triage/patched artifacts and intended-host deployment plan; no deployment authorisation.

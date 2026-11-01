@@ -1,0 +1,593 @@
+{
+  "phase": "4D",
+  "date_australia_sydney": "2026-11-02",
+  "baseline_commit": "1ef35780263a69dd3dd149c3e50eaea5b414fed5",
+  "commit_subject": "Enforce container egress policy and record local security verification",
+  "tests": {
+    "unprivileged_security_operations_admission": {
+      "passed": 264,
+      "skipped": 0,
+      "seconds": 17.63
+    },
+    "root_owned_readiness": {
+      "passed": 24,
+      "skipped": 0,
+      "seconds": 0.36
+    },
+    "full_historical_suite": "Not rerun; targeted tests only.",
+    "syntax_files": 5,
+    "utf8_command_wrapper": "Passed"
+  },
+  "runtime": {
+    "checks": {
+      "namespace_configuration": {
+        "app": {
+          "image": "sha256:00984219674cbc8c8c0d15893826dd908cf8d10eaf0fb12d439bf9b6ff6038ee",
+          "memory": 4294967296,
+          "memory_swap": 4294967296,
+          "nano_cpus": 2000000000,
+          "pids": 128,
+          "cap_add": null,
+          "cap_drop": [
+            "ALL"
+          ],
+          "network_mode": "container:4230c1660dd8f561e16464c8b830486c5fa675966b69a9f9a275bbbc3b4b466e",
+          "read_only": true
+        },
+        "egress": {
+          "image": "sha256:ffc276964349c46e385b3b849e773998a1d942b931f7ba5425a2e82e1197d684",
+          "memory": 100663296,
+          "memory_swap": 100663296,
+          "nano_cpus": 500000000,
+          "pids": 32,
+          "cap_add": [
+            "CAP_NET_ADMIN"
+          ],
+          "cap_drop": [
+            "ALL"
+          ],
+          "network_mode": "semantic-phase4d-26703a92_demo",
+          "read_only": true
+        },
+        "proxy": {
+          "image": "sha256:e70b164da81ef698b3ad19af799ea6086ce6d9e48ed4079eb9fe26f6fbf14ee5",
+          "memory": 268435456,
+          "memory_swap": 268435456,
+          "nano_cpus": 500000000,
+          "pids": 128,
+          "cap_add": [
+            "CAP_NET_BIND_SERVICE"
+          ],
+          "cap_drop": [
+            "ALL"
+          ],
+          "network_mode": "container:4230c1660dd8f561e16464c8b830486c5fa675966b69a9f9a275bbbc3b4b466e",
+          "read_only": false
+        },
+        "fixture_ips": {
+          "semantic-phase4d-26703a92_demo": "172.30.42.4",
+          "semantic-phase4d-26703a92_simulated_metadata": "169.254.169.254",
+          "semantic-phase4d-26703a92_simulated_public": "11.203.24.3"
+        },
+        "ports": {
+          "80/tcp": [
+            {
+              "HostIp": "127.0.0.1",
+              "HostPort": "8080"
+            }
+          ],
+          "8443/tcp": [
+            {
+              "HostIp": "127.0.0.1",
+              "HostPort": "8443"
+            }
+          ]
+        }
+      },
+      "actual_kernel_allow_and_deny": {
+        "unprotected_control": {
+          "public_http": true,
+          "public_https": true,
+          "public_v6_http": true,
+          "public_v6_https": true,
+          "private_http": true,
+          "private_v6_http": true,
+          "metadata_http": true,
+          "public_ssh": true,
+          "public_alternative_port": true,
+          "alternate_dns": true,
+          "loopback_127.0.0.1": true,
+          "loopback_::1": true,
+          "dns_addresses": [
+            "11.203.24.3",
+            "2001:4860:ffff:4d::3"
+          ],
+          "docker_dns_udp": true,
+          "docker_dns_tcp": true,
+          "alternate_udp_dns": true
+        },
+        "protected_app_uid10001": {
+          "public_http": true,
+          "public_https": true,
+          "public_v6_http": true,
+          "public_v6_https": true,
+          "private_http": false,
+          "private_v6_http": false,
+          "metadata_http": false,
+          "public_ssh": false,
+          "public_alternative_port": false,
+          "alternate_dns": false,
+          "loopback_127.0.0.1": false,
+          "loopback_::1": false,
+          "dns_addresses": [
+            "11.203.24.3",
+            "2001:4860:ffff:4d::3"
+          ],
+          "docker_dns_udp": true,
+          "docker_dns_tcp": true,
+          "alternate_udp_dns": false
+        },
+        "protected_root_proxy_namespace": {
+          "public_http": true,
+          "public_https": true,
+          "public_v6_http": true,
+          "public_v6_https": true,
+          "private_http": false,
+          "private_v6_http": false,
+          "metadata_http": false,
+          "public_ssh": false,
+          "public_alternative_port": false,
+          "alternate_dns": false,
+          "loopback_127.0.0.1": false,
+          "loopback_::1": false,
+          "dns_addresses": [
+            "11.203.24.3",
+            "2001:4860:ffff:4d::3"
+          ],
+          "docker_dns_udp": true,
+          "docker_dns_tcp": true,
+          "alternate_udp_dns": false
+        }
+      },
+      "unprivileged_app_cannot_forge_status": {
+        "status": [
+          "Uid:\t10001\t10001\t10001\t10001",
+          "CapEff:\t0000000000000000",
+          "NoNewPrivs:\t1"
+        ],
+        "writable": false
+      },
+      "tls_pinned_fetch_discovery_extraction_isolation": {
+        "separate_sessions": 2,
+        "cross_run_status": 404,
+        "discovered": 2,
+        "extracted": 2,
+        "processed": [
+          1,
+          2
+        ],
+        "requests_used": 4,
+        "saved_collections_unchanged": true,
+        "verified_fixture_tls": true,
+        "model_loaded": false,
+        "admission_import_not_run": "No model loading requested; atomic admission covered by targeted regressions."
+      },
+      "app_restart_under_existing_policy": {
+        "sessions_and_collections_preserved": 2,
+        "model_loaded": false,
+        "rate_counter_persistence": "Not durable; process restart resets existing in-memory counters."
+      },
+      "paused_owner_freshness_interlock": {
+        "stale_seconds": 7,
+        "fetch_status": 503,
+        "kernel_metadata_still_denied": true
+      },
+      "rule_drift_fails_closed": {
+        "operator_injected_drift": "quarantined",
+        "all_test_connections_denied": {
+          "11.203.24.3": false,
+          "172.30.42.4": false,
+          "169.254.169.254": false
+        }
+      },
+      "missing_firewall_capability_fails_closed": {
+        "without_net_admin": "not_ready",
+        "status_ready": false
+      }
+    },
+    "errors": {},
+    "model_loads": 0,
+    "public_test_requests": 0,
+    "cleanup": "Owned project and auxiliary containers removed; disposable credentials/key deleted."
+  },
+  "audit": {
+    "tools": {
+      "docker": "29.9.2 linux amd64",
+      "compose": "5.6.1",
+      "scout": "Docker Scout1.27.0",
+      "pip_audit": "pip-audit 2.10.1"
+    },
+    "python": {
+      "complete-baseline": {
+        "packages": 51,
+        "finding_entries": 17,
+        "unique_ids": [
+          "GHSA-xmj3-9gf7-h52w",
+          "PYSEC-2025-49",
+          "PYSEC-2026-1795",
+          "PYSEC-2026-1796",
+          "PYSEC-2026-196",
+          "PYSEC-2026-2875",
+          "PYSEC-2026-2876",
+          "PYSEC-2026-3447",
+          "PYSEC-2026-3721"
+        ],
+        "affected_packages": [
+          "pip",
+          "setuptools"
+        ],
+        "sha256": "e092a7d62d94ccdbdb8d5b66ffaa51712686dfaabebac775e896a8ebe2d424e8"
+      },
+      "final": {
+        "packages": 50,
+        "finding_entries": 0,
+        "unique_ids": [],
+        "affected_packages": [],
+        "sha256": "93b0d2560e8736d0bc7a8a129622c1eb68b1eb2e17b2546932c30fb47f7a6295"
+      }
+    },
+    "images": {
+      "app-final": {
+        "advisory_rules": 39,
+        "vulnerable_package_purls": 13,
+        "severity_counts": {
+          "LOW": 27,
+          "MEDIUM": 7,
+          "HIGH": 5
+        },
+        "sha256": "23abc915fc4cf874d07e3456ea84ca5cf9ba0db17ba350735a6fad4fcce941d4",
+        "high_critical_rule_count": 5,
+        "high_critical_examples": [
+          {
+            "id": "CVE-2026-85091",
+            "purls": [
+              "pkg:deb/debian/zlib@1%3A1.3.dfsg%2Breally1.3.1-1?os_distro=trixie&os_name=debian&os_version=13"
+            ],
+            "fixed_version": "not fixed",
+            "cvssV3_severity": "HIGH"
+          },
+          {
+            "id": "CVE-2026-119373",
+            "purls": [
+              "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+            ],
+            "fixed_version": "not fixed",
+            "cvssV3_severity": "HIGH"
+          },
+          {
+            "id": "CVE-2026-119374",
+            "purls": [
+              "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+            ],
+            "fixed_version": "not fixed",
+            "cvssV3_severity": "HIGH"
+          },
+          {
+            "id": "CVE-2026-119379",
+            "purls": [
+              "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+            ],
+            "fixed_version": "not fixed",
+            "cvssV3_severity": "HIGH"
+          },
+          {
+            "id": "CVE-2026-119586",
+            "purls": [
+              "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+            ],
+            "fixed_version": "not fixed",
+            "cvssV3_severity": "HIGH"
+          }
+        ]
+      },
+      "egress-final": {
+        "advisory_rules": 40,
+        "vulnerable_package_purls": 14,
+        "severity_counts": {
+          "LOW": 28,
+          "MEDIUM": 7,
+          "HIGH": 5
+        },
+        "sha256": "f465c16c07cc66a678627ad5cb43cf81fe3e5d3a3cec01e29fb64e801387501d",
+        "high_critical_rule_count": 5,
+        "high_critical_examples": [
+          {
+            "id": "CVE-2026-85091",
+            "purls": [
+              "pkg:deb/debian/zlib@1%3A1.3.dfsg%2Breally1.3.1-1?os_distro=trixie&os_name=debian&os_version=13"
+            ],
+            "fixed_version": "not fixed",
+            "cvssV3_severity": "HIGH"
+          },
+          {
+            "id": "CVE-2026-119373",
+            "purls": [
+              "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+            ],
+            "fixed_version": "not fixed",
+            "cvssV3_severity": "HIGH"
+          },
+          {
+            "id": "CVE-2026-119374",
+            "purls": [
+              "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+            ],
+            "fixed_version": "not fixed",
+            "cvssV3_severity": "HIGH"
+          },
+          {
+            "id": "CVE-2026-119379",
+            "purls": [
+              "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+            ],
+            "fixed_version": "not fixed",
+            "cvssV3_severity": "HIGH"
+          },
+          {
+            "id": "CVE-2026-119586",
+            "purls": [
+              "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+            ],
+            "fixed_version": "not fixed",
+            "cvssV3_severity": "HIGH"
+          }
+        ]
+      },
+      "caddy-baseline": {
+        "advisory_rules": 227,
+        "vulnerable_package_purls": 30,
+        "severity_counts": {
+          "UNSPECIFIED": 9,
+          "LOW": 11,
+          "MEDIUM": 82,
+          "HIGH": 99,
+          "CRITICAL": 26
+        },
+        "sha256": "7b2e70897356ab993ae76e3b55c7c4108b18d49f50849e7c6a940513543f2e63",
+        "high_critical_rule_count": 125
+      },
+      "caddy-current": {
+        "advisory_rules": 48,
+        "vulnerable_package_purls": 10,
+        "severity_counts": {
+          "UNSPECIFIED": 3,
+          "MEDIUM": 8,
+          "HIGH": 27,
+          "CRITICAL": 10
+        },
+        "sha256": "b5f86f37fec3a6acf8b61d8daeb0f0634eb91ffea918928eb9beeb4c243e8ff3",
+        "high_critical_rule_count": 37,
+        "high_critical_examples": [
+          {
+            "id": "CVE-2026-87865",
+            "purls": [
+              "pkg:apk/alpine/curl@8.22.0-r0?os_name=alpine&os_version=3.23"
+            ],
+            "fixed_version": "8.23.0-r0",
+            "cvssV3_severity": "HIGH"
+          },
+          {
+            "id": "CVE-2026-116587",
+            "purls": [
+              "pkg:golang/github.com/go-jose/go-jose/v3@3.0.5",
+              "pkg:golang/github.com/go-jose/go-jose/v4@4.1.5"
+            ],
+            "fixed_version": "4.1.6",
+            "cvssV3_severity": "HIGH"
+          },
+          {
+            "id": "CVE-2026-56866",
+            "purls": [
+              "pkg:golang/stdlib@1.26.8"
+            ],
+            "fixed_version": "1.26.9",
+            "cvssV3_severity": "HIGH"
+          },
+          {
+            "id": "CVE-2026-78659",
+            "purls": [
+              "pkg:golang/golang.org/x/net@0.59.0",
+              "pkg:golang/stdlib@1.26.8"
+            ],
+            "fixed_version": "0.60.0",
+            "cvssV3_severity": "HIGH"
+          },
+          {
+            "id": "CVE-2026-78660",
+            "purls": [
+              "pkg:golang/golang.org/x/net@0.59.0",
+              "pkg:golang/stdlib@1.26.8"
+            ],
+            "fixed_version": "1.26.9",
+            "cvssV3_severity": "HIGH"
+          }
+        ]
+      }
+    }
+  },
+  "images": {
+    "semantic-phase4d:app": {
+      "id": "sha256:00984219674cbc8c8c0d15893826dd908cf8d10eaf0fb12d439bf9b6ff6038ee",
+      "size_bytes": 2339678440,
+      "repo_digests": [
+        "semantic-phase4d@sha256:00984219674cbc8c8c0d15893826dd908cf8d10eaf0fb12d439bf9b6ff6038ee"
+      ]
+    },
+    "semantic-phase4d:egress": {
+      "id": "sha256:ffc276964349c46e385b3b849e773998a1d942b931f7ba5425a2e82e1197d684",
+      "size_bytes": 188257058,
+      "repo_digests": [
+        "semantic-phase4d@sha256:ffc276964349c46e385b3b849e773998a1d942b931f7ba5425a2e82e1197d684"
+      ]
+    },
+    "semantic-phase4d:audit": {
+      "id": "sha256:27b9c2d7b591629ac33a8402fc7a53b2e4c24a241e31f5a5f9c14ff6bf413375",
+      "size_bytes": 233478234,
+      "repo_digests": [
+        "semantic-phase4d@sha256:27b9c2d7b591629ac33a8402fc7a53b2e4c24a241e31f5a5f9c14ff6bf413375"
+      ]
+    },
+    "semantic-phase4d:test": {
+      "id": "sha256:6c1cb3e589a1fa7ba518d55866cd330b9fd7ebafb1264cc220d925e28875392c",
+      "size_bytes": 2364760898,
+      "repo_digests": [
+        "semantic-phase4d@sha256:6c1cb3e589a1fa7ba518d55866cd330b9fd7ebafb1264cc220d925e28875392c"
+      ]
+    },
+    "caddy:2-alpine": {
+      "id": "sha256:e70b164da81ef698b3ad19af799ea6086ce6d9e48ed4079eb9fe26f6fbf14ee5",
+      "size_bytes": 92791989,
+      "repo_digests": [
+        "caddy@sha256:e70b164da81ef698b3ad19af799ea6086ce6d9e48ed4079eb9fe26f6fbf14ee5"
+      ]
+    },
+    "caddy:2.10.2-alpine": {
+      "id": "sha256:4c6e91c6ed0e2fa03efd5b44747b625fec79bc9cd06ac5235a779726618e530d",
+      "size_bytes": 82849287,
+      "repo_digests": [
+        "caddy@sha256:4c6e91c6ed0e2fa03efd5b44747b625fec79bc9cd06ac5235a779726618e530d"
+      ]
+    }
+  },
+  "preservation": {
+    "baseline_files": 1968,
+    "expected_changed_files": [
+      "Dockerfile",
+      "deploy/aws/Caddyfile",
+      "deploy/aws/compose.production.yaml",
+      "deploy/local/Dockerfile.rehearsal",
+      "docs/PROJECT_CONTEXT.md",
+      "docs/development-journal.md",
+      "docs/release-readiness.md",
+      "semantic_analyser/api.py",
+      "semantic_analyser/config.py",
+      "semantic_analyser/fetch_policy.py"
+    ],
+    "other_baseline_files_unchanged": 1958,
+    "ui_ml_benchmarks_saved_data_unchanged": true,
+    "saved_database": {
+      "articles": 10,
+      "characters": 29303,
+      "reviews": 4
+    }
+  },
+  "source_function_lines": {
+    "semantic_analyser/api.py": {
+      "create_app": 37,
+      "outbound_guard": 47,
+      "lifespan": 61,
+      "authenticated": 83,
+      "rejected": 92,
+      "protect": 97,
+      "protect_impl": 116,
+      "invalid_value": 178,
+      "missing_item": 183,
+      "unavailable_preflight": 187,
+      "rejected_fetch": 191,
+      "health": 201,
+      "check_revision": 212,
+      "execute": 219,
+      "session": 244,
+      "login": 249,
+      "logout": 274,
+      "meta": 282,
+      "schema": 296,
+      "articles": 300,
+      "import_articles": 307,
+      "reset_articles": 316,
+      "update_article": 323,
+      "export_articles": 332,
+      "search": 340,
+      "links": 354,
+      "overlaps": 368,
+      "check_website": 376,
+      "website_run": 393,
+      "website_start": 407,
+      "website_step": 420,
+      "website_select": 424,
+      "website_cancel": 428,
+      "website_import": 439,
+      "reviews": 457,
+      "save_review": 463,
+      "delete_workspace": 471,
+      "evaluation": 484,
+      "index": 513,
+      "work": 222,
+      "operation": 464,
+      "ownership_guard": 223,
+      "admission_guard": 448
+    },
+    "semantic_analyser/config.py": {
+      "validate": 46
+    },
+    "semantic_analyser/egress_status.py": {
+      "policy_status": 14,
+      "app_ready": 32
+    },
+    "deploy/egress/policy.py": {
+      "command": 34,
+      "rules": 41,
+      "sealed": 79,
+      "snapshot": 83,
+      "write_status": 88,
+      "event": 97,
+      "namespace_prerequisites": 101,
+      "monitor": 114,
+      "health": 154
+    },
+    "scripts/verify_phase4d_egress.py": {
+      "command": 24,
+      "main": 31,
+      "save": 57,
+      "check": 60,
+      "inspect": 69,
+      "execute": 72,
+      "wait_status": 75,
+      "configuration": 105,
+      "enforcement": 162,
+      "capabilities": 182,
+      "client": 191,
+      "call": 193,
+      "visitors_and_fetch": 201,
+      "app_restart": 232,
+      "stale_interlock": 243,
+      "drift": 260,
+      "no_capability": 272
+    }
+  },
+  "limitations": [
+    "No public or intended-host network verification; Docker host/daemon, owner, trusted Docker DNS and root proxy remain trusted.",
+    "Remaining OS/proxy high/critical package-advisory matches require triage/patches; scan counts are snapshots, not exploitability measurements.",
+    "No new inference benchmark, editorial evaluation or live website import; runtime stops at preview and leaves admission to tested transaction checks.",
+    "Default retention windows were not wall-clock waited; SQLite/WAL aggregate limits are not filesystem quotas.",
+    "Existing rate counters reset on restart. Caddy remains trusted root with bind capability and writable root filesystem.",
+    "Build inputs are digest/version-pinned, not fully artifact-hashed or apt-repository-snapshotted.",
+    "Older Phase4C networking verifier is historical; current kernel verifier is scripts/verify_phase4d_egress.py."
+  ],
+  "private_evidence": "runtime/phase4d (raw reports, packages, test commands, counters, failed attempts, cleanup evidence)",
+  "cleanup": {
+    "phase_owned_containers_remaining": 0,
+    "image_tags": {
+      "semantic-phase4d:app": "removed",
+      "semantic-phase4d:egress": "removed",
+      "semantic-phase4d:audit": "removed",
+      "semantic-phase4d:test": "removed",
+      "caddy:2-alpine": "removed",
+      "caddy:2.10.2-alpine": "removed"
+    },
+    "unrelated_containers_left_untouched": 0,
+    "buildkit_pruned": false,
+    "global_prune_used": false,
+    "host_free_bytes_observed": 7707480064
+  }
+}

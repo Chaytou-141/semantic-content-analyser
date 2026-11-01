@@ -30,6 +30,7 @@ from .safe_fetch import SafeFetcher
 from .fetch_policy import FetchError
 from .websites import WebsiteService
 from .demo_limits import DemoLimits
+from .egress_status import policy_status
 import sqlite3
 
 
@@ -43,7 +44,11 @@ def create_app(settings=None, engine=None, fetcher=None):
     manager = WorkspaceManager(settings, engine) if local is None else None
     execution = BoundedExecutor(settings.analysis_queue_size, settings.analysis_timeout_seconds)
     fetcher = fetcher or SafeFetcher(denied_networks=settings.fetch_deny_cidrs, allowed_hosts=settings.fetch_allowed_hosts)
-    fetcher.request_guard = demo.outbound
+    def outbound_guard(owner):
+        demo.outbound(owner)
+        if settings.egress_policy_required and not policy_status(settings.egress_state_path):
+            raise FetchError('egress_unavailable')
+    fetcher.request_guard = outbound_guard
     websites = WebsiteService(fetcher)
     cookie_name = "__Host-" + COOKIE if settings.production else COOKIE
     signing_key = settings.secret or secrets.token_hex(32)
@@ -194,6 +199,8 @@ def create_app(settings=None, engine=None, fetcher=None):
 
     @app.get("/health")
     def health():
+        if settings.egress_policy_required and not policy_status(settings.egress_state_path):
+            raise HTTPException(503, 'Outbound protections are not ready.')
         if (settings.preload_model and engine.model is None) or (manager and
                 (manager.file_lock is None or not manager.thread or not manager.thread.is_alive())):
             raise HTTPException(503, 'Application is not ready.')
