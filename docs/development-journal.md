@@ -1613,3 +1613,34 @@ inventory:39 rules/5 High. Its first11 dependency/base layers and all50 Python
 versions match the new app image. This completes a current component assessment,
 not a fresh extraction/index of that image. No large image copy or inference was
 needed. These qualifications supersede the earlier packaging limitation above.
+
+
+## Phase 4E follow-up: fresh application indexing (2 November 2026)
+
+Baseline `bc079df`; commit: this documentation/evidence follow-up. Docker Desktop
+storage relocation allowed the previously blocked scan to finish. Scout also uses
+Windows TEMP, so this run set TEMP/TMP to A:\semantic-content-analyser-scan-temp
+for the child process only. Existing pinned Dockerfile and cached build steps were
+reused; all 17 image filesystem layers match the prior verified image. No package,
+application, model or database changes were necessary.
+
+Actual Scout v1.27.0 result: 191 packages indexed, 13 vulnerable packages, 38 advisory
+rules: zero Critical, four High, seven Medium, 27 Low. Fresh SARIF and SBOM exports
+completed with exit 0; JSON assertions checked totals and exact layer equality.
+The four High findings remain SQLite CVE-2026-119373/119374/119379 and zlib
+CVE-2026-85091, with no fixed Debian version reported. The older SQLite CLI-only
+CVE-2026-119586 match is absent, but no remediation or manual exception occurred.
+Prior upstream fix/reachability/dispute evidence is retained and not upgraded to
+proof of safety. Full findings/hashes: docs/phase4e-app-fresh-scan.json.
+
+Reproduction: docker build -t semantic-phase4e-scan:app . ; then, with TEMP/TMP
+pointing at A:, docker scout cves local://semantic-phase4e-scan:app --format sarif
+--output runtime/phase4e/app-fresh-index.sarif.json. Export the fresh cached inventory
+with docker scout sbom local://semantic-phase4e-scan:app --output
+runtime/phase4e/app-fresh-index.sbom.json. No filters/suppression arguments were used.
+
+No tests of unchanged application logic or unrelated images were run. Original
+evidence, saved data and Git history remain intact. No cleanup, push, deployment,
+paid service or model inference occurred. Image/cache retained for reproduction.
+The fresh-index blocker is closed; advisory dispositions, release provenance and
+intended-host operational/network/TLS/capacity checks remain open. Stop here.

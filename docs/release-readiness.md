@@ -79,9 +79,16 @@ Relevant sources: `semantic_analyser/{config,workspaces,execution,fetch_policy,
 fetch_transport,safe_fetch,collections,api}.py`, `Dockerfile`,
 `deploy/aws/compose.production.yaml`, `infra/aws/main.tf`.
 
+Fresh application-index follow-up (2 November 2026): the complete local image now
+indexes successfully: 191 packages, 38 advisories (0 Critical/4 High/7 Medium/27 Low).
+All 17 filesystem layers match the verified image. See `phase4e-app-fresh-scan.json`
+and the security-review addendum. Fresh application indexing is no longer blocked;
+remaining advisories and intended-host/release checks remain open. The proxy was
+not rescanned by this narrowly scoped follow-up.
+
 Phase4E planning is complete. Further work requires a separately approved scope:
 remaining advisory dispositions, adequate builder space for release provenance/
-fresh new-app index, then authorised intended-host network/quotas/recovery/ACME tests. Phase4D's
+release artifact retention, then authorised intended-host network/quotas/recovery/ACME tests. Phase4D's
 local kernel enforcement is now measured; it does not establish AWS networking or
 anonymous-public readiness. Retain FastAPI, SQLite, shared MiniLM/TF-IDF and the gate.
 No deployment/push or further editorial evaluation is implied. No PostgreSQL, Redis,

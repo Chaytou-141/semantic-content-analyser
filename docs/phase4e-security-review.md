@@ -1,5 +1,44 @@
 # Phase 4E: image security and source exposure
 
+## Fresh application index follow-up — 2 November 2026
+
+The disk-blocked application scan is now complete. Docker Scout v1.27.0 indexed
+191 packages from the local application image and reported 38 advisory rules across
+13 vulnerable packages: **0 Critical, 4 High, 7 Medium, 27 Low**. Exit code 0 means
+the scan completed, not that it found no vulnerabilities. No severity, fixed-only,
+base-image or suppression filter was requested. The scanner's update-available
+notice is informational; the recorded installed scanner completed successfully.
+
+The existing Dockerfile was rebuilt using cached steps, with no new dependency or
+model downloads/inference. All 17 filesystem layers match the previously verified
+image. The new Docker manifest identity reflects image export/attestation metadata;
+it is not evidence of a package update. The inspected local image is
+`sha256:3334446d5b83c444bd1266f617bc844427fe26b16935fc920bd50e163d475257`.
+Scout temporary storage was directed to `A:\semantic-content-analyser-scan-temp`
+because moving Docker Desktop storage does not move Windows TEMP automatically.
+
+| High advisory | Installed component | Fix status and remaining risk |
+| --- | --- | --- |
+| CVE-2026-119373, CVE-2026-119374 | SQLite source 3.46.1-7+deb13u2 | Scanner reports no fixed Debian version. Prior vendor evidence identifies upstream 3.54.0 fixes; app does not expose FTS5 SQL/database uploads. Retained findings, not a vulnerability-free claim |
+| CVE-2026-119379 | SQLite source 3.46.1-7+deb13u2 | Scanner reports no fixed Debian version; upstream 3.54.0 fix previously documented. Session/changeset API is not used; library finding remains |
+| CVE-2026-85091 | zlib source 1:1.3.dfsg+really1.3.1-1 (binary +b1) | Scanner reports no fixed Debian version. Previously documented upstream affected-range dispute remains unresolved; do not suppress or call fixed |
+
+All 38 advisory records, package identifiers, descriptions, available scanner fix
+versions and links are retained in `phase4e-app-fresh-scan.json`. Original SARIF,
+fresh SBOM and logs remain under `runtime/phase4e/app-fresh-*`; the portable JSON
+records their SHA256 hashes. The earlier cached-inventory report had 39 rules and
+5 High. Only CVE-2026-119586 (SQLite CLI `.recover`) is absent from this fresh report.
+The CLI was already absent and filesystem contents are unchanged: this difference
+is a scanner/feed or inventory-matching difference, **not a remediation**. No manual
+exception was applied. All historical reports are preserved.
+
+This supersedes only the fresh-app-index blocker described later in this historical
+report. Remaining gates include SQLite/zlib advisory disposition, the previously
+recorded proxy findings (not rescanned here), release provenance, intended-host
+network/metadata enforcement, quotas/monitoring, capacity, recovery and public TLS.
+No application/security changes, extra test suite, deployment or push were needed.
+The scan image and Scout cache were retained for reproducibility; no cleanup ran.
+
 2 November 2026 (Australia/Sydney). Baseline `fa1f52b`. No deployment, push, paid
 resources, website imports, model experiments or editorial evaluation. Historical
 Phase4D evidence is unchanged. AWS recommendations are in `phase4e-aws-plan.md`.

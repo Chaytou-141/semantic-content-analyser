@@ -1,0 +1,429 @@
+{
+  "date_australia_sydney": "2026-11-02",
+  "baseline_commit": "bc079df",
+  "scanner": "Docker Scout v1.27.0",
+  "image_reference": "semantic-phase4e-scan:app",
+  "image_id": "sha256:3334446d5b83c444bd1266f617bc844427fe26b16935fc920bd50e163d475257",
+  "size_bytes": 2339656320,
+  "rootfs_layers": [
+    "sha256:a5d6d345f6afa08d7c31272055746d60a838b290bfcc82c0a23e8e984d61a933",
+    "sha256:fab99bd4639aec48a77ec4d2e3564c0907e0e1e962bbf773219a0b503a168955",
+    "sha256:bca572b9549074f7cbc5f2d9d29f589038ff21c5f68cef2965167a33f177a9c0",
+    "sha256:cae4cb2b5e819765b847e67faa443b377607452f2ec949d142cad15d9d7ea0b3",
+    "sha256:73acc66174bc61c7e6bc7933e5e628f40926830d752778d6ae956caf1893ae48",
+    "sha256:0355449b9505ba0b78264e5394b0ebc448a1ca3943f5329d70b3ac91b412c6f7",
+    "sha256:1c2728f7a7c1763c9767b8734248b0d688ce8963ad4a758f594ff4cab68ca463",
+    "sha256:54524ce2a11102b6ce50f77e1b759a9f09ecff19108fbfe4be1bcf3bc6d51834",
+    "sha256:8c016732c47e4d0d17c2ab8206a4e9fd039f7adf7940a2f267248fff9e7f6094",
+    "sha256:20137c8af7f3ad1c096f39478033eaf697d7610e9ebb43f14d99200316301d1f",
+    "sha256:75972e9ef0e0fdebf07e30b18e7bc1919caef307927c2e8bd22274267d8be518",
+    "sha256:aa9738b9b3468055bc74f5939b04a3311f73178673b53115c43507f321960067",
+    "sha256:8dca70d8cff4a09a4a6e6436fdacb533f80b9b1361ddd13af125370fc0a12d0e",
+    "sha256:0a230ccc0933534d562eab1f39961d73c1a09f5123b0246874825b043c4029b9",
+    "sha256:905e20e08205b55b950be95117995568f5ac6f0a8f32679e7abb86915a7cc2c3",
+    "sha256:3ac877af664b8425345900704d27f833da1fe91aa3354e4dace8928a277f49f1",
+    "sha256:340b4b8dffe480e183180e41cc3e7da203f37430f4160d8dd343fbb0e7c39a82"
+  ],
+  "all_17_layers_match_prior_verified_image": true,
+  "indexed_packages": 191,
+  "vulnerable_packages": 13,
+  "severity_counts": {
+    "LOW": 27,
+    "MEDIUM": 7,
+    "HIGH": 4
+  },
+  "critical": 0,
+  "scan_exit_code": 0,
+  "filters_or_suppressions_requested": false,
+  "removed_since_reused_inventory": [
+    "CVE-2026-119586"
+  ],
+  "artifacts": {
+    "app-fresh-index.sarif.json": "9e433c24870c96350d088d740460a7b637b3e9879d2e0432a5e3c066ff373b71",
+    "app-fresh-index.sbom.json": "fae752146fc806876260cb79833dd064cd915ebf741846099b515fa80d768321",
+    "app-index-retry-build.log": "344d4879c3e5e8373b4d35866064a3ba732ded9752c0da74d0e4e10728c67f03",
+    "app-fresh-index.log": "2ab96f08186e738750ff627fb8aa6b0216011368302dc8e7441e1a6d18217119"
+  },
+  "findings": [
+    {
+      "id": "CVE-2005-2541",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/tar@1.35%2Bdfsg-3.1?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2005-2541?s=debian&n=tar&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Tar 1.15.1 does not properly warn the user when extracting setuid or setgid files, which may allow local users or remote attackers to gain privileges.\n\n---\nThis is intended behaviour, after all tar is an archiving tool and you\nneed to give -p as a command line flag\n- tar <unfixed> (bug https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=328228; unimportant)\n"
+    },
+    {
+      "id": "CVE-2007-5686",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/shadow@1%3A4.17.4-2?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2007-5686?s=debian&n=shadow&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "initscripts in rPath Linux 1 sets insecure permissions for the /var/log/btmp file, which allows local users to obtain sensitive information regarding authentication attempts.  NOTE: because sshd detects the insecure permissions and does not log certain events, this also prevents sshd from logging failed authentication attempts by remote attackers.\n\n---\n- shadow <unfixed> (unimportant)\nSee #290803, on Debian LOG_UNKFAIL_ENAB in login.defs is set to no so\nunknown usernames are not recorded on login failures\n"
+    },
+    {
+      "id": "CVE-2010-0928",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/openssl@3.5.7-1~deb13u3?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2010-0928?s=debian&n=openssl&ns=debian&t=deb&osn=debian&osv=13&vr=%3E%3D3.2.1-3",
+      "description": "OpenSSL 0.9.8i on the Gaisler Research LEON3 SoC on the Xilinx Virtex-II Pro FPGA uses a Fixed Width Exponentiation (FWE) algorithm for certain signature calculations, and does not verify the signature before providing it to a caller, which makes it easier for physically proximate attackers to determine the private key via a modified supply voltage for the microprocessor, related to a \"fault-based attack.\"\n\n---\nhttp://www.eecs.umich.edu/~valeria/research/publications/DATE10RSA.pdf\nhttps://github.com/openssl/openssl/discussions/24540\nFault injection based attacks are not within OpenSSLs threat model according\nto the security policy: https://www.openssl.org/policies/general/security-policy.html\n"
+    },
+    {
+      "id": "CVE-2010-4756",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/glibc@2.41-12%2Bdeb13u4?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2010-4756?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "The glob implementation in the GNU C Library (aka glibc or libc6) allows remote authenticated users to cause a denial of service (CPU and memory consumption) via crafted glob expressions that do not match any pathnames, as demonstrated by glob expressions in STAT commands to an FTP daemon, a different vulnerability than CVE-2010-2632.\n\n---\n- glibc <removed> (unimportant)\n- eglibc <unfixed> (unimportant)\nThat's standard POSIX behaviour implemented by (e)glibc. Applications using\nglob need to impose limits for themselves\n"
+    },
+    {
+      "id": "CVE-2011-3374",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/apt@3.0.3?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2011-3374?s=debian&n=apt&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "It was found that apt-key in apt, all versions, do not correctly validate gpg keys with the master keyring, leading to a potential man-in-the-middle attack.\n\n---\n- apt <unfixed> (unimportant; bug https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=642480)\nNot exploitable in Debian, since no keyring URI is defined\n"
+    },
+    {
+      "id": "CVE-2011-4116",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/perl@5.40.1-6%2Bdeb13u1?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2011-4116?s=debian&n=perl&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "_is_safe in the File::Temp module for Perl does not properly handle symlinks.\n\n---\n- perl <unfixed> (unimportant; bug https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=776268)\nhttp://thread.gmane.org/gmane.comp.security.oss.general/6174/focus=6177\nhttps://github.com/Perl-Toolchain-Gang/File-Temp/issues/14\n"
+    },
+    {
+      "id": "CVE-2013-4392",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/systemd@257.13-1~deb13u1?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2013-4392?s=debian&n=systemd&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "systemd, when updating file permissions, allows local users to change the permissions and SELinux security contexts for arbitrary files via a symlink attack on unspecified files.\n\n---\n- systemd <unfixed> (unimportant; bug https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=725357)\n[wheezy] - systemd <not-affected> (/etc/tmpfiles.d not supported in Wheezy)\nhttps://bugzilla.redhat.com/show_bug.cgi?id=859060\nonly relevant to systems running systemd along with selinux\n"
+    },
+    {
+      "id": "CVE-2017-18018",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/coreutils@9.7-3?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2017-18018?s=debian&n=coreutils&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "In GNU Coreutils through 8.29, chown-core.c in chown and chgrp does not prevent replacement of a plain file with a symlink during use of the POSIX \"-R -L\" options, which allows local users to modify the ownership of arbitrary files by leveraging a race condition.\n\n---\n- coreutils <unfixed> (unimportant)\nhttp://lists.gnu.org/archive/html/coreutils/2017-12/msg00045.html\nhttps://www.openwall.com/lists/oss-security/2018/01/04/3\nDocumentation patches proposed:\nhttps://lists.gnu.org/archive/html/coreutils/2017-12/msg00072.html\nhttps://lists.gnu.org/archive/html/coreutils/2017-12/msg00073.html\nNeutralised by kernel hardening\n"
+    },
+    {
+      "id": "CVE-2018-20796",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/glibc@2.41-12%2Bdeb13u4?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2018-20796?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "In the GNU C Library (aka glibc or libc6) through 2.29, check_dst_limits_calc_pos_1 in posix/regexec.c has Uncontrolled Recursion, as demonstrated by '(\\227|)(\\\\1\\\\1|t1|\\\\\\2537)+' in grep.\n\n---\n- glibc <unfixed> (unimportant)\n- eglibc <removed> (unimportant)\nhttps://debbugs.gnu.org/cgi/bugreport.cgi?bug=34141\nhttps://lists.gnu.org/archive/html/bug-gnulib/2019-01/msg00108.html\nNo treated as vulnerability: https://sourceware.org/glibc/wiki/Security%20Exceptions\n"
+    },
+    {
+      "id": "CVE-2019-1010022",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/glibc@2.41-12%2Bdeb13u4?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2019-1010022?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "GNU Libc current is affected by: Mitigation bypass. The impact is: Attacker may bypass stack guard protection. The component is: nptl. The attack vector is: Exploit stack buffer overflow vulnerability and use this bypass vulnerability to bypass stack guard. NOTE: Upstream comments indicate \"this is being treated as a non-security bug and no real threat.\n\n---\n- glibc <unfixed> (unimportant)\nNot treated as a security issue by upstream\nhttps://sourceware.org/bugzilla/show_bug.cgi?id=22850\n"
+    },
+    {
+      "id": "CVE-2019-1010023",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/glibc@2.41-12%2Bdeb13u4?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2019-1010023?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "GNU Libc current is affected by: Re-mapping current loaded library with malicious ELF file. The impact is: In worst case attacker may evaluate privileges. The component is: libld. The attack vector is: Attacker sends 2 ELF files to victim and asks to run ldd on it. ldd execute code. NOTE: Upstream comments indicate \"this is being treated as a non-security bug and no real threat.\n\n---\n- glibc <unfixed> (unimportant)\nNot treated as a security issue by upstream\nhttps://sourceware.org/bugzilla/show_bug.cgi?id=22851\n"
+    },
+    {
+      "id": "CVE-2019-1010024",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/glibc@2.41-12%2Bdeb13u4?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2019-1010024?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "GNU Libc current is affected by: Mitigation bypass. The impact is: Attacker may bypass ASLR using cache of thread stack and heap. The component is: glibc. NOTE: Upstream comments indicate \"this is being treated as a non-security bug and no real threat.\n\n---\n- glibc <unfixed> (unimportant)\nNot treated as a security issue by upstream\nhttps://sourceware.org/bugzilla/show_bug.cgi?id=22852\n"
+    },
+    {
+      "id": "CVE-2019-1010025",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/glibc@2.41-12%2Bdeb13u4?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2019-1010025?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "GNU Libc current is affected by: Mitigation bypass. The impact is: Attacker may guess the heap addresses of pthread_created thread. The component is: glibc. NOTE: the vendor's position is \"ASLR bypass itself is not a vulnerability.\n\n---\n- glibc <unfixed> (unimportant)\nNot treated as a security issue by upstream\nhttps://sourceware.org/bugzilla/show_bug.cgi?id=22853\n"
+    },
+    {
+      "id": "CVE-2019-9192",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/glibc@2.41-12%2Bdeb13u4?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2019-9192?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "In the GNU C Library (aka glibc or libc6) through 2.29, check_dst_limits_calc_pos_1 in posix/regexec.c has Uncontrolled Recursion, as demonstrated by '(|)(\\\\1\\\\1)*' in grep, a different issue than CVE-2018-20796. NOTE: the software maintainer disputes that this is a vulnerability because the behavior occurs only with a crafted pattern\n\n---\n- glibc <unfixed> (unimportant)\n- eglibc <removed> (unimportant)\nhttps://sourceware.org/bugzilla/show_bug.cgi?id=24269\n"
+    },
+    {
+      "id": "CVE-2021-45346",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2021-45346?s=debian&n=sqlite3&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "A Memory Leak vulnerability exists in SQLite Project SQLite3 3.35.1 and 3.37.0 via maliciously crafted SQL Queries (made via editing the Database File), it is possible to query a record, and leak subsequent bytes of memory that extend beyond the record, which could let a malicious user obtain sensitive information. NOTE: The developer disputes this as a vulnerability stating that If you give SQLite a corrupted database file and submit a query against the database, it might read parts of the database that you did not intend or expect.\n\n---\n- sqlite3 <unfixed> (unimportant; bug https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1005974)\n- sqlite <removed> (unimportant)\nhttps://github.com/guyinatuxedo/sqlite3_record_leaking\nhttps://bugzilla.redhat.com/show_bug.cgi?id=2054793\nhttps://sqlite.org/forum/forumpost/056d557c2f8c452ed5bb9c215414c802b215ce437be82be047726e521342161e\nNegligible security impact\n"
+    },
+    {
+      "id": "CVE-2022-0563",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/util-linux@2.41.5-0%2Bdeb13u1?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2022-0563?s=debian&n=util-linux&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "A flaw was found in the util-linux chfn and chsh utilities when compiled with Readline support. The Readline library uses an \"INPUTRC\" environment variable to get a path to the library config file. When the library cannot parse the specified file, it prints an error message containing data from the file. This flaw allows an unprivileged user to read root-owned files, potentially leading to privilege escalation. This flaw affects util-linux versions prior to 2.37.4.\n\n---\n- util-linux <unfixed> (unimportant)\nhttps://bugzilla.redhat.com/show_bug.cgi?id=2053151\nhttps://lore.kernel.org/util-linux/20220214110609.msiwlm457ngoic6w@ws.net.home/T/#u\nhttps://github.com/util-linux/util-linux/commit/faa5a3a83ad0cb5e2c303edbfd8cd823c9d94c17\nutil-linux in Debian does build with readline support but chfn and chsh are provided\nby src:shadow and util-linux is configured with --disable-chfn-chsh\n"
+    },
+    {
+      "id": "CVE-2023-31437",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/systemd@257.13-1~deb13u1?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2023-31437?s=debian&n=systemd&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "An issue was discovered in systemd 253. An attacker can modify a sealed log file such that, in some views, not all existing and sealed log messages are displayed. NOTE: the vendor reportedly sent \"a reply denying that any of the finding was a security vulnerability.\"\n\n---\n- systemd <unfixed> (unimportant)\nDisputed by upstream\nhttps://github.com/kastel-security/Journald/blob/main/journald-publication.pdf\n"
+    },
+    {
+      "id": "CVE-2023-31438",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/systemd@257.13-1~deb13u1?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2023-31438?s=debian&n=systemd&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "An issue was discovered in systemd 253. An attacker can truncate a sealed log file and then resume log sealing such that checking the integrity shows no error, despite modifications. NOTE: the vendor reportedly sent \"a reply denying that any of the finding was a security vulnerability.\"\n\n---\n- systemd <unfixed> (unimportant)\nDisputed by upstream\nhttps://github.com/kastel-security/Journald/blob/main/journald-publication.pdf\n"
+    },
+    {
+      "id": "CVE-2023-31439",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/systemd@257.13-1~deb13u1?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2023-31439?s=debian&n=systemd&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "An issue was discovered in systemd 253. An attacker can modify the contents of past events in a sealed log file and then adjust the file such that checking the integrity shows no error, despite modifications. NOTE: the vendor reportedly sent \"a reply denying that any of the finding was a security vulnerability.\"\n\n---\n- systemd <unfixed> (unimportant)\nDisputed by upstream\nhttps://github.com/kastel-security/Journald/blob/main/journald-publication.pdf\n"
+    },
+    {
+      "id": "CVE-2025-5278",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/coreutils@9.7-3?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2025-5278?s=debian&n=coreutils&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "A flaw was found in GNU Coreutils. The sort utility's begfield() function is vulnerable to a heap buffer under-read. The program may access memory outside the allocated buffer if a user runs a crafted command using the traditional key format. A malicious input could lead to a crash or leak sensitive data.\n\n---\n- coreutils <unfixed> (bug https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1106733; unimportant)\nhttps://bugzilla.redhat.com/show_bug.cgi?id=2368764\nhttps://lists.gnu.org/archive/html/bug-coreutils/2025-05/msg00036.html\nhttps://lists.gnu.org/archive/html/bug-coreutils/2025-05/msg00040.html\nhttps://cgit.git.savannah.gnu.org/cgit/coreutils.git/commit/?id=8c9602e3a145e9596dc1a63c6ed67865814b6633\nhttps://www.openwall.com/lists/oss-security/2025/05/27/2\nhttps://debbugs.gnu.org/cgi/bugreport.cgi?bug=78507\nCrash in CLI tool, no security impact\n"
+    },
+    {
+      "id": "CVE-2025-70873",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2025-70873?s=debian&n=sqlite3&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "An information disclosure issue in the zipfileInflate function in the zipfile extension in SQLite v3.51.1 and earlier allows attackers to obtain heap memory via supplying a crafted ZIP file.\n\n---\n- sqlite3 <unfixed> (unimportant)\nhttps://sqlite.org/src/info/3d459f1fb1bd1b5e\nhttps://sqlite.org/forum/forumpost/761eac3c82\nhttps://gist.github.com/cnwangjihe/f496393f30f5ecec5b18c8f5ab072054\nzipfile extension not build for Debian binary package builds\n"
+    },
+    {
+      "id": "CVE-2026-102473",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/dash@0.5.12-12?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-102473?s=debian&n=dash&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "A flaw was found in dash. When built without libc fnmatch, the internal pmatch() matcher implements * by unbounded recursion over candidate positions. A local user who can plant filenames, or otherwise feed that matcher, can make a short multi-star pattern such as *.*.*.*.*.tar.gz consume excessive CPU.\n\n---\n- dash <unfixed> (bug https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1149887; unimportant)\nhttps://bugzilla.redhat.com/show_bug.cgi?id=2543005\nNegligible security impact\n"
+    },
+    {
+      "id": "CVE-2026-102474",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/dash@0.5.12-12?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-102474?s=debian&n=dash&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "A flaw was found in dash. The printf builtin reserves four bytes before converting a Unicode \\u or \\U escape, but the multi-byte token can need five or six bytes. A local user who can supply such an escape to dash printf or echo %b, including through dash -c and a positional argument, can write one or two bytes past that reservation.\n\n---\n- dash <unfixed> (unimportant)\nhttps://bugzilla.redhat.com/show_bug.cgi?id=2543004\nNegligible security impact\n"
+    },
+    {
+      "id": "CVE-2026-53910",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/diffutils@1%3A3.10-4?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-53910?s=debian&n=diffutils&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "diff3\u00a0tool from GNU diffutils\u00a0is vulnerable to a heap\u2011based buffer overflow due to multiple signed integer overflows in line\u2011mapping calculations. Incorrect arithmetic in mapping line ranges can result in corrupted values being used for memory allocation and loop bounds. When processing crafted diff output, these overflows may cause the application to allocate insufficient memory and subsequently perform out\u2011of\u2011bounds writes during internal processing.\u00a0 An attacker who can control the output of the diff program used by diff3 (e.g. via --diff-program pointing to a malicious script) can trigger out-of-bounds writes, resulting in a crash and potentially remote code execution depending on the environment.   This issue has been fixed in commit 9ff04d5b84743e331e80b589335a52c5480d1815\u00a0  NOTE: The project maintainers claim that this is not a security issue. They state that the worst outcome this issue can cause is a crash of diff and that it cannot be used to escalate privileges.\n\n---\n- diffutils <unfixed> (bug https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1142675; unimportant)\nFixed by: https://cgit.git.savannah.gnu.org/cgit/diffutils.git/commit/?id=73ed7ce85cc78effb94daf028c9af6b4e5252e50\nFixed by: https://cgit.git.savannah.gnu.org/cgit/diffutils.git/commit/?id=9ff04d5b84743e331e80b589335a52c5480d1815\nNegligible security impact.\n"
+    },
+    {
+      "id": "CVE-2026-56391",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/coreutils@9.7-3?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-56391?s=debian&n=coreutils&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "GNU coreutils uniq is vulnerable to an out\u2011of\u2011bounds read due to incorrect handling of multibyte input when the -w (--check-chars) option is used. The find_field() function miscalculates the byte length of characters by repeatedly processing a fixed pointer instead of advancing through the input, resulting in an inflated length value.  This incorrect length is later used in a memcmp operation, causing reads beyond the allocated buffer when processing crafted multibyte input.  When running GNU coreutils uniq with attacker-provided arguments, this behavior leads to a crash and potential adjacent heap memory exposure.   This issue has been fixed in the commit d64e35a8a4c0e4608321433e0d84d917e4e36371.\n\n---\n- coreutils <unfixed> (unimportant)\nFixed by: https://git.savannah.gnu.org/cgit/coreutils.git/commit/?id=d64e35a8a4c0e4608321433e0d84d917e4e36371\nhttps://www.openwall.com/lists/oss-security/2026/07/25/2\nNegligible security impact\n"
+    },
+    {
+      "id": "CVE-2026-56392",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/coreutils@9.7-3?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-56392?s=debian&n=coreutils&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "GNU coreutils unexpand is vulnerable to a heap-based buffer overflow due to an integer overflow during buffer allocation when processing large tab stop (-t) values. The multiplication used to calculate the allocation size can wrap around, resulting in an undersized buffer. When processing crafted input, subsequent writes exceed the allocated memory, leading to an out\u2011of\u2011bounds heap write.  When running GNU coreutils unexpand with attacker-provided large tab stop (-t) arguments, this behavior leads to a crash and potentially achieve a heap write primitive depending on memory layout.           This issue has been fixed in the commit b60a159fdc5bfcf9988d3a4cb6f53abe8ad5d35d\n\n---\n- coreutils <unfixed> (unimportant)\nFixed by: https://git.savannah.gnu.org/cgit/coreutils.git/commit/?id=b60a159fdc5bfcf9988d3a4cb6f53abe8ad5d35d\nhttps://www.openwall.com/lists/oss-security/2026/07/25/2\nNegligible security impact\n"
+    },
+    {
+      "id": "CVE-2026-119377",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-119377?s=debian&n=sqlite3&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "SQLite before 3.54.0 contains an authorization bypass vulnerability in lookupName() that invokes the authorizer only for the first joined table's USING column. Attackers able to submit SQL can query a shared USING column in a RIGHT or FULL JOIN to read columns denied via sqlite3_set_authorizer() SQLITE_READ restrictions.\n\n---\n- sqlite3 <unfixed> (bug https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1152790)\nhttps://sqlite.org/bugs/info/2026-07-05T08:15:45Z\nhttps://sqlite.org/src/info/bbd69ce274620008\nFixed by: https://github.com/sqlite/sqlite/commit/7ff247c5b9ead3ad8a69c26d3fd264878e127237 (version-3.54.0)\nhttps://sqlite.org/src/info/2cb22877683680c1\nFixed by: https://github.com/sqlite/sqlite/commit/5694c3bb2a6a40770ecd2f65910eea756734dfd8 (version-3.54.0)\n"
+    },
+    {
+      "id": "CVE-2025-45582",
+      "severity": "MEDIUM",
+      "packages": [
+        "pkg:deb/debian/tar@1.35%2Bdfsg-3.1?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2025-45582?s=debian&n=tar&ns=debian&t=deb&osn=debian&osv=13&vr=%3E%3D1.35%2Bdfsg-3.1",
+      "description": "GNU Tar through 1.35 allows file overwrite via directory traversal in crafted TAR archives, with a certain two-step process. First, the victim must extract an archive that contains a ../ symlink to a critical directory. Second, the victim must extract an archive that contains a critical file, specified via a relative pathname that begins with the symlink name and ends with that critical file's name. Here, the extraction follows the symlink and overwrites the critical file. This bypasses the protection mechanism of \"Member name contains '..'\" that would occur for a single TAR archive that attempted to specify the critical file via a ../ approach. For example, the first archive can contain \"x -> ../../../../../home/victim/.ssh\" and the second archive can contain x/authorized_keys. This can affect server applications that automatically extract any number of user-supplied TAR archives, and were relying on the blocking of traversal. This can also affect software installation processes in which \"tar xf\" is run more than once (e.g., when installing a package can automatically install two dependencies that are set up as untrusted tarballs instead of official packages).\n\n---\nDisputed tar issue, works as documented per upstream:\nhttps://lists.gnu.org/archive/html/bug-tar/2025-08/msg00012.html\nhttps://github.com/i900008/vulndb/blob/main/Gnu_tar_vuln.md\n"
+    },
+    {
+      "id": "CVE-2026-119371",
+      "severity": "MEDIUM",
+      "packages": [
+        "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-119371?s=debian&n=sqlite3&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "SQLite before 3.54.0 contains a stack exhaustion vulnerability that allows attackers to bypass the SQLITE_LIMIT_EXPR_DEPTH nesting limit because common table expressions are not counted against it. Attackers can supply a WITH clause chaining tens of thousands of CTEs, via plain SQL or a view in an untrusted database file, causing unbounded selectExpander() recursion that crashes the process.\n\n---\n- sqlite3 <unfixed> (bug https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1152790)\nhttps://sqlite.org/bugs/info/2026-10-04T04:58:58Z\nhttps://sqlite.org/src/info/f54730871303e655\nFixed by: https://github.com/sqlite/sqlite/commit/e6ff280c839fdfc7418fd5add12e8f32702a17fb (version-3.54.0)\n"
+    },
+    {
+      "id": "CVE-2026-119372",
+      "severity": "MEDIUM",
+      "packages": [
+        "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-119372?s=debian&n=sqlite3&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "SQLite before 3.54.0 built with FTS3/FTS4 and SQLITE_ENABLE_FTS3_PARENTHESIS contains a use-after-free vulnerability in fts3BestSnippet() caused by dangling cached position-list pointers. Attackers can run a full-text MATCH query combining OR and NEAR operators with snippet() to read freed heap memory and crash the process.\n\n---\n- sqlite3 <unfixed> (bug https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1152790)\nhttps://sqlite.org/bugs/info/2026-08-17T09:18:24Z\nhttps://sqlite.org/src/info/e4635c4153\nFixed by: https://github.com/sqlite/sqlite/commit/a87bd2471a9c0606e78d3c3678bcd9cecaa0e731 (version-3.54.0)\n"
+    },
+    {
+      "id": "CVE-2026-119375",
+      "severity": "MEDIUM",
+      "packages": [
+        "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-119375?s=debian&n=sqlite3&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "SQLite before 3.54.0 contains an information disclosure vulnerability that allows attackers to read uninitialized page-cache memory by supplying a WAL file with an undersized page size. Attackers can craft a database and WAL file whose oversized record payload makes queries like substr() return stale bytes, disclosing other table rows and internal pointers.\n\n---\n- sqlite3 <unfixed> (bug https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1152790)\nhttps://sqlite.org/bugs/info/2026-08-17T15:54:41Z\nhttps://sqlite.org/src/info/f9b4ee369557c36c\nFixed by: https://github.com/sqlite/sqlite/commit/e5bf119821f25be1d7f10ef0a2edbe175289166e (version-3.54.0)\n"
+    },
+    {
+      "id": "CVE-2026-119376",
+      "severity": "MEDIUM",
+      "packages": [
+        "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-119376?s=debian&n=sqlite3&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "SQLite before 3.54.0 contains a stack exhaustion vulnerability that allows attackers to bypass the SQLITE_LIMIT_EXPR_DEPTH limit by chaining COLLATE postfix operators. Attackers can supply roughly 175,000 chained COLLATE operators in SQL or an untrusted database view to trigger unbounded recursion in sqlite3WalkExprNN() and crash the process.\n\n---\n- sqlite3 <unfixed> (bug https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1152790)\nhttps://sqlite.org/bugs/info/2026-10-04T04:50:56Z\nhttps://sqlite.org/src/info/252c0b7bf5a727d2\nFixed by: https://github.com/sqlite/sqlite/commit/d54522a5b832422ab893a1e9fa7a99ab314ea4e2 (version-3.54.0)\n"
+    },
+    {
+      "id": "CVE-2026-119378",
+      "severity": "MEDIUM",
+      "packages": [
+        "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-119378?s=debian&n=sqlite3&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "SQLite before 3.54.0 contains a use-after-free vulnerability in the R-Tree extension that allows attackers to make applications use freed heap memory by manipulating the %_node shadow table. Attackers can supply a database declaring %_node WITHOUT ROWID or with a RAISE(IGNORE) trigger so nodeWrite() hashes nodes as 0, crashing the process after node splits.\n\n---\n- sqlite3 <unfixed> (bug https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1152790)\nhttps://sqlite.org/src/info/6a9e1415659f9e75\nFixed by: https://github.com/sqlite/sqlite/commit/d21bd37c7cfc1b85b17a6703555f0926b6236e04 (version-3.54.0)\n"
+    },
+    {
+      "id": "CVE-2026-119591",
+      "severity": "MEDIUM",
+      "packages": [
+        "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-119591?s=debian&n=sqlite3&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "SQLite before 3.54.0 contains a stack exhaustion vulnerability in countOfViewOptimization() that allows attackers to crash the host process via count(*) over a large multi-row VALUES clause. Attackers supplying SQL or a database file with a crafted view can trigger deeply nested TK_PLUS expressions whose recursive freeing in sqlite3ExprDeleteNN() exhausts the C stack, causing denial of service.\n\n---\n- sqlite3 <unfixed> (bug https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1152790)\nhttps://sqlite.org/bugs/info/2026-10-04T05:34:47Z\nhttps://sqlite.org/src/info/ab621a3e11ee4acc\nhttps://github.com/sqlite/sqlite/commit/eff50a067c55f972909e7780e506e91382d08de2 (version-3.54.0)\n"
+    },
+    {
+      "id": "CVE-2026-85091",
+      "severity": "HIGH",
+      "packages": [
+        "pkg:deb/debian/zlib@1%3A1.3.dfsg%2Breally1.3.1-1?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-85091?s=debian&n=zlib&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "zlib versions 1.3.1.2 through 1.3.2 contain a heap buffer overflow vulnerability in the gz_vacate() function when processing non-blocking gzwrite() operations with stale external buffer pointers. Attackers can trigger the overflow by calling gzprintf() or gzvprintf() after a write stall, causing an unchecked memmove() to write beyond the internal input buffer boundary.\n\n---\n- zlib 1:1.3.dfsg+really1.3.2-4 (bug https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1146895)\nhttps://gist.github.com/thesmartshadow/e0b9481792afb7c31e86fee1ff084490\nhttps://github.com/madler/zlib/issues/1310\nhttps://github.com/madler/zlib/pull/1317\nFixed by: https://github.com/madler/zlib/commit/df84af25dc1942490e1d1c899a07619152a46148\nDiscussion on affected range: https://github.com/madler/zlib/issues/1310#issuecomment-5979623265\nSupport non-blocking devices in the gz* routines introduced with:\nhttps://github.com/madler/zlib/commit/81cc0bebedd935daeb81b0b6e475d8786b51af3d (v1.3.1.2)\n"
+    },
+    {
+      "id": "CVE-2026-119373",
+      "severity": "HIGH",
+      "packages": [
+        "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-119373?s=debian&n=sqlite3&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "SQLite before 3.54.0 built with FTS5 contains a heap buffer overflow in fts5MergeRowidLists() that undersizes the output buffer when merging detail=none prefix doclists. Attackers who can populate a detail=none FTS5 table with negative rowids and run a prefix MATCH query can write past the allocation, corrupting heap memory and crashing the process.\n\n---\n- sqlite3 <unfixed> (bug https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1152790)\nhttps://sqlite.org/bugs/info/2026-08-04T08:49:27Z\nhttps://sqlite.org/src/info/a7f8c92f62\nFixed by: https://github.com/sqlite/sqlite/commit/e1c9934f9f11a499029abb020ea715a08970da80 (version-3.54.0)\n"
+    },
+    {
+      "id": "CVE-2026-119374",
+      "severity": "HIGH",
+      "packages": [
+        "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-119374?s=debian&n=sqlite3&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "SQLite before 3.54.0 built with FTS5 contains a heap buffer overflow in fts5DoSecureDelete() that allows attackers to write past the leaf page buffer via crafted footer key offsets. Attackers can supply a database file with a corrupted FTS5 index that, when deleted from with secure-delete enabled, corrupts heap memory and crashes the application.\n\n---\n- sqlite3 <unfixed> (bug https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1152790)\nhttps://sqlite.org/src/info/9cd4f9e920\nFixed by: https://github.com/sqlite/sqlite/commit/d9de6eedbe918c074c7556400fa21df5960704d9 (version-3.54.0)\n"
+    },
+    {
+      "id": "CVE-2026-119379",
+      "severity": "HIGH",
+      "packages": [
+        "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-119379?s=debian&n=sqlite3&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "SQLite before 3.54.0 built with the session extension contains a heap buffer overflow vulnerability in sqlite3changeset_apply() that allows attackers to corrupt heap memory by supplying crafted changesets. Attackers can repeat a table name in a second changeset block with a larger column count, causing sessionUpdateFind() to memset past the undersized aUpdateMask allocation.\n\n---\n- sqlite3 <unfixed> (bug https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1152790)\nhttps://sqlite.org/bugs/info/2026-08-16T10:15:25Z\nhttps://sqlite.org/src/info/3f57024aecea0f3b\nFixed by: https://github.com/sqlite/sqlite/commit/64459c87cc702d600704fb77ee40ca1782398a52 (version-3.54.0)\n"
+    }
+  ]
+}
