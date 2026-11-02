@@ -1,4 +1,19 @@
-# Public portfolio release checklist - Phase 4D local security update
+# Public portfolio release checklist - Phase 4E image/plan review
+
+2 November 2026, Phase4E: clean-runtime Caddy security rebuild verified locally;
+0 Critical/1 High proxy findings remain (six total rules).175 distinct targeted tests,
+nine container checks and76 controlled HTTP exposure requests pass. All17 app/eight
+proxy filesystem layers inspected. Nested build-context and static-file protections
+added; no UI/model/ranking/data changes. Fresh app Scout scan failed for disk space;
+complete final Caddy Dockerfile build passes with cache and identical tested runtime
+files/config. Current-feed scan of unchanged app components passes39 rules/5 High;
+this is not a fresh new-app index. No cache-free replay. Remaining OS/proxy advisories
+are retained with package-level dispositions, not suppressed. No public readiness.
+See docs/phase4e-security-review.md, phase4e-verification.json, vulnerability CSV and
+phase4e-aws-plan.md for primary sources, scope, budgets and prelaunch gates.
+Production now requires explicit PROXY_IMAGE; no fallback to the old proxy. AWS plan
+is conditional: Lightsail8GB aroundUSD50/month, EC2 aroundUSD95; no resources created.
+Earlier dated evidence below is historical and must not override this qualification.
 
 2 November 2026. Phase4D verifies namespace kernel egress on disposable Linux Docker:
 288 targeted tests and eight runtime checks passed, including public-classified local
@@ -45,6 +60,9 @@ and `docs/phase4b-verification.json`. This remains preparation for a limited gat
 
 | Area | Existing evidence / boundary | Required before anonymous public release |
 | --- | --- | --- |
+| Image security (4E) | Clean Alpine Caddy2.11.7 rebuild, Go1.26.10/x-net0.62/v4JOSE4.1.6, six advisory rules/zero Critical/one High; frozen review locks; no suppressions | Disposition unfixed v3 JOSE/other advisory and Debian findings; complete fresh new-app index/release provenance on adequate disk |
+| Source/secret exposure (4E) | Explicit six assets/static allowlist; recursive private-context exclusions;76 auth/anonymous HTTPS probes; all17 app/eight proxy layers inspected; known credential/history checks clean | Private ECR/least-privilege pulls; image holders can read backend source; Docker operators can read runtime environment/volumes. Unknown credentials require continuing review |
+| AWS recommendation (4E) | Conditional Lightsail8GB x86 VM aboutUSD50/month; EC2t3.large Sydney aboutUSD95 with IAM/SSM advantages; no resources created | Agree budget/secrets/guest monitoring/quotas/selective recovery; separately authorise intended-host testing, public ACME and exposure. Managed services do not inherit the verified kernel policy |
 | Visitor isolation | Signed cookie-owned SQLite; Phase4C verifies two HTTPS cookie clients, disposable sentinel review separation and cross-revision rejection; Linux ownership/cleanup tests pass | Retest on intended host/HTTPS chain; keep visitor mode explicit, never expose shared local mode to unrelated visitors |
 | Deployment template | Phase4C release image runs non-root with private named storage and cached offline model; two real browser sessions use local HTTPS, static assets and controlled UI snapshots; production password gate retained | Public DNS/ACME, intended host, upstream proxies and load remain unverified. Local-CA TLS is not a public certificate; retain the gate |
 | Abuse/fairness | Phase 4B bounds API concurrency/rates, new sessions and wire attempts across owners/runs, with global caps, finite accounting state and Retry-After; existing one-worker queue retained | Assess NAT/IPv6 behaviour and process-restart budget reset, upstream connection/DDoS policy and actual target load. Counters are single-process, not durable distributed enforcement; retain password gate |
@@ -61,8 +79,9 @@ Relevant sources: `semantic_analyser/{config,workspaces,execution,fetch_policy,
 fetch_transport,safe_fetch,collections,api}.py`, `Dockerfile`,
 `deploy/aws/compose.production.yaml`, `infra/aws/main.tf`.
 
-The next milestone is Phase4E: patched image/advisory triage and intended-host release
-planning, then authorised targeted host/network/quotas/recovery/ACME tests. Phase4D's
+Phase4E planning is complete. Further work requires a separately approved scope:
+remaining advisory dispositions, adequate builder space for release provenance/
+fresh new-app index, then authorised intended-host network/quotas/recovery/ACME tests. Phase4D's
 local kernel enforcement is now measured; it does not establish AWS networking or
 anonymous-public readiness. Retain FastAPI, SQLite, shared MiniLM/TF-IDF and the gate.
 No deployment/push or further editorial evaluation is implied. No PostgreSQL, Redis,

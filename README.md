@@ -1,6 +1,11 @@
 # Semantic Content Analyser
 
-A working application for exploring related content using local CPU embeddings and a keyword baseline, with persistent local-demo or isolated temporary visitor workspaces. Built as an AI engineering learning project, with an AWS EC2 deployment path.
+A working application for exploring related content using local CPU embeddings and a keyword baseline, with persistent local-demo or isolated temporary visitor workspaces. Built as an AI engineering learning project, with reviewed AWS deployment options.
+
+Release status: local verification only. [Phase 4E security findings](docs/phase4e-security-review.md)
+and the [AWS cost/architecture plan](docs/phase4e-aws-plan.md) describe outstanding
+launch gates. The older EC2 deployment instructions below are a draft, not approval
+to deploy. Production requires reviewed app, egress and proxy image references.
 
 ## What it does
 

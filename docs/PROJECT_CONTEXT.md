@@ -2,21 +2,28 @@
 
 Updated 2 November 2026 (Australia/Sydney). No deployment or push.
 
-Latest: Phase4D adds an actual IPv4/IPv6 kernel egress boundary. App and Caddy share
-an owner namespace; only its small monitor has NET_ADMIN. Public TCP80/443 and narrow
-Docker DNS/own-health/IPv6-neighbour exceptions work; private/metadata/loopback and
-other ports are blocked. SafeFetcher DNS pinning/budgets remain unchanged. Production
-imports require fresh root-owned namespace-bound readiness; drift quarantines traffic.
-288 targeted Linux tests and eight controlled container checks passed. Python audit:
-50 packages/zero known findings; image scans still report app39/owner40/Caddy48 advisory
-rules, including high/critical findings. Public release remains blocked pending triage,
-intended-host network/quotas/load/recovery/ACME checks. See docs/phase4d-local-egress.md
-and docs/phase4d-verification.json. Phase4C evidence remains historical and unchanged.
-Current Phase4D preservation baseline:10 saved articles/29,303 chars/4 reviews; historical
-Phase4C had32 articles. No collection was restored or replaced. UI/ML/benchmarks unchanged.
-Next: Phase4E patched-artifact/advisory triage and intended-host deployment plan, without
-implying authorisation to deploy. Current local verifier: scripts/verify_phase4d_egress.py;
-Phase4C's verifier/override describe its earlier two-service networking topology.
+Latest Phase4E (baseline fa1f52b): Caddy2.11.7 security rebuild uses Go1.26.10,
+x/net0.62.0, Go JOSEv4 4.1.6 and a clean pinned Alpine runtime. Old executable lower
+layers removed rather than ignored. Final proxy scan:6 rules/0 Critical/1 High;
+Go JOSEv3 remains unfixed. Debian SQLite findings/range-disputed zlib remain recorded.
+Official tags still matched4D; app/ML package versions unchanged. Fresh app extraction
+failed for disk space; current-feed scan of its unchanged component inventory passes
+(39 rules/5 High). Complete final Caddy Dockerfile build passes with cache; runtime
+files/config match the tested artifact. No cache-free replay; new-app index pending.
+175 distinct targeted tests and9 container checks pass, including76 auth/anonymous
+HTTP exposure probes. All17 app/eight proxy filesystem layers inspected; no named
+secret/path/default-env findings. Static allowlist/explicit asset copies/recursive
+context exclusions prevent nested-secret packaging/serving. Backend stays readable
+to image holders: private ECR required. Current data10 articles/29,303 chars/4 reviews
+unchanged; web/rankings/history unchanged. See docs/phase4e-security-review.md,
+phase4e-vulnerability-review.csv, phase4e-verification.json and phase4e-aws-plan.md.
+Recommendation only: Lightsail8GB x86 VM aroundUSD50/month; EC2t3.large Sydney around
+USD95 with richer IAM/SSM. No AWS provisioning/alerts/DNS or editorial/model work.
+Public launch still needs advisory disposition, release provenance/new-app index, intended-
+host egress/metadata, guest quotas/monitoring, capacity, ACME and recovery acceptance.
+Stop after4E; no automatic infrastructure phase. Production requires explicit app,
+owner and PROXY_IMAGE references. Current verifier needs --proxy-image for4E builds;
+its historical default repeats the old4D proxy.
 
 - Stack: FastAPI + vanilla JS/CSS; SQLite; one shared CPU MiniLM
   `all-MiniLM-L6-v2` (384 dimensions, pinned revision), TF-IDF baseline.

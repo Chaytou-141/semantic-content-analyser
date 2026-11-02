@@ -12,7 +12,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.responses import FileResponse, JSONResponse
-from fastapi.staticfiles import StaticFiles
+from .public_assets import PublicAssets
 from itsdangerous import BadSignature, SignatureExpired, URLSafeTimedSerializer
 from pydantic import ValidationError
 from starlette.concurrency import run_in_threadpool
@@ -513,7 +513,7 @@ def create_app(settings=None, engine=None, fetcher=None):
     def index():
         return FileResponse(ROOT / "web/index.html")
 
-    app.mount("/static", StaticFiles(directory=ROOT / "web"), name="static")
+    app.mount("/static", PublicAssets(directory=ROOT / "web"), name="static")
     return app
 
 

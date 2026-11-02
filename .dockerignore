@@ -12,3 +12,21 @@ __pycache__
 *.tfvars
 Semantic_Content_Analyser_Starter_Docs.zip
 test-results
+# Build contexts must exclude nested deployment/runtime secrets as well as root files.
+**/.env
+**/.env.*
+**/*.env
+**/.git
+**/*.sqlite3
+**/*.sqlite3-*
+**/*.log
+**/*.key
+**/*.pem
+.vscode
+**/.aws
+**/.ssh
+**/.docker
+**/.netrc
+**/.terraform
+**/*.tfstate*
+**/*.tfvars

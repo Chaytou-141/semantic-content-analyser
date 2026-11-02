@@ -1542,3 +1542,74 @@ history was replaced. Cleanup targets only phase-owned containers/volumes/tags;
 BuildKit and unrelated resources are retained. Detailed architecture, limits, audit
 interpretation and reproduction: docs/phase4d-local-egress.md. Next: Phase4E advisory
 triage/patched artifacts and intended-host deployment plan; no deployment authorisation.
+
+
+## Phase4E - image vulnerability disposition, source protection and AWS plan
+
+2 November 2026 (Australia/Sydney). Baseline fa1f52b. This entry ships with commit
+subject `Harden release images and document verified AWS deployment options`;
+resolve its hash with git log on docs/phase4e-security-review.md.
+
+The official Python/Caddy tags still pointed to4D digests; pulling again did not
+constitute remediation. Reviewed53 image/package/CVE rows representing42 distinct
+baseline High/Critical CVEs. SQLite FTS/session preconditions are not exposed by this
+store, the sqlite3 shell is absent, and the zlib1.3.1 affected range is disputed while
+Debian still marks it vulnerable. Findings remain recorded. No sid/SQLite replacement
+or ML dependency change was justified; all50 Python package versions match4D.
+
+Built Caddy2.11.7 with Go1.26.10, x/net0.62.0, Go JOSEv4 4.1.6 and frozen Go locks.
+Initial replacement over the official runtime retained the vulnerable old executable
+in a lower layer; Scout SBOM layer ordinals and binary build-info confirmed this.
+A fresh pinned Alpine runtime removes obsolete executable/curl/brotli bytes, with
+pinned direct runtime packages. Final proxy scan has6 rules (0 Critical/1 High,
+4 Medium/1 Unspecified), versus4D48/10 Critical/27 High. Unfixed Go JOSEv3 remains;
+no ignore/suppression file was used. Same compiled binary SHA is verified across
+source build and fresh runtime. CustomVersion identifies this as our rebuild.
+
+Synthetic build-context tests demonstrated nested env/Git/database/key admission.
+Recursive ignores, six explicit public asset copies, removal of deployment-file COPY
+and PublicAssets allowlist address it without changing UI.76 raw HTTPS requests
+cover authenticated/anonymous source/secrets/DB/log/traversal/docs/debug paths and
+public assets. No private values or traceback returned. Full streaming layer coverage
+is asserted against image metadata:17 app layers/40,422 regular files, eight proxy
+layers/575 files, no named secret/path/default-env findings. New tests cover deleted
+secrets, chunk boundaries, tiny compressed layers and root credential filenames.
+These checks do not prove absence of every arbitrary unknown credential; Docker/image
+holders can read backend source and operators can read runtime secrets/volumes.
+
+172 targeted Linux security/operations/static tests pass in15.27s. Final focused
+nine tests pass in0.24s, six overlapping and three new layer cases:175 distinct tests.
+Nine final disposable-container checks pass: kernel/DNS/TLS/isolation/restart/fail-
+closed behaviour plus HTTP exposure. No historical full suite or model evaluation ran.
+Existing data/web/rankings/benchmark history are preserved. Temporary credentials and
+phase-owned resources are cleaned; unrelated resources/caches remain untouched.
+
+Limitations are explicit: fresh app Scout indexing failed for Windows disk space;
+owner scan completed. Only the milestone-owned1.767GB compiler cache was pruned by
+exact ID, not globally. After that, final runtime assembly reused the previously
+compiled, SHA-verified artifact; cold compilation of the final multistage Dockerfile
+was not repeated. It remains a prelaunch requirement, alongside advisory disposition,
+intended-host firewall/metadata, quotas, monitoring, capacity, public ACME and recovery.
+No unit-count-to-production-readiness claim is made.
+
+AWS plan compares a Lightsail8GB x86 VM (44USD bundle, around50USD with reserves)
+and EC2t3.large Sydney (official0.1056USD/hour, around95USD all-in estimate). No
+free-tier/FX/tax assumptions; ancillary costs are explicitly reserves. Fargate does
+not support our NET_ADMIN owner; App Runner no longer accepts new customers. The
+lowest-cost Lightsail plan requires explicit secrets/guest-monitoring design because
+it lacks EC2 instance roles. No NAT/ALB/autoscaling/RDS/Redis or whole-host visitor-data
+backups proposed. Budgets are alerts, not guaranteed spending ceilings. No AWS calls
+that provision resources, alarms, secrets, DNS, deployment or GitHub push occurred.
+Detailed findings, price sources and stop/approval gates are in the Phase4E reports.
+
+
+Phase4E verification addendum before commit: cleanup freed space for the complete
+final Caddy multistage Dockerfile build, which passed with trusted cached builder
+steps. All eight runtime filesystem layers, runtime configuration and executable
+SHA match the artifact used by the nine container checks; a fresh complete-source
+image scan also reports6 rules/1 High. No cache-free replay is claimed. A supported
+SBOM-input scan applied the current advisory feed to the cached4D app component
+inventory:39 rules/5 High. Its first11 dependency/base layers and all50 Python
+versions match the new app image. This completes a current component assessment,
+not a fresh extraction/index of that image. No large image copy or inference was
+needed. These qualifications supersede the earlier packaging limitation above.

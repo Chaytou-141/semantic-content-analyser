@@ -90,12 +90,12 @@ services:
         max-size: "10m"
         max-file: "3"
   proxy:
-    image: caddy:2-alpine@sha256:e70b164da81ef698b3ad19af799ea6086ce6d9e48ed4079eb9fe26f6fbf14ee5
+    image: ${PROXY_IMAGE:?Set PROXY_IMAGE to the reviewed security-rebuilt Caddy image or digest}
     environment:
       DOMAIN: ${DOMAIN:?Set DOMAIN to your DNS hostname}
     network_mode: service:egress
     cap_drop: [ALL]
-    # Official Caddy binary carries this file capability; no network admin/raw.
+    # Bind frontend ports only; no network admin/raw capability.
     cap_add: [NET_BIND_SERVICE]
     security_opt: [no-new-privileges:true]
     volumes:

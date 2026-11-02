@@ -33,6 +33,8 @@ def main():
     parser.add_argument('--out', type=Path, required=True, help='New evidence directory; never overwrites a previous run.')
     parser.add_argument('--image', default='semantic-phase4d:app')
     parser.add_argument('--egress-image', default='semantic-phase4d:egress')
+    parser.add_argument('--proxy-image', default='caddy:2-alpine@sha256:e70b164da81ef698b3ad19af799ea6086ce6d9e48ed4079eb9fe26f6fbf14ee5', help='Use the reviewed Phase4E image for current verification; default repeats the historical proxy.')
+    parser.add_argument('--exposure-audit', action='store_true')
     args = parser.parse_args()
     out = args.out.resolve()
     out.mkdir(parents=True, exist_ok=False)
@@ -45,6 +47,7 @@ def main():
              '-keyout', str(fixture/'ca.key'), '-out', str(fixture/'ca.crt')])
     project = 'semantic-phase4d-' + secrets.token_hex(4)
     values = {'IMAGE':args.image, 'EGRESS_IMAGE':args.egress_image, 'DOMAIN':'localhost:8443',
+              'PROXY_IMAGE':args.proxy_image,
               'APP_PASSWORD':secrets.token_hex(16), 'SECRET_KEY':secrets.token_hex(32),
               'FIXTURE_DIR':fixture.as_posix()}
     envfile = out/'lab.env'
@@ -228,6 +231,9 @@ print(json.dumps(r))
                     'requests_used':run['requests_used'],'saved_collections_unchanged':True,
                     'verified_fixture_tls':True,'model_loaded':False,'admission_import_not_run':'No model loading requested; atomic admission covered by targeted regressions.'}
         check('tls_pinned_fetch_discovery_extraction_isolation',visitors_and_fetch)
+        if args.exposure_audit:
+            from phase4e_exposure import audit_routes
+            check('production_http_source_and_secret_exposure',lambda:audit_routes(context,a,[values['APP_PASSWORD'],values['SECRET_KEY']]))
 
         def app_restart():
             before=[call(browser,'/api/articles')[1] for browser in [a,b]]

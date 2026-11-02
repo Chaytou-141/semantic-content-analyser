@@ -1,0 +1,549 @@
+{
+  "phase": "4E",
+  "date_australia_sydney": "2026-11-02",
+  "baseline_commit": "fa1f52b",
+  "commit_subject": "Harden release images and document verified AWS deployment options",
+  "images": {
+    "semantic-phase4e:app": {
+      "id": "sha256:158af536e897002fb9e851a89f148599df2351f2f6c83efb63e59908a60d94ea",
+      "size_bytes": 2339656320,
+      "rootfs_layers": 17
+    },
+    "semantic-phase4e:egress": {
+      "id": "sha256:bb93111163c05b23b2a9341200ed3e3496452408b574205cee695be129016b8a",
+      "size_bytes": 188257058,
+      "rootfs_layers": 8
+    },
+    "semantic-phase4e:test": {
+      "id": "sha256:d8d1937b7943cda2e89b1fd8a6db7cae69ada3f963c1faaa73a858a4778c73f1",
+      "size_bytes": 2364738773,
+      "rootfs_layers": 18
+    },
+    "semantic-phase4e:caddy": {
+      "id": "sha256:76161de9b3982126e8a7fd3866050ff3d61b5a7ca42139456f0e9c91a82ebb2b",
+      "size_bytes": 178443904,
+      "rootfs_layers": 11
+    },
+    "semantic-phase4e:caddy-final": {
+      "id": "sha256:ef21b4b3fa2a13ec33d8692c2caea6144cbd06de0281295445851c3c53e6e2a1",
+      "size_bytes": 96006027,
+      "rootfs_layers": 8
+    },
+    "semantic-phase4e:context-before": {
+      "id": "sha256:b27d54c2f37608fa154ccc6f90c4464a2e8ec407ac2f8f721db191e0010a00e8",
+      "size_bytes": 87652,
+      "rootfs_layers": 1
+    },
+    "semantic-phase4e:context-after": {
+      "id": "sha256:fdeaff35a5033abae57ce8874b23965e8de06b314467f3ce91b090137db44ed4",
+      "size_bytes": 34198,
+      "rootfs_layers": 1
+    }
+  },
+  "caddy_executable_sha256": "587738492764da66f0eb5e60a0cfc80c4e449391d01687bc467de601d807b3ad",
+  "caddy_version": "v2.11.7-phase4e",
+  "build_versions": {
+    "Go": "1.26.10",
+    "x/net": "0.62.0",
+    "go-jose/v4": "4.1.6",
+    "go-jose/v3": "3.0.5 (unfixed)"
+  },
+  "scan": {
+    "caddy-release": {
+      "rules": 6,
+      "packages": 4,
+      "severity": {
+        "UNSPECIFIED": 1,
+        "MEDIUM": 4,
+        "HIGH": 1
+      },
+      "sha256": "5115a33605ecabb1e55197183672163fa286f4d31d6a972574aae68881a72b2a",
+      "remaining": [
+        {
+          "id": "GO-2026-5932",
+          "severity": "UNSPECIFIED",
+          "packages": [
+            "pkg:golang/golang.org/x/crypto@0.58.0"
+          ],
+          "fix": "not fixed"
+        },
+        {
+          "id": "CVE-2026-114437",
+          "severity": "MEDIUM",
+          "packages": [
+            "pkg:golang/github.com/go-chi/chi/v5@5.3.2"
+          ],
+          "fix": "5.4.0"
+        },
+        {
+          "id": "CVE-2025-60876",
+          "severity": "MEDIUM",
+          "packages": [
+            "pkg:apk/alpine/busybox@1.37.0-r30?os_name=alpine&os_version=3.23"
+          ],
+          "fix": "not fixed"
+        },
+        {
+          "id": "CVE-2026-116585",
+          "severity": "MEDIUM",
+          "packages": [
+            "pkg:golang/github.com/go-jose/go-jose/v3@3.0.5"
+          ],
+          "fix": "not fixed"
+        },
+        {
+          "id": "CVE-2026-116586",
+          "severity": "MEDIUM",
+          "packages": [
+            "pkg:golang/github.com/go-jose/go-jose/v3@3.0.5"
+          ],
+          "fix": "not fixed"
+        },
+        {
+          "id": "CVE-2026-116587",
+          "severity": "HIGH",
+          "packages": [
+            "pkg:golang/github.com/go-jose/go-jose/v3@3.0.5"
+          ],
+          "fix": "not fixed"
+        }
+      ]
+    },
+    "egress": {
+      "rules": 40,
+      "packages": 14,
+      "severity": {
+        "LOW": 28,
+        "MEDIUM": 7,
+        "HIGH": 5
+      },
+      "sha256": "f465c16c07cc66a678627ad5cb43cf81fe3e5d3a3cec01e29fb64e801387501d",
+      "remaining": []
+    }
+  },
+  "app_fresh_scan": {
+    "status": "failed",
+    "reason": "Windows disk space insufficient during Scout extraction; not reported passed. Python/base/OS inventory unchanged from4D.",
+    "log_sha256": "014577b4364b5b86cd70a826fac8acabcc63f6cad97533889caf504f91e4735a"
+  },
+  "full_cold_final_build": "Complete final multistage Dockerfile build passed with cached validated builder steps. No cache-free cold replay. Runtime-tested binary and base/package layers match the complete-source image.",
+  "tests": {
+    "regression_run": {
+      "passed": 172,
+      "seconds": 15.27,
+      "skipped": 0
+    },
+    "final_focused_run": {
+      "passed": 9,
+      "seconds": 0.24,
+      "overlap_with_regression": 6,
+      "skipped": 0
+    },
+    "distinct_passed": 175,
+    "full_historical_suite": "Not rerun",
+    "actual_runtime_checks": 9,
+    "http_requests": 76
+  },
+  "runtime_checks": {
+    "namespace_configuration": {
+      "app": {
+        "image": "sha256:158af536e897002fb9e851a89f148599df2351f2f6c83efb63e59908a60d94ea",
+        "memory": 4294967296,
+        "memory_swap": 4294967296,
+        "nano_cpus": 2000000000,
+        "pids": 128,
+        "cap_add": null,
+        "cap_drop": [
+          "ALL"
+        ],
+        "network_mode": "container:54ef1b1126685c80f25f356d1d9692e35f3b9be0328679c85ac3aeecf8df70db",
+        "read_only": true
+      },
+      "egress": {
+        "image": "sha256:bb93111163c05b23b2a9341200ed3e3496452408b574205cee695be129016b8a",
+        "memory": 100663296,
+        "memory_swap": 100663296,
+        "nano_cpus": 500000000,
+        "pids": 32,
+        "cap_add": [
+          "CAP_NET_ADMIN"
+        ],
+        "cap_drop": [
+          "ALL"
+        ],
+        "network_mode": "semantic-phase4d-8fb964b2_demo",
+        "read_only": true
+      },
+      "proxy": {
+        "image": "sha256:ef21b4b3fa2a13ec33d8692c2caea6144cbd06de0281295445851c3c53e6e2a1",
+        "memory": 268435456,
+        "memory_swap": 268435456,
+        "nano_cpus": 500000000,
+        "pids": 128,
+        "cap_add": [
+          "CAP_NET_BIND_SERVICE"
+        ],
+        "cap_drop": [
+          "ALL"
+        ],
+        "network_mode": "container:54ef1b1126685c80f25f356d1d9692e35f3b9be0328679c85ac3aeecf8df70db",
+        "read_only": false
+      },
+      "fixture_ips": {
+        "semantic-phase4d-8fb964b2_demo": "172.30.42.4",
+        "semantic-phase4d-8fb964b2_simulated_metadata": "169.254.169.254",
+        "semantic-phase4d-8fb964b2_simulated_public": "11.203.24.3"
+      },
+      "ports": {
+        "80/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "8080"
+          }
+        ],
+        "8443/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "8443"
+          }
+        ]
+      }
+    },
+    "actual_kernel_allow_and_deny": {
+      "unprotected_control": {
+        "public_http": true,
+        "public_https": true,
+        "public_v6_http": true,
+        "public_v6_https": true,
+        "private_http": true,
+        "private_v6_http": true,
+        "metadata_http": true,
+        "public_ssh": true,
+        "public_alternative_port": true,
+        "alternate_dns": true,
+        "loopback_127.0.0.1": true,
+        "loopback_::1": true,
+        "dns_addresses": [
+          "11.203.24.3",
+          "2001:4860:ffff:4d::3"
+        ],
+        "docker_dns_udp": true,
+        "docker_dns_tcp": true,
+        "alternate_udp_dns": true
+      },
+      "protected_app_uid10001": {
+        "public_http": true,
+        "public_https": true,
+        "public_v6_http": true,
+        "public_v6_https": true,
+        "private_http": false,
+        "private_v6_http": false,
+        "metadata_http": false,
+        "public_ssh": false,
+        "public_alternative_port": false,
+        "alternate_dns": false,
+        "loopback_127.0.0.1": false,
+        "loopback_::1": false,
+        "dns_addresses": [
+          "11.203.24.3",
+          "2001:4860:ffff:4d::3"
+        ],
+        "docker_dns_udp": true,
+        "docker_dns_tcp": true,
+        "alternate_udp_dns": false
+      },
+      "protected_root_proxy_namespace": {
+        "public_http": true,
+        "public_https": true,
+        "public_v6_http": true,
+        "public_v6_https": true,
+        "private_http": false,
+        "private_v6_http": false,
+        "metadata_http": false,
+        "public_ssh": false,
+        "public_alternative_port": false,
+        "alternate_dns": false,
+        "loopback_127.0.0.1": false,
+        "loopback_::1": false,
+        "dns_addresses": [
+          "11.203.24.3",
+          "2001:4860:ffff:4d::3"
+        ],
+        "docker_dns_udp": true,
+        "docker_dns_tcp": true,
+        "alternate_udp_dns": false
+      }
+    },
+    "unprivileged_app_cannot_forge_status": {
+      "status": [
+        "Uid:\t10001\t10001\t10001\t10001",
+        "CapEff:\t0000000000000000",
+        "NoNewPrivs:\t1"
+      ],
+      "writable": false
+    },
+    "tls_pinned_fetch_discovery_extraction_isolation": {
+      "separate_sessions": 2,
+      "cross_run_status": 404,
+      "discovered": 2,
+      "extracted": 2,
+      "processed": [
+        1,
+        2
+      ],
+      "requests_used": 4,
+      "saved_collections_unchanged": true,
+      "verified_fixture_tls": true,
+      "model_loaded": false,
+      "admission_import_not_run": "No model loading requested; atomic admission covered by targeted regressions."
+    },
+    "production_http_source_and_secret_exposure": {
+      "requests": 76,
+      "private_values_returned": 0,
+      "raw_paths_not_normalized_by_client": true,
+      "all_public_assets_accessible": true,
+      "intentional_endpoints": "Authenticated article/CSV exports and saved-demo evaluation remain application features, not debug/file-serving routes."
+    },
+    "app_restart_under_existing_policy": {
+      "sessions_and_collections_preserved": 2,
+      "model_loaded": false,
+      "rate_counter_persistence": "Not durable; process restart resets existing in-memory counters."
+    },
+    "paused_owner_freshness_interlock": {
+      "stale_seconds": 7,
+      "fetch_status": 503,
+      "kernel_metadata_still_denied": true
+    },
+    "rule_drift_fails_closed": {
+      "operator_injected_drift": "quarantined",
+      "all_test_connections_denied": {
+        "11.203.24.3": false,
+        "172.30.42.4": false,
+        "169.254.169.254": false
+      }
+    },
+    "missing_firewall_capability_fails_closed": {
+      "without_net_admin": "not_ready",
+      "status_ready": false
+    }
+  },
+  "layers": {
+    "app": {
+      "image": "semantic-phase4e:app",
+      "id": "sha256:158af536e897002fb9e851a89f148599df2351f2f6c83efb63e59908a60d94ea",
+      "layer_count": 17,
+      "files": 40422,
+      "canary_files": [],
+      "sensitive_first_party_paths": [],
+      "nonempty_secret_defaults": 0,
+      "rootfs_diff_ids": [
+        "sha256:a5d6d345f6afa08d7c31272055746d60a838b290bfcc82c0a23e8e984d61a933",
+        "sha256:fab99bd4639aec48a77ec4d2e3564c0907e0e1e962bbf773219a0b503a168955",
+        "sha256:bca572b9549074f7cbc5f2d9d29f589038ff21c5f68cef2965167a33f177a9c0",
+        "sha256:cae4cb2b5e819765b847e67faa443b377607452f2ec949d142cad15d9d7ea0b3",
+        "sha256:73acc66174bc61c7e6bc7933e5e628f40926830d752778d6ae956caf1893ae48",
+        "sha256:0355449b9505ba0b78264e5394b0ebc448a1ca3943f5329d70b3ac91b412c6f7",
+        "sha256:1c2728f7a7c1763c9767b8734248b0d688ce8963ad4a758f594ff4cab68ca463",
+        "sha256:54524ce2a11102b6ce50f77e1b759a9f09ecff19108fbfe4be1bcf3bc6d51834",
+        "sha256:8c016732c47e4d0d17c2ab8206a4e9fd039f7adf7940a2f267248fff9e7f6094",
+        "sha256:20137c8af7f3ad1c096f39478033eaf697d7610e9ebb43f14d99200316301d1f",
+        "sha256:75972e9ef0e0fdebf07e30b18e7bc1919caef307927c2e8bd22274267d8be518",
+        "sha256:aa9738b9b3468055bc74f5939b04a3311f73178673b53115c43507f321960067",
+        "sha256:8dca70d8cff4a09a4a6e6436fdacb533f80b9b1361ddd13af125370fc0a12d0e",
+        "sha256:0a230ccc0933534d562eab1f39961d73c1a09f5123b0246874825b043c4029b9",
+        "sha256:905e20e08205b55b950be95117995568f5ac6f0a8f32679e7abb86915a7cc2c3",
+        "sha256:3ac877af664b8425345900704d27f833da1fe91aa3354e4dace8928a277f49f1",
+        "sha256:340b4b8dffe480e183180e41cc3e7da203f37430f4160d8dd343fbb0e7c39a82"
+      ],
+      "limitations": "Named canary/path/default-environment checks; does not prove arbitrary unknown strings are not credentials. Backend source and model remain readable to image holders."
+    },
+    "proxy": {
+      "image": "semantic-phase4e:caddy-final",
+      "id": "sha256:ef21b4b3fa2a13ec33d8692c2caea6144cbd06de0281295445851c3c53e6e2a1",
+      "layer_count": 8,
+      "files": 575,
+      "canary_files": [],
+      "sensitive_first_party_paths": [],
+      "nonempty_secret_defaults": 0,
+      "rootfs_diff_ids": [
+        "sha256:54ea9baa1bbd7651dbda5c61569dad60fa601c73e5b784e154e8ba0f314e84fd",
+        "sha256:c01d7c1f39925bca717d15e121c483e10f08d5b020c7878b7394cf45a5813166",
+        "sha256:33c5e66a73c9c3ab03d056f9d2415f4d35e5fca4b5abdce16e43b2751d8716c2",
+        "sha256:67e18504009f9e7054719b05beea404d09a5b33b859a00d84dc22e3d5abc4e03",
+        "sha256:0a31afad5fef39a024c6ccab65a91471b861ec5f90a377249a5f81ddf0875c24",
+        "sha256:871497babfd295cd70d022245713a333cb57f15e8a729b65280e06319b547c6e",
+        "sha256:0af2d5693bf2bfa24774f9599f4222a72de5fe778fa82cc5a85b9d4d114872c6",
+        "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef"
+      ],
+      "limitations": "Named canary/path/default-environment checks; does not prove arbitrary unknown strings are not credentials. Backend source and model remain readable to image holders."
+    }
+  },
+  "preservation": {
+    "checked_baseline_files": 2009,
+    "expected_changes": [
+      "semantic_analyser/api.py",
+      "docs/development-journal.md",
+      "docs/PROJECT_CONTEXT.md",
+      "docs/release-readiness.md"
+    ],
+    "all_other_baseline_files_unchanged": 2005,
+    "saved_collection": {
+      "articles": 10,
+      "characters": 29303,
+      "reviews": 4
+    },
+    "web_ml_ranking_data_history_unchanged": true
+  },
+  "context_probes": {
+    "old_rules_admitted": 9,
+    "initial_private_fixtures": 10,
+    "expanded_final_private_fixtures": 13,
+    "new_rules_admitted": 0,
+    "before_sha256": "69006742b1ad8340cf6bbc5ab2a3381991f50ea9366f1013d5298d73e9f933f4",
+    "after_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "price": {
+    "currency": "USD",
+    "hours": 730,
+    "tax_domain_fx_free_tiers": "Excluded",
+    "lightsail": {
+      "base_monthly": 44,
+      "estimated_with_reserves": 50,
+      "ram_gb": 8,
+      "vcpu": 2,
+      "region": "ap-southeast-2",
+      "source": "https://aws.amazon.com/lightsail/pricing/"
+    },
+    "ec2": {
+      "verified_compute": {
+        "rateCode": "B7WDU84CV8BAGNYW.JRTCKXETXF.6YS6EN2CT7",
+        "price": "0.1056000000",
+        "Location": "Asia Pacific (Sydney)",
+        "Instance Family": "General purpose",
+        "vCPU": "2",
+        "Instance Type": "t3.large",
+        "Memory": "8 GiB",
+        "Storage": "EBS only",
+        "Network Performance": "Up to 5 Gigabit",
+        "plc:OperatingSystem": "Linux",
+        "plc:InstanceFamily": "General Purpose",
+        "Operating System": "Linux",
+        "Pre Installed S/W": "NA",
+        "License Model": "No License required"
+      },
+      "compute_monthly": 77.09,
+      "estimated_with_reserves": 95.24,
+      "reserves_not_verified_regional_quotes": {
+        "EBS_40GB": 5,
+        "IPv4": 3.65,
+        "recovery_storage": 2,
+        "monitoring_logs": 4,
+        "registry": 1,
+        "DNS": 0.5,
+        "transfer": 2
+      },
+      "source": "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/ec2/USD/current/ec2-ondemand-without-sec-sel/Asia%20Pacific%20%28Sydney%29/Linux/index.json"
+    }
+  },
+  "source_function_lines": {
+    "semantic_analyser/public_assets.py": {
+      "get_response": 12
+    },
+    "scripts/phase4e_image_audit.py": {
+      "scan_layer": 15,
+      "scan_archive": 34,
+      "audit": 49
+    },
+    "scripts/phase4e_exposure.py": {
+      "audit_routes": 23,
+      "connect": 31
+    }
+  },
+  "remaining_launch_gates": [
+    "Remaining OS/proxy advisory disposition, not suppression",
+    "Fresh full new-app inventory/index on adequately sized builder and release provenance; final Caddy Dockerfile build passed with trusted cache, no cache-free replay.",
+    "Explicit provider/budget/secrets/guest monitoring/quota/no-visitor-backup recovery decisions",
+    "Authorised intended-host egress/metadata/capability/restart acceptance; public ACME and capacity checks",
+    "No AWS provisioning/push/deployment authorised by this phase"
+  ],
+  "private_evidence": "runtime/phase4e",
+  "compiler_cache_cleanup": {
+    "id": "s5mic95q2qbwp2v23rrqav2yg",
+    "logical_size": "1.767GB",
+    "scope": "Exact milestone-owned Go compiler entry only; no global prune or unrelated-cache deletion."
+  },
+  "image_history_checks": {
+    "semantic-phase4e:app": {
+      "history_rows": 30,
+      "credential_assignments_found": 0
+    },
+    "semantic-phase4e:egress": {
+      "history_rows": 17,
+      "credential_assignments_found": 0
+    },
+    "semantic-phase4e:caddy-final": {
+      "history_rows": 12,
+      "credential_assignments_found": 0
+    }
+  },
+  "matching_first_party_image_source_files": 24,
+  "go_locks_lf": true,
+  "raw_artifact_sha256": {
+    "focused-tests.txt": "685f4c6af0d883854622b68cb7a68d9dc62517408d61628a55b94bb076229e1e",
+    "final-focused-tests.txt": "f5819501fcd4acb7045b5a20d944b713e1e37bd63978646949b05211537a2b77",
+    "pinned-container-check/verification.json": "843aab7fd601609531ebfb5b9c6a8cb8d9d3b44fe29fc3ad5d37c49a4bd41134",
+    "app-layer-audit.json": "bc10f1e001382a6502a8d33ae10224d4b0b38eac062e799f6088e95b69506bd1",
+    "caddy-release-layer-audit.json": "246cb8b4c6bf2d66ae135014e399a7987143444f622f658ad925f501d1f81be9",
+    "caddy-build-info.txt": "6d18e37a43fc78c94f4f518aa63ac2c0b65cfcc5b70ab9257c9b1a59305134f5",
+    "installed-app.txt": "d4593798d007eb77abc1ecea0d74c24d6b76e68ceced8e80a4e66ce66cc7cb09",
+    "installed-caddy-final.txt": "85f35e4d31d6ede2f4f2c954522b27693358adda6e13ae58474aaad6317faae5"
+  },
+  "cleanup": {
+    "owned_projects_cleaned": 3,
+    "owned_containers_remaining": 0,
+    "image_tags": {
+      "semantic-phase4e:app": "removed",
+      "semantic-phase4e:egress": "removed",
+      "semantic-phase4e:test": "removed",
+      "semantic-phase4e:caddy": "removed",
+      "semantic-phase4e:caddy-final": "removed",
+      "semantic-phase4e:context-before": "removed",
+      "semantic-phase4e:context-after": "removed",
+      "semantic-phase4e:caddy-complete": "removed"
+    },
+    "real_disposable_keys_env_removed": true,
+    "global_prune_used": false,
+    "unrelated_resources_preserved": true,
+    "compiler_cache_removed_by_exact_id": "s5mic95q2qbwp2v23rrqav2yg",
+    "host_free_bytes_observed": 7117639680
+  },
+  "current_advisory_assessment_reused_app_inventory": {
+    "status": "passed",
+    "rules": 39,
+    "severity": {
+      "LOW": 27,
+      "MEDIUM": 7,
+      "HIGH": 5
+    },
+    "source_image": "00984219674cbc8c8c0d15893826dd908cf8d10eaf0fb12d439bf9b6ff6038ee",
+    "source_sbom_sha256": "a287d40cc6962cfe51447e8a886fb03a49496b43746501491b90d8df1b1d38e5",
+    "report_sha256": "23abc915fc4cf874d07e3456ea84ca5cf9ba0db17ba350735a6fad4fcce941d4",
+    "qualification": "Current advisory feed against reused Phase4D component inventory; base and50 Python versions unchanged. Does not represent a fresh extraction/index of the new image.",
+    "unchanged_leading_filesystem_layers": 11
+  },
+  "complete_final_dockerfile_build": {
+    "status": "passed",
+    "image_id": "sha256:8c84cc9915abd83d689ecb40122c95870add0df58d3e22d9e96262ffd07acb27",
+    "size_bytes": 96006027,
+    "rootfs_layers": 8,
+    "identical_leading_base_package_layers_to_runtime_test": 8,
+    "tested_binary_sha256": "587738492764da66f0eb5e60a0cfc80c4e449391d01687bc467de601d807b3ad",
+    "cache_used": true,
+    "cache_free_cold_build": "Not attempted; trusted cached builder result reused.",
+    "log_sha256": "06402e7adb4bbea705f0236c09df6c9a71fc62592c51e6ec3ab9ae0ec71e8017",
+    "identical_runtime_filesystem_layers": true,
+    "identical_runtime_configuration": true,
+    "advisory_rules": 6,
+    "scan_sha256": "5115a33605ecabb1e55197183672163fa286f4d31d6a972574aae68881a72b2a"
+  }
+}

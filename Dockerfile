@@ -17,10 +17,10 @@ RUN python -c "import os; from sentence_transformers import SentenceTransformer;
 RUN python -m pip uninstall -y pip && rm -rf /usr/local/lib/python3.12/ensurepip
 
 COPY semantic_analyser ./semantic_analyser
-COPY web ./web
+COPY web/index.html web/app.js web/styles.css web/favicon.svg ./web/
+COPY web/fonts/InstrumentSans.ttf web/fonts/OFL.txt ./web/fonts/
 COPY data/synthetic_articles.csv data/evaluation_queries.csv ./data/
 COPY docs/evaluation-rankings.csv ./docs/
-COPY deploy/aws ./deploy/aws
 RUN useradd --uid 10001 --create-home appuser \
     && mkdir -p /app/runtime \
     && chown -R appuser:appuser /app/runtime /opt/huggingface
