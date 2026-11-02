@@ -1,5 +1,57 @@
 # Phase 4E: image security and source exposure
 
+## High-advisory applicability assessment — 2 November 2026
+
+Read-only assessment of baseline `ba6ed34`; only this report updated. Existing
+`semantic-phase4e-scan:app` inspected without rebuilding or rescanning. Two disposable
+containers used `--rm --network none --read-only --cap-drop ALL --security-opt
+no-new-privileges`; no host/volume mounts, app startup, model imports or saved database
+access. `dpkg-query` verified the binary versions below. A Python probe used only
+`:memory:` SQLite, `PRAGMA compile_options`, library symbol inspection and version
+attributes. No exploit payload or broad tests were run.
+
+**Library capabilities actually present:** SQLite 3.46.1 reports `ENABLE_FTS5`,
+`ENABLE_SESSION` and `SECURE_DELETE`; `sqlite3changeset_apply` is exported. Python's
+connection object exposes no session/changeset methods. The compile-time
+`SECURE_DELETE` default is not evidence that an FTS5 table or its separate secure-delete
+configuration exists in the application. zlib compile/runtime versions both report
+1.3.1. Presence of vulnerable-capable native code is distinct from an application
+path invoking it.
+
+| CVE / exact installed binary | Affected functionality and application reachability | Current vendor guidance / upstream fix | Residual risk and pre-public-deployment disposition |
+| --- | --- | --- | --- |
+| **CVE-2026-119373**; `libsqlite3-0:amd64 3.46.1-7+deb13u2` (source `sqlite3` same version) | FTS5 prefix-list merging with `detail=none` and negative docids. FTS5 is compiled in, but `Store.__init__` creates ordinary tables only; no FTS5/MATCH SQL or caller-supplied SQL found. Article IDs/text are bound values, not executable SQL. No identified visitor trigger. | [Debian](https://security-tracker.debian.org/tracker/CVE-2026-119373) marks trixie vulnerable and lists no fixed Debian package. Tracker identifies upstream 3.54.0 / [e1c9934](https://github.com/sqlite/sqlite/commit/e1c9934f9f11a499029abb020ea715a08970da80), whose diff fixes negative-docid buffer sizing. | Vulnerable-capable library remains. New FTS5/search SQL or SQL injection would invalidate this assessment. **No immediate application patch justified by current reachability**; before launch, record explicit residual-risk acceptance or adopt a verified fixed stable package when available. Finding remains open. |
+| **CVE-2026-119374**; `libsqlite3-0:amd64 3.46.1-7+deb13u2` | FTS5 secure-delete handling of a deliberately corrupted index. FTS5 exists, but the app creates no FTS5 tables and accepts CSV/validated article objects, not native database files. Ordinary `DELETE FROM articles/reviews` does not alone invoke this FTS5 path. No identified visitor trigger. | [Debian](https://security-tracker.debian.org/tracker/CVE-2026-119374): trixie vulnerable, no fixed Debian version. Upstream fix identified as 3.54.0 / [d9de6ee](https://github.com/sqlite/sqlite/commit/d9de6eedbe918c074c7556400fa21df5960704d9), fixing corrupted-index secure-delete handling. | App reopens persisted workspace databases on restart; host/volume integrity and trusted recovery inputs matter. A malicious database already written by an operator/compromised host is outside the visitor import boundary. **No immediate code patch justified**; document risk acceptance before launch, preserve filesystem ownership and prohibit untrusted DB restores; patch when a suitable vendor fix is available. |
+| **CVE-2026-119379**; `libsqlite3-0:amd64 3.46.1-7+deb13u2` | Session extension `sqlite3changeset_apply()` processing malformed changesets. Native extension/symbol exists, but Python connection has no changeset API and first-party code neither calls native session functions nor accepts/applies changeset blobs. No identified visitor trigger. | [Debian](https://security-tracker.debian.org/tracker/CVE-2026-119379): trixie vulnerable, no fixed Debian version. Upstream 3.54.0 / [64459c8](https://github.com/sqlite/sqlite/commit/64459c87cc702d600704fb77ee40ca1782398a52) repairs corrupted-changeset processing. | Native capability could become reachable through future bindings/extensions/sync features. **No immediate code patch justified**; documented residual-risk decision required before launch and reassessment before adding changeset processing. Retain finding and track stable fixes. |
+| **CVE-2026-85091**; `zlib1g:amd64 1:1.3.dfsg+really1.3.1-1+b1` (source `zlib 1:1.3.dfsg+really1.3.1-1`, upstream runtime 1.3.1) | Nonblocking gzip write stall followed by `gzprintf/gzvprintf` can misuse buffered input in `gzwrite.c`. Our untrusted website-response path calls `zlib.decompressobj/decompress` with encoded/decoded limits; it does not call gzip file-writing/printf APIs. Those native APIs are not made absent by this usage restriction. No matching first-party writer path found. | [Debian](https://security-tracker.debian.org/tracker/CVE-2026-85091) still marks trixie vulnerable; sid `1:1.3.dfsg+really1.3.2-4` is fixed. It also records introduction at upstream 1.3.1.2, later than installed 1.3.1, and links the [range discussion](https://github.com/madler/zlib/issues/1310). [df84af2](https://github.com/madler/zlib/commit/df84af25dc1942490e1d1c899a07619152a46148) resets input pointers on write failure. No confirmed trixie fixed version. | Installed-range/vendor classification remains disputed, not vendor-cleared. Untrusted decompression remains a general attack surface, but is a different path from this advisory. **No immediate replacement justified for this CVE**; explicitly retain/accept the disputed residual risk before launch, monitor Debian resolution and update to a compatible fixed stable package when available. Do not mix sid packages merely to clear the report. |
+
+Evidence references in the unchanged application:
+
+- `semantic_analyser/storage.py:31` (`parse_csv`), `:63` (`Store`), `:68`
+  (literal schema), `:85` (`connect`), `:108` (`replace`), `:119` (`save_article`),
+  `:136` (`review`): ordinary tables and parameterized visitor values. The only
+  interpolated storage PRAGMA derives from integer page/byte limits, not visitor SQL.
+- `semantic_analyser/api.py:306` (`import_articles`) and `:438` (`website_import`)
+  route CSV/validated extracted articles through collection admission; neither
+  imports SQLite files or changesets. `semantic_analyser/workspaces.py:124` reopens
+  existing server-owned workspace files; no blanket claim that corrupted local
+  database files could never exist is made.
+- `semantic_analyser/fetch_transport.py:237` constructs a decompressor and `:259`
+  bounds each decoded chunk; no `gzprintf`, `gzwrite`, native changeset bindings,
+  `CREATE VIRTUAL TABLE`, FTS5 `MATCH` or extension-loading calls were found under
+  `semantic_analyser/`. This is scoped source inspection, not exhaustive native
+  dependency call-graph proof or an exploitability certification.
+
+Debian pages and upstream GitHub patch diffs were checked on the assessment date.
+Direct sqlite.org Fossil pages were unavailable through the research tool; their
+official GitHub mirror diffs and Debian-linked fix identities were used instead.
+Debian's four records remain vulnerable for installed trixie packages. None of these
+assessments suppresses or changes the recorded four High findings. The recommendation
+is conditional risk acceptance for the current limited demo, not public-launch
+approval: native-library patching is preferable once a compatible fixed package is
+available; functionality changes require renewed assessment. No formal acceptance
+is recorded by this review, and other release gates/proxy findings remain unchanged.
+
 ## Fresh application index follow-up — 2 November 2026
 
 The disk-blocked application scan is now complete. Docker Scout v1.27.0 indexed
