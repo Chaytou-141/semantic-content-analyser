@@ -54,7 +54,7 @@ async function api(path, data, method = "POST", expectedRevision = state.revisio
   let response;
   try { response = await fetch(path, options); }
   catch { throw new Error("The service could not be reached. Check your connection and refresh the collection before retrying."); }
-  if (response.ok && path === "/api/reports/pdf") return response.blob();
+  if (response.ok && /^\/api\/reports\/(search|links|overlaps)\/pdf$/u.test(path)) return response.blob();
   let payload;
   try { payload = await response.json(); } catch { throw new Error("The service returned an unreadable result. Refresh the collection to check its state before retrying."); }
   if (!response.ok) {
@@ -91,7 +91,12 @@ async function task(message, action) {
   $("#app-error").hidden = true;
   document.querySelectorAll(".dialog-error").forEach((error) => error.remove());
   $("#busy-message").textContent = message;
-  $("#busy").hidden = false;
+  const websiteTask = $("#website-dialog").open;
+  $("#busy").hidden = websiteTask;
+  if (websiteTask) {
+    $("#website-operation").hidden = false;
+    $("#website-operation-text").textContent = message;
+  }
   const submitButtons = [...document.querySelectorAll("button[type=submit]")].map((button) => ({ button, disabled: button.disabled }));
   submitButtons.forEach(({ button }) => { button.disabled = true; });
   try { await action(); }
@@ -102,7 +107,10 @@ async function task(message, action) {
     if (dialog) {
       if (dialog.id === "website-dialog" && websiteRun && ["discovering", "extracting"].includes(websiteRun.phase)) {
         renderExtractionProgress(websiteRun, true);
-        $("#website-progress").textContent = "Request stopped. Counts below reflect the last confirmed response.";
+      }
+      if (dialog.id === "website-dialog") {
+        $("#website-progress").textContent = "Request failed. Last confirmed counts are retained; server work may still be finishing. Retry cancellation or start a new run when ready.";
+        dialog.querySelectorAll(".website-loading").forEach((node) => node.remove());
       }
       const inlineError = el("p", { class: "dialog-error", role: "alert", tabindex: "-1", text: error.message });
       (dialog.querySelector(".website-content-panel") || dialog.querySelector("form") || dialog).append(inlineError);
@@ -113,6 +121,9 @@ async function task(message, action) {
     state.busy = false;
     $("#workspace").setAttribute("aria-busy", "false");
     $("#busy").hidden = true;
+    $("#website-operation").hidden = true;
+    $("#website-stop").disabled = false;
+    $("#website-stop").textContent = "Cancel website run";
     submitButtons.forEach(({ button, disabled }) => { button.disabled = disabled; });
     if (state.pendingEvaluation) {
       state.pendingEvaluation = false;
@@ -261,6 +272,9 @@ function metadata(result) {
 function methodName(method) { return method === "embeddings" ? "MiniLM" : "TF-IDF"; }
 
 function renderSearch(payload) {
+  const exportButton = $('[data-export-pdf="search"]');
+  exportButton.disabled = false;
+  exportButton.title = "Export the completed results shown here, using their original settings";
   state.hasSearched = true;
   const container = $("#search-results");
   const methods = Object.entries(payload.results);
@@ -285,6 +299,9 @@ function safeTarget(url) {
 }
 
 function renderLinks(payload) {
+  const exportButton = $('[data-export-pdf="links"]');
+  exportButton.disabled = false;
+  exportButton.title = "Export the completed results shown here, using their original settings";
   state.lastLinks = payload;
   const container = $("#links-results");
   container.className = "";
@@ -411,6 +428,9 @@ function linkExcerpt(text) {
 }
 
 function renderOverlaps(payload) {
+  const exportButton = $('[data-export-pdf="overlaps"]');
+  exportButton.disabled = false;
+  exportButton.title = "Export the completed results shown here, using their original settings";
   const container = $("#overlap-results");
   container.className = "";
   if (!payload.pairs.length) { empty(container, "No pairs above this threshold.", "Try a lower threshold. A lack of high similarity is not proof that topics never overlap."); return; }
@@ -463,6 +483,7 @@ function openArticle(id) {
 }
 
 function invalidateResults() {
+  document.querySelectorAll("[data-export-pdf]").forEach((button) => { button.disabled = true; button.title = "Run this analysis first"; });
   state.lastLinks = null;
   state.linkView = null;
   state.hasSearched = false;
@@ -580,6 +601,17 @@ let websiteRun = null;
 let websiteCancelled = false;
 let websiteLastExtractionCount = null;
 
+function discoveryLoading(count = null) {
+  if (count === null) $("#website-source-settings").open = false;
+  $("#website-operation").hidden = true;
+  $("#website-results").replaceChildren(el("div", { class: "website-loading", role: "status", "aria-live": "polite" },
+    el("span", { class: "spinner", "aria-hidden": "true" }),
+    el("h3", { text: "Discovering website articles" }),
+    el("p", { text: "Checking public article feeds and sitemaps. Your saved collection stays unchanged." }),
+    el("strong", { text: count === null ? "Waiting for the first discovery response..." : `${count} articles found so far` })));
+}
+
+
 function renderExtractionProgress(run, interrupted = false) {
   const total = run.selected.length;
   // Cancellation deliberately discards the server's extracted previews. Retain only
@@ -593,10 +625,15 @@ function renderExtractionProgress(run, interrupted = false) {
   $("#extraction-progress").dataset.state = stopped ? "stopped" : ["ready", "imported"].includes(run.phase) ? "complete" : "active";
   $("#extraction-meter").max = total || 1;
   $("#extraction-meter").value = processed;
-  const prefix = run.phase === "cancelled" ? "Cancelled. Preview discarded. Last confirmed: " : stopped ? "Stopped. Last confirmed: " : "";
+  const prefix = run.phase === "cancelled" ? "Cancelled. Preview discarded. Last confirmed: " : stopped ? "Interrupted. Last confirmed: " : "";
   const label = `${prefix}${processed} of ${total} selected articles processed. This includes excluded or failed articles; it does not mean they were imported.`;
   $("#extraction-count").textContent = label;
   $("#extraction-meter").setAttribute("aria-valuetext", label);
+  const excluded = run.failures.filter((failure) => failure.kind === "capacity").length;
+  const failed = run.failures.length - excluded;
+  $("#extraction-outcomes").textContent = ["ready", "imported"].includes(run.phase)
+    ? `${run.articles.length} ${run.phase === "imported" ? "imported" : "ready for review (not imported)"}; ${excluded} excluded by capacity; ${failed} failed.`
+    : `${excluded} excluded by capacity; ${failed} failed. Accepted article count is finalised after extraction.`;
 }
 
 function renderWebsite(run) {
@@ -609,8 +646,9 @@ function renderWebsite(run) {
   const labels = { discovering: "Finding public articles", selecting: "Choose your articles", extracting: "Extracting article text", ready: "Review your collection", imported: "Collection imported", cancelled: "Import cancelled", failed: "This run could not finish" };
   $("#website-progress").textContent = `${labels[run.phase] || run.phase} · ${run.candidates.length} found${run.phase === "extracting" ? ` · ${run.processed} of ${run.selected.length} processed` : ""}`;
   renderExtractionProgress(run);
+  $("#website-operation").hidden = true;
   const settings = $("#website-source-settings");
-  if (settings.dataset.phase !== run.phase) { settings.open = run.phase === "discovering"; settings.dataset.phase = run.phase; }
+  if (settings.dataset.phase !== run.phase) { settings.open = false; settings.dataset.phase = run.phase; }
   $("#collection-capacity").hidden = !["extracting", "ready", "imported"].includes(run.phase);
   $("#capacity-meter").max = LIMITS.characters;
   $("#capacity-meter").value = run.characters;
@@ -624,6 +662,7 @@ function renderWebsite(run) {
   $("#website-action-note").textContent = run.phase === "ready" ? "Import replaces your collection and clears its editorial reviews." : run.phase === "imported" ? "Import complete. Start another discovery to build a new collection." : "Your saved collection is unchanged until you confirm.";
   const results = $("#website-results");
   results.replaceChildren();
+  if (run.phase === "discovering") discoveryLoading(run.candidates.length);
   for (const warning of run.warnings) results.append(el("p", { class: "notice", text: warning }));
   $("#website-extract").hidden = run.phase !== "selecting" || !run.candidates.length;
   $("#website-commit").hidden = run.phase !== "ready" || !run.articles.length;
@@ -700,6 +739,14 @@ $("#website-form").addEventListener("submit", (event) => {
   event.preventDefault();
   task("Starting website discovery…", async () => {
     websiteCancelled = false;
+    websiteRun = null;
+    $("#extraction-progress").hidden = true;
+    $("#collection-capacity").hidden = true;
+    $("#website-commit").hidden = true;
+    $("#website-extract").hidden = true;
+    $("#website-stop").hidden = false;
+    $("#website-progress").textContent = "Starting discovery. Your saved collection is unchanged.";
+    discoveryLoading();
     renderWebsite(await api("/api/website/start", { url: $("#website-url").value, method: $("#website-method").value }));
     $("#website-form").dataset.dirty = "false";
     await advanceWebsite();
@@ -713,20 +760,31 @@ $("#website-extract").addEventListener("click", () => task("Preparing your selec
 }));
 $("#website-stop").addEventListener("click", () => {
   websiteCancelled = true;
+  $("#website-stop").disabled = true;
+  $("#website-stop").textContent = "Cancellation requested...";
+  $("#website-progress").textContent = "Cancellation requested. Waiting for the current request and server confirmation.";
   if (!state.busy) task("Cancelling website run…", advanceWebsite);
 });
-$("#website-dialog").addEventListener("close", () => { websiteCancelled = true; });
+$("#website-dialog").addEventListener("close", () => {
+  websiteCancelled = true;
+  if (state.busy && websiteRun?.phase !== "imported") {
+    $("#busy-message").textContent = "Finishing the current website request. Closing the dialog does not stop server work immediately.";
+    $("#busy").hidden = false;
+  }
+});
 $("#website-commit").addEventListener("click", async () => {
   if (state.busy || websiteRun?.phase !== "ready") return;
   const button = $("#website-commit");
   button.disabled = true;
   try {
-    await task("Validating article and model passage limits…", async () => {
+    await task("Preparing analysis: validating article and model passage limits…", async () => {
       if (!confirm("Replace the collection with these extracted articles and clear its editorial reviews? Export first if needed.")) return;
       const result = await api("/api/website/import", { run_id: websiteRun.run_id, accept_partial: Boolean($("#website-partial")?.checked) }, "POST", websiteRun.collection_revision);
       websiteRun.phase = "imported";
       renderWebsite(websiteRun); // Reopening must not offer a stale replacement action.
       $("#website-dialog").close();
+      $("#busy-message").textContent = "Loading your imported collection. Run an analysis when ready.";
+      $("#busy").hidden = false;
       await loadCollection(); invalidateResults(); importComplete(result.count, "Website");
       toast(`Imported ${result.count} website articles. You can now search, review links and compare overlap.`);
     });
@@ -745,11 +803,12 @@ document.addEventListener("keydown", (event) => {
 });
 start();
 
-$("#export-pdf").addEventListener("click", () => task("Preparing PDF report...", async () => {
-  const blob = await api("/api/reports/pdf", {});
+document.querySelectorAll("[data-export-pdf]").forEach((button) => button.addEventListener("click", () => task("Preparing PDF report...", async () => {
+  const section = button.dataset.exportPdf;
+  const blob = await api(`/api/reports/${section}/pdf`, {});
   const url = URL.createObjectURL(blob);
-  const link = el("a", { href: url, download: "website-content-analysis.pdf" });
+  const link = el("a", { href: url, download: `${section}-analysis.pdf` });
   document.body.append(link); link.click(); link.remove();
   setTimeout(() => URL.revokeObjectURL(url), 60000);
-  toast("PDF downloaded. It includes the latest completed run per section; unavailable sections are labelled.");
-}));
+  toast("PDF downloaded for this completed analysis. Truncated findings are labelled.");
+})));

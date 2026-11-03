@@ -297,18 +297,18 @@ docs/                  Learning journal, evaluation evidence and deployment guid
 The original brief remains in `Semantic_Content_Analyser_Starter_Docs/`. At the user's later request, scope expanded from guided experiments to a deployable demo application. WordPress/sitemap import is opt-in; SocialBuzz integration and automatic publishing, merging or deletion are not implemented.
 
 
-## Export an analysis PDF
+## Export a feature-specific analysis PDF
 
-In Analysis, run Search articles, Link opportunities and/or Content overlap, then choose
-**Export PDF**. It downloads the latest completed run for each section in this workspace
-without fetching websites or rerunning inference. Search results remain query-dependent;
-sections not run for the current collection are marked unavailable. Saving a link review
-before export includes its current status and note. Reports are generated in memory.
+Run Search articles, Link opportunities or Content overlap, then use **Export PDF**
+inside that feature. Only its latest completed result is exported, with the original
+method and filters. Buttons stay disabled until that feature has a completed result;
+the server also rejects unavailable or stale collection snapshots. Empty completed
+results can be exported and are clearly labelled. No combined report is generated.
 
-The report includes at most 10 returned items per method/section and 600 characters per
-passage; any truncation is labelled. Output is capped at 2 MB. Changing the collection
-invalidates old results; restarting the server clears report snapshots. This is an
-editorial evidence report, not a complete website audit or a claim of accuracy or
-confirmed duplicates. Embedded fonts cover common Latin text but not all languages.
-Existing CSV export remains available. Install the updated requirements and restart the
-server before using the new control.
+Reports include at most 10 returned candidates per method, 180-character original
+evidence excerpts, and a 2 MB output limit. Shortened text is labelled. Displayed long
+URLs may be shortened, but their clickable destinations are complete. Review status
+and notes are read from the current workspace at export time. Related results remain
+query-dependent; potential overlap is not confirmed duplication. Collection changes
+invalidate results; restarting clears process-local snapshots. Existing CSV exports
+are unchanged. Embedded fonts cover common Latin text, not every writing system.

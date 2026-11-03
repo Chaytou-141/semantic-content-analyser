@@ -1696,3 +1696,46 @@ audit); no persistence across restart, no tagged-PDF accessibility certification
 universal multilingual/CJK font coverage. Human editorial review is still required.
 Committed with this feature's source/tests/docs after targeted verification. No push,
 deployment, model evaluation, historical benchmark changes or database migrations.
+
+
+## Feature-specific PDF redesign - 3 November 2026 (output reviewed and approved)
+
+Feedback: the combined report mixed unrelated feature settings and lengthy evidence.
+Replaced the shared export control with one disabled-until-completed button per feature.
+POST /api/reports/{section}/pdf accepts only search, links or overlaps and uses one
+revision-matching server snapshot. Missing or stale analysis returns 409, even if a
+client bypasses the disabled control; the old combined route is removed. Existing
+workspace leases, authentication, revision checks, bounded execution and request
+budgets remain in force. No dependency, ranking, CSV or saved-data change.
+
+Reports use A4 branded candidate cards kept together where possible, side-by-side
+article relationships for links/overlap, exact raw cosine scores, human-readable
+filters, current saved review status and notes, and clickable original URLs. IDs,
+offsets and backend parameter dumps are removed from presentation. Evidence is an
+original prefix capped at 180 characters with shortening disclosed; whitespace is
+collapsed for display. Visible URLs cap at 130 characters while PDF link targets
+remain complete. Notes cap at 240 and displayed queries at 500, with labels. Existing
+10-items-per-method and 2 MB limits remain. Candidates are not called validated
+recommendations, and high overlap scores do not justify merging pages.
+
+Verification: 32 distinct focused tests passed (PDF, feature export browser controls, import
+loading regression and existing application tests). Tests cover feature separation,
+unavailable versus empty results, revisions, ownership/authentication, exact scores,
+URLs, reviews, escaped/long accented Latin text, card pagination, cancellation and
+output cap. Offline Chromium verifies per-feature availability/download filenames at
+1280 and 390px. A final 14-test PDF/browser run includes the additional long paired-card
+pagination case and passed. No model inference, website fetching, Docker builds, security scans,
+model evaluation or broad suite. Reused frozen Phase 3D real Freeze Edge content and
+rankings, without converting provisional historical assessments into editorial reviews.
+Representative links: five results per method, two methods, four pages / 58,752 bytes.
+Overlap: ten saved MiniLM pairs, four pages / 59,187 bytes. The overlap settings were
+verified against scripts/evaluate_phase3d.py (threshold 0, limit 10), not guessed from
+scores. Rendered every page and visually inspected the contact sheet and first link
+page; text spans stay inside margins. Inputs' hashes are unchanged. Representative
+PDFs, page images and input-hash evidence live under ignored runtime/pdf-redesign.
+
+Limits: only the latest completed run for one query/source/settings; not a sitewide
+report across every possible source. No universal font coverage, tagged-PDF or screen
+reader certification. No new image/dependency security certification is implied.
+The user reviewed and approved the redesigned PDFs. Committed locally with the
+verified import-loading frontend fixes and their offline regression tests; no push or deployment.

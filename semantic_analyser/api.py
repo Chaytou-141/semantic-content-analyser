@@ -32,6 +32,7 @@ from .websites import WebsiteService
 from .demo_limits import DemoLimits
 from .egress_status import policy_status
 import sqlite3
+from typing import Literal
 
 
 def create_app(settings=None, engine=None, fetcher=None):
@@ -348,15 +349,17 @@ def create_app(settings=None, engine=None, fetcher=None):
                                            "payload": cached}
         return payload
 
-    @app.post("/api/reports/pdf")
-    async def export_pdf(request: Request):
+    @app.post("/api/reports/{section}/pdf")
+    async def export_pdf(section: Literal["search", "links", "overlaps"], request: Request):
         from .pdf_report import build_report
         def operation(entry, control):
             revision = entry.store.revision()
-            snapshots = {k: v for k, v in entry.report_snapshots.items() if v["revision"] == revision}
-            content = build_report(entry.store.articles(), snapshots, entry.store.reviews(), control.check)
+            snapshot = entry.report_snapshots.get(section)
+            if not snapshot or snapshot["revision"] != revision:
+                raise HTTPException(409, "No completed analysis for this feature and collection. Run it first, then export.")
+            content = build_report(entry.store.articles(), section, snapshot, entry.store.reviews(), control.check)
             return Response(content, media_type="application/pdf", headers={
-                "Content-Disposition": 'attachment; filename="website-content-analysis.pdf"',
+                "Content-Disposition": f'attachment; filename="{section}-analysis.pdf"',
                 "Cache-Control": "no-store"})
         return await execute(request, operation)
 

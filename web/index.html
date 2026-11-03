@@ -8,8 +8,8 @@
   <title>Semantic Content Analyser</title>
   <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
   <link rel="preload" href="/static/fonts/InstrumentSans.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="stylesheet" href="/static/styles.css?v=link-workbench-20261101">
-  <script src="/static/app.js?v=link-workbench-20261101" defer></script>
+  <link rel="stylesheet" href="/static/styles.css?v=feature-pdf-20261103">
+  <script src="/static/app.js?v=feature-pdf-20261103" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -55,11 +55,10 @@
         <a class="nav-item active" data-view="search" href="#search"><svg aria-hidden="true" viewBox="0 0 20 20"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4 4"/></svg>Search articles</a>
         <a class="nav-item" data-view="links" href="#links"><svg aria-hidden="true" viewBox="0 0 20 20"><path d="m8 12 4-4m-5 6-1 1a3.5 3.5 0 0 1-5-5l4-4a3.5 3.5 0 0 1 5 0m0 8a3.5 3.5 0 0 0 5 0l4-4a3.5 3.5 0 0 0-5-5l-1 1" transform="translate(1 1) scale(.9)"/></svg>Link opportunities</a>
         <a class="nav-item" data-view="overlap" href="#overlap"><svg aria-hidden="true" viewBox="0 0 20 20"><rect x="2" y="3" width="10" height="13" rx="2"/><rect x="8" y="5" width="10" height="13" rx="2"/></svg>Content overlap</a>
-        <button id="export-pdf" type="button" class="button" title="Download latest completed analysis; sections not run are marked unavailable">Export PDF</button>
         <a class="text-button analyse-another" data-view="home" href="#home">Analyse another website</a>
       </nav>
       <section id="view-search" class="view" hidden>
-        <div class="page-heading"><div><h1>Search your articles</h1><p id="analysis-collection-note">Ask a question. Find the passage worth reading.</p></div><span class="keyboard-hint"><kbd>/</kbd> to focus search</span></div>
+        <div class="page-heading feature-report-heading"><div><h1>Search your articles</h1><p id="analysis-collection-note">Ask a question. Find the passage worth reading.</p></div><span class="keyboard-hint"><kbd>/</kbd> to focus search</span><button data-export-pdf="search" type="button" class="button" disabled title="Run this analysis first">Export PDF</button></div>
         <div class="search-layout">
           <div class="search-main">
             <form id="search-form" class="search-panel">
@@ -74,13 +73,13 @@
         </div>
       </section>
       <section id="view-links" class="view" hidden>
-        <div class="page-heading"><div><h1>Link opportunities</h1><p>Choose a source. Decide whether a destination helps its reader.</p></div><span class="view-note">Editorial review</span></div>
+        <div class="page-heading feature-report-heading"><div><h1>Link opportunities</h1><p>Choose a source. Decide whether a destination helps its reader.</p></div><span class="view-note">Editorial review</span><button data-export-pdf="links" type="button" class="button" disabled title="Run this analysis first">Export PDF</button></div>
         <form id="links-form" class="control-panel"><label class="grow">Source article<select id="links-source" name="source_id" required></select></label><label>Match by<select id="links-method" name="method"><option value="embeddings">Meaning · embeddings</option><option value="tfidf">Words · TF-IDF</option><option value="compare">Compare both</option></select></label><label>Show<select id="links-k" name="top_k"><option value="3">3 candidates</option><option value="5" selected>5 candidates</option><option value="10">10 candidates</option></select></label><button class="button primary" type="submit">Find opportunities</button></form>
         <p class="context-note">Self-links, existing links and ineligible destinations are excluded. A shared passage suggests a possible next reading destination; check the article's intent before deciding. Nothing is inserted automatically.</p>
         <div id="links-results" class="empty-state"><span class="empty-symbol" aria-hidden="true">↗</span><h2>Follow the reader’s next question.</h2><p>Select an article to compare its passages with potential destinations. Review the text on both sides before saving a decision.</p></div>
       </section>
       <section id="view-overlap" class="view" hidden>
-        <div class="page-heading"><div><h1>Content overlap</h1><p>Related subject matter can still serve different reader needs.</p></div><span class="view-note">Compare passages</span></div>
+        <div class="page-heading feature-report-heading"><div><h1>Content overlap</h1><p>Related subject matter can still serve different reader needs.</p></div><span class="view-note">Compare passages</span><button data-export-pdf="overlaps" type="button" class="button" disabled title="Run this analysis first">Export PDF</button></div>
         <form id="overlap-form" class="control-panel"><label>Match by<select id="overlap-method" name="method"><option value="embeddings">Meaning · embeddings</option><option value="tfidf">Words · TF-IDF</option></select></label><label>Minimum similarity<input id="overlap-threshold" name="threshold" type="number" min="0" max="1" step="0.05" value="0.65"></label><label>Maximum pairs<select id="overlap-limit" name="limit"><option>10</option><option selected>20</option><option>50</option></select></label><button class="button primary" type="submit">Review overlap</button></form>
         <div class="notice">The threshold filters passage pairs by cosine similarity. High similarity does not establish duplicate content or keyword cannibalisation. Check purpose and unique information before any editorial action.</div><div id="overlap-results" class="empty-state"><span class="empty-symbol" aria-hidden="true">≋</span><h2>Find the shared ground.</h2><p>Compare passages, then inspect what each article contributes. The threshold controls which pairs appear.</p></div>
       </section>
@@ -118,8 +117,9 @@
     </form>
     <div class="website-retention"><strong>Your collection stays intact.</strong><p>Discovery and preview do not change your articles or reviews. You confirm the replacement at the end.</p></div>
     </details></aside><div class="website-content-panel"><div class="website-status-area">
+    <div id="website-operation" class="website-operation" role="status" aria-live="polite" hidden><span class="spinner" aria-hidden="true"></span><span id="website-operation-text"></span></div>
     <p id="website-progress" role="status" aria-live="polite">Add a website to find its articles.</p>
-    <div id="extraction-progress" hidden><label for="extraction-meter">Selected articles processed</label><progress id="extraction-meter" max="40" value="0"></progress><p id="extraction-count" class="context-note"></p></div>
+    <div id="extraction-progress" hidden><label for="extraction-meter">Selected articles processed</label><progress id="extraction-meter" max="40" value="0"></progress><p id="extraction-count" class="context-note"></p><p id="extraction-outcomes" class="context-note" role="status" aria-live="polite"></p></div>
     </div>
     <div id="collection-capacity" hidden><label id="capacity-label" for="capacity-meter">Collection capacity</label><progress id="capacity-meter" max="250000" value="0"></progress><p class="context-note">This application budget protects memory and processing time. Excluded articles are not imported; select a smaller set in a new run if needed. Final validation also checks article and tokenizer passage limits.</p></div>
     <div id="website-results"><div class="website-empty"><div class="website-page-symbol" aria-hidden="true"><span></span><span></span><span></span></div><h3>Pick the articles worth comparing.</h3><p>Find public posts through WordPress or a sitemap, then choose up to 40. You can inspect every extracted article before importing.</p></div></div>
