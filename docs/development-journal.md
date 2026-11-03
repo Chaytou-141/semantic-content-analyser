@@ -1644,3 +1644,55 @@ evidence, saved data and Git history remain intact. No cleanup, push, deployment
 paid service or model inference occurred. Image/cache retained for reproduction.
 The fresh-index blocker is closed; advisory dispositions, release provenance and
 intended-host operational/network/TLS/capacity checks remain open. Stop here.
+
+
+## First combined PDF export - 3 November 2026
+
+Problem: visitors could inspect three analysis views but could not take their evidence
+and saved link reviews into one report. Added one Export PDF button and an authenticated
+POST /api/reports/pdf route using the existing bounded executor, workspace lease/lock,
+request budgets, ownership checks and collection revision validation. No website fetching
+or model inference is performed during export. No generated report is persisted.
+
+Decision: retain one latest successful server-generated snapshot per analysis section
+inside each Workspace, not arbitrary scores supplied by the browser and not a second
+analysis pipeline. Search retains its query/settings; links retain source/settings;
+overlap retains settings and first 10 pairs plus original returned count. Collection
+revision mismatch excludes old snapshots. Reviews are read fresh at export time.
+Snapshots are process-local and lost on restart; this is explicit in the PDF. Existing
+CSV exports and ranking computations are unchanged. Only server-derived counts/scores
+are printed. No independently reviewed quality or confirmed duplication is asserted.
+
+ReportLab 5.1.0 is the one new runtime PDF dependency; Pillow 13.0.0 and charset-normalizer
+3.5.2 are its pinned transitive dependencies. pypdf 6.21.4 is development-only for PDF
+inspection tests. Rendering verification used locally installed PyMuPDF, not a runtime
+dependency. No Docker build/security rescan was run; prior image scan evidence is
+historical and does not certify these new packages or a future rebuilt image.
+
+A4 reports use embedded ReportLab Vera fonts, purple headings/lavender page bands,
+page numbers, escaped imported text and clickable HTTP(S) URLs. At most 10 results per
+method/section, 600 characters per passage, and 2 MB final output; truncation is explicit.
+Related-content scores remain query-dependent; absent/empty sections are distinguished.
+Snapshot memory is bounded by existing API top-k limits and the new overlap snapshot cap.
+PDF rendering checks cancellation at sections/items/pages; the existing thread timeout
+cannot forcibly stop an individual native call. No new process sandbox is claimed.
+
+Verification: 57 focused tests passed, one existing Windows symlink privilege skip
+(application, visitor workspaces, PDF, link presentation, display). Ten new PDF tests
+cover counts/scores, latest reviews, missing/empty/stale sections, auth, two-visitor
+isolation, If-Match, headers, links, long escaped text, truncation, cancellation and
+output-size rejection. JavaScript syntax check passed. Offline Chromium downloaded
+reports at widths 1280 and 390 using a disposable TestClient collection and deterministic
+test double; no real MiniLM loading, saved-data changes or external network requests.
+Six-page combined example: 56,301 bytes; reproduced by the ignored offline
+verification script runtime/pdf-export/verify.py. Rendered all pages and visually
+inspected the contact sheet; a two-page long-title/approximately 2,000-character URL
+example also rendered, with every text span within horizontal margins. Artifacts and
+verification script are ignored under runtime/pdf-export, not visitor data or fixtures
+that replace the development collection.
+
+Limitations: latest run per section only (not every query/source or an exhaustive site
+audit); no persistence across restart, no tagged-PDF accessibility certification or
+universal multilingual/CJK font coverage. Human editorial review is still required.
+Committed with this feature's source/tests/docs after targeted verification. No push,
+deployment, model evaluation, historical benchmark changes or database migrations.

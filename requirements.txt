@@ -6,3 +6,6 @@ sentence-transformers==6.2.0
 scikit-learn==1.9.1
 numpy==2.5.4
 transformers==5.20.2
+
+# In-memory A4 report generation; no browser or remote rendering service.
+reportlab==5.1.0

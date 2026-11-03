@@ -295,3 +295,20 @@ docs/                  Learning journal, evaluation evidence and deployment guid
 ```
 
 The original brief remains in `Semantic_Content_Analyser_Starter_Docs/`. At the user's later request, scope expanded from guided experiments to a deployable demo application. WordPress/sitemap import is opt-in; SocialBuzz integration and automatic publishing, merging or deletion are not implemented.
+
+
+## Export an analysis PDF
+
+In Analysis, run Search articles, Link opportunities and/or Content overlap, then choose
+**Export PDF**. It downloads the latest completed run for each section in this workspace
+without fetching websites or rerunning inference. Search results remain query-dependent;
+sections not run for the current collection are marked unavailable. Saving a link review
+before export includes its current status and note. Reports are generated in memory.
+
+The report includes at most 10 returned items per method/section and 600 characters per
+passage; any truncation is labelled. Output is capped at 2 MB. Changing the collection
+invalidates old results; restarting the server clears report snapshots. This is an
+editorial evidence report, not a complete website audit or a claim of accuracy or
+confirmed duplicates. Embedded fonts cover common Latin text but not all languages.
+Existing CSV export remains available. Install the updated requirements and restart the
+server before using the new control.

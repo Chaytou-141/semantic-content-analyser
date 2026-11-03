@@ -54,6 +54,7 @@ async function api(path, data, method = "POST", expectedRevision = state.revisio
   let response;
   try { response = await fetch(path, options); }
   catch { throw new Error("The service could not be reached. Check your connection and refresh the collection before retrying."); }
+  if (response.ok && path === "/api/reports/pdf") return response.blob();
   let payload;
   try { payload = await response.json(); } catch { throw new Error("The service returned an unreadable result. Refresh the collection to check its state before retrying."); }
   if (!response.ok) {
@@ -743,3 +744,12 @@ document.addEventListener("keydown", (event) => {
   }
 });
 start();
+
+$("#export-pdf").addEventListener("click", () => task("Preparing PDF report...", async () => {
+  const blob = await api("/api/reports/pdf", {});
+  const url = URL.createObjectURL(blob);
+  const link = el("a", { href: url, download: "website-content-analysis.pdf" });
+  document.body.append(link); link.click(); link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 60000);
+  toast("PDF downloaded. It includes the latest completed run per section; unavailable sections are labelled.");
+}));

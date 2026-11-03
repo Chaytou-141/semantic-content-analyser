@@ -336,6 +336,30 @@ def create_app(settings=None, engine=None, fetcher=None):
         return Response(exported, media_type="text/csv; charset=utf-8",
                         headers={"Content-Disposition": 'attachment; filename="articles.csv"'})
 
+    def report_snapshot(entry, section, payload, parameters, control):
+        control.check()
+        revision = entry.store.revision()
+        if any(v["revision"] != revision for v in entry.report_snapshots.values()):
+            entry.report_snapshots.clear()
+        cached = payload
+        if section == "overlaps":
+            cached = {**payload, "pairs": payload["pairs"][:10], "returned_count": len(payload["pairs"])}
+        entry.report_snapshots[section] = {"revision": revision, "parameters": parameters,
+                                           "payload": cached}
+        return payload
+
+    @app.post("/api/reports/pdf")
+    async def export_pdf(request: Request):
+        from .pdf_report import build_report
+        def operation(entry, control):
+            revision = entry.store.revision()
+            snapshots = {k: v for k, v in entry.report_snapshots.items() if v["revision"] == revision}
+            content = build_report(entry.store.articles(), snapshots, entry.store.reviews(), control.check)
+            return Response(content, media_type="application/pdf", headers={
+                "Content-Disposition": 'attachment; filename="website-content-analysis.pdf"',
+                "Cache-Control": "no-store"})
+        return await execute(request, operation)
+
     @app.post("/api/search")
     async def search(data: SearchRequest, request: Request):
         start = time.perf_counter()
@@ -346,8 +370,8 @@ def create_app(settings=None, engine=None, fetcher=None):
             for method in methods:
                 control.check()
                 results[method] = entry.engine.search(collection, data.query, method, data.top_k, data.min_score)
-            return {"results": results, "elapsed_ms": round((time.perf_counter() - start) * 1000),
-                    "query": data.query, "article_count": len(collection), "collection_revision": entry.store.revision()}
+            return report_snapshot(entry, "search", {"results": results, "elapsed_ms": round((time.perf_counter() - start) * 1000),
+                    "query": data.query, "article_count": len(collection), "collection_revision": entry.store.revision()}, data.model_dump(), control)
         return await execute(request, operation)
 
     @app.post("/api/links")
@@ -360,16 +384,16 @@ def create_app(settings=None, engine=None, fetcher=None):
                 control.check()
                 results[method] = entry.engine.links(collection, data.source_id, method, data.top_k, data.min_score)
             decisions = [r for r in entry.store.reviews() if r["source_id"] == data.source_id]
-            return {"results": results, "reviews": decisions, "review_required": True,
-                    "collection_revision": entry.store.revision()}
+            return report_snapshot(entry, "links", {"results": results, "reviews": decisions, "review_required": True,
+                    "collection_revision": entry.store.revision()}, data.model_dump(), control)
         return await execute(request, operation)
 
     @app.post("/api/overlaps")
     async def overlaps(data: OverlapRequest, request: Request):
         def operation(entry, control):
-            return {"pairs": entry.engine.overlaps(entry.store.articles(), data.method, data.threshold, data.limit),
+            return report_snapshot(entry, "overlaps", {"pairs": entry.engine.overlaps(entry.store.articles(), data.method, data.threshold, data.limit),
                     "collection_revision": entry.store.revision(),
-                    "notice": "Similarity is a review signal. It does not establish identical intent, cannibalisation or merge eligibility."}
+                    "notice": "Similarity is a review signal. It does not establish identical intent, cannibalisation or merge eligibility."}, data.model_dump(), control)
         return await execute(request, operation)
 
     @app.post("/api/website/check")

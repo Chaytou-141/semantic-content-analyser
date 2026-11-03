@@ -51,3 +51,7 @@ typing-inspection==0.4.4
 typing_extensions==4.16.0
 uvicorn==0.54.0
 pip==26.2.2
+
+reportlab==5.1.0
+pillow==13.0.0
+charset-normalizer==3.5.2

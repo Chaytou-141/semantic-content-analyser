@@ -34,6 +34,7 @@ class Workspace:
     fetch_session: object = None
     fetch_revision: str | None = None
     website_run: object = None
+    report_snapshots: dict = field(default_factory=dict)
 
     def __post_init__(self):
         self.collections = CollectionService(self.store, self.engine, self.lock)
