@@ -12,7 +12,7 @@ RUN go build -trimpath -buildvcs=false -ldflags '-s -w -X github.com/caddyserver
 
 FROM alpine:3.23@sha256:ff7f0c727dd796aa36787bfcd9a64bf35a6ce72a73451b3359fde849b6703d63
 # Fresh runtime: no obsolete Caddy executable/curl in inherited image layers.
-RUN apk add --no-cache ca-certificates=20261020-r0 tzdata=2026e-r0 \
+RUN apk add --no-cache ca-certificates=20261020-r0 tzdata=2026f-r0 \
     mailcap=2.1.54-r0 openssl=3.5.9-r0 ssl_client=1.37.0-r30 \
     && mkdir -p /etc/caddy /config/caddy /data/caddy /srv
 ENV XDG_CONFIG_HOME=/config XDG_DATA_HOME=/data
