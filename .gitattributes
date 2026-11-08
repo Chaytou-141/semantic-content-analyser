@@ -11,3 +11,11 @@
 Dockerfile text eol=lf
 deploy/caddy/go.mod text eol=lf
 deploy/caddy/go.sum text eol=lf
+
+# Frozen evaluation fingerprints use recorded line endings. Keep the same
+# checkout bytes on Linux and Windows so evidence hashes remain portable.
+evaluations/phase3d/editorial-review-set.json text eol=crlf
+evaluations/phase3d/results.json text eol=crlf
+evaluations/phase3e/packet-registry.json text eol=crlf
+evaluations/phase3f/inputs/*.csv text eol=lf
+evaluations/phase3f/results.json text eol=lf
