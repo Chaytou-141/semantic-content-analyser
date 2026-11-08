@@ -1,0 +1,430 @@
+{
+  "date_australia_sydney": "2026-11-02",
+  "baseline_commit": "bc079df",
+  "scanner": "Docker Scout v1.27.0",
+  "image_reference": "semantic-phase4e-scan:app",
+  "image_id": "sha256:3334446d5b83c444bd1266f617bc844427fe26b16935fc920bd50e163d475257",
+  "size_bytes": 2339656320,
+  "rootfs_layers": [
+    "sha256:a5d6d345f6afa08d7c31272055746d60a838b290bfcc82c0a23e8e984d61a933",
+    "sha256:fab99bd4639aec48a77ec4d2e3564c0907e0e1e962bbf773219a0b503a168955",
+    "sha256:bca572b9549074f7cbc5f2d9d29f589038ff21c5f68cef2965167a33f177a9c0",
+    "sha256:cae4cb2b5e819765b847e67faa443b377607452f2ec949d142cad15d9d7ea0b3",
+    "sha256:73acc66174bc61c7e6bc7933e5e628f40926830d752778d6ae956caf1893ae48",
+    "sha256:0355449b9505ba0b78264e5394b0ebc448a1ca3943f5329d70b3ac91b412c6f7",
+    "sha256:1c2728f7a7c1763c9767b8734248b0d688ce8963ad4a758f594ff4cab68ca463",
+    "sha256:54524ce2a11102b6ce50f77e1b759a9f09ecff19108fbfe4be1bcf3bc6d51834",
+    "sha256:8c016732c47e4d0d17c2ab8206a4e9fd039f7adf7940a2f267248fff9e7f6094",
+    "sha256:20137c8af7f3ad1c096f39478033eaf697d7610e9ebb43f14d99200316301d1f",
+    "sha256:75972e9ef0e0fdebf07e30b18e7bc1919caef307927c2e8bd22274267d8be518",
+    "sha256:aa9738b9b3468055bc74f5939b04a3311f73178673b53115c43507f321960067",
+    "sha256:8dca70d8cff4a09a4a6e6436fdacb533f80b9b1361ddd13af125370fc0a12d0e",
+    "sha256:0a230ccc0933534d562eab1f39961d73c1a09f5123b0246874825b043c4029b9",
+    "sha256:905e20e08205b55b950be95117995568f5ac6f0a8f32679e7abb86915a7cc2c3",
+    "sha256:3ac877af664b8425345900704d27f833da1fe91aa3354e4dace8928a277f49f1",
+    "sha256:340b4b8dffe480e183180e41cc3e7da203f37430f4160d8dd343fbb0e7c39a82"
+  ],
+  "all_17_layers_match_prior_verified_image": true,
+  "indexed_packages": 191,
+  "vulnerable_packages": 13,
+  "severity_counts": {
+    "LOW": 27,
+    "MEDIUM": 7,
+    "HIGH": 4
+  },
+  "critical": 0,
+  "scan_exit_code": 0,
+  "filters_or_suppressions_requested": false,
+  "removed_since_reused_inventory": [
+    "CVE-2026-119586"
+  ],
+  "artifacts": {
+    "app-fresh-index.sarif.json": "9e433c24870c96350d088d740460a7b637b3e9879d2e0432a5e3c066ff373b71",
+    "app-fresh-index.sbom.json": "fae752146fc806876260cb79833dd064cd915ebf741846099b515fa80d768321",
+    "app-index-retry-build.log": "344d4879c3e5e8373b4d35866064a3ba732ded9752c0da74d0e4e10728c67f03",
+    "app-fresh-index.log": "2ab96f08186e738750ff627fb8aa6b0216011368302dc8e7441e1a6d18217119"
+  },
+  "findings": [
+    {
+      "id": "CVE-2005-2541",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/tar@1.35%2Bdfsg-3.1?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2005-2541?s=debian&n=tar&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for tar. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2007-5686",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/shadow@1%3A4.17.4-2?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2007-5686?s=debian&n=shadow&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for shadow. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2010-0928",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/openssl@3.5.7-1~deb13u3?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2010-0928?s=debian&n=openssl&ns=debian&t=deb&osn=debian&osv=13&vr=%3E%3D3.2.1-3",
+      "description": "Scanner advisory for openssl. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2010-4756",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/glibc@2.41-12%2Bdeb13u4?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2010-4756?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for glibc. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2011-3374",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/apt@3.0.3?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2011-3374?s=debian&n=apt&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for apt. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2011-4116",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/perl@5.40.1-6%2Bdeb13u1?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2011-4116?s=debian&n=perl&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for perl. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2013-4392",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/systemd@257.13-1~deb13u1?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2013-4392?s=debian&n=systemd&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for systemd. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2017-18018",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/coreutils@9.7-3?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2017-18018?s=debian&n=coreutils&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for coreutils. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2018-20796",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/glibc@2.41-12%2Bdeb13u4?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2018-20796?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for glibc. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2019-1010022",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/glibc@2.41-12%2Bdeb13u4?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2019-1010022?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for glibc. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2019-1010023",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/glibc@2.41-12%2Bdeb13u4?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2019-1010023?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for glibc. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2019-1010024",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/glibc@2.41-12%2Bdeb13u4?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2019-1010024?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for glibc. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2019-1010025",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/glibc@2.41-12%2Bdeb13u4?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2019-1010025?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for glibc. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2019-9192",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/glibc@2.41-12%2Bdeb13u4?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2019-9192?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for glibc. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2021-45346",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2021-45346?s=debian&n=sqlite3&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for sqlite3. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2022-0563",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/util-linux@2.41.5-0%2Bdeb13u1?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2022-0563?s=debian&n=util-linux&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for util-linux. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2023-31437",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/systemd@257.13-1~deb13u1?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2023-31437?s=debian&n=systemd&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for systemd. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2023-31438",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/systemd@257.13-1~deb13u1?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2023-31438?s=debian&n=systemd&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for systemd. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2023-31439",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/systemd@257.13-1~deb13u1?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2023-31439?s=debian&n=systemd&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for systemd. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2025-5278",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/coreutils@9.7-3?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2025-5278?s=debian&n=coreutils&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for coreutils. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2025-70873",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2025-70873?s=debian&n=sqlite3&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for sqlite3. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2026-102473",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/dash@0.5.12-12?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-102473?s=debian&n=dash&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for dash. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2026-102474",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/dash@0.5.12-12?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-102474?s=debian&n=dash&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for dash. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2026-53910",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/diffutils@1%3A3.10-4?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-53910?s=debian&n=diffutils&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for diffutils. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2026-56391",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/coreutils@9.7-3?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-56391?s=debian&n=coreutils&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for coreutils. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2026-56392",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/coreutils@9.7-3?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-56392?s=debian&n=coreutils&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for coreutils. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2026-119377",
+      "severity": "LOW",
+      "packages": [
+        "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-119377?s=debian&n=sqlite3&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for sqlite3. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2025-45582",
+      "severity": "MEDIUM",
+      "packages": [
+        "pkg:deb/debian/tar@1.35%2Bdfsg-3.1?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2025-45582?s=debian&n=tar&ns=debian&t=deb&osn=debian&osv=13&vr=%3E%3D1.35%2Bdfsg-3.1",
+      "description": "Scanner advisory for tar. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2026-119371",
+      "severity": "MEDIUM",
+      "packages": [
+        "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-119371?s=debian&n=sqlite3&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for sqlite3. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2026-119372",
+      "severity": "MEDIUM",
+      "packages": [
+        "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-119372?s=debian&n=sqlite3&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for sqlite3. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2026-119375",
+      "severity": "MEDIUM",
+      "packages": [
+        "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-119375?s=debian&n=sqlite3&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for sqlite3. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2026-119376",
+      "severity": "MEDIUM",
+      "packages": [
+        "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-119376?s=debian&n=sqlite3&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for sqlite3. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2026-119378",
+      "severity": "MEDIUM",
+      "packages": [
+        "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-119378?s=debian&n=sqlite3&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for sqlite3. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2026-119591",
+      "severity": "MEDIUM",
+      "packages": [
+        "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-119591?s=debian&n=sqlite3&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "Scanner advisory for sqlite3. Consult the linked vendor record for affected functionality and exploit prerequisites; fixed-version information is retained separately."
+    },
+    {
+      "id": "CVE-2026-85091",
+      "severity": "HIGH",
+      "packages": [
+        "pkg:deb/debian/zlib@1%3A1.3.dfsg%2Breally1.3.1-1?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-85091?s=debian&n=zlib&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "zlib gzip writing. The fetcher uses bounded decompression instead; Debian affected-range guidance remains disputed."
+    },
+    {
+      "id": "CVE-2026-119373",
+      "severity": "HIGH",
+      "packages": [
+        "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-119373?s=debian&n=sqlite3&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "SQLite FTS5 index processing. The application does not create FTS5 tables; track a compatible Debian fix."
+    },
+    {
+      "id": "CVE-2026-119374",
+      "severity": "HIGH",
+      "packages": [
+        "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-119374?s=debian&n=sqlite3&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "SQLite FTS5 secure-delete handling. The application does not accept database files; track a compatible Debian fix."
+    },
+    {
+      "id": "CVE-2026-119379",
+      "severity": "HIGH",
+      "packages": [
+        "pkg:deb/debian/sqlite3@3.46.1-7%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13"
+      ],
+      "fixed_version": "not fixed",
+      "url": "https://scout.docker.com/v/CVE-2026-119379?s=debian&n=sqlite3&ns=debian&t=deb&osn=debian&osv=13&vr=%3E0",
+      "description": "SQLite changeset processing. The application does not apply native changesets; track a compatible Debian fix."
+    }
+  ],
+  "publication_description_note": "Descriptions were replaced with concise original release-review summaries on 2026-11-09. IDs, severities, package identifiers, fixed versions and source URLs remain from the original scanner record. The historical raw scanner description text remains in earlier Git history until a separately approved rewrite."
+}

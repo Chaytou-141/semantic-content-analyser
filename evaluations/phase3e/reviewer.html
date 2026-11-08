@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-@@SCRIPT_HASH@@'; style-src 'unsafe-inline'; connect-src 'none'; img-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Independent SEO editorial review</title><style>@@STYLE@@</style></head>
+<body><main>
+<header><h1>Independent SEO editorial review</h1><p>Review the saved Freeze Edge articles. Your decisions are separate from the AI suggestions. Nothing is published, linked, merged or deleted.</p></header>
+<section class="reviewer"><label>Your name or reviewer ID<input id="reviewer" maxlength="100" autocomplete="off"></label><label class="attest"><input id="attest" type="checkbox">I am a human reviewer making my own independent judgements.</label><p>One reviewer per CSV. Drafts stay in this browser when storage is available; export to keep a portable copy. Exported files are not submitted automatically.</p></section>
+<div class="toolbar"><label>Task<select id="task"><option value="all">All tasks</option></select></label><label>Show<select id="status"><option value="all">All decisions</option><option value="unreviewed">Unreviewed</option><option value="unsure">Unsure</option><option value="decided">Useful / Not useful</option></select></label><button id="next" type="button">Next unreviewed</button><button id="export" type="button">Export review CSV</button><label class="import">Resume from CSV<input id="import" type="file" accept=".csv,text/csv"></label></div>
+<p id="progress" role="status" aria-live="polite"></p><p id="message" role="alert" hidden></p>
+<p class="scope">Judge usefulness against each task, not similarity alone. Existing links refer to the saved selected collection, not a new live crawl. For overlap pairs, Useful means worth editorial investigation—not a duplicate verdict. AI notes are hidden until you open them; exposure is recorded separately.</p>
+<div id="items"></div><p id="empty" hidden>No items match this filter.</p>
+<footer><button id="clear" type="button">Clear this browser draft</button><p>No model or website requests are made. To submit, export your CSV and send that file to the person coordinating the review. Do not share this packet publicly without permission for its article content.</p></footer>
+</main><script type="application/json" id="review-data">@@DATA@@</script><script>@@SCRIPT@@</script></body></html>

@@ -1,0 +1,70 @@
+{
+  "phase": "4A",
+  "baseline_commit": "1a276af",
+  "date_australia_sydney": "2026-10-29",
+  "commit_reference": "git log -1 --format=%H --grep=\"Fix bounded XML sitemap compatibility and prepare isolated demo configuration\"",
+  "reproduction_before_fixes": {
+    "failed": 10,
+    "passed": 3,
+    "pytest_seconds": 1.5
+  },
+  "relevant_regression_suite": {
+    "command": ".venv/Scripts/python.exe -B -m pytest -q --tb=short tests/test_website_compatibility.py tests/test_websites.py tests/test_safe_fetch.py tests/test_safe_fetch_api.py tests/test_visitor_workspaces.py tests/test_collection_admission.py",
+    "passed": 235,
+    "failed": 0,
+    "skipped": 1,
+    "pytest_seconds": 30.85,
+    "skip": "tests/test_visitor_workspaces.py:295; Windows account cannot create symbolic links"
+  },
+  "followup_after_test_only_route_assertion": {
+    "command": ".venv/Scripts/python.exe -B -m pytest -q --tb=short tests/test_website_compatibility.py",
+    "passed": 20,
+    "failed": 0,
+    "skipped": 0,
+    "pytest_seconds": 1.32
+  },
+  "offline_workflow": {
+    "sitemap_selected_articles": 40,
+    "requests_including_robots": 44,
+    "transport": "controlled synthetic routes with mocked DNS; no live website",
+    "delay_seconds": 0,
+    "real_world_performance_claim": false,
+    "atomic_failure_and_cross_session_checks": "passed"
+  },
+  "deployment_validation": {
+    "yaml_parsed_with_existing_pyyaml": true,
+    "explicit_visitor_mode_and_website_fetch": true,
+    "production_settings_validated_with_dummy_credentials": true,
+    "password_gate_retained": true,
+    "app_port_not_published": true,
+    "docker_cli_available": false,
+    "docker_build_run_or_compose_validation": false
+  },
+  "preservation": {
+    "snapshot_files_checked": 1773,
+    "unchanged_files": 1772,
+    "intentionally_updated_previously_snapshotted_documentation": [
+      "docs/aws-deployment.md"
+    ],
+    "unexpected_changes": [],
+    "application_ranking_security_data_and_benchmark_artifacts_except_listed_source_edits": "unchanged"
+  },
+  "source_sha256": {
+    "semantic_analyser/websites.py": "c5b671ec7ec7bf924af2f3f421dee342834ddbef060b9e0eca33733378f0885e",
+    "semantic_analyser/extraction.py": "21d3a621b2f4f6ba9c805c42d79b5cb1b1aa0a569c7392a446e6ad3261c83437",
+    "deploy/aws/compose.production.yaml": "edffe7be1ac22428afe823a77f4464e0b7b7692f42f1724e43e182bca4777599",
+    "tests/test_website_compatibility.py": "4f0ecaa533419b2a7ea65c7b4d829a7991cc6367669b1750885d9aa964a5a9f4"
+  },
+  "full_suite_run": false,
+  "real_model_constructions": 0,
+  "historical_benchmarks_run": false,
+  "live_website_requests": 0,
+  "new_editorial_packets_or_labels": 0,
+  "push_or_deployment": false,
+  "limitations": [
+    "No new live sitemap or non-WordPress validation.",
+    "No local Docker CLI/container build, HTTPS proxy smoke, image scan or hosting load measurement.",
+    "One Windows symlink regression skipped; Linux follow-up required.",
+    "Proxy trust, ingress fairness, egress policy and container quotas remain release blockers."
+  ]
+}

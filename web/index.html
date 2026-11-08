@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f8f7fa">
+  <meta name="description" content="A workspace for searching articles, reviewing internal links and comparing related passages.">
+  <title>Semantic Content Analyser</title>
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+  <link rel="preload" href="/static/fonts/InstrumentSans.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="/static/styles.css?v=common-terms-20261108">
+  <script src="/static/app.js?v=common-terms-20261108" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div id="login" class="login-shell" hidden>
+    <form id="login-form" class="login-panel">
+      <img src="/static/favicon.svg" width="42" height="42" alt="">
+      <p class="login-brand">Semantic Content Analyser</p>
+      <h1>Open your workspace.</h1>
+      <p>Search your collection and review the evidence behind each connection.</p>
+      <label for="password">Workspace password</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required>
+      <button class="button primary" type="submit">Open workspace</button>
+      <p id="login-error" role="alert"></p>
+    </form>
+  </div>
+  <div id="workspace" class="workspace" hidden>
+    <header class="masthead">
+      <div class="masthead-inner">
+        <a class="brand" href="#home" data-view="home" aria-label="Semantic Content Analyser home"><img src="/static/favicon.svg" alt="" width="38" height="38"><span>Semantic<span class="brand-sub">Content analyser</span></span></a>
+        <nav class="masthead-actions" aria-label="Main navigation"><a class="text-button" href="#search" data-view="search">Analysis</a><a class="text-button" href="#collection" data-view="collection">Articles <span id="nav-article-count" class="nav-count"></span></a><button id="import-top" class="text-button" type="button">Import</button><details class="utility-menu"><summary>More</summary><div><a class="text-button" href="/api/articles/export">Export CSV</a><a class="text-button" data-view="evaluation" href="#evaluation">Development evaluation</a><button id="sign-out" class="text-button" hidden>Sign out</button></div></details></nav>
+      </div>
+    </header>
+    <main id="main-content" tabindex="-1">
+      <div id="app-error" class="error-banner" role="alert" tabindex="-1" hidden></div>
+      <div id="busy" class="busy-banner" role="status" aria-live="polite" hidden><span class="spinner"></span><span id="busy-message">Analysing your collection…</span></div>
+      <section id="view-home" class="view home-view">
+        <div class="home-intro"><h1>See how your articles connect.</h1><p>Search by meaning, review internal-link opportunities and compare overlapping content. Explore the sample collection or bring your own website.</p></div>
+        <section id="home-current-collection" class="current-collection" aria-labelledby="home-current-title" hidden><div><h2 id="home-current-title">Continue your collection</h2><p id="home-current-note"></p></div><a id="home-continue" class="button primary" href="#search" data-view="search" hidden>Continue with your articles</a></section>
+        <div class="entry-paths"><section class="sample-entry"><h2>Explore sample analysis</h2><p>Try 21 fictional articles about cafes, baking and refrigeration. Use the same search, linking and overlap tools as your own collection.</p><button id="home-explore" class="button primary" type="button">Explore sample analysis</button><p id="home-sample-note" class="context-note"></p></section><section class="website-entry"><h2>Analyse your website</h2><p>Discover public articles, choose a collection and inspect the extracted text before importing.</p>
+        <form id="home-website-form" class="home-search">
+          <label for="home-website-url">Website or XML sitemap URL</label>
+          <div class="home-query-row"><input id="home-website-url" type="url" autocomplete="url" placeholder="https://your-website.com" required maxlength="2048" aria-describedby="home-site-help" disabled><button id="home-website-submit" class="button primary" type="submit" disabled>Find articles</button></div>
+          <p id="home-site-help">Use a public WordPress website or XML sitemap. You review the article selection and text before anything is imported.</p>
+          <p id="home-website-unavailable" class="notice" hidden>Website import is unavailable on this installation. You can import a CSV or explore the current articles instead.</p>
+        </form>
+        <div class="home-alternatives"><button id="home-import" class="text-button" type="button">Import a CSV instead</button></div></section></div>
+        <nav class="feature-explainer" aria-label="Analysis tools"><a class="feature-card" href="#search" data-view="search" aria-labelledby="home-search-title"><h2 id="home-search-title">Search articles</h2><p>Find articles by meaning.</p></a><a class="feature-card" href="#links" data-view="links" aria-labelledby="home-links-title"><h2 id="home-links-title">Link opportunities</h2><p>Review potentially useful internal links.</p></a><a class="feature-card" href="#overlap" data-view="overlap" aria-labelledby="home-overlap-title"><h2 id="home-overlap-title">Content overlap</h2><p>Compare articles that may cover similar subjects.</p></a></nav>
+        <ol class="home-workflow" aria-label="How it works"><li><strong>Choose your articles</strong><span>Select up to 40 public pages.</span></li><li><strong>Check the source text</strong><span>Review what will be analysed.</span></li><li><strong>Explore the connections</strong><span>Inspect evidence before deciding.</span></li></ol>
+        <p class="home-privacy">This tool assists editorial decisions. It never inserts links, merges articles or changes your website. Only analyse content you are authorised to use.</p>
+      </section>
+      <section id="import-success" class="import-success" role="status" hidden><div><h2 id="import-success-title">Your collection is ready</h2><p id="import-success-description"></p></div><div class="heading-actions"><a class="button primary" href="#search" data-view="search">Explore analysis</a><a class="button" href="#collection" data-view="collection">Manage articles</a><button id="dismiss-import-success" class="text-button" type="button">Dismiss</button></div></section>
+      <nav id="analysis-nav" class="main-nav analysis-nav" aria-label="Article analysis" hidden>
+        <a class="nav-item active" data-view="search" href="#search"><svg aria-hidden="true" viewBox="0 0 20 20"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4 4"/></svg>Search articles</a>
+        <a class="nav-item" data-view="links" href="#links"><svg aria-hidden="true" viewBox="0 0 20 20"><path d="m8 12 4-4m-5 6-1 1a3.5 3.5 0 0 1-5-5l4-4a3.5 3.5 0 0 1 5 0m0 8a3.5 3.5 0 0 0 5 0l4-4a3.5 3.5 0 0 0-5-5l-1 1" transform="translate(1 1) scale(.9)"/></svg>Link opportunities</a>
+        <a class="nav-item" data-view="overlap" href="#overlap"><svg aria-hidden="true" viewBox="0 0 20 20"><rect x="2" y="3" width="10" height="13" rx="2"/><rect x="8" y="5" width="10" height="13" rx="2"/></svg>Content overlap</a>
+        <a class="text-button analyse-another" data-view="home" href="#home">Analyse another website</a>
+      </nav>
+      <section id="view-search" class="view" hidden>
+        <div class="page-heading feature-report-heading"><div><h1>Search your articles</h1><p id="analysis-collection-note">Ask a question. Find the passage worth reading.</p></div><span class="keyboard-hint"><kbd>/</kbd> to focus search</span><button data-export-pdf="search" type="button" class="button" disabled title="Run this analysis first">Export PDF</button></div>
+        <div class="search-layout">
+          <div class="search-main">
+            <form id="search-form" class="search-panel">
+              <label for="search-query">Your question or topic</label>
+              <div class="query-row"><input id="search-query" name="query" autocomplete="off" placeholder="Search by topic or ask a question…" minlength="2" maxlength="2000" required><button class="button primary" type="submit">Search articles<svg aria-hidden="true" viewBox="0 0 20 20" width="16" height="16"><path d="M3 10h13m-5-5 5 5-5 5"/></svg></button></div>
+              <details class="search-settings"><summary>Search settings</summary><div class="search-options"><label>Match by<select id="search-method" name="method"><option value="embeddings">Meaning</option><option value="tfidf">Words</option><option value="compare">Compare both methods</option></select></label><label>Show<select id="search-k" name="top_k"><option value="3">3 results</option><option value="5" selected>5 results</option><option value="10">10 results</option><option value="20">20 results</option></select></label><label>Minimum similarity<input id="search-min" name="min_score" type="number" min="0" max="1" step="0.05" value="0"></label></div></details>
+            </form>
+            <div class="examples"><span>Try</span><button data-example="Choosing a display fridge for a cafe">Display fridges</button><button data-example="Why does bread dough expand while resting?">Bread fermentation</button><button data-example="How can I arrange a cafe coffee station?">Cafe workflow</button></div>
+            <div id="search-results" aria-live="polite"><div class="initial-loading">Loading your article collection…</div></div>
+          </div>
+          <details class="collection-details"><summary>Browse topics and matching help</summary><aside id="collection-rail" class="collection-rail" aria-label="Collection overview"></aside></details>
+        </div>
+      </section>
+      <section id="view-links" class="view" hidden>
+        <div class="page-heading feature-report-heading"><div><h1>Link opportunities</h1><p>Choose a source. Decide whether a destination helps its reader.</p></div><span class="view-note">Editorial review</span><button data-export-pdf="links" type="button" class="button" disabled title="Run this analysis first">Export PDF</button></div>
+        <form id="links-form" class="control-panel"><label class="grow">Source article<select id="links-source" name="source_id" required></select></label><label>Match by<select id="links-method" name="method"><option value="embeddings">Meaning · embeddings</option><option value="tfidf">Words · TF-IDF</option><option value="compare">Compare both</option></select></label><label>Show<select id="links-k" name="top_k"><option value="3">3 candidates</option><option value="5" selected>5 candidates</option><option value="10">10 candidates</option></select></label><button class="button primary" type="submit">Find opportunities</button></form>
+        <p class="context-note">Self-links, existing links and ineligible destinations are excluded. A shared passage suggests a possible next reading destination; check the article's intent before deciding. Nothing is inserted automatically.</p>
+        <div id="links-results" class="empty-state"><span class="empty-symbol" aria-hidden="true">↗</span><h2>Follow the reader’s next question.</h2><p>Select an article to compare its passages with potential destinations. Review the text on both sides before saving a decision.</p></div>
+      </section>
+      <section id="view-overlap" class="view" hidden>
+        <div class="page-heading feature-report-heading"><div><h1>Content overlap</h1><p>Related subject matter can still serve different reader needs.</p></div><span class="view-note">Compare passages</span><button data-export-pdf="overlaps" type="button" class="button" disabled title="Run this analysis first">Export PDF</button></div>
+        <form id="overlap-form" class="control-panel"><label>Match by<select id="overlap-method" name="method"><option value="embeddings">Meaning · embeddings</option><option value="tfidf">Words · TF-IDF</option></select></label><label>Minimum similarity<input id="overlap-threshold" name="threshold" type="number" min="0" max="1" step="0.05" value="0.65"></label><label>Maximum pairs<select id="overlap-limit" name="limit"><option>10</option><option selected>20</option><option>50</option></select></label><button class="button primary" type="submit">Review overlap</button></form>
+        <div class="notice">The threshold filters passage pairs by cosine similarity. High similarity does not establish duplicate content or keyword cannibalisation. Check purpose and unique information before any editorial action.</div><div id="overlap-results" class="empty-state"><span class="empty-symbol" aria-hidden="true">≋</span><h2>Find the shared ground.</h2><p>Compare passages, then inspect what each article contributes. The threshold controls which pairs appear.</p></div>
+      </section>
+      <section id="view-collection" class="view" hidden>
+        <div class="page-heading"><div><h1>Article collection</h1><p id="collection-count">Loading collection…</p><p id="collection-origin" class="context-note"></p></div><div class="heading-actions"><a class="button primary" data-view="search" href="#search">Explore analysis</a><a class="button" href="/api/articles/export">Export CSV</a></div></div>
+        <details id="collection-imports" class="collection-imports"><summary>Import or replace a collection</summary><div class="collection-sources">
+          <div class="collection-source website-source"><div class="source-mark" aria-hidden="true">www.</div><div><h2>Start with your website</h2><p>Discover posts, choose your articles and review the text before bringing it into your collection.</p><p id="website-availability" class="source-availability" hidden>Website import is unavailable on this installation.</p><button id="website-open" class="button primary" hidden>Import website</button></div></div>
+          <div class="collection-source"><div class="source-mark file-mark" aria-hidden="true">.csv</div><div><h2>Bring a prepared collection</h2><p>Already have your article text? Import a CSV, or use the sample collection below to explore.</p><button id="import-collection" class="button">Import articles</button></div></div>
+        </div></details>
+        <div class="collection-toolbar"><label class="grow">Find an article<input id="article-filter" name="article_filter" autocomplete="off" type="search" placeholder="Filter by title, ID or topic…"></label><button id="reset-demo" class="text-button">Restore demo collection</button></div>
+        <div class="table-wrap"><table><thead><tr><th scope="col">Article</th><th scope="col">Topic</th><th scope="col">Words</th><th scope="col">Link destination</th><th scope="col"><span class="sr-only">Edit article</span></th></tr></thead><tbody id="article-table"></tbody></table></div><p id="workspace-notice" class="context-note">Demo articles are fictional. Import only content you are authorised to process. This installation has one shared workspace.</p>
+      </section>
+      <section id="view-evaluation" class="view" hidden>
+        <div class="page-heading"><div><h1>Development evaluation</h1><p>Historical synthetic results for the original 21 demonstration articles. These do not update when you import a collection and are not independently validated production accuracy.</p></div><span class="view-note">Saved development results</span></div>
+        <div id="evaluation-content"></div>
+      </section>
+      <details id="about-demo" class="about-demo"><summary><svg aria-hidden="true" width="18" height="18" viewBox="0 0 20 20"><path d="m5 7 5 5 5-5"/></svg><span>About this demo and its limits</span></summary><p>The same local CPU embedding model and TF-IDF baseline power sample and imported collections. Search compares a question with passages; link and overlap tools compare passages between articles. Full source text remains available for editorial review.</p><p>Cosine similarity measures mathematical closeness between text representations. It is not an accuracy percentage or a probability of relevance; the two methods' scores are not directly comparable.</p><p>Application resource limits: 250,000 title/body characters and 100 articles per collection, 20,000 body characters per article, 800 model passages and 40 selected pages per website import. These are application safeguards, not limits imposed by MiniLM: they bound memory, tokenisation, embedding work and processing time for multiple visitors in a small demo. Admission checks remain authoritative; no text is silently shortened to fit.</p><p>Recommendations are experimental suggestions, not instructions to modify a website. Development evaluation is historical, synthetic and separate from your collection.</p></details>
+      <footer><span>Semantic Content Analyser</span><span>Text is analysed on this server.</span></footer>
+    </main>
+  </div>
+  <dialog id="article-dialog" aria-labelledby="article-dialog-title"><div class="dialog-header"><h2 id="article-dialog-title">Article details</h2><button class="icon-button close-dialog" aria-label="Close article">×</button></div><div id="article-details"></div></dialog>
+  <dialog id="import-dialog" aria-labelledby="import-dialog-title"><div class="dialog-header"><h2 id="import-dialog-title">Import a collection</h2><button class="icon-button close-dialog" aria-label="Close import">×</button></div><form id="import-form"><p>Required columns: <strong>id, title, body</strong>. Optional: topic, url, eligible, existing_links. Separate existing destination IDs with semicolons.</p><label for="csv-file">CSV file</label><input id="csv-file" name="csv_file" type="file" accept=".csv,text/csv"><label for="csv-text">CSV content</label><textarea id="csv-text" name="csv_text" autocomplete="off" rows="9" required placeholder="id,title,body,topic,url,eligible,existing_links…"></textarea><div class="notice">Import replaces the current collection and clears saved link reviews. Export your collection first if needed. Limit: 100 articles and 250,000 text characters.</div><button class="button primary" type="submit">Replace collection</button></form></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <dialog id="sample-dialog" aria-labelledby="sample-title"><div class="dialog-header"><h2 id="sample-title">Your collection stays yours</h2><button class="icon-button close-dialog" aria-label="Close sample options">×</button></div><p>You already have a collection. Exploring it uses the same analysis tools as the fictional samples.</p><a id="sample-keep" class="button primary" href="#search">Explore my current collection</a><p>For samples without replacing this collection, use a fresh private browser session on an installation with visitor workspaces. In shared local mode, every browser uses the same collection.</p><p>Restoring samples replaces this workspace's articles and clears its reviews. Export first if you want to keep them.</p><button id="sample-restore" class="button" type="button">Restore fictional samples…</button></dialog>
+  <dialog id="website-dialog" aria-labelledby="website-title">
+    <div class="dialog-header website-header"><div><h2 id="website-title">From website to collection</h2><p>Choose the source material for your next analysis.</p></div><button class="icon-button close-dialog" aria-label="Close website import">×</button></div>
+    <ol class="website-steps" aria-label="Website import progress"><li data-stage="0" aria-current="step"><span>1</span>Find articles</li><li data-stage="1"><span>2</span>Choose articles</li><li data-stage="2"><span>3</span>Review &amp; import</li></ol>
+    <div class="website-workspace"><aside class="website-source-panel"><details id="website-source-settings" open><summary>Website source and settings</summary>
+    <h3>Your source</h3><p>Use a public website or sitemap you are authorised to analyse.</p>
+    <form id="website-form">
+      <label for="website-url">Website or XML sitemap URL</label><input id="website-url" type="url" required maxlength="2048" placeholder="https://your-website.com/">
+      <label for="website-method">Find content</label><select id="website-method"><option value="auto">Automatic (recommended)</option><option value="wordpress">WordPress posts only</option><option value="sitemap">All sitemap pages</option></select>
+      <p class="context-note">Enter your homepage; you do not need to know its sitemap address. Automatic uses a published WordPress feed or page map and focuses on clearly named blog/article sections when available. All sitemap pages can also include products and categories. You review the results before importing.</p>
+      <button class="button primary" type="submit">Discover articles</button>
+    </form>
+    <div class="website-retention"><strong>Your collection stays intact.</strong><p>Discovery and preview do not change your articles or reviews. You confirm the replacement at the end.</p></div>
+    </details></aside><div class="website-content-panel"><div class="website-status-area">
+    <div id="website-operation" class="website-operation" role="status" aria-live="polite" hidden><span class="spinner" aria-hidden="true"></span><span id="website-operation-text"></span></div>
+    <p id="website-progress" role="status" aria-live="polite">Add a website to find its articles.</p>
+    <div id="extraction-progress" hidden><label for="extraction-meter">Selected articles processed</label><progress id="extraction-meter" max="40" value="0"></progress><p id="extraction-count" class="context-note"></p><p id="extraction-outcomes" class="context-note" role="status" aria-live="polite"></p></div>
+    </div>
+    <div id="collection-capacity" hidden><label id="capacity-label" for="capacity-meter">Collection capacity</label><progress id="capacity-meter" max="250000" value="0"></progress><p class="context-note">This application budget protects memory and processing time. Excluded articles are not imported; select a smaller set in a new run if needed. Final validation also checks article and tokenizer passage limits.</p></div>
+    <div id="website-results"><div class="website-empty"><div class="website-page-symbol" aria-hidden="true"><span></span><span></span><span></span></div><h3>Pick the articles worth comparing.</h3><p>Find public posts through WordPress or a sitemap, then choose up to 40. You can inspect every extracted article before importing.</p></div></div>
+    </div></div>
+    <div class="website-action-bar"><p id="website-action-note">Your saved collection will stay as it is until you confirm.</p><div class="heading-actions">
+      <button id="website-extract" class="button primary" type="button" hidden>Extract selected articles</button>
+      <button id="website-commit" class="button primary" type="button" hidden>Replace collection with these articles</button>
+      <button id="website-stop" class="button" type="button" hidden>Cancel website run</button>
+    </div></div>
+    <p class="website-limit-note">You have 15 minutes to choose and review articles. Fetching has a separate three-minute total budget. Choose up to 40 articles; size and passage limits still apply. Sitemaps can also list pages that are not blog posts.</p>
+  </dialog>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "baseline_commit": "34b613d",
+  "phase": "3D",
+  "suite": {
+    "passed": 237,
+    "skipped": 1,
+    "seconds": 30.68
+  },
+  "protected_files_checked": 1081,
+  "changed_protected_files": [],
+  "application_source_changed": false,
+  "saved_source_pages_refetched": false,
+  "model_constructions": 1,
+  "model_evaluation_repeated_by_verifier": false,
+  "exact_evidence_checks": 140,
+  "independently_reviewed_judgements": 0,
+  "production_readiness_claimed": false,
+  "review_set_sha256": "67cd2c62725d1f6ccdb508258a7bd323bc6f9922a53a2b603be39be1e1fc6e65",
+  "human_review_packet_checked": {
+    "rendered": true,
+    "external_http_resources": 0,
+    "model_load_required": false
+  }
+}

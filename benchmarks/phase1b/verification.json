@@ -1,0 +1,863 @@
+{
+  "pytest": {
+    "exit_code": 0,
+    "output": "...............                                                          [100%]\n15 passed in 0.93s\n"
+  },
+  "javascript": {
+    "exit_code": 0,
+    "output": ""
+  },
+  "browser": {
+    "exit_code": 0,
+    "output": "PASS: search and method comparison\nPASS: link exclusions, source/target evidence and saved review\nPASS: overlap review\nPASS: live topic filters, keyboard search, article editor and unsaved-change protection\nPASS: evaluation results and limitations\nPASS: mobile layout and import dialog\nBrowser smoke checks passed. Screenshots: runtime/browser/\n"
+  },
+  "real_model_http_36_articles": {
+    "passed": true,
+    "search": {
+      "results": {
+        "embeddings": [
+          {
+            "id": "B01",
+            "title": "Arranging an espresso station for two baristas",
+            "topic": "cafe",
+            "url": "https://benchmark.example.invalid/b01",
+            "score": 0.68153,
+            "passage": "day rather than the most ambitious future arrangement. Write down the sequence of work and the point at which a decision is needed. For this article, the central concern is Position the grinder beside the espresso machine, keep milk within easy reach, and separate the handover point from drink preparation. The aim is to reduce crossing paths rather than squeeze another appliance onto the bench. Keep that concern visible when reviewing options. A solution that improves an unrelated activity may be useful later, but it should not replace the question being investigated. Explain the expected benefit in language the person doing the work can challenge.\n\nCompare two practical options\nCreate a simple comparison between keeping the current arrangement and making the proposed change. Include time, space, training and maintenance, not only the initial purchase or setup. In a neighbourhood cafe with a narrow counter and a busy morning service, an apparently small adjustment can move work to another person. Ask that person to inspect the proposal before declaring",
+            "passage_start": 2565,
+            "passage_end": 3633
+          },
+          {
+            "id": "B05",
+            "title": "Planning a cafe opening checklist",
+            "topic": "cafe",
+            "url": "https://benchmark.example.invalid/b05",
+            "score": 0.40005,
+            "passage": "closed often overlooks the person paying, the customer asking about cakes and the staff member carrying stock from the storeroom. Measure these interruptions as part of the work rather than assuming every movement is an error.\n\nMeasure usable space\nMeasure the clear working surface rather than the overall length of the counter. Power leads, water connections, a cleaning bucket and the swing of a cupboard door all take space away from the plan. Mark the footprints with removable tape and stand at the bench with the equipment in use. Ask whether a shorter colleague can reach the same items without leaning across a hot surface or another worker.\n\nSeparate tasks deliberately\nMap ordering, preparation, cleaning and collection as separate activities even when one person performs several of them. Place the objects needed for an activity together, but leave a clear boundary between food handling and dirty equipment. The boundary can be a small tray or a clearly assigned section of bench. It should remain understandable to a casual employee who has not",
+            "passage_start": 2725,
+            "passage_end": 3784
+          },
+          {
+            "id": "B02",
+            "title": "Choosing a display fridge for a small cafe",
+            "topic": "cafe",
+            "url": "https://benchmark.example.invalid/b02",
+            "score": 0.39062,
+            "passage": "the footprints with removable tape and stand at the bench with the equipment in use. Ask whether a shorter colleague can reach the same items without leaning across a hot surface or another worker.\n\nSeparate tasks deliberately\nMap ordering, preparation, cleaning and collection as separate activities even when one person performs several of them. Place the objects needed for an activity together, but leave a clear boundary between food handling and dirty equipment. The boundary can be a small tray or a clearly assigned section of bench. It should remain understandable to a casual employee who has not memorised the owner's preferred routine.\n\nTest the busiest handover\nA small change can help one task while delaying the next. Moving cups closer to preparation may obstruct the person taking payment. Trial the change with two workers and a realistic sequence of orders, including a customer who changes their mind. Describe the handover out loud: who places the item, who collects it and what signals that the task",
+            "passage_start": 874,
+            "passage_end": 1895
+          },
+          {
+            "id": "B04",
+            "title": "Reducing wasted milk during the morning rush",
+            "topic": "cafe",
+            "url": "https://benchmark.example.invalid/b04",
+            "score": 0.38407,
+            "passage": "space away from the plan. Mark the footprints with removable tape and stand at the bench with the equipment in use. Ask whether a shorter colleague can reach the same items without leaning across a hot surface or another worker.\n\nA worked planning example\nFor a neighbourhood cafe with a narrow counter and a busy morning service, start with one ordinary day rather than the most ambitious future arrangement. Write down the sequence of work and the point at which a decision is needed. For this article, the central concern is Match milk portions to actual drink orders and record the leftovers before changing purchasing quantities. Avoid treating a quieter Tuesday and a crowded Saturday as comparable services. Keep that concern visible when reviewing options. A solution that improves an unrelated activity may be useful later, but it should not replace the question being investigated. Explain the expected benefit in language the person doing the work can challenge.\n\nCompare two practical options\nCreate a simple comparison between keeping the current arrangement and making the proposed change.",
+            "passage_start": 3606,
+            "passage_end": 4709
+          },
+          {
+            "id": "B06",
+            "title": "Designing a takeaway collection point",
+            "topic": "cafe",
+            "url": "https://benchmark.example.invalid/b06",
+            "score": 0.35349,
+            "passage": "a realistic sequence of orders, including a customer who changes their mind. Describe the handover out loud: who places the item, who collects it and what signals that the task is complete. Ambiguous handovers produce more confusion than a slightly longer reach.\n\nKeep purchasing separate\nAn operational problem does not automatically require new equipment. Compare a low-cost change to storage or order sequence before requesting a quote for a larger unit. If replacement is justified, write down the capacity, service access and utility requirements first. A sales photograph does not show the space needed for cleaning or maintenance. Confirm installation conditions with the supplier instead of guessing from the nominal product width.\n\nA worked planning example\nFor a neighbourhood cafe with a narrow counter and a busy morning service, start with one ordinary day rather than the most ambitious future arrangement. Write down the sequence of work and the point at which a decision is needed. For this article, the central concern is Place finished takeaway drinks where waiting customers",
+            "passage_start": 3564,
+            "passage_end": 4657
+          }
+        ],
+        "tfidf": [
+          {
+            "id": "B01",
+            "title": "Arranging an espresso station for two baristas",
+            "topic": "cafe",
+            "url": "https://benchmark.example.invalid/b01",
+            "score": 0.42466,
+            "passage": "Arranging an espresso station for two baristas\n\nPosition the grinder beside the espresso machine, keep milk within easy reach, and separate the handover point from drink preparation. The aim is to reduce crossing paths rather than squeeze another appliance onto the bench.\n\nThis guide follows a neighbourhood cafe with a narrow counter and a busy morning service. It treats the immediate task as part of an ordinary working routine, with limited space, imperfect information and people who need a clear handover. The examples are fictional. They are designed to make the decision process visible, including the reasons to test an idea before committing to it.\n\nObserve a complete service\nWatch the counter during a normal morning before drawing a new layout. Record where orders enter, where cups wait and where completed drinks leave the bench. A sketch made while the cafe is closed often overlooks the person paying, the customer asking about cakes and the staff member carrying stock from the storeroom. Measure",
+            "passage_start": 0,
+            "passage_end": 1015
+          },
+          {
+            "id": "B26",
+            "title": "Planning a careful WordPress plugin update",
+            "topic": "webops",
+            "url": "https://benchmark.example.invalid/b26",
+            "score": 0.08487,
+            "passage": "intent, and a quick page load on one machine does not establish performance for all visitors. Compare relevant examples and retain enough context to explain a recommendation to the person responsible for the website.\n\nA worked planning example\nFor a small organisation maintaining an informational website without a full-time operations team, start with one ordinary day rather than the most ambitious future arrangement. Write down the sequence of work and the point at which a decision is needed. For this article, the central concern is Inventory the affected plugins, create a recoverable backup, test changes away from the live site and check the important workflows. Do not assume a successful installation message means every page still works. Keep that concern visible when reviewing options. A solution that improves an unrelated activity may be useful later, but it should not replace the question being investigated. Explain the expected benefit in language the person doing the work can challenge.\n\nCompare two practical options\nCreate a simple comparison between keeping the current arrangement",
+            "passage_start": 2683,
+            "passage_end": 3790
+          },
+          {
+            "id": "B28",
+            "title": "Reducing oversized images on article pages",
+            "topic": "webops",
+            "url": "https://benchmark.example.invalid/b28",
+            "score": 0.06544,
+            "passage": "Use a short checklist with an observable result for each step. Keep screenshots or logs where useful, taking care not to capture secrets or unnecessary personal information.\n\nPrepare a recovery route\nDecide how the previous working state can be restored before making a consequential change. Confirm which files, database contents and configuration are needed, and test recovery with a disposable copy. A rollback instruction that depends on an unavailable person is incomplete. Keep the recovery steps alongside the release notes so someone responding to a problem does not need to reconstruct the plan under pressure.\n\nSeparate evidence from interpretation\nA metric or automated warning is a starting point for investigation. Describe what was measured, under which conditions and what it does not establish. A related passage does not prove identical article intent, and a quick page load on one machine does not establish performance for all visitors. Compare relevant examples and retain enough context to explain a recommendation to the person responsible for the",
+            "passage_start": 954,
+            "passage_end": 2023
+          },
+          {
+            "id": "B30",
+            "title": "Deciding whether overlapping blog posts should stay separate",
+            "topic": "webops",
+            "url": "https://benchmark.example.invalid/b30",
+            "score": 0.06458,
+            "passage": "Deciding whether overlapping blog posts should stay separate\n\nCompare reader intent, unique information and maintenance needs before merging related posts. A high text-similarity score is evidence to inspect, not an automatic instruction to delete a page.\n\nThis guide follows a small organisation maintaining an informational website without a full-time operations team. It treats the immediate task as part of an ordinary working routine, with limited space, imperfect information and people who need a clear handover. The examples are fictional. They are designed to make the decision process visible, including the reasons to test an idea before committing to it.\n\nSeparate evidence from interpretation\nA metric or automated warning is a starting point for investigation. Describe what was measured, under which conditions and what it does not establish. A related passage does not prove identical article intent, and a quick page load on one machine does not establish performance for all visitors. Compare relevant examples and retain enough context to explain a recommendation to the person responsible for the website",
+            "passage_start": 0,
+            "passage_end": 1124
+          },
+          {
+            "id": "B27",
+            "title": "Improving a small business contact page",
+            "topic": "webops",
+            "url": "https://benchmark.example.invalid/b27",
+            "score": 0.06375,
+            "passage": "that depends on an unavailable person is incomplete. Keep the recovery steps alongside the release notes so someone responding to a problem does not need to reconstruct the plan under pressure.\n\nSeparate evidence from interpretation\nA metric or automated warning is a starting point for investigation. Describe what was measured, under which conditions and what it does not establish. A related passage does not prove identical article intent, and a quick page load on one machine does not establish performance for all visitors. Compare relevant examples and retain enough context to explain a recommendation to the person responsible for the website.\n\nAssign ongoing ownership\nEvery change that introduces content or a dependency creates something to maintain. Assign responsibility for reviewing the information and set a practical reminder where appropriate. Contact details, plugin versions and recovery procedures can become outdated quietly. Prefer a small process someone will follow to an elaborate dashboard nobody checks. Document how a future maintainer can tell whether the original assumptions still hold.\n\nReview the release\nAfter an approved change,",
+            "passage_start": 1799,
+            "passage_end": 2964
+          }
+        ]
+      },
+      "elapsed_ms": 7901,
+      "query": "arranging an espresso machine and grinder for two baristas",
+      "article_count": 36
+    },
+    "links": {
+      "results": {
+        "embeddings": {
+          "results": [
+            {
+              "id": "B05",
+              "title": "Planning a cafe opening checklist",
+              "topic": "cafe",
+              "url": "https://benchmark.example.invalid/b05",
+              "score": 0.9004,
+              "passage": "closed often overlooks the person paying, the customer asking about cakes and the staff member carrying stock from the storeroom. Measure these interruptions as part of the work rather than assuming every movement is an error.\n\nMeasure usable space\nMeasure the clear working surface rather than the overall length of the counter. Power leads, water connections, a cleaning bucket and the swing of a cupboard door all take space away from the plan. Mark the footprints with removable tape and stand at the bench with the equipment in use. Ask whether a shorter colleague can reach the same items without leaning across a hot surface or another worker.\n\nSeparate tasks deliberately\nMap ordering, preparation, cleaning and collection as separate activities even when one person performs several of them. Place the objects needed for an activity together, but leave a clear boundary between food handling and dirty equipment. The boundary can be a small tray or a clearly assigned section of bench. It should remain understandable to a casual employee who has not",
+              "passage_start": 2725,
+              "passage_end": 3784,
+              "source_passage": "A sketch made while the cafe is closed often overlooks the person paying, the customer asking about cakes and the staff member carrying stock from the storeroom. Measure these interruptions as part of the work rather than assuming every movement is an error.\n\nMeasure usable space\nMeasure the clear working surface rather than the overall length of the counter. Power leads, water connections, a cleaning bucket and the swing of a cupboard door all take space away from the plan. Mark the footprints with removable tape and stand at the bench with the equipment in use. Ask whether a shorter colleague can reach the same items without leaning across a hot surface or another worker.\n\nSeparate tasks deliberately\nMap ordering, preparation, cleaning and collection as separate activities even when one person performs several of them. Place the objects needed for an activity together, but leave a clear boundary between food handling and dirty equipment. The boundary can be a small tray or a clearly assigned section of bench. It should remain understandable",
+              "source_start": 846,
+              "source_end": 1904,
+              "review_required": true
+            },
+            {
+              "id": "B02",
+              "title": "Choosing a display fridge for a small cafe",
+              "topic": "cafe",
+              "url": "https://benchmark.example.invalid/b02",
+              "score": 0.86728,
+              "passage": "the footprints with removable tape and stand at the bench with the equipment in use. Ask whether a shorter colleague can reach the same items without leaning across a hot surface or another worker.\n\nSeparate tasks deliberately\nMap ordering, preparation, cleaning and collection as separate activities even when one person performs several of them. Place the objects needed for an activity together, but leave a clear boundary between food handling and dirty equipment. The boundary can be a small tray or a clearly assigned section of bench. It should remain understandable to a casual employee who has not memorised the owner's preferred routine.\n\nTest the busiest handover\nA small change can help one task while delaying the next. Moving cups closer to preparation may obstruct the person taking payment. Trial the change with two workers and a realistic sequence of orders, including a customer who changes their mind. Describe the handover out loud: who places the item, who collects it and what signals that the task",
+              "passage_start": 874,
+              "passage_end": 1895,
+              "source_passage": "but leave a clear boundary between food handling and dirty equipment. The boundary can be a small tray or a clearly assigned section of bench. It should remain understandable to a casual employee who has not memorised the owner's preferred routine.\n\nTest the busiest handover\nA small change can help one task while delaying the next. Moving cups closer to preparation may obstruct the person taking payment. Trial the change with two workers and a realistic sequence of orders, including a customer who changes their mind. Describe the handover out loud: who places the item, who collects it and what signals that the task is complete. Ambiguous handovers produce more confusion than a slightly longer reach.\n\nA worked planning example\nFor a neighbourhood cafe with a narrow counter and a busy morning service, start with one ordinary day rather than the most ambitious future arrangement. Write down the sequence of work and the point at which a decision is needed. For this article, the central concern",
+              "source_start": 1730,
+              "source_end": 2734,
+              "review_required": true
+            },
+            {
+              "id": "B04",
+              "title": "Reducing wasted milk during the morning rush",
+              "topic": "cafe",
+              "url": "https://benchmark.example.invalid/b04",
+              "score": 0.83231,
+              "passage": "the expected benefit in language the person doing the work can challenge.\n\nCompare two practical options\nCreate a simple comparison between keeping the current arrangement and making the proposed change. Include time, space, training and maintenance, not only the initial purchase or setup. In a neighbourhood cafe with a narrow counter and a busy morning service, an apparently small adjustment can move work to another person. Ask that person to inspect the proposal before declaring it more efficient. Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.\n\nAn example",
+              "passage_start": 4506,
+              "passage_end": 5606,
+              "source_passage": "neighbourhood cafe with a narrow counter and a busy morning service, an apparently small adjustment can move work to another person. Ask that person to inspect the proposal before declaring it more efficient. Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.",
+              "source_start": 3444,
+              "source_end": 4236,
+              "review_required": true
+            },
+            {
+              "id": "B06",
+              "title": "Designing a takeaway collection point",
+              "topic": "cafe",
+              "url": "https://benchmark.example.invalid/b06",
+              "score": 0.82804,
+              "passage": "plan. Mark the footprints with removable tape and stand at the bench with the equipment in use. Ask whether a shorter colleague can reach the same items without leaning across a hot surface or another worker.\n\nSeparate tasks deliberately\nMap ordering, preparation, cleaning and collection as separate activities even when one person performs several of them. Place the objects needed for an activity together, but leave a clear boundary between food handling and dirty equipment. The boundary can be a small tray or a clearly assigned section of bench. It should remain understandable to a casual employee who has not memorised the owner's preferred routine.\n\nTest the busiest handover\nA small change can help one task while delaying the next. Moving cups closer to preparation may obstruct the person taking payment. Trial the change with two workers and a realistic sequence of orders, including a customer who changes their mind. Describe the handover out loud: who places the item, who collects it and what signals",
+              "passage_start": 2708,
+              "passage_end": 3726,
+              "source_passage": "but leave a clear boundary between food handling and dirty equipment. The boundary can be a small tray or a clearly assigned section of bench. It should remain understandable to a casual employee who has not memorised the owner's preferred routine.\n\nTest the busiest handover\nA small change can help one task while delaying the next. Moving cups closer to preparation may obstruct the person taking payment. Trial the change with two workers and a realistic sequence of orders, including a customer who changes their mind. Describe the handover out loud: who places the item, who collects it and what signals that the task is complete. Ambiguous handovers produce more confusion than a slightly longer reach.\n\nA worked planning example\nFor a neighbourhood cafe with a narrow counter and a busy morning service, start with one ordinary day rather than the most ambitious future arrangement. Write down the sequence of work and the point at which a decision is needed. For this article, the central concern",
+              "source_start": 1730,
+              "source_end": 2734,
+              "review_required": true
+            },
+            {
+              "id": "B09",
+              "title": "Scheduling several products through one oven",
+              "topic": "bakery",
+              "url": "https://benchmark.example.invalid/b09",
+              "score": 0.77138,
+              "passage": "a small bakery balancing a limited oven schedule with several daily product lines, an apparently small adjustment can move work to another person. Ask that person to inspect the proposal before declaring it more efficient. Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.\n\nAn example of misleading evidence\nSuppose a short trial seems easier on a quiet day. Before adopting the change, ask whether demand, staffing or the material being handled also changed. The comparison may still be useful, but those conditions belong in the conclusion. In",
+              "passage_start": 4524,
+              "passage_end": 5603,
+              "source_passage": "neighbourhood cafe with a narrow counter and a busy morning service, an apparently small adjustment can move work to another person. Ask that person to inspect the proposal before declaring it more efficient. Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.",
+              "source_start": 3444,
+              "source_end": 4236,
+              "review_required": true
+            }
+          ],
+          "excluded": {
+            "self": "B01",
+            "existing": [],
+            "disallowed": []
+          }
+        },
+        "tfidf": {
+          "results": [
+            {
+              "id": "B05",
+              "title": "Planning a cafe opening checklist",
+              "topic": "cafe",
+              "url": "https://benchmark.example.invalid/b05",
+              "score": 0.95043,
+              "passage": "closed often overlooks the person paying, the customer asking about cakes and the staff member carrying stock from the storeroom. Measure these interruptions as part of the work rather than assuming every movement is an error.\n\nMeasure usable space\nMeasure the clear working surface rather than the overall length of the counter. Power leads, water connections, a cleaning bucket and the swing of a cupboard door all take space away from the plan. Mark the footprints with removable tape and stand at the bench with the equipment in use. Ask whether a shorter colleague can reach the same items without leaning across a hot surface or another worker.\n\nSeparate tasks deliberately\nMap ordering, preparation, cleaning and collection as separate activities even when one person performs several of them. Place the objects needed for an activity together, but leave a clear boundary between food handling and dirty equipment. The boundary can be a small tray or a clearly assigned section of bench. It should remain understandable to a casual employee who has not",
+              "passage_start": 2725,
+              "passage_end": 3784,
+              "source_passage": "A sketch made while the cafe is closed often overlooks the person paying, the customer asking about cakes and the staff member carrying stock from the storeroom. Measure these interruptions as part of the work rather than assuming every movement is an error.\n\nMeasure usable space\nMeasure the clear working surface rather than the overall length of the counter. Power leads, water connections, a cleaning bucket and the swing of a cupboard door all take space away from the plan. Mark the footprints with removable tape and stand at the bench with the equipment in use. Ask whether a shorter colleague can reach the same items without leaning across a hot surface or another worker.\n\nSeparate tasks deliberately\nMap ordering, preparation, cleaning and collection as separate activities even when one person performs several of them. Place the objects needed for an activity together, but leave a clear boundary between food handling and dirty equipment. The boundary can be a small tray or a clearly assigned section of bench. It should remain understandable",
+              "source_start": 846,
+              "source_end": 1904,
+              "review_required": true
+            },
+            {
+              "id": "B13",
+              "title": "Watering raised vegetable beds through dry weather",
+              "topic": "garden",
+              "url": "https://benchmark.example.invalid/b13",
+              "score": 0.81432,
+              "passage": "and a shared water supply, an apparently small adjustment can move work to another person. Ask that person to inspect the proposal before declaring it more efficient. Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.",
+              "passage_start": 3462,
+              "passage_end": 4212,
+              "source_passage": "neighbourhood cafe with a narrow counter and a busy morning service, an apparently small adjustment can move work to another person. Ask that person to inspect the proposal before declaring it more efficient. Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.",
+              "source_start": 3444,
+              "source_end": 4236,
+              "review_required": true
+            },
+            {
+              "id": "B04",
+              "title": "Reducing wasted milk during the morning rush",
+              "topic": "cafe",
+              "url": "https://benchmark.example.invalid/b04",
+              "score": 0.81236,
+              "passage": "the expected benefit in language the person doing the work can challenge.\n\nCompare two practical options\nCreate a simple comparison between keeping the current arrangement and making the proposed change. Include time, space, training and maintenance, not only the initial purchase or setup. In a neighbourhood cafe with a narrow counter and a busy morning service, an apparently small adjustment can move work to another person. Ask that person to inspect the proposal before declaring it more efficient. Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.\n\nAn example",
+              "passage_start": 4506,
+              "passage_end": 5606,
+              "source_passage": "neighbourhood cafe with a narrow counter and a busy morning service, an apparently small adjustment can move work to another person. Ask that person to inspect the proposal before declaring it more efficient. Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.",
+              "source_start": 3444,
+              "source_end": 4236,
+              "review_required": true
+            },
+            {
+              "id": "B03",
+              "title": "Cleaning the glass and shelves of a cake display",
+              "topic": "cafe",
+              "url": "https://benchmark.example.invalid/b03",
+              "score": 0.80151,
+              "passage": "a busy morning service, an apparently small adjustment can move work to another person. Ask that person to inspect the proposal before declaring it more efficient. Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.\n\nAn example of misleading evidence\nSuppose a short trial seems easier on a quiet day. Before adopting the change, ask whether demand, staffing or the material being handled also changed. The comparison may still be useful, but those conditions belong in the conclusion. In a neighbourhood cafe with a narrow counter and a",
+              "passage_start": 4444,
+              "passage_end": 5513,
+              "source_passage": "neighbourhood cafe with a narrow counter and a busy morning service, an apparently small adjustment can move work to another person. Ask that person to inspect the proposal before declaring it more efficient. Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.",
+              "source_start": 3444,
+              "source_end": 4236,
+              "review_required": true
+            },
+            {
+              "id": "B07",
+              "title": "Why bread dough expands during fermentation",
+              "topic": "bakery",
+              "url": "https://benchmark.example.invalid/b07",
+              "score": 0.79261,
+              "passage": "small bakery balancing a limited oven schedule with several daily product lines, an apparently small adjustment can move work to another person. Ask that person to inspect the proposal before declaring it more efficient. Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.",
+              "passage_start": 3561,
+              "passage_end": 4365,
+              "source_passage": "neighbourhood cafe with a narrow counter and a busy morning service, an apparently small adjustment can move work to another person. Ask that person to inspect the proposal before declaring it more efficient. Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.",
+              "source_start": 3444,
+              "source_end": 4236,
+              "review_required": true
+            }
+          ],
+          "excluded": {
+            "self": "B01",
+            "existing": [],
+            "disallowed": []
+          }
+        }
+      },
+      "reviews": [],
+      "review_required": true
+    },
+    "overlaps": {
+      "pairs": [
+        {
+          "left": {
+            "id": "B11",
+            "title": "Recording bread batches for consistent results",
+            "topic": "bakery",
+            "url": "https://benchmark.example.invalid/b11",
+            "score": 0.94939,
+            "passage": ", ask whether demand, staffing or the material being handled also changed. The comparison may still be useful, but those conditions belong in the conclusion. In a small bakery balancing a limited oven schedule with several daily product lines, the same result may not carry over to a crowded session. Keep the original notes so the group can distinguish what was observed from the explanation first proposed for it.\n\nMake the handover usable\nLeave a short note describing the agreed arrangement, who is responsible for maintaining it and what should trigger a review. Put the note where the next person will actually look. A procedure hidden in an old email is unlikely to guide daily work. Include the exception that caused the most discussion during the trial, because that is often the situation in which a new person needs the clearest instruction.\n\nQuestions before spending more\nBefore expanding the change, ask whether the original problem remains, whether a simpler adjustment would address it and whether the necessary support is available. Separate an essential",
+            "passage_start": 6330,
+            "passage_end": 7401
+          },
+          "right": {
+            "id": "B12",
+            "title": "Cooling bread before packing for delivery",
+            "topic": "bakery",
+            "url": "https://benchmark.example.invalid/b12",
+            "score": 0.94939,
+            "passage": "staffing or the material being handled also changed. The comparison may still be useful, but those conditions belong in the conclusion. In a small bakery balancing a limited oven schedule with several daily product lines, the same result may not carry over to a crowded session. Keep the original notes so the group can distinguish what was observed from the explanation first proposed for it.\n\nMake the handover usable\nLeave a short note describing the agreed arrangement, who is responsible for maintaining it and what should trigger a review. Put the note where the next person will actually look. A procedure hidden in an old email is unlikely to guide daily work. Include the exception that caused the most discussion during the trial, because that is often the situation in which a new person needs the clearest instruction.\n\nQuestions before spending more\nBefore expanding the change, ask whether the original problem remains, whether a simpler adjustment would address it and whether the necessary support is available. Separate an essential requirement from a preference.",
+            "passage_start": 6319,
+            "passage_end": 7399
+          },
+          "score": 0.94939,
+          "recommendation": "Review intent and unique information",
+          "review_required": true
+        },
+        {
+          "left": {
+            "id": "B19",
+            "title": "Choosing a calmer route for a daily cycle commute",
+            "topic": "cycling",
+            "url": "https://benchmark.example.invalid/b19",
+            "score": 0.94916,
+            "passage": "day. Note whether the bicycle must be carried upstairs or placed on public transport. These details influence practical choices more directly than a photograph of an ideal bicycle on an empty road.\n\nInspect before changing\nLook at the current arrangement and record the problem before buying an accessory or adjusting a component. A rattle may come from a bag attachment rather than the part the rider first suspects. Where the issue affects braking, steering or structural safety, seek competent assistance rather than experimenting from a blog example. Keep the observation separate from the repair decision so the person helping receives a clear description.\n\nTrial an ordinary day\nTest a proposed change with the load and clothing used on a normal trip. A pannier that feels stable when empty may behave differently with a laptop and shopping inside. A route that seems comfortable on Sunday may be difficult at the required weekday time. Record the conditions of the trial and leave enough flexibility to return to a familiar arrangement if the change does not work.\n\nAllow for changing conditions",
+            "passage_start": 889,
+            "passage_end": 1991
+          },
+          "right": {
+            "id": "B23",
+            "title": "Planning a group ride with mixed experience",
+            "topic": "cycling",
+            "url": "https://benchmark.example.invalid/b23",
+            "score": 0.94916,
+            "passage": "or placed on public transport. These details influence practical choices more directly than a photograph of an ideal bicycle on an empty road.\n\nInspect before changing\nLook at the current arrangement and record the problem before buying an accessory or adjusting a component. A rattle may come from a bag attachment rather than the part the rider first suspects. Where the issue affects braking, steering or structural safety, seek competent assistance rather than experimenting from a blog example. Keep the observation separate from the repair decision so the person helping receives a clear description.\n\nTrial an ordinary day\nTest a proposed change with the load and clothing used on a normal trip. A pannier that feels stable when empty may behave differently with a laptop and shopping inside. A route that seems comfortable on Sunday may be difficult at the required weekday time. Record the conditions of the trial and leave enough flexibility to return to a familiar arrangement if the change does not work.\n\nAllow for changing conditions\nWeather, daylight, road works and personal circumstances can",
+            "passage_start": 2695,
+            "passage_end": 3803
+          },
+          "score": 0.94916,
+          "recommendation": "Review intent and unique information",
+          "review_required": true
+        },
+        {
+          "left": {
+            "id": "B03",
+            "title": "Cleaning the glass and shelves of a cake display",
+            "topic": "cafe",
+            "url": "https://benchmark.example.invalid/b03",
+            "score": 0.94873,
+            "passage": "a busy morning service, an apparently small adjustment can move work to another person. Ask that person to inspect the proposal before declaring it more efficient. Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.\n\nAn example of misleading evidence\nSuppose a short trial seems easier on a quiet day. Before adopting the change, ask whether demand, staffing or the material being handled also changed. The comparison may still be useful, but those conditions belong in the conclusion. In a neighbourhood cafe with a narrow counter and a",
+            "passage_start": 4444,
+            "passage_end": 5513
+          },
+          "right": {
+            "id": "B06",
+            "title": "Designing a takeaway collection point",
+            "topic": "cafe",
+            "url": "https://benchmark.example.invalid/b06",
+            "score": 0.94873,
+            "passage": "to another person. Ask that person to inspect the proposal before declaring it more efficient. Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.\n\nAn example of misleading evidence\nSuppose a short trial seems easier on a quiet day. Before adopting the change, ask whether demand, staffing or the material being handled also changed. The comparison may still be useful, but those conditions belong in the conclusion. In a neighbourhood cafe with a narrow counter and a busy morning service, the same result may not carry over to",
+            "passage_start": 5411,
+            "passage_end": 6471
+          },
+          "score": 0.94873,
+          "recommendation": "Review intent and unique information",
+          "review_required": true
+        },
+        {
+          "left": {
+            "id": "B03",
+            "title": "Cleaning the glass and shelves of a cake display",
+            "topic": "cafe",
+            "url": "https://benchmark.example.invalid/b03",
+            "score": 0.94809,
+            "passage": "a busy morning service, an apparently small adjustment can move work to another person. Ask that person to inspect the proposal before declaring it more efficient. Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.\n\nAn example of misleading evidence\nSuppose a short trial seems easier on a quiet day. Before adopting the change, ask whether demand, staffing or the material being handled also changed. The comparison may still be useful, but those conditions belong in the conclusion. In a neighbourhood cafe with a narrow counter and a",
+            "passage_start": 4444,
+            "passage_end": 5513
+          },
+          "right": {
+            "id": "B05",
+            "title": "Planning a cafe opening checklist",
+            "topic": "cafe",
+            "url": "https://benchmark.example.invalid/b05",
+            "score": 0.94809,
+            "passage": "adjustment can move work to another person. Ask that person to inspect the proposal before declaring it more efficient. Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.\n\nAn example of misleading evidence\nSuppose a short trial seems easier on a quiet day. Before adopting the change, ask whether demand, staffing or the material being handled also changed. The comparison may still be useful, but those conditions belong in the conclusion. In a neighbourhood cafe with a narrow counter and a busy morning service, the same result may",
+            "passage_start": 5354,
+            "passage_end": 6421
+          },
+          "score": 0.94809,
+          "recommendation": "Review intent and unique information",
+          "review_required": true
+        },
+        {
+          "left": {
+            "id": "B09",
+            "title": "Scheduling several products through one oven",
+            "topic": "bakery",
+            "url": "https://benchmark.example.invalid/b09",
+            "score": 0.94475,
+            "passage": "a small bakery balancing a limited oven schedule with several daily product lines, an apparently small adjustment can move work to another person. Ask that person to inspect the proposal before declaring it more efficient. Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.\n\nAn example of misleading evidence\nSuppose a short trial seems easier on a quiet day. Before adopting the change, ask whether demand, staffing or the material being handled also changed. The comparison may still be useful, but those conditions belong in the conclusion. In",
+            "passage_start": 4524,
+            "passage_end": 5603
+          },
+          "right": {
+            "id": "B11",
+            "title": "Recording bread batches for consistent results",
+            "topic": "bakery",
+            "url": "https://benchmark.example.invalid/b11",
+            "score": 0.94475,
+            "passage": "small bakery balancing a limited oven schedule with several daily product lines, an apparently small adjustment can move work to another person. Ask that person to inspect the proposal before declaring it more efficient. Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.\n\nAn example of misleading evidence\nSuppose a short trial seems easier on a quiet day. Before adopting the change, ask whether demand, staffing or the material being handled also changed. The comparison may still be useful, but those conditions belong in the conclusion. In a",
+            "passage_start": 5413,
+            "passage_end": 6492
+          },
+          "score": 0.94475,
+          "recommendation": "Review intent and unique information",
+          "review_required": true
+        },
+        {
+          "left": {
+            "id": "B16",
+            "title": "Collecting rainwater for a shared garden",
+            "topic": "garden",
+            "url": "https://benchmark.example.invalid/b16",
+            "score": 0.94432,
+            "passage": "an alternative contact and a short handover that describes the current condition of the beds. The plan should be realistic about time, access and weather rather than assuming every volunteer can visit whenever a task is needed.\n\nChoose advice carefully\nSeparate local observations from general gardening advice. Soil type, climate, plant variety and season can change the outcome of an otherwise sensible practice. Check specialist guidance before using unfamiliar products and follow their labels. This fictional example does not prescribe a chemical treatment. The useful habit is to identify the problem, gather evidence and choose a proportionate response rather than buying a product because another gardener mentioned it.\n\nReview the season\nAt the end of a growing period, compare the original plan with what happened in each bed. Note which crops were useful to the group, which tasks were difficult to maintain and what could be simplified. Keep enough detail to help the next coordinator without creating paperwork nobody reads. A review should acknowledge changing weather and volunteer availability. Those conditions explain",
+            "passage_start": 1807,
+            "passage_end": 2942
+          },
+          "right": {
+            "id": "B18",
+            "title": "Organising volunteers for a productive garden day",
+            "topic": "garden",
+            "url": "https://benchmark.example.invalid/b18",
+            "score": 0.94432,
+            "passage": "and a short handover that describes the current condition of the beds. The plan should be realistic about time, access and weather rather than assuming every volunteer can visit whenever a task is needed.\n\nChoose advice carefully\nSeparate local observations from general gardening advice. Soil type, climate, plant variety and season can change the outcome of an otherwise sensible practice. Check specialist guidance before using unfamiliar products and follow their labels. This fictional example does not prescribe a chemical treatment. The useful habit is to identify the problem, gather evidence and choose a proportionate response rather than buying a product because another gardener mentioned it.\n\nReview the season\nAt the end of a growing period, compare the original plan with what happened in each bed. Note which crops were useful to the group, which tasks were difficult to maintain and what could be simplified. Keep enough detail to help the next coordinator without creating paperwork nobody reads. A review should acknowledge changing weather and volunteer availability. Those conditions explain why a good",
+            "passage_start": 907,
+            "passage_end": 2030
+          },
+          "score": 0.94432,
+          "recommendation": "Review intent and unique information",
+          "review_required": true
+        },
+        {
+          "left": {
+            "id": "B05",
+            "title": "Planning a cafe opening checklist",
+            "topic": "cafe",
+            "url": "https://benchmark.example.invalid/b05",
+            "score": 0.94429,
+            "passage": "adjustment can move work to another person. Ask that person to inspect the proposal before declaring it more efficient. Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.\n\nAn example of misleading evidence\nSuppose a short trial seems easier on a quiet day. Before adopting the change, ask whether demand, staffing or the material being handled also changed. The comparison may still be useful, but those conditions belong in the conclusion. In a neighbourhood cafe with a narrow counter and a busy morning service, the same result may",
+            "passage_start": 5354,
+            "passage_end": 6421
+          },
+          "right": {
+            "id": "B06",
+            "title": "Designing a takeaway collection point",
+            "topic": "cafe",
+            "url": "https://benchmark.example.invalid/b06",
+            "score": 0.94429,
+            "passage": "to another person. Ask that person to inspect the proposal before declaring it more efficient. Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.\n\nAn example of misleading evidence\nSuppose a short trial seems easier on a quiet day. Before adopting the change, ask whether demand, staffing or the material being handled also changed. The comparison may still be useful, but those conditions belong in the conclusion. In a neighbourhood cafe with a narrow counter and a busy morning service, the same result may not carry over to",
+            "passage_start": 5411,
+            "passage_end": 6471
+          },
+          "score": 0.94429,
+          "recommendation": "Review intent and unique information",
+          "review_required": true
+        },
+        {
+          "left": {
+            "id": "B15",
+            "title": "Planning a crop rotation for four raised beds",
+            "topic": "garden",
+            "url": "https://benchmark.example.invalid/b15",
+            "score": 0.94267,
+            "passage": "small adjustment can move work to another person. Ask that person to inspect the proposal before declaring it more efficient. Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.\n\nAn example of misleading evidence\nSuppose a short trial seems easier on a quiet day. Before adopting the change, ask whether demand, staffing or the material being handled also changed. The comparison may still be useful, but those conditions belong in the conclusion. In an urban community garden with raised beds, volunteer gardeners and a shared water supply",
+            "passage_start": 4505,
+            "passage_end": 5577
+          },
+          "right": {
+            "id": "B18",
+            "title": "Organising volunteers for a productive garden day",
+            "topic": "garden",
+            "url": "https://benchmark.example.invalid/b18",
+            "score": 0.94267,
+            "passage": "adjustment can move work to another person. Ask that person to inspect the proposal before declaring it more efficient. Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.\n\nAn example of misleading evidence\nSuppose a short trial seems easier on a quiet day. Before adopting the change, ask whether demand, staffing or the material being handled also changed. The comparison may still be useful, but those conditions belong in the conclusion. In an urban community garden with raised beds, volunteer gardeners and a shared water supply,",
+            "passage_start": 5374,
+            "passage_end": 6441
+          },
+          "score": 0.94267,
+          "recommendation": "Review intent and unique information",
+          "review_required": true
+        },
+        {
+          "left": {
+            "id": "B20",
+            "title": "Keeping a bicycle chain clean on wet commutes",
+            "topic": "cycling",
+            "url": "https://benchmark.example.invalid/b20",
+            "score": 0.93857,
+            "passage": "expected benefit in language the person doing the work can challenge.\n\nCompare two practical options\nCreate a simple comparison between keeping the current arrangement and making the proposed change. Include time, space, training and maintenance, not only the initial purchase or setup. In a commuter cycling group helping new riders prepare for regular trips across town, an apparently small adjustment can move work to another person. Ask that person to inspect the proposal before declaring it more efficient. Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.\n\nAn example",
+            "passage_start": 3640,
+            "passage_end": 4748
+          },
+          "right": {
+            "id": "B22",
+            "title": "Checking a commuter bicycle before the week begins",
+            "topic": "cycling",
+            "url": "https://benchmark.example.invalid/b22",
+            "score": 0.93857,
+            "passage": "the person doing the work can challenge.\n\nCompare two practical options\nCreate a simple comparison between keeping the current arrangement and making the proposed change. Include time, space, training and maintenance, not only the initial purchase or setup. In a commuter cycling group helping new riders prepare for regular trips across town, an apparently small adjustment can move work to another person. Ask that person to inspect the proposal before declaring it more efficient. Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.\n\nAn example of misleading evidence\nSuppose",
+            "passage_start": 4551,
+            "passage_end": 5661
+          },
+          "score": 0.93857,
+          "recommendation": "Review intent and unique information",
+          "review_required": true
+        },
+        {
+          "left": {
+            "id": "B10",
+            "title": "Choosing an oven for a growing bakery",
+            "topic": "bakery",
+            "url": "https://benchmark.example.invalid/b10",
+            "score": 0.9373,
+            "passage": ". Before buying equipment, walk through its delivery route and service requirements. Ask who can maintain it and how production would continue during a breakdown. A simple contingency is more useful than an optimistic capacity calculation.\n\nReview waste carefully\nCount unsold products separately from products lost through a process fault. A change in demand may call for a smaller batch, while repeated handling damage calls for a different response. Record the product and stage where waste occurred, and avoid assigning blame from an incomplete note. The aim is to make the next decision clearer. A single quiet day should not be treated as evidence that the recipe or the whole production schedule is wrong.\n\nTeach the observable cues\nTraining should include the signs a baker looks for as well as the actions they perform. Ask a learner to describe what changed during a rest and why the next step is appropriate. Written instructions can support that discussion, but they cannot make every dough or pastry behave identically. Keep",
+            "passage_start": 1843,
+            "passage_end": 2880
+          },
+          "right": {
+            "id": "B12",
+            "title": "Cooling bread before packing for delivery",
+            "topic": "bakery",
+            "url": "https://benchmark.example.invalid/b12",
+            "score": 0.9373,
+            "passage": "walk through its delivery route and service requirements. Ask who can maintain it and how production would continue during a breakdown. A simple contingency is more useful than an optimistic capacity calculation.\n\nReview waste carefully\nCount unsold products separately from products lost through a process fault. A change in demand may call for a smaller batch, while repeated handling damage calls for a different response. Record the product and stage where waste occurred, and avoid assigning blame from an incomplete note. The aim is to make the next decision clearer. A single quiet day should not be treated as evidence that the recipe or the whole production schedule is wrong.\n\nTeach the observable cues\nTraining should include the signs a baker looks for as well as the actions they perform. Ask a learner to describe what changed during a rest and why the next step is appropriate. Written instructions can support that discussion, but they cannot make every dough or pastry behave identically. Keep the learning example separate from",
+            "passage_start": 908,
+            "passage_end": 1953
+          },
+          "score": 0.9373,
+          "recommendation": "Review intent and unique information",
+          "review_required": true
+        },
+        {
+          "left": {
+            "id": "B23",
+            "title": "Planning a group ride with mixed experience",
+            "topic": "cycling",
+            "url": "https://benchmark.example.invalid/b23",
+            "score": 0.93726,
+            "passage": "avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.\n\nAn example of misleading evidence\nSuppose a short trial seems easier on a quiet day. Before adopting the change, ask whether demand, staffing or the material being handled also changed. The comparison may still be useful, but those conditions belong in the conclusion. In a commuter cycling group helping new riders prepare for regular trips across town, the same result may not carry over to a crowded session. Keep the original notes so the group can distinguish what was observed from the explanation first proposed for",
+            "passage_start": 5428,
+            "passage_end": 6503
+          },
+          "right": {
+            "id": "B24",
+            "title": "Storing a bicycle in a small apartment",
+            "topic": "cycling",
+            "url": "https://benchmark.example.invalid/b24",
+            "score": 0.93726,
+            "passage": "Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.\n\nAn example of misleading evidence\nSuppose a short trial seems easier on a quiet day. Before adopting the change, ask whether demand, staffing or the material being handled also changed. The comparison may still be useful, but those conditions belong in the conclusion. In a commuter cycling group helping new riders prepare for regular trips across town, the same result may not carry over to a crowded session. Keep the original notes so the group can distinguish what was observed",
+            "passage_start": 5423,
+            "passage_end": 6490
+          },
+          "score": 0.93726,
+          "recommendation": "Review intent and unique information",
+          "review_required": true
+        },
+        {
+          "left": {
+            "id": "B22",
+            "title": "Checking a commuter bicycle before the week begins",
+            "topic": "cycling",
+            "url": "https://benchmark.example.invalid/b22",
+            "score": 0.93691,
+            "passage": "the component involved when asking for help. This prevents advice about one design being applied to another. Use the record to communicate clearly with a qualified mechanic where professional work is needed.\n\nConsider the end of the trip\nA journey includes arriving, securing the bicycle and preparing for the next departure. Check whether the destination has suitable storage and whether bags must be removed. Leave time for the practical handover between riding and the next activity. If the arrangement is consistently awkward, revisit the route or carrying system rather than judging the whole commute by riding time alone.\n\nReview after several journeys\nCompare notes across a few ordinary trips instead of deciding from the best or worst day. Identify repeated problems, such as a shifting load or an inconvenient junction, and address one practical issue at a time. A personal travel log does not establish universal safety conclusions. It helps the rider discuss specific conditions, recognise limits and make a better-informed plan for the journeys they actually take",
+            "passage_start": 1832,
+            "passage_end": 2908
+          },
+          "right": {
+            "id": "B24",
+            "title": "Storing a bicycle in a small apartment",
+            "topic": "cycling",
+            "url": "https://benchmark.example.invalid/b24",
+            "score": 0.93691,
+            "passage": "Make a note of the component involved when asking for help. This prevents advice about one design being applied to another. Use the record to communicate clearly with a qualified mechanic where professional work is needed.\n\nConsider the end of the trip\nA journey includes arriving, securing the bicycle and preparing for the next departure. Check whether the destination has suitable storage and whether bags must be removed. Leave time for the practical handover between riding and the next activity. If the arrangement is consistently awkward, revisit the route or carrying system rather than judging the whole commute by riding time alone.\n\nReview after several journeys\nCompare notes across a few ordinary trips instead of deciding from the best or worst day. Identify repeated problems, such as a shifting load or an inconvenient junction, and address one practical issue at a time. A personal travel log does not establish universal safety conclusions. It helps the rider discuss specific conditions, recognise limits and make a better-informed plan for the",
+            "passage_start": 911,
+            "passage_end": 1974
+          },
+          "score": 0.93691,
+          "recommendation": "Review intent and unique information",
+          "review_required": true
+        },
+        {
+          "left": {
+            "id": "B02",
+            "title": "Choosing a display fridge for a small cafe",
+            "topic": "cafe",
+            "url": "https://benchmark.example.invalid/b02",
+            "score": 0.93652,
+            "passage": "the footprints with removable tape and stand at the bench with the equipment in use. Ask whether a shorter colleague can reach the same items without leaning across a hot surface or another worker.\n\nSeparate tasks deliberately\nMap ordering, preparation, cleaning and collection as separate activities even when one person performs several of them. Place the objects needed for an activity together, but leave a clear boundary between food handling and dirty equipment. The boundary can be a small tray or a clearly assigned section of bench. It should remain understandable to a casual employee who has not memorised the owner's preferred routine.\n\nTest the busiest handover\nA small change can help one task while delaying the next. Moving cups closer to preparation may obstruct the person taking payment. Trial the change with two workers and a realistic sequence of orders, including a customer who changes their mind. Describe the handover out loud: who places the item, who collects it and what signals that the task",
+            "passage_start": 874,
+            "passage_end": 1895
+          },
+          "right": {
+            "id": "B06",
+            "title": "Designing a takeaway collection point",
+            "topic": "cafe",
+            "url": "https://benchmark.example.invalid/b06",
+            "score": 0.93652,
+            "passage": "plan. Mark the footprints with removable tape and stand at the bench with the equipment in use. Ask whether a shorter colleague can reach the same items without leaning across a hot surface or another worker.\n\nSeparate tasks deliberately\nMap ordering, preparation, cleaning and collection as separate activities even when one person performs several of them. Place the objects needed for an activity together, but leave a clear boundary between food handling and dirty equipment. The boundary can be a small tray or a clearly assigned section of bench. It should remain understandable to a casual employee who has not memorised the owner's preferred routine.\n\nTest the busiest handover\nA small change can help one task while delaying the next. Moving cups closer to preparation may obstruct the person taking payment. Trial the change with two workers and a realistic sequence of orders, including a customer who changes their mind. Describe the handover out loud: who places the item, who collects it and what signals",
+            "passage_start": 2708,
+            "passage_end": 3726
+          },
+          "score": 0.93652,
+          "recommendation": "Review intent and unique information",
+          "review_required": true
+        },
+        {
+          "left": {
+            "id": "B09",
+            "title": "Scheduling several products through one oven",
+            "topic": "bakery",
+            "url": "https://benchmark.example.invalid/b09",
+            "score": 0.93281,
+            "passage": "a small bakery balancing a limited oven schedule with several daily product lines, an apparently small adjustment can move work to another person. Ask that person to inspect the proposal before declaring it more efficient. Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.\n\nAn example of misleading evidence\nSuppose a short trial seems easier on a quiet day. Before adopting the change, ask whether demand, staffing or the material being handled also changed. The comparison may still be useful, but those conditions belong in the conclusion. In",
+            "passage_start": 4524,
+            "passage_end": 5603
+          },
+          "right": {
+            "id": "B12",
+            "title": "Cooling bread before packing for delivery",
+            "topic": "bakery",
+            "url": "https://benchmark.example.invalid/b12",
+            "score": 0.93281,
+            "passage": "oven schedule with several daily product lines, an apparently small adjustment can move work to another person. Ask that person to inspect the proposal before declaring it more efficient. Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.\n\nAn example of misleading evidence\nSuppose a short trial seems easier on a quiet day. Before adopting the change, ask whether demand, staffing or the material being handled also changed. The comparison may still be useful, but those conditions belong in the conclusion. In a small bakery balancing a limited",
+            "passage_start": 5413,
+            "passage_end": 6492
+          },
+          "score": 0.93281,
+          "recommendation": "Review intent and unique information",
+          "review_required": true
+        },
+        {
+          "left": {
+            "id": "B17",
+            "title": "Starting seedlings without overcrowding trays",
+            "topic": "garden",
+            "url": "https://benchmark.example.invalid/b17",
+            "score": 0.93202,
+            "passage": "beds, volunteer gardeners and a shared water supply, an apparently small adjustment can move work to another person. Ask that person to inspect the proposal before declaring it more efficient. Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.\n\nAn example of misleading evidence\nSuppose a short trial seems easier on a quiet day. Before adopting the change, ask whether demand, staffing or the material being handled also changed. The comparison may still be useful, but those conditions belong in the conclusion. In an urban community",
+            "passage_start": 5297,
+            "passage_end": 6365
+          },
+          "right": {
+            "id": "B18",
+            "title": "Organising volunteers for a productive garden day",
+            "topic": "garden",
+            "url": "https://benchmark.example.invalid/b18",
+            "score": 0.93202,
+            "passage": "adjustment can move work to another person. Ask that person to inspect the proposal before declaring it more efficient. Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.\n\nAn example of misleading evidence\nSuppose a short trial seems easier on a quiet day. Before adopting the change, ask whether demand, staffing or the material being handled also changed. The comparison may still be useful, but those conditions belong in the conclusion. In an urban community garden with raised beds, volunteer gardeners and a shared water supply,",
+            "passage_start": 5374,
+            "passage_end": 6441
+          },
+          "score": 0.93202,
+          "recommendation": "Review intent and unique information",
+          "review_required": true
+        },
+        {
+          "left": {
+            "id": "B15",
+            "title": "Planning a crop rotation for four raised beds",
+            "topic": "garden",
+            "url": "https://benchmark.example.invalid/b15",
+            "score": 0.93043,
+            "passage": "small adjustment can move work to another person. Ask that person to inspect the proposal before declaring it more efficient. Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.\n\nAn example of misleading evidence\nSuppose a short trial seems easier on a quiet day. Before adopting the change, ask whether demand, staffing or the material being handled also changed. The comparison may still be useful, but those conditions belong in the conclusion. In an urban community garden with raised beds, volunteer gardeners and a shared water supply",
+            "passage_start": 4505,
+            "passage_end": 5577
+          },
+          "right": {
+            "id": "B17",
+            "title": "Starting seedlings without overcrowding trays",
+            "topic": "garden",
+            "url": "https://benchmark.example.invalid/b17",
+            "score": 0.93043,
+            "passage": "beds, volunteer gardeners and a shared water supply, an apparently small adjustment can move work to another person. Ask that person to inspect the proposal before declaring it more efficient. Record unresolved questions and avoid giving invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.\n\nAn example of misleading evidence\nSuppose a short trial seems easier on a quiet day. Before adopting the change, ask whether demand, staffing or the material being handled also changed. The comparison may still be useful, but those conditions belong in the conclusion. In an urban community",
+            "passage_start": 5297,
+            "passage_end": 6365
+          },
+          "score": 0.93043,
+          "recommendation": "Review intent and unique information",
+          "review_required": true
+        },
+        {
+          "left": {
+            "id": "B08",
+            "title": "Protecting the layers in laminated pastry",
+            "topic": "bakery",
+            "url": "https://benchmark.example.invalid/b08",
+            "score": 0.92913,
+            "passage": "without becoming a complicated tracking system. Do not rely on a container's position to communicate readiness: someone may move it to clean. Clear handovers are particularly useful when mixing, resting and baking overlap across several products and different staff members.\n\nSeparate symptoms from causes\nA dense loaf or a poor layer structure is an observation, not a complete diagnosis. Compare the batch record with a successful example and change one relevant variable where practical. Several simultaneous adjustments may improve the result while leaving the baker unsure which change helped. Preserve photographs and notes consistently, using the same stage of production, rather than comparing one finished product with another product photographed before baking.\n\nPlan equipment access\nAllow enough space to load trays and to move racks without crossing an active work area. Nominal oven capacity does not describe the entire production system: mixing, shaping, cooling and packing can become the next constraint. Before buying equipment, walk through its delivery route and service requirements. Ask who can maintain it and how",
+            "passage_start": 1787,
+            "passage_end": 2924
+          },
+          "right": {
+            "id": "B10",
+            "title": "Choosing an oven for a growing bakery",
+            "topic": "bakery",
+            "url": "https://benchmark.example.invalid/b10",
+            "score": 0.92913,
+            "passage": "a container's position to communicate readiness: someone may move it to clean. Clear handovers are particularly useful when mixing, resting and baking overlap across several products and different staff members.\n\nSeparate symptoms from causes\nA dense loaf or a poor layer structure is an observation, not a complete diagnosis. Compare the batch record with a successful example and change one relevant variable where practical. Several simultaneous adjustments may improve the result while leaving the baker unsure which change helped. Preserve photographs and notes consistently, using the same stage of production, rather than comparing one finished product with another product photographed before baking.\n\nPlan equipment access\nAllow enough space to load trays and to move racks without crossing an active work area. Nominal oven capacity does not describe the entire production system: mixing, shaping, cooling and packing can become the next constraint. Before buying equipment, walk through its delivery route and service requirements. Ask who can maintain it and how production would continue during a breakdown. A simple conting",
+            "passage_start": 885,
+            "passage_end": 2022
+          },
+          "score": 0.92913,
+          "recommendation": "Review intent and unique information",
+          "review_required": true
+        },
+        {
+          "left": {
+            "id": "B13",
+            "title": "Watering raised vegetable beds through dry weather",
+            "topic": "garden",
+            "url": "https://benchmark.example.invalid/b13",
+            "score": 0.92353,
+            "passage": "path that becomes muddy after rain. Describe the conditions before selecting a treatment or buying supplies. Keep the notes attached to the particular bed because two beds in the same garden can have different drainage, soil depth and exposure.\n\nKeep a simple garden record\nRecord the date, bed, task and observation in language another volunteer can understand. A note that says a plant looked unhappy is less useful than a description of dry soil, damaged leaves or the stage of growth. Photographs can help if the position and scale are clear. Do not diagnose every symptom from an image alone. Use the record to decide what to inspect next rather than to claim certainty.\n\nWork with the available space\nMeasure the bed and the reach from the path before placing plants or tools. Volunteers should not need to step on growing soil to reach the middle of a bed. Leave room for mature plants rather than arranging seedlings according to their present size. A practical spacing plan also accounts for harvesting",
+            "passage_start": 833,
+            "passage_end": 1844
+          },
+          "right": {
+            "id": "B17",
+            "title": "Starting seedlings without overcrowding trays",
+            "topic": "garden",
+            "url": "https://benchmark.example.invalid/b17",
+            "score": 0.92353,
+            "passage": "an afternoon shadow or a path that becomes muddy after rain. Describe the conditions before selecting a treatment or buying supplies. Keep the notes attached to the particular bed because two beds in the same garden can have different drainage, soil depth and exposure.\n\nKeep a simple garden record\nRecord the date, bed, task and observation in language another volunteer can understand. A note that says a plant looked unhappy is less useful than a description of dry soil, damaged leaves or the stage of growth. Photographs can help if the position and scale are clear. Do not diagnose every symptom from an image alone. Use the record to decide what to inspect next rather than to claim certainty.\n\nWork with the available space\nMeasure the bed and the reach from the path before placing plants or tools. Volunteers should not need to step on growing soil to reach the middle of a bed. Leave room for mature plants rather than arranging seedlings according to their present size. A practical spacing",
+            "passage_start": 2661,
+            "passage_end": 3663
+          },
+          "score": 0.92353,
+          "recommendation": "Review intent and unique information",
+          "review_required": true
+        },
+        {
+          "left": {
+            "id": "B27",
+            "title": "Improving a small business contact page",
+            "topic": "webops",
+            "url": "https://benchmark.example.invalid/b27",
+            "score": 0.91681,
+            "passage": "invented numerical savings to a change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.\n\nAn example of misleading evidence\nSuppose a short trial seems easier on a quiet day. Before adopting the change, ask whether demand, staffing or the material being handled also changed. The comparison may still be useful, but those conditions belong in the conclusion. In a small organisation maintaining an informational website without a full-time operations team, the same result may not carry over to a crowded session. Keep the original notes so the group can distinguish what was observed from the explanation first proposed for",
+            "passage_start": 4629,
+            "passage_end": 5703
+          },
+          "right": {
+            "id": "B29",
+            "title": "Reviewing related articles before adding internal links",
+            "topic": "webops",
+            "url": "https://benchmark.example.invalid/b29",
+            "score": 0.91681,
+            "passage": "change that has not been measured.\n\nKeep the trial reversible\nUse a temporary arrangement where practical and retain the information needed to restore the previous setup. Tell affected people when the trial starts and what should be observed. Do not treat participation as agreement that the idea is successful. Invite concrete examples of inconvenience as well as improvement. A reversible trial makes it easier to learn without committing resources to an arrangement whose advantages are still uncertain.\n\nAn example of misleading evidence\nSuppose a short trial seems easier on a quiet day. Before adopting the change, ask whether demand, staffing or the material being handled also changed. The comparison may still be useful, but those conditions belong in the conclusion. In a small organisation maintaining an informational website without a full-time operations team, the same result may not carry over to a crowded session. Keep the original notes so the group can distinguish what was observed from the explanation first proposed for it.\n\nMake the hand",
+            "passage_start": 5496,
+            "passage_end": 6557
+          },
+          "score": 0.91681,
+          "recommendation": "Review intent and unique information",
+          "review_required": true
+        },
+        {
+          "left": {
+            "id": "B07",
+            "title": "Why bread dough expands during fermentation",
+            "topic": "bakery",
+            "url": "https://benchmark.example.invalid/b07",
+            "score": 0.91307,
+            "passage": "products reach the same stage together. Mark where work in progress may wait and where finished products must be protected. Keep flour, cleaning tools and packaging organised so staff do not move an unfinished batch simply to reach another item. The arrangement should support the sequence of work.\n\nMake handovers explicit\nWhen another baker takes over a batch, pass on what has happened and what should happen next. A tray label can include the product, start time and a short observation without becoming a complicated tracking system. Do not rely on a container's position to communicate readiness: someone may move it to clean. Clear handovers are particularly useful when mixing, resting and baking overlap across several products and different staff members.\n\nA worked planning example\nFor a small bakery balancing a limited oven schedule with several daily product lines, start with one ordinary day rather than the most ambitious future arrangement. Write down the sequence of work and the point at which a decision is needed. For this article, the central",
+            "passage_start": 1759,
+            "passage_end": 2824
+          },
+          "right": {
+            "id": "B11",
+            "title": "Recording bread batches for consistent results",
+            "topic": "bakery",
+            "url": "https://benchmark.example.invalid/b11",
+            "score": 0.91307,
+            "passage": "clear bench at opening can become blocked when several products reach the same stage together. Mark where work in progress may wait and where finished products must be protected. Keep flour, cleaning tools and packaging organised so staff do not move an unfinished batch simply to reach another item. The arrangement should support the sequence of work.\n\nMake handovers explicit\nWhen another baker takes over a batch, pass on what has happened and what should happen next. A tray label can include the product, start time and a short observation without becoming a complicated tracking system. Do not rely on a container's position to communicate readiness: someone may move it to clean. Clear handovers are particularly useful when mixing, resting and baking overlap across several products and different staff members.\n\nA worked planning example\nFor a small bakery balancing a limited oven schedule with several daily product lines, start with one ordinary day rather than the most ambitious future arrangement. Write down the sequence of work and the point at which a decision",
+            "passage_start": 3596,
+            "passage_end": 4675
+          },
+          "score": 0.91307,
+          "recommendation": "Review intent and unique information",
+          "review_required": true
+        }
+      ],
+      "notice": "Similarity is a review signal. It does not establish identical intent, cannibalisation or merge eligibility."
+    }
+  },
+  "capacity": {
+    "real_tokenizer_passages_checked": 269,
+    "max_combined_tokens": 206,
+    "all_offsets_and_tails_preserved": true,
+    "scenarios": [
+      {
+        "articles": 30,
+        "characters": 198653,
+        "accepted": true,
+        "reason": null,
+        "passages": 225,
+        "note": "original ordered prefix"
+      },
+      {
+        "articles": 36,
+        "characters": 238142,
+        "accepted": true,
+        "reason": null,
+        "passages": 269,
+        "note": "original ordered prefix"
+      },
+      {
+        "articles": 40,
+        "characters": 268013,
+        "accepted": false,
+        "reason": "The collection exceeds the 250,000-character limit.",
+        "passages": 302,
+        "note": "36 originals plus four duplicated length fixtures with new IDs"
+      },
+      {
+        "articles": 36,
+        "length_multiplier": 1.25,
+        "characters": 297257,
+        "accepted": false,
+        "passages": 337,
+        "note": "repeated-prose engineering capacity fixture"
+      },
+      {
+        "articles": 36,
+        "length_multiplier": 1.5,
+        "characters": 356393,
+        "accepted": false,
+        "passages": 402,
+        "note": "repeated-prose engineering capacity fixture"
+      },
+      {
+        "articles": 36,
+        "length_multiplier": 2.0,
+        "characters": 474663,
+        "accepted": false,
+        "passages": 531,
+        "note": "repeated-prose engineering capacity fixture"
+      }
+    ]
+  },
+  "token_dense_boundary": {
+    "import_status": 200,
+    "analysis_status": 422,
+    "detail": {
+      "detail": "The collection exceeds 800 passages. Import fewer or shorter articles."
+    }
+  },
+  "preservation": {
+    "checked_files": 42,
+    "changed": []
+  }
+}

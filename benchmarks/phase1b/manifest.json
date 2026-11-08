@@ -1,0 +1,193 @@
+{
+  "purpose": "Synthetic engineering capacity/performance fixture; not recommendation ground truth",
+  "provenance": "Original assistant-authored synthetic prose; no fetched or client content",
+  "limitations": [
+    "Shared topic sections and process templates deliberately create correlated passages",
+    "Length is realistic; language diversity and topic distribution are not a production sample",
+    "No independent human relevance labels; no accuracy claim is justified"
+  ],
+  "article_count": 36,
+  "sha256": "f7391d146b4a87a703d6deef0f71933d09dcf043bce28848cb18857831383c5f",
+  "articles": [
+    {
+      "id": "B01",
+      "words": 674,
+      "characters": 4236
+    },
+    {
+      "id": "B02",
+      "words": 824,
+      "characters": 5235
+    },
+    {
+      "id": "B03",
+      "words": 963,
+      "characters": 6144
+    },
+    {
+      "id": "B04",
+      "words": 1115,
+      "characters": 7066
+    },
+    {
+      "id": "B05",
+      "words": 1263,
+      "characters": 7995
+    },
+    {
+      "id": "B06",
+      "words": 1342,
+      "characters": 8594
+    },
+    {
+      "id": "B07",
+      "words": 689,
+      "characters": 4365
+    },
+    {
+      "id": "B08",
+      "words": 832,
+      "characters": 5376
+    },
+    {
+      "id": "B09",
+      "words": 986,
+      "characters": 6295
+    },
+    {
+      "id": "B10",
+      "words": 1128,
+      "characters": 7209
+    },
+    {
+      "id": "B11",
+      "words": 1281,
+      "characters": 8167
+    },
+    {
+      "id": "B12",
+      "words": 1363,
+      "characters": 8713
+    },
+    {
+      "id": "B13",
+      "words": 675,
+      "characters": 4212
+    },
+    {
+      "id": "B14",
+      "words": 837,
+      "characters": 5291
+    },
+    {
+      "id": "B15",
+      "words": 982,
+      "characters": 6187
+    },
+    {
+      "id": "B16",
+      "words": 1121,
+      "characters": 7167
+    },
+    {
+      "id": "B17",
+      "words": 1272,
+      "characters": 8031
+    },
+    {
+      "id": "B18",
+      "words": 1355,
+      "characters": 8622
+    },
+    {
+      "id": "B19",
+      "words": 663,
+      "characters": 4238
+    },
+    {
+      "id": "B20",
+      "words": 825,
+      "characters": 5264
+    },
+    {
+      "id": "B21",
+      "words": 951,
+      "characters": 6043
+    },
+    {
+      "id": "B22",
+      "words": 1104,
+      "characters": 7102
+    },
+    {
+      "id": "B23",
+      "words": 1243,
+      "characters": 7929
+    },
+    {
+      "id": "B24",
+      "words": 1331,
+      "characters": 8535
+    },
+    {
+      "id": "B25",
+      "words": 652,
+      "characters": 4226
+    },
+    {
+      "id": "B26",
+      "words": 804,
+      "characters": 5271
+    },
+    {
+      "id": "B27",
+      "words": 938,
+      "characters": 6144
+    },
+    {
+      "id": "B28",
+      "words": 1081,
+      "characters": 7122
+    },
+    {
+      "id": "B29",
+      "words": 1214,
+      "characters": 7964
+    },
+    {
+      "id": "B30",
+      "words": 1298,
+      "characters": 8582
+    },
+    {
+      "id": "B31",
+      "words": 641,
+      "characters": 4238
+    },
+    {
+      "id": "B32",
+      "words": 802,
+      "characters": 5281
+    },
+    {
+      "id": "B33",
+      "words": 933,
+      "characters": 6169
+    },
+    {
+      "id": "B34",
+      "words": 1071,
+      "characters": 7027
+    },
+    {
+      "id": "B35",
+      "words": 1212,
+      "characters": 7929
+    },
+    {
+      "id": "B36",
+      "words": 1303,
+      "characters": 8552
+    }
+  ]
+}

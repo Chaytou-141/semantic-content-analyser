@@ -1,0 +1,30 @@
+{
+  "phase": "3G",
+  "baseline_commit": "cad5b4a",
+  "targeted_tests": "....................................................................     [100%]\n68 passed in 1.39s",
+  "recommendation_judgements": 44,
+  "tasks": 7,
+  "overlap_cases_included": 0,
+  "overlap_cases_preserved_separately": 15,
+  "blind_payload_whitelist_and_exact_top5_union": "passed",
+  "unselected_initial_decisions": "passed",
+  "no_old_draft_or_review_import": "passed",
+  "csv_export_resume_and_invalid_import_rollback": "passed",
+  "draft_reload_and_mobile_layout": "passed",
+  "eligible_cutoff_and_provenance_validation": "passed",
+  "browser_errors": [],
+  "external_http_requests": 0,
+  "model_inference_runs": 0,
+  "actual_new_human_judgements": 0,
+  "synthetic_test_decisions_only": true,
+  "full_suite_run": false,
+  "protected_files_checked": 1758,
+  "changed_protected_files": [],
+  "packet_id": "06e7d3c92d86ed28013cef8cb78a402537ec32acb8ab8c79156b61259a382fc6",
+  "packet_sha256": "8cf72798802c1cea9660d1eeda37c07ee74c66c6eb91e64316c00eb3c22d1254",
+  "limitations": [
+    "Self-reported identity and prior exposure; no formal blindness certification.",
+    "Saved passage selection is model-derived; corpus/tasks are a single-site development sample.",
+    "Private article cache needed to rebuild, but not to score exported CSVs."
+  ]
+}

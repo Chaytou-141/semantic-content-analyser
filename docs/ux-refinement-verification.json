@@ -1,0 +1,84 @@
+{
+  "milestone": "UI/UX refinement after Phase 4B",
+  "baseline_commit": "f93aed4",
+  "date_australia_sydney": "2026-11-01",
+  "commit_reference": "git log -1 --format=%H --grep=\"Refine onboarding import guidance and readable article evidence\"",
+  "focused_tests": {
+    "passed": 163,
+    "failed": 0,
+    "skipped": 1,
+    "pytest_seconds": 15.8,
+    "skip": "Existing Windows symlink cleanup test requires symlink privileges."
+  },
+  "node_syntax_check": "passed",
+  "browser": {
+    "checks": [
+      "sample search/compare, exact full evidence, review persistence and overlaps",
+      "110 discovered, filtered selection, 40 extracted, 32 accepted/8 capacity excluded, success actions, sample protection and failed CSV rollback",
+      "non-WordPress XML import, visitor separation, mobile and keyboard, empty search",
+      "editor save/CSV export and replacement, development provenance, empty link/overlap and simulated budget/expiry errors"
+    ],
+    "browser_errors": [],
+    "external_browser_requests": [],
+    "public_site_fetches": 0,
+    "model": "deterministic test encoder only; not MiniLM quality evidence",
+    "preserved_files": 1793,
+    "transient_sqlite_sidecars_excluded": [
+      "runtime/workspace.sqlite3-shm",
+      "runtime/workspace.sqlite3-wal"
+    ],
+    "changed_protected_files": [],
+    "real_saved_collection_modified": false,
+    "fixture_discovery": 110,
+    "fixture_selected": 40,
+    "fixture_accepted": 32,
+    "fixture_capacity_excluded": 8,
+    "network": "mock DNS/transport, local app only"
+  },
+  "live_preview_readonly": {
+    "port": 8000,
+    "checks": [
+      "home sees current 32",
+      "sample options do not reset",
+      "continue to analysis preserves 32"
+    ],
+    "analysis_or_write_requests": 0
+  },
+  "saved_collection": {
+    "articles": 32,
+    "title_body_characters": 249162,
+    "reviews": 0,
+    "main_sqlite_sha256": "dbcde56c95eb6060419732cfade7afd98f5951e21ad6713b647584e62969167b",
+    "main_file_matches_before": true
+  },
+  "citation_artifact": {
+    "origin": "Present in authorised saved source HTML; no live-site claim",
+    "sources": [
+      {
+        "cached_source": "runtime/phase3c/corrected30/response-012.bin",
+        "sha256": "3a18e6c73341dec5e9bc48b8f89518ab7f44620a3ad02bbccde9eb8469adb134",
+        "source_already_contains_marker": true
+      },
+      {
+        "cached_source": "runtime/phase3c/corrected30/response-015.bin",
+        "sha256": "f6528454c2fac8193ed2e081b7b56ecfc55682d2d0560484088f45c83fb0fdf6",
+        "source_already_contains_marker": true
+      }
+    ],
+    "cleanup": "Labelled display previews only; full raw text, stored body, model input and offsets unchanged"
+  },
+  "source_sha256": {
+    "web/index.html": "b072521492b2800e94d0fd3c3f469ca99d3f4c4d95f48f3dcf660410f11d2219",
+    "web/app.js": "5769eac77ba54ccb809ac0c0e2b935d0260ba3afe21a02acf8f9606c22c6e842",
+    "web/styles.css": "8377704492ce6c2fa8d1aa9e61a9d7bd0e21168c5751ed1502b2fd21acf7f4a1",
+    "scripts/verify_ux_refinement.py": "075de792b90f3390cdefd8d0216be1f6343061a72dfeb6a7189ed2511c4c68db",
+    "tests/test_ux_display.py": "30c1587ca73baa75a2f26d4ae7009d319086cdd6868305185bdf8e5752570c0c",
+    "scripts/browser_smoke.py": "666c5b29b38e2f85f81fa89b1549f1bfc57d3496332c8eaea2dc3ce8e23dbb95"
+  },
+  "backend_api_ranking_security_or_limits_changed": false,
+  "real_model_inference_benchmarks": 0,
+  "new_evaluation_labels": 0,
+  "full_historical_suite_run": false,
+  "docker_or_cloud_deployment": false,
+  "github_push": false
+}

@@ -1,0 +1,337 @@
+{
+  "classification_provenance": "Assistant error-analysis annotations of supplied labels and frozen evidence; not new human judgements or causal experiments.",
+  "examples": [
+    {
+      "item_id": "C-R01-Wc8d0057aff79b0bf",
+      "case_id": "R01",
+      "source_id": "",
+      "target_id": "Wc8d0057aff79b0bf",
+      "source_title": null,
+      "target_title": "Commercial Freezer Buying Guide Sydney: 7 Essential Tips",
+      "decision": "not_useful",
+      "review_origin": "user_decision_after_ai_screening",
+      "categories": [
+        "search_intent_mismatch"
+      ],
+      "interpretation": "Assistant-classified search intent mismatch; inspect article intent and original evidence before editorial action.",
+      "frozen_evidence": [
+        {
+          "method": "embeddings",
+          "rank": 5,
+          "score": 0.68303,
+          "source_passage_sha256": null,
+          "target_passage_sha256": "1b3ed78925d406d191b988b8e3551c1bc37a156485ba8cf5f7fcbc14ae9378e6"
+        },
+        {
+          "method": "tfidf",
+          "rank": 3,
+          "score": 0.34728,
+          "source_passage_sha256": null,
+          "target_passage_sha256": "3a9a00ce61eb9f66fa64cb40267d19f1975ef9b47518877bbcd8afcdd47b5591"
+        }
+      ]
+    },
+    {
+      "item_id": "C-R02-W38e46c97bbbb0405",
+      "case_id": "R02",
+      "source_id": "",
+      "target_id": "W38e46c97bbbb0405",
+      "source_title": null,
+      "target_title": "Commercial Upright Fridge: 7 Essential Features for Better Display",
+      "decision": "not_useful",
+      "review_origin": "user_decision_after_ai_screening",
+      "categories": [
+        "search_intent_mismatch"
+      ],
+      "interpretation": "Assistant-classified search intent mismatch; inspect article intent and original evidence before editorial action.",
+      "frozen_evidence": [
+        {
+          "method": "tfidf",
+          "rank": 4,
+          "score": 0.20709,
+          "source_passage_sha256": null,
+          "target_passage_sha256": "38fd6a41f4e2b3dd0df6e55c0c363cbf6ed56cc12220a60007dfcec54a6e5b48"
+        }
+      ]
+    },
+    {
+      "item_id": "C-R03-W7979ae9d079cd4e8",
+      "case_id": "R03",
+      "source_id": "",
+      "target_id": "W7979ae9d079cd4e8",
+      "source_title": null,
+      "target_title": "Triple Glazed Display Freezer: Why Heated Glass Matters",
+      "decision": "not_useful",
+      "review_origin": "user_decision_after_ai_screening",
+      "categories": [
+        "topic_mismatch"
+      ],
+      "interpretation": "Assistant-classified topic mismatch; inspect article intent and original evidence before editorial action.",
+      "frozen_evidence": [
+        {
+          "method": "embeddings",
+          "rank": 5,
+          "score": 0.66855,
+          "source_passage_sha256": null,
+          "target_passage_sha256": "e4dc39ee64a60a89aee2026573dcd1d9f10334719d3f73daf734c1c2ef87ec31"
+        }
+      ]
+    },
+    {
+      "item_id": "C-R04-Wb1b62862200f9fab",
+      "case_id": "R04",
+      "source_id": "",
+      "target_id": "Wb1b62862200f9fab",
+      "source_title": null,
+      "target_title": "Commercial Fridge Airflow: 5 Critical Stocking Mistakes to Avoid",
+      "decision": "not_useful",
+      "review_origin": "user_decision_after_ai_screening",
+      "categories": [
+        "topic_mismatch",
+        "search_intent_mismatch"
+      ],
+      "interpretation": "Assistant-classified topic mismatch, search intent mismatch; inspect article intent and original evidence before editorial action.",
+      "frozen_evidence": [
+        {
+          "method": "embeddings",
+          "rank": 4,
+          "score": 0.41123,
+          "source_passage_sha256": null,
+          "target_passage_sha256": "2ab3851f60512f4364020493b018c3a8e4aa18ec467825962c1e5688e43f6402"
+        },
+        {
+          "method": "tfidf",
+          "rank": 4,
+          "score": 0.15709,
+          "source_passage_sha256": null,
+          "target_passage_sha256": "2ab3851f60512f4364020493b018c3a8e4aa18ec467825962c1e5688e43f6402"
+        }
+      ]
+    },
+    {
+      "item_id": "C-L02-W1d81d7c9e8f5f100",
+      "case_id": "L02",
+      "source_id": "W0352ca07b1d5f7a4",
+      "target_id": "W1d81d7c9e8f5f100",
+      "source_title": "Open Display Fridge Running Costs: 7 Factors That Affect Energy Use",
+      "target_title": "Self Service Display Fridge: 7 Powerful Benefits for Food Retail",
+      "decision": "not_useful",
+      "review_origin": "user_decision_after_ai_screening",
+      "categories": [
+        "search_intent_mismatch"
+      ],
+      "interpretation": "Assistant-classified search intent mismatch; inspect article intent and original evidence before editorial action.",
+      "frozen_evidence": [
+        {
+          "method": "embeddings",
+          "rank": 4,
+          "score": 0.79497,
+          "source_passage_sha256": "f2d1fee170fec175d67ba616cbc63205a335314676d6592ce8aa7aa675cca0b2",
+          "target_passage_sha256": "96518f922c9addf4bf4e48461b084d640bde36a50494ea66efe4d33c0585e995"
+        },
+        {
+          "method": "tfidf",
+          "rank": 3,
+          "score": 0.36226,
+          "source_passage_sha256": "ea646ab51ed96a3a84737c4f72775c6c9b6d0462d18046533a26671fde81c96b",
+          "target_passage_sha256": "ebfd6cdb67687ccc7acce8ac7c620cac0b418c0ce0fc3423f5b4a9cd0f1f338a"
+        }
+      ]
+    },
+    {
+      "item_id": "C-L03-Wb1b62862200f9fab",
+      "case_id": "L03",
+      "source_id": "Wabdb55b581cec281",
+      "target_id": "Wb1b62862200f9fab",
+      "source_title": "Static Cooling Sushi Display Fridge: Why No-Fan Cooling Matters",
+      "target_title": "Commercial Fridge Airflow: 5 Critical Stocking Mistakes to Avoid",
+      "decision": "not_useful",
+      "review_origin": "user_decision_after_ai_screening",
+      "categories": [
+        "topic_mismatch",
+        "search_intent_mismatch"
+      ],
+      "interpretation": "Assistant-classified topic mismatch, search intent mismatch; inspect article intent and original evidence before editorial action.",
+      "frozen_evidence": [
+        {
+          "method": "embeddings",
+          "rank": 3,
+          "score": 0.64037,
+          "source_passage_sha256": "870a28b7b56261bbbf1e40968419acfbd52d7804ba71df6fd9241072f533975b",
+          "target_passage_sha256": "f23fa33309850f168ab1c769e7aab74002f6e45ef623044dc6ab74fac6b52c3e"
+        },
+        {
+          "method": "tfidf",
+          "rank": 2,
+          "score": 0.33587,
+          "source_passage_sha256": "870a28b7b56261bbbf1e40968419acfbd52d7804ba71df6fd9241072f533975b",
+          "target_passage_sha256": "f23fa33309850f168ab1c769e7aab74002f6e45ef623044dc6ab74fac6b52c3e"
+        }
+      ]
+    },
+    {
+      "item_id": "O03",
+      "case_id": "OVERLAP",
+      "source_id": "W0352ca07b1d5f7a4",
+      "target_id": "Wd20a8f0e6dce6f2e",
+      "source_title": "Open Display Fridge Running Costs: 7 Factors That Affect Energy Use",
+      "target_title": "Open Display Fridge With Doors vs Open Front: Which Is Better for Your Store?",
+      "decision": "not_useful",
+      "review_origin": "user_decision_after_ai_screening",
+      "categories": [
+        "search_intent_mismatch",
+        "complementary_content_not_duplicate"
+      ],
+      "interpretation": "Assistant-classified search intent mismatch, complementary content not duplicate; inspect article intent and original evidence before editorial action.",
+      "frozen_evidence": [
+        {
+          "method": "embeddings",
+          "rank": 2,
+          "score": 0.91009,
+          "source_passage_sha256": "99ac3ada9dd5ddf07d83b81e7295ef8bbaa06aa5444d9b4d52bace44e109fcde",
+          "target_passage_sha256": "83152e3fce20d1d193865dbe9a9be502a6a9a7c8ccedf62881cec8a38324fb45"
+        },
+        {
+          "method": "tfidf",
+          "rank": 5,
+          "score": 0.5257,
+          "source_passage_sha256": "ea646ab51ed96a3a84737c4f72775c6c9b6d0462d18046533a26671fde81c96b",
+          "target_passage_sha256": "c2a38afb968bd79e9c874d5d5675496cfd6ae432bb35c15b6a4bff7f81629a7f"
+        }
+      ]
+    },
+    {
+      "item_id": "C-L02-W38e46c97bbbb0405",
+      "case_id": "L02",
+      "source_id": "W0352ca07b1d5f7a4",
+      "target_id": "W38e46c97bbbb0405",
+      "source_title": "Open Display Fridge Running Costs: 7 Factors That Affect Energy Use",
+      "target_title": "Commercial Upright Fridge: 7 Essential Features for Better Display",
+      "decision": "not_useful",
+      "review_origin": "chatgpt_ai_assisted",
+      "categories": [
+        "generic_buying_advice",
+        "search_intent_mismatch"
+      ],
+      "interpretation": "Assistant-classified generic buying advice, search intent mismatch; inspect article intent and original evidence before editorial action.",
+      "frozen_evidence": [
+        {
+          "method": "embeddings",
+          "rank": 2,
+          "score": 0.82363,
+          "source_passage_sha256": "2c1bad2ddb3b7702d44342cb7b8d46f1202bcb2178dd2ceb75a448b9bf2425d9",
+          "target_passage_sha256": "38fd6a41f4e2b3dd0df6e55c0c363cbf6ed56cc12220a60007dfcec54a6e5b48"
+        }
+      ]
+    },
+    {
+      "item_id": "C-L02-W59124efd4aebdc60",
+      "case_id": "L02",
+      "source_id": "W0352ca07b1d5f7a4",
+      "target_id": "W59124efd4aebdc60",
+      "source_title": "Open Display Fridge Running Costs: 7 Factors That Affect Energy Use",
+      "target_title": "Commercial Refrigeration Supplier Sydney: 7 Essential Buying Checks",
+      "decision": "not_useful",
+      "review_origin": "chatgpt_ai_assisted",
+      "categories": [
+        "generic_promotional_text",
+        "generic_buying_advice"
+      ],
+      "interpretation": "Assistant-classified generic promotional text, generic buying advice; inspect article intent and original evidence before editorial action.",
+      "frozen_evidence": [
+        {
+          "method": "embeddings",
+          "rank": 5,
+          "score": 0.78581,
+          "source_passage_sha256": "2c1bad2ddb3b7702d44342cb7b8d46f1202bcb2178dd2ceb75a448b9bf2425d9",
+          "target_passage_sha256": "a8dd6a66867a56b89320ee5213032cba242523c03b364dca20a196f35868471d"
+        },
+        {
+          "method": "tfidf",
+          "rank": 4,
+          "score": 0.36002,
+          "source_passage_sha256": "ea646ab51ed96a3a84737c4f72775c6c9b6d0462d18046533a26671fde81c96b",
+          "target_passage_sha256": "a8dd6a66867a56b89320ee5213032cba242523c03b364dca20a196f35868471d"
+        }
+      ]
+    },
+    {
+      "item_id": "C-L03-W0352ca07b1d5f7a4",
+      "case_id": "L03",
+      "source_id": "Wabdb55b581cec281",
+      "target_id": "W0352ca07b1d5f7a4",
+      "source_title": "Static Cooling Sushi Display Fridge: Why No-Fan Cooling Matters",
+      "target_title": "Open Display Fridge Running Costs: 7 Factors That Affect Energy Use",
+      "decision": "not_useful",
+      "review_origin": "chatgpt_ai_assisted",
+      "categories": [
+        "search_intent_mismatch"
+      ],
+      "interpretation": "Assistant-classified search intent mismatch; inspect article intent and original evidence before editorial action.",
+      "frozen_evidence": [
+        {
+          "method": "embeddings",
+          "rank": 2,
+          "score": 0.64323,
+          "source_passage_sha256": "acad803e8f5c344b5e3b584c68a47af7a06cd5079b787fd1c041b2947547c93a",
+          "target_passage_sha256": "ba1cc45f13911f369931b5b1dac664d0f4a5c87444b7723f3f99b926bfdf335a"
+        }
+      ]
+    },
+    {
+      "item_id": "O15",
+      "case_id": "OVERLAP",
+      "source_id": "Wcaa7372aa01a6165",
+      "target_id": "Wcbbba493a5bee591",
+      "source_title": "Commercial Refrigeration Equipment Sydney: 7 Reasons to Choose Freeze Edge",
+      "target_title": "Commercial Fridge Finance: 5 Flexible Payment Options",
+      "decision": "not_useful",
+      "review_origin": "chatgpt_ai_assisted",
+      "categories": [
+        "generic_promotional_text",
+        "search_intent_mismatch"
+      ],
+      "interpretation": "Assistant-classified generic promotional text, search intent mismatch; inspect article intent and original evidence before editorial action.",
+      "frozen_evidence": [
+        {
+          "method": "embeddings",
+          "rank": 8,
+          "score": 0.86721,
+          "source_passage_sha256": "9faa34bb8b48d4ca4ed7ffb250decac05d122eb8dc3283945fe3e057558dd89c",
+          "target_passage_sha256": "57ab30b87bb7e6cfdd857db897340059e3259c70d9f3e612419bb23dce93ca06"
+        },
+        {
+          "method": "tfidf",
+          "rank": 2,
+          "score": 0.57169,
+          "source_passage_sha256": "9faa34bb8b48d4ca4ed7ffb250decac05d122eb8dc3283945fe3e057558dd89c",
+          "target_passage_sha256": "57ab30b87bb7e6cfdd857db897340059e3259c70d9f3e612419bb23dce93ca06"
+        }
+      ]
+    },
+    {
+      "item_id": "O02",
+      "case_id": "OVERLAP",
+      "source_id": "W0352ca07b1d5f7a4",
+      "target_id": "W62fab2566c9ce776",
+      "source_title": "Open Display Fridge Running Costs: 7 Factors That Affect Energy Use",
+      "target_title": "Commercial Refrigeration Upgrade: 7 Signs It’s Time to Make a Change",
+      "decision": "not_useful",
+      "review_origin": "chatgpt_ai_assisted",
+      "categories": [
+        "generic_promotional_text",
+        "search_intent_mismatch"
+      ],
+      "interpretation": "Assistant-classified generic promotional text, search intent mismatch; inspect article intent and original evidence before editorial action.",
+      "frozen_evidence": [
+        {
+          "method": "embeddings",
+          "rank": 10,
+          "score": 0.86472,
+          "source_passage_sha256": "2c1bad2ddb3b7702d44342cb7b8d46f1202bcb2178dd2ceb75a448b9bf2425d9",
+          "target_passage_sha256": "193c334ea6f69653360474c9b8ef7e87548aecf0e3cbcc80fdf57c82b0935037"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1695 @@
+{
+  "baseline_commit": "34b613d",
+  "input_sha256": "eae069cfd02b85d44c64c851fb2fdef65a38caa688c9ff7d6389a1eeab03eecc",
+  "review_set_sha256": "67cd2c62725d1f6ccdb508258a7bd323bc6f9922a53a2b603be39be1e1fc6e65",
+  "articles": 30,
+  "characters": 232919,
+  "passages": 275,
+  "embedding_shape": [
+    275,
+    384
+  ],
+  "model_constructions": 1,
+  "model_revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+  "admission_wall_seconds": 0.562,
+  "analysis_wall_seconds": 9.278,
+  "process_cpu_seconds": 17.734,
+  "network_attempts": 0,
+  "exact_evidence_checks": 140,
+  "independently_reviewed_judgements": 0,
+  "metric_scope": "Assistant provisional development judgements; single-site sample; not held out or independent.",
+  "cases": [
+    {
+      "id": "R01",
+      "kind": "related",
+      "results": {
+        "embeddings": {
+          "metrics": {
+            "provisional": {
+              "precision@3": {
+                "value": 0.6666666666666666,
+                "relevant": 2,
+                "returned": 3
+              },
+              "precision@5": {
+                "value": 0.6,
+                "relevant": 3,
+                "returned": 5
+              }
+            },
+            "independent": {
+              "precision@3": {
+                "value": null,
+                "reason": "insufficient_review_provenance"
+              },
+              "precision@5": {
+                "value": null,
+                "reason": "insufficient_review_provenance"
+              }
+            }
+          },
+          "ranking": [
+            {
+              "id": "W809d6443d972f88b",
+              "score": 0.81031,
+              "passage_start": 0,
+              "passage_end": 1080,
+              "passage_sha256": "ebca64dd644cb9ff566447de523b2ec3229d7a2784124c45600f5a1e5b001558"
+            },
+            {
+              "id": "Wf0519af068261b10",
+              "score": 0.75036,
+              "passage_start": 5269,
+              "passage_end": 6312,
+              "passage_sha256": "ef5d0fccba2d3df03f28b81cf6530dba2cccfdd9ca0ea462c699254999d38f35"
+            },
+            {
+              "id": "W72fdaf17cd4c4232",
+              "score": 0.69579,
+              "passage_start": 2433,
+              "passage_end": 3411,
+              "passage_sha256": "ad2689934ab3027c46ea9dd0f774b6cf7f5759f03e7db2bb0ecc657455fbba63"
+            },
+            {
+              "id": "W53b407e9d806c4ed",
+              "score": 0.6838,
+              "passage_start": 1745,
+              "passage_end": 2755,
+              "passage_sha256": "97b4469557b722fddad1fefaf71c5f49bba96fe987648e68cbda5c19e66e1439"
+            },
+            {
+              "id": "Wc8d0057aff79b0bf",
+              "score": 0.68303,
+              "passage_start": 2720,
+              "passage_end": 3774,
+              "passage_sha256": "1b3ed78925d406d191b988b8e3551c1bc37a156485ba8cf5f7fcbc14ae9378e6"
+            }
+          ]
+        },
+        "tfidf": {
+          "metrics": {
+            "provisional": {
+              "precision@3": {
+                "value": 0.6666666666666666,
+                "relevant": 2,
+                "returned": 3
+              },
+              "precision@5": {
+                "value": 0.6,
+                "relevant": 3,
+                "returned": 5
+              }
+            },
+            "independent": {
+              "precision@3": {
+                "value": null,
+                "reason": "insufficient_review_provenance"
+              },
+              "precision@5": {
+                "value": null,
+                "reason": "insufficient_review_provenance"
+              }
+            }
+          },
+          "ranking": [
+            {
+              "id": "W53b407e9d806c4ed",
+              "score": 0.38046,
+              "passage_start": 9749,
+              "passage_end": 10705,
+              "passage_sha256": "6f7235a42563bd42ef6cbde0b63e167be3aa62e4e0d492253839c382d5606062"
+            },
+            {
+              "id": "Wf0519af068261b10",
+              "score": 0.36205,
+              "passage_start": 917,
+              "passage_end": 1992,
+              "passage_sha256": "3665a5d969ed569039dc4e800e438060cd1afbe8bd0164ce7b29716197f20d1b"
+            },
+            {
+              "id": "Wc8d0057aff79b0bf",
+              "score": 0.34728,
+              "passage_start": 1759,
+              "passage_end": 2919,
+              "passage_sha256": "3a9a00ce61eb9f66fa64cb40267d19f1975ef9b47518877bbcd8afcdd47b5591"
+            },
+            {
+              "id": "W809d6443d972f88b",
+              "score": 0.3206,
+              "passage_start": 0,
+              "passage_end": 1080,
+              "passage_sha256": "ebca64dd644cb9ff566447de523b2ec3229d7a2784124c45600f5a1e5b001558"
+            },
+            {
+              "id": "Wb759d5121095c6e0",
+              "score": 0.31974,
+              "passage_start": 2665,
+              "passage_end": 3764,
+              "passage_sha256": "1435b44a7bb80235f49ff996dd4f24fc380bf8e2890623238e8c9c9d529caa63"
+            }
+          ]
+        }
+      },
+      "relevant_label_count": 5
+    },
+    {
+      "id": "R02",
+      "kind": "related",
+      "results": {
+        "embeddings": {
+          "metrics": {
+            "provisional": {
+              "precision@3": {
+                "value": 1.0,
+                "relevant": 3,
+                "returned": 3
+              },
+              "precision@5": {
+                "value": 1.0,
+                "relevant": 5,
+                "returned": 5
+              }
+            },
+            "independent": {
+              "precision@3": {
+                "value": null,
+                "reason": "insufficient_review_provenance"
+              },
+              "precision@5": {
+                "value": null,
+                "reason": "insufficient_review_provenance"
+              }
+            }
+          },
+          "ranking": [
+            {
+              "id": "W4ccfbfbf7f453ddf",
+              "score": 0.7944,
+              "passage_start": 922,
+              "passage_end": 1955,
+              "passage_sha256": "e379b91a8ea6640150489765c90a344cb157b17f6d4cf7fbdd157f156e38eac8"
+            },
+            {
+              "id": "W59124efd4aebdc60",
+              "score": 0.6851,
+              "passage_start": 3520,
+              "passage_end": 4638,
+              "passage_sha256": "1fd009017223a96b991121b9a1894d589f7639e71a33d8e1a30bd3c289dfb9fe"
+            },
+            {
+              "id": "W1dd3e6cf9eb6189f",
+              "score": 0.68241,
+              "passage_start": 5120,
+              "passage_end": 6271,
+              "passage_sha256": "7def0aae521cdf60afd266c5fb0f6151963c051e49d4efd7b05c636f83120261"
+            },
+            {
+              "id": "W772f1c46d825866c",
+              "score": 0.67551,
+              "passage_start": 6072,
+              "passage_end": 7156,
+              "passage_sha256": "8caf6cacf2499f98541a70ccf1cdda5c7a35fda4676e3bcd24b68528a4f0100e"
+            },
+            {
+              "id": "W62fab2566c9ce776",
+              "score": 0.66713,
+              "passage_start": 7951,
+              "passage_end": 8439,
+              "passage_sha256": "39bf937730ca477cafc2415cd4719a7c080b3c3c9e8b3ef5b44083540f5cc89a"
+            }
+          ]
+        },
+        "tfidf": {
+          "metrics": {
+            "provisional": {
+              "precision@3": {
+                "value": 1.0,
+                "relevant": 3,
+                "returned": 3
+              },
+              "precision@5": {
+                "value": 1.0,
+                "relevant": 5,
+                "returned": 5
+              }
+            },
+            "independent": {
+              "precision@3": {
+                "value": null,
+                "reason": "insufficient_review_provenance"
+              },
+              "precision@5": {
+                "value": null,
+                "reason": "insufficient_review_provenance"
+              }
+            }
+          },
+          "ranking": [
+            {
+              "id": "W4ccfbfbf7f453ddf",
+              "score": 0.21755,
+              "passage_start": 7003,
+              "passage_end": 8114,
+              "passage_sha256": "b198bcf070fcc2844cd3f192e3027ccab79771eaab36b34dec3c2049aae6cda6"
+            },
+            {
+              "id": "W59124efd4aebdc60",
+              "score": 0.21424,
+              "passage_start": 7169,
+              "passage_end": 7691,
+              "passage_sha256": "168afc6d9a61e3d3355071573603e197370d80872cb10f073324ce5d9431b466"
+            },
+            {
+              "id": "W62fab2566c9ce776",
+              "score": 0.21271,
+              "passage_start": 7951,
+              "passage_end": 8439,
+              "passage_sha256": "39bf937730ca477cafc2415cd4719a7c080b3c3c9e8b3ef5b44083540f5cc89a"
+            },
+            {
+              "id": "W38e46c97bbbb0405",
+              "score": 0.20709,
+              "passage_start": 4678,
+              "passage_end": 5877,
+              "passage_sha256": "38fd6a41f4e2b3dd0df6e55c0c363cbf6ed56cc12220a60007dfcec54a6e5b48"
+            },
+            {
+              "id": "Wc8d0057aff79b0bf",
+              "score": 0.20571,
+              "passage_start": 3574,
+              "passage_end": 4686,
+              "passage_sha256": "2b56c2f0f6d673209811dda3ed65e0f747ff523731f0ef1b050cfd9a96cdf563"
+            }
+          ]
+        }
+      },
+      "relevant_label_count": 10
+    },
+    {
+      "id": "R03",
+      "kind": "related",
+      "results": {
+        "embeddings": {
+          "metrics": {
+            "provisional": {
+              "precision@3": {
+                "value": 1.0,
+                "relevant": 3,
+                "returned": 3
+              },
+              "precision@5": {
+                "value": 1.0,
+                "relevant": 5,
+                "returned": 5
+              }
+            },
+            "independent": {
+              "precision@3": {
+                "value": null,
+                "reason": "insufficient_review_provenance"
+              },
+              "precision@5": {
+                "value": null,
+                "reason": "insufficient_review_provenance"
+              }
+            }
+          },
+          "ranking": [
+            {
+              "id": "Wd20a8f0e6dce6f2e",
+              "score": 0.77336,
+              "passage_start": 5203,
+              "passage_end": 6297,
+              "passage_sha256": "a02035321d56432c7b4d5a9998814074913000e98beaf64009f035590ac349ec"
+            },
+            {
+              "id": "Wcde14bde9c3a81b5",
+              "score": 0.75635,
+              "passage_start": 1794,
+              "passage_end": 2855,
+              "passage_sha256": "639e424181d702188b5c3e83780aa073c155ed0950feb969185c9f0dfe95bbaf"
+            },
+            {
+              "id": "We52d30e6b7490ab6",
+              "score": 0.71661,
+              "passage_start": 2659,
+              "passage_end": 3754,
+              "passage_sha256": "28632006b42e3ca5662fb4958294abf62814d401bd2f2bb0b77f3a0e1a6017b5"
+            },
+            {
+              "id": "W1d81d7c9e8f5f100",
+              "score": 0.70479,
+              "passage_start": 2575,
+              "passage_end": 3635,
+              "passage_sha256": "c9ffc6ad74914ccbca49de1e22bfcc35cd50a1eafc13cc60a1a9746dda70ef81"
+            },
+            {
+              "id": "W7979ae9d079cd4e8",
+              "score": 0.66855,
+              "passage_start": 2605,
+              "passage_end": 3638,
+              "passage_sha256": "e4dc39ee64a60a89aee2026573dcd1d9f10334719d3f73daf734c1c2ef87ec31"
+            }
+          ]
+        },
+        "tfidf": {
+          "metrics": {
+            "provisional": {
+              "precision@3": {
+                "value": 1.0,
+                "relevant": 3,
+                "returned": 3
+              },
+              "precision@5": {
+                "value": 1.0,
+                "relevant": 5,
+                "returned": 5
+              }
+            },
+            "independent": {
+              "precision@3": {
+                "value": null,
+                "reason": "insufficient_review_provenance"
+              },
+              "precision@5": {
+                "value": null,
+                "reason": "insufficient_review_provenance"
+              }
+            }
+          },
+          "ranking": [
+            {
+              "id": "Wd20a8f0e6dce6f2e",
+              "score": 0.26157,
+              "passage_start": 5203,
+              "passage_end": 6297,
+              "passage_sha256": "a02035321d56432c7b4d5a9998814074913000e98beaf64009f035590ac349ec"
+            },
+            {
+              "id": "Wb092510eb9d3d03b",
+              "score": 0.2232,
+              "passage_start": 1829,
+              "passage_end": 2837,
+              "passage_sha256": "041d54d0daff6255263bd76d788c66e98f259c623b3d5f0e194a1b60816a976a"
+            },
+            {
+              "id": "W1d81d7c9e8f5f100",
+              "score": 0.21119,
+              "passage_start": 2575,
+              "passage_end": 3635,
+              "passage_sha256": "c9ffc6ad74914ccbca49de1e22bfcc35cd50a1eafc13cc60a1a9746dda70ef81"
+            },
+            {
+              "id": "Wcde14bde9c3a81b5",
+              "score": 0.20992,
+              "passage_start": 3599,
+              "passage_end": 4643,
+              "passage_sha256": "1136fead85b9462ae14f3f4dee77a0c84c187f9eccd2529eaa78dc445c7ce5a7"
+            },
+            {
+              "id": "We52d30e6b7490ab6",
+              "score": 0.20638,
+              "passage_start": 2659,
+              "passage_end": 3754,
+              "passage_sha256": "28632006b42e3ca5662fb4958294abf62814d401bd2f2bb0b77f3a0e1a6017b5"
+            }
+          ]
+        }
+      },
+      "relevant_label_count": 7
+    },
+    {
+      "id": "R04",
+      "kind": "related",
+      "results": {
+        "embeddings": {
+          "metrics": {
+            "provisional": {
+              "precision@3": {
+                "value": 0.6666666666666666,
+                "relevant": 2,
+                "returned": 3
+              },
+              "precision@5": {
+                "value": 0.4,
+                "relevant": 2,
+                "returned": 5
+              }
+            },
+            "independent": {
+              "precision@3": {
+                "value": null,
+                "reason": "insufficient_review_provenance"
+              },
+              "precision@5": {
+                "value": null,
+                "reason": "insufficient_review_provenance"
+              }
+            }
+          },
+          "ranking": [
+            {
+              "id": "Wabdb55b581cec281",
+              "score": 0.72285,
+              "passage_start": 833,
+              "passage_end": 1842,
+              "passage_sha256": "870a28b7b56261bbbf1e40968419acfbd52d7804ba71df6fd9241072f533975b"
+            },
+            {
+              "id": "Wc201444bb806b11c",
+              "score": 0.60239,
+              "passage_start": 0,
+              "passage_end": 1030,
+              "passage_sha256": "10bd0f07dd512b82a2fe838e927df02827b48be12593a3424af9190a21343e1d"
+            },
+            {
+              "id": "W38e46c97bbbb0405",
+              "score": 0.46484,
+              "passage_start": 2839,
+              "passage_end": 3931,
+              "passage_sha256": "8514b48b4924608bde74a206584fda542a492c3c55b504e23d464292ab25700c"
+            },
+            {
+              "id": "Wb1b62862200f9fab",
+              "score": 0.41123,
+              "passage_start": 836,
+              "passage_end": 1831,
+              "passage_sha256": "2ab3851f60512f4364020493b018c3a8e4aa18ec467825962c1e5688e43f6402"
+            },
+            {
+              "id": "Wcde14bde9c3a81b5",
+              "score": 0.4079,
+              "passage_start": 1794,
+              "passage_end": 2855,
+              "passage_sha256": "639e424181d702188b5c3e83780aa073c155ed0950feb969185c9f0dfe95bbaf"
+            }
+          ]
+        },
+        "tfidf": {
+          "metrics": {
+            "provisional": {
+              "precision@3": {
+                "value": 0.6666666666666666,
+                "relevant": 2,
+                "returned": 3
+              },
+              "precision@5": {
+                "value": 0.4,
+                "relevant": 2,
+                "returned": 5
+              }
+            },
+            "independent": {
+              "precision@3": {
+                "value": null,
+                "reason": "insufficient_review_provenance"
+              },
+              "precision@5": {
+                "value": null,
+                "reason": "insufficient_review_provenance"
+              }
+            }
+          },
+          "ranking": [
+            {
+              "id": "Wabdb55b581cec281",
+              "score": 0.4023,
+              "passage_start": 0,
+              "passage_end": 981,
+              "passage_sha256": "4bf9d9b96639cf9671300bf36b86b4b14f33eb816afed72202296d9f5f5ebf2e"
+            },
+            {
+              "id": "Wc201444bb806b11c",
+              "score": 0.22594,
+              "passage_start": 0,
+              "passage_end": 1030,
+              "passage_sha256": "10bd0f07dd512b82a2fe838e927df02827b48be12593a3424af9190a21343e1d"
+            },
+            {
+              "id": "W38e46c97bbbb0405",
+              "score": 0.20372,
+              "passage_start": 2839,
+              "passage_end": 3931,
+              "passage_sha256": "8514b48b4924608bde74a206584fda542a492c3c55b504e23d464292ab25700c"
+            },
+            {
+              "id": "Wb1b62862200f9fab",
+              "score": 0.15709,
+              "passage_start": 836,
+              "passage_end": 1831,
+              "passage_sha256": "2ab3851f60512f4364020493b018c3a8e4aa18ec467825962c1e5688e43f6402"
+            },
+            {
+              "id": "W1d81d7c9e8f5f100",
+              "score": 0.1046,
+              "passage_start": 6080,
+              "passage_end": 7113,
+              "passage_sha256": "96518f922c9addf4bf4e48461b084d640bde36a50494ea66efe4d33c0585e995"
+            }
+          ]
+        }
+      },
+      "relevant_label_count": 2
+    },
+    {
+      "id": "L01",
+      "kind": "internal_link",
+      "results": {
+        "embeddings": {
+          "metrics": {
+            "provisional": {
+              "precision@3": {
+                "value": 1.0,
+                "relevant": 3,
+                "returned": 3
+              },
+              "precision@5": {
+                "value": 0.8,
+                "relevant": 4,
+                "returned": 5
+              }
+            },
+            "independent": {
+              "precision@3": {
+                "value": null,
+                "reason": "insufficient_review_provenance"
+              },
+              "precision@5": {
+                "value": null,
+                "reason": "insufficient_review_provenance"
+              }
+            }
+          },
+          "ranking": [
+            {
+              "id": "W0264280d87a79512",
+              "score": 0.84173,
+              "passage_start": 859,
+              "passage_end": 1893,
+              "passage_sha256": "b0aef4272e49fab6b0e4cda3ad9cf7ad8c43b2d535225972a6985c688b850277"
+            },
+            {
+              "id": "W809d6443d972f88b",
+              "score": 0.80482,
+              "passage_start": 0,
+              "passage_end": 1080,
+              "passage_sha256": "ebca64dd644cb9ff566447de523b2ec3229d7a2784124c45600f5a1e5b001558"
+            },
+            {
+              "id": "Wf0519af068261b10",
+              "score": 0.80337,
+              "passage_start": 1817,
+              "passage_end": 2840,
+              "passage_sha256": "26ce120d15e90042b78008495ccdde624ebee085b8ea3d50a55fbc05c78a3828"
+            },
+            {
+              "id": "W53b407e9d806c4ed",
+              "score": 0.80088,
+              "passage_start": 2587,
+              "passage_end": 3625,
+              "passage_sha256": "543b5a3d36e4bcc759e93a233774d02a3b06a88382f93df5820c724a84c22792"
+            },
+            {
+              "id": "Wc8d0057aff79b0bf",
+              "score": 0.74607,
+              "passage_start": 1759,
+              "passage_end": 2919,
+              "passage_sha256": "3a9a00ce61eb9f66fa64cb40267d19f1975ef9b47518877bbcd8afcdd47b5591"
+            }
+          ]
+        },
+        "tfidf": {
+          "metrics": {
+            "provisional": {
+              "precision@3": {
+                "value": 1.0,
+                "relevant": 3,
+                "returned": 3
+              },
+              "precision@5": {
+                "value": 0.8,
+                "relevant": 4,
+                "returned": 5
+              }
+            },
+            "independent": {
+              "precision@3": {
+                "value": null,
+                "reason": "insufficient_review_provenance"
+              },
+              "precision@5": {
+                "value": null,
+                "reason": "insufficient_review_provenance"
+              }
+            }
+          },
+          "ranking": [
+            {
+              "id": "W53b407e9d806c4ed",
+              "score": 0.42852,
+              "passage_start": 9749,
+              "passage_end": 10705,
+              "passage_sha256": "6f7235a42563bd42ef6cbde0b63e167be3aa62e4e0d492253839c382d5606062"
+            },
+            {
+              "id": "Wf0519af068261b10",
+              "score": 0.41604,
+              "passage_start": 1817,
+              "passage_end": 2840,
+              "passage_sha256": "26ce120d15e90042b78008495ccdde624ebee085b8ea3d50a55fbc05c78a3828"
+            },
+            {
+              "id": "W0264280d87a79512",
+              "score": 0.36975,
+              "passage_start": 0,
+              "passage_end": 1037,
+              "passage_sha256": "7588db1a1f3b11927236ab7e2403e581d28fd6408a0896dc9308ac28d469c66b"
+            },
+            {
+              "id": "W809d6443d972f88b",
+              "score": 0.33104,
+              "passage_start": 0,
+              "passage_end": 1080,
+              "passage_sha256": "ebca64dd644cb9ff566447de523b2ec3229d7a2784124c45600f5a1e5b001558"
+            },
+            {
+              "id": "Wd20a8f0e6dce6f2e",
+              "score": 0.30791,
+              "passage_start": 6111,
+              "passage_end": 7145,
+              "passage_sha256": "c2a38afb968bd79e9c874d5d5675496cfd6ae432bb35c15b6a4bff7f81629a7f"
+            }
+          ]
+        }
+      },
+      "relevant_label_count": 4
+    },
+    {
+      "id": "L02",
+      "kind": "internal_link",
+      "results": {
+        "embeddings": {
+          "metrics": {
+            "provisional": {
+              "precision@3": {
+                "value": 0.3333333333333333,
+                "relevant": 1,
+                "returned": 3
+              },
+              "precision@5": {
+                "value": 0.2,
+                "relevant": 1,
+                "returned": 5
+              }
+            },
+            "independent": {
+              "precision@3": {
+                "value": null,
+                "reason": "insufficient_review_provenance"
+              },
+              "precision@5": {
+                "value": null,
+                "reason": "insufficient_review_provenance"
+              }
+            }
+          },
+          "ranking": [
+            {
+              "id": "W62fab2566c9ce776",
+              "score": 0.86472,
+              "passage_start": 3546,
+              "passage_end": 4589,
+              "passage_sha256": "193c334ea6f69653360474c9b8ef7e87548aecf0e3cbcc80fdf57c82b0935037"
+            },
+            {
+              "id": "W38e46c97bbbb0405",
+              "score": 0.82363,
+              "passage_start": 4678,
+              "passage_end": 5877,
+              "passage_sha256": "38fd6a41f4e2b3dd0df6e55c0c363cbf6ed56cc12220a60007dfcec54a6e5b48"
+            },
+            {
+              "id": "Wcde14bde9c3a81b5",
+              "score": 0.82219,
+              "passage_start": 4477,
+              "passage_end": 5574,
+              "passage_sha256": "8b51fc3682210785682794674c2facd905356f8f492ccab6eabf060b0fc7c921"
+            },
+            {
+              "id": "W1d81d7c9e8f5f100",
+              "score": 0.79497,
+              "passage_start": 6080,
+              "passage_end": 7113,
+              "passage_sha256": "96518f922c9addf4bf4e48461b084d640bde36a50494ea66efe4d33c0585e995"
+            },
+            {
+              "id": "W59124efd4aebdc60",
+              "score": 0.78581,
+              "passage_start": 2553,
+              "passage_end": 3696,
+              "passage_sha256": "a8dd6a66867a56b89320ee5213032cba242523c03b364dca20a196f35868471d"
+            }
+          ]
+        },
+        "tfidf": {
+          "metrics": {
+            "provisional": {
+              "precision@3": {
+                "value": 0.3333333333333333,
+                "relevant": 1,
+                "returned": 3
+              },
+              "precision@5": {
+                "value": 0.2,
+                "relevant": 1,
+                "returned": 5
+              }
+            },
+            "independent": {
+              "precision@3": {
+                "value": null,
+                "reason": "insufficient_review_provenance"
+              },
+              "precision@5": {
+                "value": null,
+                "reason": "insufficient_review_provenance"
+              }
+            }
+          },
+          "ranking": [
+            {
+              "id": "W62fab2566c9ce776",
+              "score": 0.40693,
+              "passage_start": 3546,
+              "passage_end": 4589,
+              "passage_sha256": "193c334ea6f69653360474c9b8ef7e87548aecf0e3cbcc80fdf57c82b0935037"
+            },
+            {
+              "id": "Wcde14bde9c3a81b5",
+              "score": 0.39544,
+              "passage_start": 3599,
+              "passage_end": 4643,
+              "passage_sha256": "1136fead85b9462ae14f3f4dee77a0c84c187f9eccd2529eaa78dc445c7ce5a7"
+            },
+            {
+              "id": "W1d81d7c9e8f5f100",
+              "score": 0.36226,
+              "passage_start": 7837,
+              "passage_end": 8849,
+              "passage_sha256": "ebfd6cdb67687ccc7acce8ac7c620cac0b418c0ce0fc3423f5b4a9cd0f1f338a"
+            },
+            {
+              "id": "W59124efd4aebdc60",
+              "score": 0.36002,
+              "passage_start": 2553,
+              "passage_end": 3696,
+              "passage_sha256": "a8dd6a66867a56b89320ee5213032cba242523c03b364dca20a196f35868471d"
+            },
+            {
+              "id": "Wb759d5121095c6e0",
+              "score": 0.35643,
+              "passage_start": 4497,
+              "passage_end": 5616,
+              "passage_sha256": "b8ed6668ae0df48597b9906806d47b922121f53ee333f42b0d86052dbc7cc57d"
+            }
+          ]
+        }
+      },
+      "relevant_label_count": 3
+    },
+    {
+      "id": "L03",
+      "kind": "internal_link",
+      "results": {
+        "embeddings": {
+          "metrics": {
+            "provisional": {
+              "precision@3": {
+                "value": 0.3333333333333333,
+                "relevant": 1,
+                "returned": 3
+              },
+              "precision@5": {
+                "value": 0.2,
+                "relevant": 1,
+                "returned": 5
+              }
+            },
+            "independent": {
+              "precision@3": {
+                "value": null,
+                "reason": "insufficient_review_provenance"
+              },
+              "precision@5": {
+                "value": null,
+                "reason": "insufficient_review_provenance"
+              }
+            }
+          },
+          "ranking": [
+            {
+              "id": "Wc201444bb806b11c",
+              "score": 0.8477,
+              "passage_start": 0,
+              "passage_end": 1030,
+              "passage_sha256": "10bd0f07dd512b82a2fe838e927df02827b48be12593a3424af9190a21343e1d"
+            },
+            {
+              "id": "W0352ca07b1d5f7a4",
+              "score": 0.64323,
+              "passage_start": 4524,
+              "passage_end": 5671,
+              "passage_sha256": "ba1cc45f13911f369931b5b1dac664d0f4a5c87444b7723f3f99b926bfdf335a"
+            },
+            {
+              "id": "Wb1b62862200f9fab",
+              "score": 0.64037,
+              "passage_start": 0,
+              "passage_end": 979,
+              "passage_sha256": "f23fa33309850f168ab1c769e7aab74002f6e45ef623044dc6ab74fac6b52c3e"
+            },
+            {
+              "id": "W38e46c97bbbb0405",
+              "score": 0.63395,
+              "passage_start": 5710,
+              "passage_end": 6810,
+              "passage_sha256": "813b74dcd9e923c06515ebaf3af6bc5d50ac92e37caa2bf7723f416af0b7a69b"
+            },
+            {
+              "id": "Wb759d5121095c6e0",
+              "score": 0.6217,
+              "passage_start": 5443,
+              "passage_end": 6434,
+              "passage_sha256": "b2b4d3f1c036ceda48c1e06896afa5ee7450f401f1ecf5029b30edb2f238e04a"
+            }
+          ]
+        },
+        "tfidf": {
+          "metrics": {
+            "provisional": {
+              "precision@3": {
+                "value": 0.3333333333333333,
+                "relevant": 1,
+                "returned": 3
+              },
+              "precision@5": {
+                "value": 0.2,
+                "relevant": 1,
+                "returned": 5
+              }
+            },
+            "independent": {
+              "precision@3": {
+                "value": null,
+                "reason": "insufficient_review_provenance"
+              },
+              "precision@5": {
+                "value": null,
+                "reason": "insufficient_review_provenance"
+              }
+            }
+          },
+          "ranking": [
+            {
+              "id": "Wc201444bb806b11c",
+              "score": 0.49049,
+              "passage_start": 0,
+              "passage_end": 1030,
+              "passage_sha256": "10bd0f07dd512b82a2fe838e927df02827b48be12593a3424af9190a21343e1d"
+            },
+            {
+              "id": "Wb1b62862200f9fab",
+              "score": 0.33587,
+              "passage_start": 0,
+              "passage_end": 979,
+              "passage_sha256": "f23fa33309850f168ab1c769e7aab74002f6e45ef623044dc6ab74fac6b52c3e"
+            },
+            {
+              "id": "W1dd3e6cf9eb6189f",
+              "score": 0.29811,
+              "passage_start": 2499,
+              "passage_end": 3547,
+              "passage_sha256": "e33416f1572a76536c521e19b7fa91545bc564aadbf64bfb7942548036b6ea91"
+            },
+            {
+              "id": "W1d81d7c9e8f5f100",
+              "score": 0.28036,
+              "passage_start": 4370,
+              "passage_end": 5394,
+              "passage_sha256": "9e2a704dcaf4a4b7392779c9160a7adfab65f56a7583deb5bd30b3be778d2f9c"
+            },
+            {
+              "id": "W38e46c97bbbb0405",
+              "score": 0.27877,
+              "passage_start": 2839,
+              "passage_end": 3931,
+              "passage_sha256": "8514b48b4924608bde74a206584fda542a492c3c55b504e23d464292ab25700c"
+            }
+          ]
+        }
+      },
+      "relevant_label_count": 3
+    }
+  ],
+  "top5_union_judgements_to_review": 44,
+  "macro_provisional": {
+    "related": {
+      "embeddings": {
+        "precision@3": 0.8333333333333333,
+        "precision@5": 0.75
+      },
+      "tfidf": {
+        "precision@3": 0.8333333333333333,
+        "precision@5": 0.75
+      }
+    },
+    "internal_link": {
+      "embeddings": {
+        "precision@3": 0.5555555555555555,
+        "precision@5": 0.4000000000000001
+      },
+      "tfidf": {
+        "precision@3": 0.5555555555555555,
+        "precision@5": 0.4000000000000001
+      }
+    }
+  },
+  "overlap_rankings": {
+    "embeddings": [
+      {
+        "left": "W7979ae9d079cd4e8",
+        "right": "Wb092510eb9d3d03b",
+        "score": 0.93711,
+        "left_passage_sha256": "c2a61ec61962b8ce42eb2066dfb2476da1644bef3da8fd3ad58263f59e67c552",
+        "right_passage_sha256": "041d54d0daff6255263bd76d788c66e98f259c623b3d5f0e194a1b60816a976a"
+      },
+      {
+        "left": "W0352ca07b1d5f7a4",
+        "right": "Wd20a8f0e6dce6f2e",
+        "score": 0.91009,
+        "left_passage_sha256": "99ac3ada9dd5ddf07d83b81e7295ef8bbaa06aa5444d9b4d52bace44e109fcde",
+        "right_passage_sha256": "83152e3fce20d1d193865dbe9a9be502a6a9a7c8ccedf62881cec8a38324fb45"
+      },
+      {
+        "left": "W62fab2566c9ce776",
+        "right": "Wcaa7372aa01a6165",
+        "score": 0.88963,
+        "left_passage_sha256": "1f9e5a6389bc67348c4e0a435b25f68218d1eb62e4189231302bbd562fb92fd8",
+        "right_passage_sha256": "a07444adef603418e55e7dc4bbab96117f447fa84db9aa9d97802d61ab057b2e"
+      },
+      {
+        "left": "W59124efd4aebdc60",
+        "right": "Wcaa7372aa01a6165",
+        "score": 0.88375,
+        "left_passage_sha256": "e686010646e7fb7017a24cdc3af5064d4bb1ffbbd8d2f70356dbac22f7e6f19a",
+        "right_passage_sha256": "a07444adef603418e55e7dc4bbab96117f447fa84db9aa9d97802d61ab057b2e"
+      },
+      {
+        "left": "W59124efd4aebdc60",
+        "right": "W772f1c46d825866c",
+        "score": 0.8729,
+        "left_passage_sha256": "2ce0b233f32083efe0ae8279cd2e686e9eef3ccef8cc1e0b0b1753c99adcd098",
+        "right_passage_sha256": "9be88cceefbaf20afa676cfd56d4d083afa32070862cb61ea349dd18a165637b"
+      },
+      {
+        "left": "W59124efd4aebdc60",
+        "right": "Wc8d0057aff79b0bf",
+        "score": 0.86969,
+        "left_passage_sha256": "2ce0b233f32083efe0ae8279cd2e686e9eef3ccef8cc1e0b0b1753c99adcd098",
+        "right_passage_sha256": "b25abf3834b0968717b71e2fb4b016bf097ad5b9a945d54f7bdcedf7e5039e25"
+      },
+      {
+        "left": "Wc8d0057aff79b0bf",
+        "right": "Wcaa7372aa01a6165",
+        "score": 0.86957,
+        "left_passage_sha256": "b25abf3834b0968717b71e2fb4b016bf097ad5b9a945d54f7bdcedf7e5039e25",
+        "right_passage_sha256": "b844b37d5bfd9e9f1c73b89c58a6d8a95d3bc9d5199eebbdcbe2680a905e4544"
+      },
+      {
+        "left": "Wcaa7372aa01a6165",
+        "right": "Wcbbba493a5bee591",
+        "score": 0.86721,
+        "left_passage_sha256": "9faa34bb8b48d4ca4ed7ffb250decac05d122eb8dc3283945fe3e057558dd89c",
+        "right_passage_sha256": "57ab30b87bb7e6cfdd857db897340059e3259c70d9f3e612419bb23dce93ca06"
+      },
+      {
+        "left": "W809d6443d972f88b",
+        "right": "Wf0519af068261b10",
+        "score": 0.8671,
+        "left_passage_sha256": "a0d67e0c586245205289d72266f532913b3f21a6a7774c5b604dd33cfee43131",
+        "right_passage_sha256": "ef5d0fccba2d3df03f28b81cf6530dba2cccfdd9ca0ea462c699254999d38f35"
+      },
+      {
+        "left": "W0352ca07b1d5f7a4",
+        "right": "W62fab2566c9ce776",
+        "score": 0.86472,
+        "left_passage_sha256": "2c1bad2ddb3b7702d44342cb7b8d46f1202bcb2178dd2ceb75a448b9bf2425d9",
+        "right_passage_sha256": "193c334ea6f69653360474c9b8ef7e87548aecf0e3cbcc80fdf57c82b0935037"
+      }
+    ],
+    "tfidf": [
+      {
+        "left": "W7979ae9d079cd4e8",
+        "right": "Wb092510eb9d3d03b",
+        "score": 0.58155,
+        "left_passage_sha256": "ee94769813f1f2d94d63c9c625e4b7a071dfb04a16b7453b3702b821baafcc60",
+        "right_passage_sha256": "ccf4744cba3a4fedf489f48a7a8a991857ff02e1d0ed42ad05df82c8e9395f42"
+      },
+      {
+        "left": "Wcaa7372aa01a6165",
+        "right": "Wcbbba493a5bee591",
+        "score": 0.57169,
+        "left_passage_sha256": "9faa34bb8b48d4ca4ed7ffb250decac05d122eb8dc3283945fe3e057558dd89c",
+        "right_passage_sha256": "57ab30b87bb7e6cfdd857db897340059e3259c70d9f3e612419bb23dce93ca06"
+      },
+      {
+        "left": "W53b407e9d806c4ed",
+        "right": "Wc8d0057aff79b0bf",
+        "score": 0.54184,
+        "left_passage_sha256": "7ec4deb18357fe3e44e4ed5009f8739b0b8473d3749ba7367dec67c17519db7a",
+        "right_passage_sha256": "b106915f9f668ef3480de3abe2d22c0b74a32ead5209a0256397de110c31039a"
+      },
+      {
+        "left": "W53b407e9d806c4ed",
+        "right": "W809d6443d972f88b",
+        "score": 0.5263,
+        "left_passage_sha256": "c2040cce6efed6ce9d81da150c9c969ac1432cebc8222cca29e749e61b8ec033",
+        "right_passage_sha256": "cc06819a293552ccbb49426031fc4375682f5c9458ec082d5a8558f2c8be84ac"
+      },
+      {
+        "left": "W0352ca07b1d5f7a4",
+        "right": "Wd20a8f0e6dce6f2e",
+        "score": 0.5257,
+        "left_passage_sha256": "ea646ab51ed96a3a84737c4f72775c6c9b6d0462d18046533a26671fde81c96b",
+        "right_passage_sha256": "c2a38afb968bd79e9c874d5d5675496cfd6ae432bb35c15b6a4bff7f81629a7f"
+      },
+      {
+        "left": "W59124efd4aebdc60",
+        "right": "W62fab2566c9ce776",
+        "score": 0.52142,
+        "left_passage_sha256": "e686010646e7fb7017a24cdc3af5064d4bb1ffbbd8d2f70356dbac22f7e6f19a",
+        "right_passage_sha256": "1f9e5a6389bc67348c4e0a435b25f68218d1eb62e4189231302bbd562fb92fd8"
+      },
+      {
+        "left": "W62fab2566c9ce776",
+        "right": "Wcaa7372aa01a6165",
+        "score": 0.50224,
+        "left_passage_sha256": "1f9e5a6389bc67348c4e0a435b25f68218d1eb62e4189231302bbd562fb92fd8",
+        "right_passage_sha256": "a07444adef603418e55e7dc4bbab96117f447fa84db9aa9d97802d61ab057b2e"
+      },
+      {
+        "left": "Wabdb55b581cec281",
+        "right": "Wc201444bb806b11c",
+        "score": 0.49049,
+        "left_passage_sha256": "1a9b0c865903526eefbf849c89f016441d0bb72059a2a6b67eb4151be899ca8b",
+        "right_passage_sha256": "10bd0f07dd512b82a2fe838e927df02827b48be12593a3424af9190a21343e1d"
+      },
+      {
+        "left": "W0352ca07b1d5f7a4",
+        "right": "W0cdaa04e763c37db",
+        "score": 0.48645,
+        "left_passage_sha256": "3eb682fd6086efe5ab365d067d3071177d4feba2d71eb1346ac8ffeeabe759cb",
+        "right_passage_sha256": "5c966e0840f242cab47789ac005d24f9f9707e0fae70322927877c4004429adc"
+      },
+      {
+        "left": "W59124efd4aebdc60",
+        "right": "Wc8d0057aff79b0bf",
+        "score": 0.48161,
+        "left_passage_sha256": "2b7a85925b04e7ebf245229622145b3ab07f20a4f826247047c98748a2c559a1",
+        "right_passage_sha256": "3a9a00ce61eb9f66fa64cb40267d19f1975ef9b47518877bbcd8afcdd47b5591"
+      }
+    ]
+  },
+  "extraction_audit": [
+    {
+      "id": "W1dd3e6cf9eb6189f",
+      "url": "https://freezeedge.com.au/deli-display-fridge-size-guide/",
+      "title_matches_source_h1": true,
+      "source_h1_count": 2,
+      "source_body_words": 1354,
+      "saved_body_words": 1353,
+      "missing_word_occurrences": 1,
+      "extra_word_occurrences": 0,
+      "missing_word_types": {
+        "contents": 1
+      },
+      "missing_body_headings": [],
+      "additional_recorded_headings": [],
+      "canonical_matches_source": true,
+      "missing_selected_link_ids": [],
+      "extra_selected_link_ids": [],
+      "residual_contact_signal": true
+    },
+    {
+      "id": "Wcde14bde9c3a81b5",
+      "url": "https://freezeedge.com.au/heated-glass-fridge-doors/",
+      "title_matches_source_h1": true,
+      "source_h1_count": 1,
+      "source_body_words": 1244,
+      "saved_body_words": 1243,
+      "missing_word_occurrences": 1,
+      "extra_word_occurrences": 0,
+      "missing_word_types": {
+        "contents": 1
+      },
+      "missing_body_headings": [],
+      "additional_recorded_headings": [],
+      "canonical_matches_source": true,
+      "missing_selected_link_ids": [],
+      "extra_selected_link_ids": [],
+      "residual_contact_signal": true
+    },
+    {
+      "id": "W1d81d7c9e8f5f100",
+      "url": "https://freezeedge.com.au/self-service-display-fridge/",
+      "title_matches_source_h1": true,
+      "source_h1_count": 1,
+      "source_body_words": 1406,
+      "saved_body_words": 1405,
+      "missing_word_occurrences": 1,
+      "extra_word_occurrences": 0,
+      "missing_word_types": {
+        "contents": 1
+      },
+      "missing_body_headings": [],
+      "additional_recorded_headings": [],
+      "canonical_matches_source": true,
+      "missing_selected_link_ids": [],
+      "extra_selected_link_ids": [],
+      "residual_contact_signal": false
+    },
+    {
+      "id": "Wb759d5121095c6e0",
+      "url": "https://freezeedge.com.au/commercial-fridge-freezer-combo/",
+      "title_matches_source_h1": true,
+      "source_h1_count": 1,
+      "source_body_words": 1503,
+      "saved_body_words": 1502,
+      "missing_word_occurrences": 1,
+      "extra_word_occurrences": 0,
+      "missing_word_types": {
+        "contents": 1
+      },
+      "missing_body_headings": [],
+      "additional_recorded_headings": [],
+      "canonical_matches_source": true,
+      "missing_selected_link_ids": [],
+      "extra_selected_link_ids": [],
+      "residual_contact_signal": false
+    },
+    {
+      "id": "W7979ae9d079cd4e8",
+      "url": "https://freezeedge.com.au/triple-glazed-display-freezer/",
+      "title_matches_source_h1": true,
+      "source_h1_count": 1,
+      "source_body_words": 1276,
+      "saved_body_words": 1275,
+      "missing_word_occurrences": 1,
+      "extra_word_occurrences": 0,
+      "missing_word_types": {
+        "contents": 1
+      },
+      "missing_body_headings": [],
+      "additional_recorded_headings": [],
+      "canonical_matches_source": true,
+      "missing_selected_link_ids": [],
+      "extra_selected_link_ids": [],
+      "residual_contact_signal": false
+    },
+    {
+      "id": "W828054a379c6180c",
+      "url": "https://freezeedge.com.au/commercial-fridge-power-requirements/",
+      "title_matches_source_h1": true,
+      "source_h1_count": 1,
+      "source_body_words": 981,
+      "saved_body_words": 980,
+      "missing_word_occurrences": 1,
+      "extra_word_occurrences": 0,
+      "missing_word_types": {
+        "contents": 1
+      },
+      "missing_body_headings": [],
+      "additional_recorded_headings": [],
+      "canonical_matches_source": true,
+      "missing_selected_link_ids": [],
+      "extra_selected_link_ids": [],
+      "residual_contact_signal": true
+    },
+    {
+      "id": "Wb092510eb9d3d03b",
+      "url": "https://freezeedge.com.au/triple-glazed-display-freezer-doors/",
+      "title_matches_source_h1": true,
+      "source_h1_count": 1,
+      "source_body_words": 960,
+      "saved_body_words": 959,
+      "missing_word_occurrences": 1,
+      "extra_word_occurrences": 0,
+      "missing_word_types": {
+        "contents": 1
+      },
+      "missing_body_headings": [],
+      "additional_recorded_headings": [],
+      "canonical_matches_source": true,
+      "missing_selected_link_ids": [],
+      "extra_selected_link_ids": [],
+      "residual_contact_signal": true
+    },
+    {
+      "id": "W67e9020ad420ceaa",
+      "url": "https://freezeedge.com.au/self-evaporating-commercial-fridge/",
+      "title_matches_source_h1": true,
+      "source_h1_count": 1,
+      "source_body_words": 1051,
+      "saved_body_words": 1050,
+      "missing_word_occurrences": 1,
+      "extra_word_occurrences": 0,
+      "missing_word_types": {
+        "contents": 1
+      },
+      "missing_body_headings": [],
+      "additional_recorded_headings": [],
+      "canonical_matches_source": true,
+      "missing_selected_link_ids": [],
+      "extra_selected_link_ids": [],
+      "residual_contact_signal": true
+    },
+    {
+      "id": "W8dc1c0e1bb6139d2",
+      "url": "https://freezeedge.com.au/chest-display-freezer-baskets-vs-dividers/",
+      "title_matches_source_h1": true,
+      "source_h1_count": 1,
+      "source_body_words": 975,
+      "saved_body_words": 974,
+      "missing_word_occurrences": 1,
+      "extra_word_occurrences": 0,
+      "missing_word_types": {
+        "contents": 1
+      },
+      "missing_body_headings": [],
+      "additional_recorded_headings": [],
+      "canonical_matches_source": true,
+      "missing_selected_link_ids": [],
+      "extra_selected_link_ids": [],
+      "residual_contact_signal": true
+    },
+    {
+      "id": "W0352ca07b1d5f7a4",
+      "url": "https://freezeedge.com.au/open-display-fridge-running-costs/",
+      "title_matches_source_h1": true,
+      "source_h1_count": 1,
+      "source_body_words": 1212,
+      "saved_body_words": 1211,
+      "missing_word_occurrences": 1,
+      "extra_word_occurrences": 0,
+      "missing_word_types": {
+        "contents": 1
+      },
+      "missing_body_headings": [],
+      "additional_recorded_headings": [],
+      "canonical_matches_source": true,
+      "missing_selected_link_ids": [],
+      "extra_selected_link_ids": [],
+      "residual_contact_signal": true
+    },
+    {
+      "id": "Wd20a8f0e6dce6f2e",
+      "url": "https://freezeedge.com.au/open-display-fridge-with-doors-vs-open-front/",
+      "title_matches_source_h1": true,
+      "source_h1_count": 1,
+      "source_body_words": 1170,
+      "saved_body_words": 1169,
+      "missing_word_occurrences": 1,
+      "extra_word_occurrences": 0,
+      "missing_word_types": {
+        "contents": 1
+      },
+      "missing_body_headings": [],
+      "additional_recorded_headings": [],
+      "canonical_matches_source": true,
+      "missing_selected_link_ids": [],
+      "extra_selected_link_ids": [],
+      "residual_contact_signal": true
+    },
+    {
+      "id": "W0cdaa04e763c37db",
+      "url": "https://freezeedge.com.au/open-display-fridge-night-curtain/",
+      "title_matches_source_h1": true,
+      "source_h1_count": 1,
+      "source_body_words": 802,
+      "saved_body_words": 801,
+      "missing_word_occurrences": 1,
+      "extra_word_occurrences": 0,
+      "missing_word_types": {
+        "contents": 1
+      },
+      "missing_body_headings": [],
+      "additional_recorded_headings": [],
+      "canonical_matches_source": true,
+      "missing_selected_link_ids": [],
+      "extra_selected_link_ids": [],
+      "residual_contact_signal": true
+    },
+    {
+      "id": "We52d30e6b7490ab6",
+      "url": "https://freezeedge.com.au/triple-door-drinks-fridge-for-retailers/",
+      "title_matches_source_h1": true,
+      "source_h1_count": 2,
+      "source_body_words": 1019,
+      "saved_body_words": 1018,
+      "missing_word_occurrences": 1,
+      "extra_word_occurrences": 0,
+      "missing_word_types": {
+        "contents": 1
+      },
+      "missing_body_headings": [],
+      "additional_recorded_headings": [],
+      "canonical_matches_source": true,
+      "missing_selected_link_ids": [],
+      "extra_selected_link_ids": [],
+      "residual_contact_signal": true
+    },
+    {
+      "id": "W62fab2566c9ce776",
+      "url": "https://freezeedge.com.au/commercial-refrigeration-upgrade/",
+      "title_matches_source_h1": true,
+      "source_h1_count": 2,
+      "source_body_words": 1222,
+      "saved_body_words": 1221,
+      "missing_word_occurrences": 1,
+      "extra_word_occurrences": 0,
+      "missing_word_types": {
+        "contents": 1
+      },
+      "missing_body_headings": [],
+      "additional_recorded_headings": [],
+      "canonical_matches_source": true,
+      "missing_selected_link_ids": [],
+      "extra_selected_link_ids": [],
+      "residual_contact_signal": false
+    },
+    {
+      "id": "Wcaa7372aa01a6165",
+      "url": "https://freezeedge.com.au/commercial-refrigeration-equipment-sydney/",
+      "title_matches_source_h1": true,
+      "source_h1_count": 1,
+      "source_body_words": 782,
+      "saved_body_words": 781,
+      "missing_word_occurrences": 1,
+      "extra_word_occurrences": 0,
+      "missing_word_types": {
+        "contents": 1
+      },
+      "missing_body_headings": [],
+      "additional_recorded_headings": [],
+      "canonical_matches_source": true,
+      "missing_selected_link_ids": [],
+      "extra_selected_link_ids": [],
+      "residual_contact_signal": true
+    },
+    {
+      "id": "W809d6443d972f88b",
+      "url": "https://freezeedge.com.au/chest-freezer-organisation/",
+      "title_matches_source_h1": true,
+      "source_h1_count": 1,
+      "source_body_words": 1129,
+      "saved_body_words": 1128,
+      "missing_word_occurrences": 1,
+      "extra_word_occurrences": 0,
+      "missing_word_types": {
+        "contents": 1
+      },
+      "missing_body_headings": [],
+      "additional_recorded_headings": [],
+      "canonical_matches_source": true,
+      "missing_selected_link_ids": [],
+      "extra_selected_link_ids": [],
+      "residual_contact_signal": true
+    },
+    {
+      "id": "Wc8d0057aff79b0bf",
+      "url": "https://freezeedge.com.au/commercial-freezer-buying-guide-sydney/",
+      "title_matches_source_h1": true,
+      "source_h1_count": 1,
+      "source_body_words": 1205,
+      "saved_body_words": 1204,
+      "missing_word_occurrences": 1,
+      "extra_word_occurrences": 0,
+      "missing_word_types": {
+        "contents": 1
+      },
+      "missing_body_headings": [],
+      "additional_recorded_headings": [],
+      "canonical_matches_source": true,
+      "missing_selected_link_ids": [],
+      "extra_selected_link_ids": [],
+      "residual_contact_signal": true
+    },
+    {
+      "id": "Wabdb55b581cec281",
+      "url": "https://freezeedge.com.au/static-cooling-sushi-display-fridge/",
+      "title_matches_source_h1": true,
+      "source_h1_count": 1,
+      "source_body_words": 950,
+      "saved_body_words": 949,
+      "missing_word_occurrences": 1,
+      "extra_word_occurrences": 0,
+      "missing_word_types": {
+        "contents": 1
+      },
+      "missing_body_headings": [],
+      "additional_recorded_headings": [],
+      "canonical_matches_source": true,
+      "missing_selected_link_ids": [],
+      "extra_selected_link_ids": [],
+      "residual_contact_signal": true
+    },
+    {
+      "id": "W53b407e9d806c4ed",
+      "url": "https://freezeedge.com.au/upright-freezer-vs-chest-freezer/",
+      "title_matches_source_h1": true,
+      "source_h1_count": 1,
+      "source_body_words": 1715,
+      "saved_body_words": 1714,
+      "missing_word_occurrences": 1,
+      "extra_word_occurrences": 0,
+      "missing_word_types": {
+        "contents": 1
+      },
+      "missing_body_headings": [],
+      "additional_recorded_headings": [],
+      "canonical_matches_source": true,
+      "missing_selected_link_ids": [],
+      "extra_selected_link_ids": [],
+      "residual_contact_signal": true
+    },
+    {
+      "id": "W38e46c97bbbb0405",
+      "url": "https://freezeedge.com.au/commercial-upright-fridge-guide/",
+      "title_matches_source_h1": true,
+      "source_h1_count": 1,
+      "source_body_words": 1159,
+      "saved_body_words": 1158,
+      "missing_word_occurrences": 1,
+      "extra_word_occurrences": 0,
+      "missing_word_types": {
+        "contents": 1
+      },
+      "missing_body_headings": [],
+      "additional_recorded_headings": [],
+      "canonical_matches_source": true,
+      "missing_selected_link_ids": [],
+      "extra_selected_link_ids": [],
+      "residual_contact_signal": true
+    },
+    {
+      "id": "Wf0519af068261b10",
+      "url": "https://freezeedge.com.au/how-to-load-a-chest-freezer/",
+      "title_matches_source_h1": true,
+      "source_h1_count": 2,
+      "source_body_words": 1579,
+      "saved_body_words": 1578,
+      "missing_word_occurrences": 1,
+      "extra_word_occurrences": 0,
+      "missing_word_types": {
+        "contents": 1
+      },
+      "missing_body_headings": [],
+      "additional_recorded_headings": [],
+      "canonical_matches_source": true,
+      "missing_selected_link_ids": [],
+      "extra_selected_link_ids": [],
+      "residual_contact_signal": true
+    },
+    {
+      "id": "Wc201444bb806b11c",
+      "url": "https://freezeedge.com.au/sushi-display-fridge-6-tray/",
+      "title_matches_source_h1": true,
+      "source_h1_count": 1,
+      "source_body_words": 930,
+      "saved_body_words": 929,
+      "missing_word_occurrences": 1,
+      "extra_word_occurrences": 0,
+      "missing_word_types": {
+        "contents": 1
+      },
+      "missing_body_headings": [],
+      "additional_recorded_headings": [],
+      "canonical_matches_source": true,
+      "missing_selected_link_ids": [],
+      "extra_selected_link_ids": [],
+      "residual_contact_signal": true
+    },
+    {
+      "id": "W59124efd4aebdc60",
+      "url": "https://freezeedge.com.au/commercial-refrigeration-supplier-sydney-guide/",
+      "title_matches_source_h1": true,
+      "source_h1_count": 1,
+      "source_body_words": 1094,
+      "saved_body_words": 1093,
+      "missing_word_occurrences": 1,
+      "extra_word_occurrences": 0,
+      "missing_word_types": {
+        "contents": 1
+      },
+      "missing_body_headings": [],
+      "additional_recorded_headings": [],
+      "canonical_matches_source": true,
+      "missing_selected_link_ids": [],
+      "extra_selected_link_ids": [],
+      "residual_contact_signal": true
+    },
+    {
+      "id": "W72fdaf17cd4c4232",
+      "url": "https://freezeedge.com.au/chest-freezer-ice-build-up/",
+      "title_matches_source_h1": true,
+      "source_h1_count": 2,
+      "source_body_words": 945,
+      "saved_body_words": 944,
+      "missing_word_occurrences": 1,
+      "extra_word_occurrences": 0,
+      "missing_word_types": {
+        "contents": 1
+      },
+      "missing_body_headings": [],
+      "additional_recorded_headings": [],
+      "canonical_matches_source": true,
+      "missing_selected_link_ids": [],
+      "extra_selected_link_ids": [],
+      "residual_contact_signal": true
+    },
+    {
+      "id": "Wb1b62862200f9fab",
+      "url": "https://freezeedge.com.au/commercial-fridge-airflow/",
+      "title_matches_source_h1": true,
+      "source_h1_count": 1,
+      "source_body_words": 1560,
+      "saved_body_words": 1559,
+      "missing_word_occurrences": 1,
+      "extra_word_occurrences": 0,
+      "missing_word_types": {
+        "contents": 1
+      },
+      "missing_body_headings": [],
+      "additional_recorded_headings": [],
+      "canonical_matches_source": true,
+      "missing_selected_link_ids": [],
+      "extra_selected_link_ids": [],
+      "residual_contact_signal": true
+    },
+    {
+      "id": "Wd2d18f408012125b",
+      "url": "https://freezeedge.com.au/chest-freezer-condensation/",
+      "title_matches_source_h1": true,
+      "source_h1_count": 1,
+      "source_body_words": 801,
+      "saved_body_words": 800,
+      "missing_word_occurrences": 1,
+      "extra_word_occurrences": 0,
+      "missing_word_types": {
+        "contents": 1
+      },
+      "missing_body_headings": [],
+      "additional_recorded_headings": [],
+      "canonical_matches_source": true,
+      "missing_selected_link_ids": [],
+      "extra_selected_link_ids": [],
+      "residual_contact_signal": true
+    },
+    {
+      "id": "Wcbbba493a5bee591",
+      "url": "https://freezeedge.com.au/commercial-fridge-finance-payment-options/",
+      "title_matches_source_h1": true,
+      "source_h1_count": 1,
+      "source_body_words": 817,
+      "saved_body_words": 816,
+      "missing_word_occurrences": 1,
+      "extra_word_occurrences": 0,
+      "missing_word_types": {
+        "contents": 1
+      },
+      "missing_body_headings": [],
+      "additional_recorded_headings": [],
+      "canonical_matches_source": true,
+      "missing_selected_link_ids": [],
+      "extra_selected_link_ids": [],
+      "residual_contact_signal": true
+    },
+    {
+      "id": "W4ccfbfbf7f453ddf",
+      "url": "https://freezeedge.com.au/commercial-fridge-dimensions-before-ordering/",
+      "title_matches_source_h1": true,
+      "source_h1_count": 1,
+      "source_body_words": 1318,
+      "saved_body_words": 1317,
+      "missing_word_occurrences": 1,
+      "extra_word_occurrences": 0,
+      "missing_word_types": {
+        "contents": 1
+      },
+      "missing_body_headings": [],
+      "additional_recorded_headings": [],
+      "canonical_matches_source": true,
+      "missing_selected_link_ids": [],
+      "extra_selected_link_ids": [],
+      "residual_contact_signal": true
+    },
+    {
+      "id": "W0264280d87a79512",
+      "url": "https://freezeedge.com.au/chest-display-freezer-buying-guide/",
+      "title_matches_source_h1": true,
+      "source_h1_count": 1,
+      "source_body_words": 831,
+      "saved_body_words": 830,
+      "missing_word_occurrences": 1,
+      "extra_word_occurrences": 0,
+      "missing_word_types": {
+        "contents": 1
+      },
+      "missing_body_headings": [],
+      "additional_recorded_headings": [],
+      "canonical_matches_source": true,
+      "missing_selected_link_ids": [],
+      "extra_selected_link_ids": [],
+      "residual_contact_signal": false
+    },
+    {
+      "id": "W772f1c46d825866c",
+      "url": "https://freezeedge.com.au/commercial-fridge-buying-mistakes-2/",
+      "title_matches_source_h1": true,
+      "source_h1_count": 1,
+      "source_body_words": 1601,
+      "saved_body_words": 1600,
+      "missing_word_occurrences": 1,
+      "extra_word_occurrences": 0,
+      "missing_word_types": {
+        "contents": 1
+      },
+      "missing_body_headings": [],
+      "additional_recorded_headings": [],
+      "canonical_matches_source": true,
+      "missing_selected_link_ids": [],
+      "extra_selected_link_ids": [],
+      "residual_contact_signal": false
+    }
+  ]
+}

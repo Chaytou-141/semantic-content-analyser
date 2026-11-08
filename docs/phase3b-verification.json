@@ -1,0 +1,73 @@
+{
+  "baseline_commit": "f93c03b",
+  "phase": "3B",
+  "recorded_at_utc": "2026-10-28T21:16:33.750182+00:00",
+  "full_suite": {
+    "passed": 222,
+    "skipped": 1,
+    "seconds": 29.16
+  },
+  "focused": {
+    "real_model": true,
+    "offline": true,
+    "public_websites_fetched": false,
+    "transport": "Actual loopback HTTP with mocked DNS/test-only numeric connector",
+    "test_delay_seconds": 0,
+    "browser_errors": [],
+    "real_compare_seconds": 7.828,
+    "real_collection": {
+      "articles": 36,
+      "characters": 238690,
+      "passages": 270,
+      "embedding_shape": [
+        270,
+        384
+      ]
+    },
+    "wordpress_workflow": "36 articles: discovery -> selection -> preview -> atomic import -> both-method search/link evidence and overlap",
+    "sitemap_workflow": "36 articles: REST 404 fallback -> sitemap index -> URL set -> selection -> preview -> import",
+    "csv_browser": "Invalid import rollback; valid import and actual CSV download passed",
+    "model_constructions": 1,
+    "visitor_contexts": 2,
+    "servers_stopped": true
+  },
+  "protected_files_checked": 651,
+  "changed_protected_files": [],
+  "production_readiness_claimed": false,
+  "follow_up_ui": {
+    "real_model": false,
+    "offline": true,
+    "public_websites_fetched": false,
+    "transport": "Actual loopback HTTP with mocked DNS/test-only numeric connector",
+    "test_delay_seconds": 0,
+    "browser_errors": [],
+    "real_compare_seconds": 0.047,
+    "real_collection": {
+      "articles": 3,
+      "characters": 3501,
+      "passages": 3,
+      "embedding_shape": [
+        3,
+        384
+      ]
+    },
+    "wordpress_workflow": "3 articles: discovery -> selection -> preview -> atomic import -> both-method search/link evidence and overlap",
+    "sitemap_workflow": "3 articles: REST 404 fallback -> sitemap index -> URL set -> selection -> preview -> import",
+    "csv_browser": "Invalid import rollback; valid import and actual CSV download passed",
+    "model_constructions": 1,
+    "visitor_contexts": 2,
+    "servers_stopped": true,
+    "protected_files_checked": 651
+  },
+  "affected_tests_after_review": {
+    "passed": 34,
+    "seconds": 5.37,
+    "scope": "tests/test_websites.py; malformed HTML and fragmented XML callbacks included"
+  },
+  "verification_notes": [
+    "Full suite ran once: 222 passed, 1 Windows symlink-permission skip. Subsequent parser changes passed the affected 34 tests; the post-import UI fix passed a focused two-context deterministic-encoder browser check.",
+    "Initial focused attempts failed before MiniLM load because HTTPS fixture links pointed at a plaintext local server. Only fixture URLs were corrected; transport security was unchanged.",
+    "The completed real verifier emitted its final JSON after all assertions. PowerShell treated redirected Hugging Face stderr progress as NativeCommandError; the log has no Python exception in that completed run. The UI-only follow-up exited 0.",
+    "One real MiniLM construction; no historical benchmark rerun or public website access. This is synthetic engineering integration evidence, not recommendation/extraction accuracy or public hosting capacity."
+  ]
+}

@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-@@SCRIPT_HASH@@'; style-src 'unsafe-inline'; connect-src 'none'; img-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Editorial review — new round</title><style>@@STYLE@@
+@media(max-width:680px){.toolbar>.import{flex:1 1 100%;min-width:0}.toolbar>button{flex:1 1 130px}.toolbar .import input{max-width:100%}}
+</style></head>
+<body><main>
+<header><h1>Editorial review — new round</h1><p>Judge each proposed destination against its question or source article. These 44 recommendations cover seven tasks. The 15 separate overlap-investigation cases are outside this round.</p></header>
+<section class="reviewer">
+<label>Your name or reviewer ID<input id="reviewer" maxlength="100" autocomplete="off"></label>
+<label class="attest"><input id="attest" type="checkbox">I am a human reviewer and these are my own judgements.</label>
+<label>Have you previously seen judgements, retrieval results or discussion of these cases?
+<select id="exposure"><option value="unreported">Choose an answer</option><option value="none">No prior exposure to these cases</option><option value="screened">Yes, I have seen earlier assessments or results</option><option value="unsure">I am unsure</option></select></label>
+<p>Please answer honestly. Prior exposure is retained as provenance; it does not erase your review. For this round's eligible metrics, a named human must attest and report no prior exposure. This statement is self-reported, not identity verification. Do not consult earlier packets or assessments while reviewing.</p>
+</section>
+<div class="toolbar"><label>Task<select id="task"><option value="all">All tasks</option></select></label><label>Show<select id="status"><option value="all">All decisions</option><option value="unreviewed">Unreviewed</option><option value="unsure">Unsure</option><option value="decided">Useful / Not useful</option></select></label><button id="next" type="button">Next unreviewed</button><button id="export" type="button">Export review CSV</button><label class="import">Resume this round<input id="import" type="file" accept=".csv,text/csv"></label></div>
+<p id="progress" role="status" aria-live="polite"></p><p id="message" role="alert" hidden></p>
+<p class="scope">Useful means the destination helps with this specific task. Not useful means it does not. Choose Unsure if context is insufficient. Read the full saved articles when passages alone are inconclusive. Related content and a useful additional link are different tasks. Existing-link status is a saved fact, not a new live check.</p>
+<div id="items"></div><p id="empty" hidden>No items match this filter.</p>
+<footer><button id="clear" type="button">Clear this browser draft</button><p>Export and send the CSV to the review coordinator; nothing uploads automatically. Drafts may persist in this browser. Article content is private review material: do not publish it without permission. No website requests are made.</p></footer>
+</main><script type="application/json" id="review-data">@@DATA@@</script><script>@@SCRIPT@@</script></body></html>

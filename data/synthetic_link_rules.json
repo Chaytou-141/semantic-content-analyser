@@ -1,0 +1,6 @@
+{
+  "note": "Fictional link conditions for a local learning experiment, not observed website data.",
+  "source_id": "A01",
+  "existing_target_ids": ["A04"],
+  "disallowed_target_ids": ["A20"]
+}

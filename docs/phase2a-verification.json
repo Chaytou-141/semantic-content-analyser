@@ -1,0 +1,65 @@
+{
+  "baseline_commit": "8e2c99198d42a05696b0b362ef851c1c8932e559",
+  "implementation": "Phase 2A working tree; no implementation commit created",
+  "model_revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+  "threads": 2,
+  "offline": true,
+  "measurements": {
+    "cold_preflight_import_36": {
+      "wall_seconds": 6.94562379992567,
+      "cpu_seconds": 6.25
+    },
+    "warm_preflight_36": {
+      "wall_seconds": 0.1898187999613583,
+      "cpu_seconds": 0.1875
+    },
+    "real_comparison_search_36": {
+      "wall_seconds": 8.056569500011392,
+      "cpu_seconds": 15.828125
+    },
+    "reject_801_passages": {
+      "wall_seconds": 0.09974259999580681,
+      "cpu_seconds": 0.140625
+    },
+    "accept_800_passages": {
+      "wall_seconds": 0.21934189996682107,
+      "cpu_seconds": 0.21875
+    },
+    "reject_edit_801_passages": {
+      "wall_seconds": 0.09635620005428791,
+      "cpu_seconds": 0.078125
+    }
+  },
+  "corpus_preflight": {
+    "article_count": 36,
+    "character_count": 238142,
+    "passage_count": 269
+  },
+  "real_tokenizer_boundary": {
+    "accepted_passages": 800,
+    "rejected_passages": 801
+  },
+  "phase1b_top5_ids_equal": true,
+  "max_score_differences": {
+    "embeddings": 0.0,
+    "tfidf": 0.0
+  },
+  "real_offsets_and_tails_checked": 269,
+  "failed_import_and_edit_preserve_reviews": true,
+  "cache_preserved_on_rejection": true,
+  "protected_files_checked": 48,
+  "changed_protected_files": [],
+  "automated_tests": {
+    "passed": 45,
+    "duration_seconds": 3.65,
+    "original_tests": 15,
+    "additional_cases": 30
+  },
+  "browser_smoke": {
+    "passed": true,
+    "isolated_port": 8012,
+    "server_stopped": true,
+    "log": "runtime/phase2a/ui/browser.log"
+  },
+  "javascript_syntax": "passed"
+}

@@ -1,0 +1,28 @@
+{
+  "phase": "3E",
+  "baseline_evidence_commit": "771c4cb",
+  "preserved_application_commit": "036f173",
+  "targeted_suite": "..............                                                           [100%]\n14 passed in 0.17s",
+  "browser_items": 59,
+  "candidate_items": 44,
+  "overlap_pairs": 15,
+  "csv_export_resume_and_failed_import_atomicity": "passed",
+  "draft_reload": "passed",
+  "ai_label_separation": "passed",
+  "synthetic_decisions_only": true,
+  "actual_human_reviews_received": 0,
+  "incomplete_precision_unavailable": "passed",
+  "external_http_requests": 0,
+  "browser_errors": [],
+  "model_inference_runs": 0,
+  "full_suite_run": false,
+  "protected_files_checked": 1254,
+  "changed_protected_files": [],
+  "csv_followup": {
+    "passed": 14,
+    "seconds": 0.54,
+    "scope": "Strict malformed-CSV handling included"
+  },
+  "packet_id": "a69e68a586f75a8f344a448dd75f6e6ab16e5affb275c867a171481a627b8815",
+  "packet_sha256": "de75c4dc7112be1581c82d601ab63b41c73a06af6ae982a7c16fb89a2d29540c"
+}
