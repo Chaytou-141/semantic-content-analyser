@@ -1,5 +1,24 @@
 # Public portfolio release checklist - Phase 4E image/plan review
 
+9 November 2026 local remediation update: all three production images rebuilt
+locally and freshly rescanned. App and egress now report zero High/Critical;
+Caddy reports zero Critical and one unfixed High (Go JOSE v3, configuration-scoped
+public reachability not identified). Patched Debian/Alpine zlib, Debian apt and Go
+compression versions were checked in the rebuilt images. The production Caddy
+admin endpoint is disabled. Windows suite: 440 passed, 14 skipped. See
+`docs/public-release-review.md` for versions, limitations and scan evidence.
+The images were not deployed; history privacy/rights, Linux CI, intended-host
+checks and explicit residual-risk review remain open. Earlier dated records below
+are historical snapshots, not the current scan outcome.
+
+9 November 2026 maintainer decision: the historical personal email is intentionally
+public; no history rewrite is requested. The remaining Go JOSE v3 High advisory is
+accepted for a private merge review under the current Caddy configuration, with
+admin disabled and no public JWK route. This is not a patch, scanner suppression,
+deployment approval or permission to change repository visibility. Reassess on
+configuration or upstream changes; independently review historical publication
+material before making the repository public.
+
 2 November 2026, Phase4E: clean-runtime Caddy security rebuild verified locally;
 0 Critical/1 High proxy findings remain (six total rules).175 distinct targeted tests,
 nine container checks and76 controlled HTTP exposure requests pass. All17 app/eight

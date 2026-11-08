@@ -1,10 +1,14 @@
-FROM python:3.12-slim@sha256:aa943ce411423c7582288f18707ff66eddcbaeb510502d747a72aeb34f30d159
+FROM python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b
 
 ARG MODEL_REVISION=1110a243fdf4706b3f48f1d95db1a4f5529b4d41
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 \
     HF_HOME=/opt/huggingface MODEL_REVISION=${MODEL_REVISION} \
     TOKENIZERS_PARALLELISM=false OMP_NUM_THREADS=2
 WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    zlib1g=1:1.3.dfsg+really1.3.1-1+deb13u1 \
+    && rm -rf /var/lib/apt/lists/*
 
 # CPU-only PyTorch avoids shipping CUDA libraries to the EC2 CPU instance.
 COPY requirements.txt requirements-linux.lock ./

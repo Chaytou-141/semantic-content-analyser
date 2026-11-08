@@ -6,20 +6,20 @@
       "case_id": "R01",
       "article_id": "W72fdaf17cd4c4232",
       "frozen_relevant": false,
-      "challenge": "Ice-build-up guidance contains a keep-stock-below-lid-line section; the broad loading criterion makes this a plausible relevant result. Human adjudication required.",
+      "challenge": "Provisional relevance judgement needs independent adjudication.",
       "illustrative_sensitivity": "If this one label becomes relevant, MiniLM R01 P@3 becomes 1 and P@5 becomes 0.8; TF-IDF top five do not contain this article. This is not the reported primary metric."
     },
     {
       "case_id": "R04",
       "article_id": "Wc201444bb806b11c",
       "frozen_relevant": true,
-      "challenge": "A sushi model overview supplies context, but may not explain why no fan is used. A stricter answer-seeking criterion could mark it not relevant."
+      "challenge": "Provisional relevance judgement needs independent adjudication."
     },
     {
       "case_id": "L02",
       "article_id": "W38e46c97bbbb0405",
       "frozen_relevant": false,
-      "challenge": "The upright-fridge overview also includes fan/ventilation checks. A reviewer may consider that useful load-management advice despite the generic winning passage; the negative label needs adjudication."
+      "challenge": "Provisional relevance judgement needs independent adjudication."
     }
   ],
   "false_positive_examples": [
@@ -29,7 +29,7 @@
       "rank": 2,
       "article_id": "W38e46c97bbbb0405",
       "score": 0.82363,
-      "finding": "Generic upright-cabinet selection checklist matches an open-display running-cost passage; not a direct actionable destination under the frozen task criterion."
+      "finding": "Possible search-intent mismatch; inspect the original articles before acting."
     },
     {
       "case_id": "L03",
@@ -37,7 +37,7 @@
       "rank": 2,
       "article_id": "Wb1b62862200f9fab",
       "score": 0.33587,
-      "finding": "Target explains keeping internal fans clear; source explains avoiding fan airflow for sushi. Shared words are not sufficient to transfer cabinet-specific advice."
+      "finding": "Possible search-intent mismatch; inspect the original articles before acting."
     },
     {
       "case_id": "L03",
@@ -45,53 +45,53 @@
       "rank": 2,
       "article_id": "W0352ca07b1d5f7a4",
       "score": 0.64323,
-      "finding": "Food-temperature monitoring language matches sushi guidance, but the destination focuses on open-display running costs rather than static cooling."
+      "finding": "Possible search-intent mismatch; inspect the original articles before acting."
     }
   ],
   "overlap_examples": [
     {
       "left_id": "W7979ae9d079cd4e8",
       "right_id": "Wb092510eb9d3d03b",
-      "interpretation": "Substantive overlap candidate in glazing, condensation and model features; compare unique sections and intent before any merge decision."
+      "interpretation": "Potential shared subject matter; assess distinct purpose before an editorial decision."
     },
     {
       "left_id": "Wcaa7372aa01a6165",
       "right_id": "Wcbbba493a5bee591",
-      "interpretation": "Supplier promotion versus finance/payment intent; shared product-range/contact language creates high max-passage scores, not proof of duplicate articles.",
+      "interpretation": "Potential shared subject matter; assess distinct purpose before an editorial decision.",
       "embeddings_score": 0.86721,
       "tfidf_score": 0.57169
     },
     {
       "left_id": "W0352ca07b1d5f7a4",
       "right_id": "Wd20a8f0e6dce6f2e",
-      "interpretation": "Operating costs versus open/closed display design are complementary decisions despite shared buying/energy language."
+      "interpretation": "Potential shared subject matter; assess distinct purpose before an editorial decision."
     },
     {
       "left_id": "W809d6443d972f88b",
       "right_id": "Wf0519af068261b10",
-      "interpretation": "Stock organisation and loading procedures share useful guidance; overlap alone is not a reason to remove either page."
+      "interpretation": "Potential shared subject matter; assess distinct purpose before an editorial decision."
     }
   ],
   "extraction_spot_examples": [
     {
       "article_id": "W1dd3e6cf9eb6189f",
-      "notes": "Outer title and a second body H1 are source-authored variants; body sections and delivery/measurement text remain."
+      "notes": "Extraction spot check recorded; compare with the original public article if needed."
     },
     {
       "article_id": "W7979ae9d079cd4e8",
-      "notes": "Glazing, energy considerations and product context remain; closing promotional call-to-action is retained in the source body."
+      "notes": "Extraction spot check recorded; compare with the original public article if needed."
     },
     {
       "article_id": "W8dc1c0e1bb6139d2",
-      "notes": "Basket/divider comparison headings and internal article references remain mapped; related topic alone is not an editorial link decision."
+      "notes": "Extraction spot check recorded; compare with the original public article if needed."
     },
     {
       "article_id": "Wabdb55b581cec281",
-      "notes": "Static/no-fan explanation remains distinct from generic forced-air cabinet guidance."
+      "notes": "Extraction spot check recorded; compare with the original public article if needed."
     },
     {
       "article_id": "Wcbbba493a5bee591",
-      "notes": "Finance eligibility caveats and commercial contact language remain; promotion can match other supplier articles without shared main intent."
+      "notes": "Extraction spot check recorded; compare with the original public article if needed."
     }
   ],
   "audit_interpretation": "The one unmatched word per page is Contents inside a role=navigation table-of-contents region. Its omission is intentional. No additional source-body word-count differences, heading differences or selected-link mapping differences were detected by the structural audit; this is not a rendered-page completeness proof."

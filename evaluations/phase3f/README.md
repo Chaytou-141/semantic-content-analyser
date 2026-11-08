@@ -1,6 +1,6 @@
 # Phase 3F: screened mixed-review consolidation
 
-`inputs/` preserves the supplied CSV bytes. They contain **14 reported user decisions
+`inputs/` contains publication-anonymised copies of the supplied CSVs. They contain **14 reported user decisions
 after AI screening**, not independent validation, plus **45 AI-assisted assessments**.
 All independent attestations remain false. `results.json` contains validated coverage,
 unresolved per-cutoff gaps and frozen ranking disagreements. No available human P@3/P@5

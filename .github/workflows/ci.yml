@@ -15,6 +15,8 @@ jobs:
           cache: pip
       - run: pip install torch==2.14.1 --index-url https://download.pytorch.org/whl/cpu
       - run: pip install -r requirements-dev.txt
+      - name: Install browser for offline UI tests
+        run: python -m playwright install --with-deps chromium
       - run: python -m pytest -q
       - run: node --check web/app.js
   container:

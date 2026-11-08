@@ -1,314 +1,135 @@
 # Semantic Content Analyser
 
-A working application for exploring related content using local CPU embeddings and a keyword baseline, with persistent local-demo or isolated temporary visitor workspaces. Built as an AI engineering learning project, with reviewed AWS deployment options.
+An AI engineering portfolio application for exploring how website articles relate,
+reviewing internal-link opportunities and comparing potentially overlapping content.
 
-Release status: local verification only. [Phase 4E security findings](docs/phase4e-security-review.md)
-and the [AWS cost/architecture plan](docs/phase4e-aws-plan.md) describe outstanding
-launch gates. The older EC2 deployment instructions below are a draft, not approval
-to deploy. Production requires reviewed app, egress and proxy image references.
+**Live demo:** [analyser.alichaytou.com](https://analyser.alichaytou.com)
 
-## What it does
+The live demo runs on a **2 GB AWS Lightsail instance in Sydney**, as reported by
+its maintainer. This preparation review did not access the AWS account or independently
+verify the running host configuration. It is a limited portfolio/demo application,
+not a production SEO platform or a claim of independently validated recommendation accuracy.
 
-- **Semantic search:** search the collection using MiniLM embeddings, TF-IDF or both. Results include the best matching passage, score and article details.
-- **Internal-link review:** select a source article, exclude self-links, existing links and ineligible pages, and inspect source/destination passage evidence. Save useful/not-useful decisions and editorial notes without inserting links.
-- **Content-overlap review:** inspect related passage pairs, with thresholds and result limits. Similarity is evidence to review, not a merge or deletion decision.
-- **Collection management:** import/export CSV, edit article text and link eligibility, and restore the fictional demo collection. Invalid imports leave existing data intact.
-- **Evaluation:** view the saved, honestly labelled development comparison. The earlier Python experiments remain available.
-- **Deployment:** Docker image with a pinned CPU model, HTTPS proxy configuration, Terraform for AWS EC2/ECR, and CI checks.
+## Features
 
-This is a bounded learning/demo application. Local mode has one persistent collection; visitor mode isolates temporary collections with signed ownership cookies. Independent human evaluation, large-scale retrieval, public abuse controls and production load testing remain future work.
+- **Semantic search:** pretrained `sentence-transformers/all-MiniLM-L6-v2` embeddings
+  compare a question with article passages. TF-IDF provides a keyword baseline.
+- **Internal-link opportunity review:** inspect source-to-destination passage evidence,
+  exclude self/existing links and ineligible destinations, and save editorial decisions.
+- **Content-overlap comparison:** compare passage pairs and inspect their original
+  context. Rule-based Common terms highlighting is a reading aid, not model attribution.
+- **Evidence-based PDF exports:** download a separate report for a completed search,
+  link or overlap analysis, including settings, scores, excerpts, URLs and available
+  editorial decisions. Exports reuse results without rerunning inference.
+- **Website and CSV import:** bounded WordPress REST/XML sitemap discovery, article
+  selection and extraction preview, followed by explicit collection replacement.
+  CSV import/export and fictional sample articles remain available.
+- **Temporary visitor workspaces:** signed ownership cookies isolate each browser's
+  temporary SQLite collection and reviews. Admission checks and collection revisions
+  prevent invalid imports and stale results from replacing current work.
+
+**Editorial review is essential.** Cosine similarity measures vector closeness; it is
+not accuracy, confidence, a relevance probability or a percentage of duplicated text.
+High similarity alone does not establish duplicate content, keyword cannibalisation,
+link usefulness or a reason to merge pages. The application does not insert website
+links, merge pages, train a new model or modify the original website.
+
+## Stack and processing
+
+Python 3.12, FastAPI, SQLite, Sentence Transformers/MiniLM, scikit-learn TF-IDF,
+vanilla HTML/CSS/JavaScript and ReportLab. Docker packages the application; Caddy
+provides HTTPS reverse-proxy routing. MiniLM inference runs on CPU on the application
+server, without a hosted LLM API. The first required model load can take time; subsequent
+analyses can reuse collection indexes. Model weights are downloaded from Hugging Face
+when not cached (or during the Docker build) and are pinned to a revision.
+
+Local mode uses one persistent collection. Visitor mode shares one loaded model but
+isolates collections and indexes, with bounded execution, workspace expiration and
+cleanup. Treat downloaded reports and CSVs as potentially sensitive user data.
 
 ## Run locally on Windows
 
-From this project folder, use the environment's Python explicitly:
+From the repository root:
 
 ```powershell
-# Only needed on a fresh checkout:
 py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
-
-# Launch the application:
-.\.venv\Scripts\python.exe -m uvicorn semantic_analyser.api:app --host 127.0.0.1 --port 8000
+$env:ENABLE_WEBSITE_FETCH = 'true'
+.\.venv\Scripts\python.exe -m uvicorn semantic_analyser.api:app --host 127.0.0.1 --port 8000 --workers 1 --no-proxy-headers
 ```
 
-Open **http://127.0.0.1:8000**. The 21 fictional demo articles load automatically into an ignored SQLite database at `runtime/workspace.sqlite3`. The first import/edit preflight or analysis loads the model. Imports and edits check real-tokenizer passage limits before saving; collection embeddings are built on the first semantic analysis and reused until the collection changes. Model files are fetched from Hugging Face if not cached. Article/query text is processed on the machine running the app, not sent to a hosted inference API.
+Open **http://127.0.0.1:8000**. A new local database starts with fictional sample
+articles; an existing database retains its collection. Local source execution does
+not automatically load `.env`. Keep local mode bound to loopback; it is a shared
+workspace and must not be used for unrelated public visitors.
 
-The first page offers sample analysis or your website. Existing custom collections have
-a non-destructive continuation path; restoring samples always requires confirmation.
-Enable website import with
-`$env:ENABLE_WEBSITE_FETCH = 'true'` before starting the server, as described below.
-You can also choose **Try the sample articles** or import CSV. After import, the app
-opens article analysis; collection management is under **Articles** and development
-evaluation is under **More**. Starting discovery does not replace saved data.
-
-Analysis, Articles and Import are visible in the main navigation. Website/CSV imports
-show a count-bearing success state with Explore analysis and Manage articles. Matching
-passages start short and expand to unchanged full evidence. The import wizard groups
-capacity exclusions separately from extraction failures and shows the accepted character
-budget. [UI workflow and frontend learning guide](docs/ux-refinement-learning-guide.md)
-explains state, events, API interactions and the resource-management rationale.
-
-Local mode has no password by default and binds to the loopback address. To test sign-in locally, set environment variables before launching:
-
-```powershell
-$env:APP_PASSWORD = Read-Host "Workspace password"
-$env:SECRET_KEY = .\.venv\Scripts\python.exe -c "import secrets; print(secrets.token_hex(32))"
-```
-
-Do not set `APP_ENV=production` for plain HTTP localhost: production sessions require HTTPS. Local source execution does not automatically read `.env`; Docker Compose reads the relevant environment files.
-
-## Temporary visitor workspaces (Phase 2B)
-
-The default `WORKSPACE_MODE=local` retains the existing persistent local demo and its
-SQLite file. Use it on loopback or as a trusted private demonstration. To test isolated
-visitors locally in a new PowerShell terminal:
+For isolated local visitors, set these before launching:
 
 ```powershell
 $env:WORKSPACE_MODE = 'visitor'
 $env:SECRET_KEY = .\.venv\Scripts\python.exe -c "import secrets; print(secrets.token_hex(32))"
-.\.venv\Scripts\python.exe -m uvicorn semantic_analyser.api:app --host 127.0.0.1 --port 8000 --workers 1
 ```
 
-Use two browser profiles or private sessions to test different visitors. Each starts
-with its own copy of the fictional demo and can import its own CSV. Visitor mode does
-not open the original `DATABASE_PATH`; its default temporary root is a `visitors`
-directory beside that path, or `VISITOR_WORKSPACE_ROOT` when set explicitly. Keep the
-same strong SECRET_KEY across restarts to retain ownership of unexpired workspaces.
-HTTPS with `APP_ENV=production` is required for secure public cookies; no public
-deployment is performed or certified by this implementation.
+Keep deployment secrets out of Git. Production requires HTTPS, reviewed secrets,
+visitor mode, suitable resource limits and enforced outbound protections. Only import
+websites you own or are authorised to analyse; authentication, robots restrictions,
+request budgets and SSRF protections must not be bypassed.
 
-Defaults: 32 workspaces, one CPU analysis/preflight worker, two pending operations,
-four idle cached indexes, a 60-second operation response deadline, one-hour idle
-expiry, 24-hour absolute expiry, and cleanup every 60 seconds. Configure with
-`MAX_VISITOR_WORKSPACES`, `ANALYSIS_QUEUE_SIZE`, `MAX_CACHED_INDEXES`,
-`ANALYSIS_TIMEOUT_SECONDS`, `WORKSPACE_IDLE_SECONDS`, `WORKSPACE_LIFETIME_SECONDS`
-and `WORKSPACE_CLEANUP_SECONDS`. Workspace locks and SQLite busy waits are bounded
-at one second by default (`WORKSPACE_LOCK_SECONDS` controls the former).
-
-Native inference cannot be force-cancelled by a Python thread. A timed-out running
-operation keeps its slot and workspace lease until it finishes; excess work gets 503
-with Retry-After. Writes check cancellation/ownership before committing. After a
-timeout refresh the collection to reconcile state; do not automatically replay writes.
-Graceful shutdown waits for running work. A permanently stuck native call requires a
-supervisor/process restart. This is not a hard CPU-time or RAM sandbox.
-
-Visitor API clients first call `GET /api/session` with `X-Workspace-Request: true`,
-retain the ownership cookie, then read `/api/articles`. Supply its `collection_revision`
-as `If-Match` on analysis and mutation requests. Missing/stale revisions return 428/409.
-Results carry their snapshot revision; review actions and article editors retain that
-revision. `DELETE /api/workspace` deletes only the current visitor's idle workspace;
-logout revokes ownership, with active work protected until it exits. Expired sessions
-return 410 and clear the cookie; reload to begin again. No workspace ID/path is accepted
-as an authorization override. Local-mode legacy calls may omit If-Match, but the UI
-sends revisions in both modes.
-
-One process owns a visitor root; a second owner fails startup. Restarts retain unexpired
-SQLite text/reviews/revisions but discard indexes and pending HTTP work. Cleanup closes
-SQLite handles and deletes only recognized, unleased workspace files; unexpected
-contents are retained for inspection. This phase adds no crawler, external identity
-provider, PostgreSQL, Redis or cloud infrastructure.
-
-Run the full tests and `scripts/verify_phase2b.py` using the existing virtual environment
-for offline real-model/two-browser verification. That script uses localhost port 8013,
-disposable data under `runtime/phase2b/` and never regenerates Phase 1B results.
-
-## Use Docker locally
-
-Install Docker Desktop and select Linux containers first; Docker is not currently installed in the original development environment.
+## Tests
 
 ```powershell
-docker compose up --build -d
-docker compose logs -f app
-```
-
-Open **http://127.0.0.1:8000**. The image downloads the pinned model during its build and uses offline model access at runtime. The first build is substantial because it includes CPU PyTorch and model weights. Named volume `workspace` preserves article data and review decisions across container restarts.
-
-```powershell
-docker compose down
-```
-
-This stops containers without deleting the data volume. Do not add `--volumes` unless you intend to discard that local database.
-
-## CSV format
-
-Required columns: `id,title,body`. Optional: `topic,url,eligible,existing_links`.
-
-```csv
-id,title,body,topic,url,eligible,existing_links
-A01,Choosing a display fridge,Compare capacity and counter space.,refrigeration,https://example.com/a01,true,A02
-A02,Measuring cabinet space,Measure the counter and ventilation clearance.,refrigeration,https://example.com/a02,true,
-```
-
-- IDs must be unique and contain only letters, numbers, hyphens or underscores.
-- Existing links use article IDs separated by semicolons and must reference articles in the collection.
-- `eligible=false` excludes a page as a link destination; it remains searchable and available for overlap review.
-- Import replaces the full collection and clears previous review decisions. Export first if you need the old collection.
-- Limits: 100 articles, 20,000 characters per body, 250,000 total text characters, and 800 model passages. HTTP requests are limited to 2 MB.
-- Imports, demo resets and article edits run full preflight before any collection write. Invalid candidates preserve the existing articles and reviews; model-validation unavailability returns a retryable error. The 250,000-character limit remains unchanged.
-- Export escapes spreadsheet formula prefixes. If a text field begins with `=`, `+`, `-` or `@`, a leading apostrophe is added to the exported value.
-- The demo's A01 → A04 existing link and A20's ineligible status are fictional test conditions, not observed website data.
-
-## Model and scoring
-
-Model: `sentence-transformers/all-MiniLM-L6-v2`; revision: `1110a243fdf4706b3f48f1d95db1a4f5529b4d41`; licence: Apache 2.0. It produces 384-dimensional English-language embeddings with a 256-word-piece model input limit. See the [model card](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2).
-
-The application splits bodies into 192-token windows with a 32-token overlap, caps the title at 40 tokens, and retains character offsets so displayed evidence is an actual source substring. This is a simple chunking baseline, not a validated solution for every article type. It can cut across sentences and longer articles have more chances to produce a high-scoring passage.
-
-Search returns each article's highest scoring passage. Link discovery uses the strongest source/destination passage pair. Overlap review uses the strongest cross-article passage pair, not a claim that entire articles are duplicates. TF-IDF and embeddings use the same passages in the application. Scores are not probabilities and their sizes are not directly comparable between methods.
-
-The application passage scorer differs from the original whole-article evaluation experiments. The Evaluation page explicitly shows **historical development results**, not live metrics for edited collections or a validated measurement of the new chunking method. Model/query/threshold changes should be evaluated separately before claiming improvement.
-
-## Check the application
-
-```powershell
+.\.venv\Scripts\python.exe -m playwright install chromium
 .\.venv\Scripts\python.exe -m pytest -q
 node --check web/app.js
-
-# With the server running against a disposable 21-article demo workspace:
-.\.venv\Scripts\python.exe -m playwright install chromium
-.\.venv\Scripts\python.exe scripts/browser_smoke.py
 ```
 
-Unit/API tests use a deterministic test encoder and do not download the model. Browser checks exercise the real running service and save screenshots in ignored `runtime/browser/`. They save one demo link review. GitHub Actions checks the tests, builds and smoke-tests the Docker image, and validates Terraform.
+Normal tests use controlled fixtures and a deterministic model test double. They do
+not establish real-model quality or public-host capacity. Linux/root-only firewall
+checks and privileged Windows checks need the appropriate environment. Existing
+historical benchmarks and model evaluation are separate workflows, not steps to rerun
+for every documentation change. See [the public-release review](docs/public-release-review.md)
+for actual checks, failures, limitations and publication gates.
 
-The original `requirements-lock.txt` is a snapshot of the tested Windows environment including development dependencies, not a Linux lockfile. `requirements.txt` pins direct runtime dependencies; the Docker build installs CPU PyTorch separately. Container validation runs in CI; see [verification notes](docs/verification.md) for what was actually tested locally.
+## Deployment and limits
 
-## API
+The live 2 GB Lightsail configuration may differ from the checked-in production
+Compose template, whose default application memory ceiling is 4 GB. Earlier EC2 and
+8 GB hosting plans are historical engineering documents, not instructions to resize
+the live demo or approved spending. Do not apply Terraform or deployment scripts
+without reviewing their target, costs, secret handling and resource settings.
 
-The frontend and API are served from the same origin. Authenticated callers can retrieve the OpenAPI schema at `/api/schema`.
+Application admission limits include 100 articles, 250,000 title/body characters,
+20,000 body characters per article and 800 tokenizer passages; website selection is
+limited to 40 pages. These ceilings are safeguards, not a claim that maximum-size
+workloads fit every host. Public requests can be rejected when concurrency, time or
+storage budgets are exhausted. Deployment settings determine retention; expiration
+and explicit deletion can remove temporary workspaces. Export work you need to keep.
 
-| Route | Purpose |
-| --- | --- |
-| `GET /health` | Process/database health and model-loaded status |
-| `GET /api/session` | Sign-in state |
-| `POST /api/login`, `/api/logout` | Workspace session |
-| `GET /api/articles` | Current article collection |
-| `POST /api/articles/import`, `/api/articles/reset` | Atomic replacement / restore demo |
-| `PUT /api/articles/{id}` | Edit text and link rules |
-| `GET /api/articles/export` | Download CSV |
-| `POST /api/search` | Search or compare methods |
-| `POST /api/links` | Source-specific link candidates |
-| `POST /api/overlaps` | Passage overlap pairs |
-| `GET /api/reviews`, `POST /api/reviews` | Saved editorial decisions |
-| `GET /api/evaluation` | Saved original development metrics |
-| `POST /api/website/check` | Optional bounded fetch check; metadata only, disabled by default |
+PDFs cover only the latest completed feature analysis for the current collection
+revision. Reports cap results at 10 candidates per method, excerpts at 180 characters
+and output at 2 MB, disclosing truncation. Restarting the server clears in-memory
+analysis snapshots. Font coverage is limited; there is no universal multilingual or
+tagged-PDF accessibility certification.
 
-All state-changing and analysis POST/PUT calls require `X-Workspace-Request: true`. This custom header, same-origin requests and strict same-site cookies prevent ordinary cross-site form submissions. The production deployment template requires a 12+ character `APP_PASSWORD` and 32+ character `SECRET_KEY`; the deployment helper enforces a longer password. Sign-in sessions expire after eight hours; visitor ownership and idle-expiry limits are separate. The single-worker process throttles sign-in attempts; this is not a distributed abuse-prevention system.
+## Evaluation, third-party material and security
 
-## Website import (Phase 3B)
+Fictional demo data and the synthetic benchmark support development. Real-site
+experiments are single-site development evidence with carefully distinguished user,
+AI-assisted and provisional judgements; do not describe them as independently
+validated ground truth. Most real article bodies and generated reviewer packets live
+under ignored `runtime/` and are not supplied in a fresh clone. Some evaluation scripts
+therefore require private authorised caches and cannot reproduce those results from
+public files alone. Permission to evaluate a site is not redistribution permission.
 
-Set `$env:ENABLE_WEBSITE_FETCH = 'true'` before launching Uvicorn to enable the website
-URL workflow on the first page. Enter a public website or published XML sitemap URL,
-discover WordPress posts or sitemap URLs, select up to 40 articles, and review the
-extracted text before replacing your collection. Existing CSV/sample workflows remain.
+[Architecture](docs/architecture.md), [development journal](docs/development-journal.md),
+[security findings](docs/phase4e-security-review.md) and
+[security reporting](SECURITY.md) provide implementation context. Older dated reports
+remain historical; passing tests or a live demo do not certify production readiness.
 
-Phase 4A fixes explicit extensionless/query-based sitemap URLs and namespace extensions.
-In **XML sitemap** discovery mode, a bare website root uses homepage/robots-advertised
-maps (or conventional defaults) without probing WordPress. A non-root/query URL is
-treated as the explicit sitemap endpoint and is preserved. Standard namespace-qualified
-URL sets/indexes and legacy namespace-free maps are supported; image/alternate-language
-extensions do not become article candidates. Discovery-limit warnings describe partial
-results. This is offline-fixture coverage, not new live-site validation.
+## Licence
 
-Only public server-rendered UTF-8 pages with an article/main region are supported.
-No authentication, paywall bypass, JavaScript rendering or cross-host redirects are
-supported. Each run has a fixed 15-minute selection/review lifetime and a separate
-180-second cumulative fetch budget, with 60 network attempts. Waiting does not reset
-requests, bytes or fetch time. Oversized collections still fail the existing character/passage
-checks without replacing your articles or reviews. This is not a complete-site crawl.
-
-See [workflow, supported structures and limitations](docs/phase3b-websites.md),
-[verification evidence](docs/phase3b-verification.json) and the short
-[project context](docs/PROJECT_CONTEXT.md).
-
-Phase 3C [real-site findings and bounded selection-time changes](docs/phase3c-real-websites.md)
-record the authorised FreezeEdge sample. WordPress extraction was measured; that site's
-advertised sitemap returned 404, so independent real sitemap coverage is still missing.
-
-The [Phase 3D offline editorial evaluation](docs/phase3d-real-content-evaluation.md)
-reuses those saved pages with provisional labels and human-review worksheets. Its
-research artifacts are separate from the application's original Evaluation page.
-See the [release-readiness checklist](docs/release-readiness.md) before planning public hosting.
-
-[Phase 4A compatibility and container assessment](docs/phase4a-compatibility-readiness.md)
-records the targeted tests and remaining deployment blockers. The production Compose
-template now explicitly enables visitor isolation and website import while retaining
-the password gate. The local Compose/demo defaults are unchanged. Docker has not been
-run locally; the template is not approval to deploy or expose anonymous access.
-Further human editorial evaluation is intentionally deferred; existing evidence is preserved.
-
-Phase 4B adds opt-in demo admission and storage safeguards, enabled in production Compose:
-API/session/outbound budgets, bounded HTTP concurrency, SQLite page limits and physical
-storage admission thresholds. Trusted proxy identity uses exact peers and overwritten
-custom headers; Docker disables Uvicorn forwarded-header rewriting. Keep that
-`--no-proxy-headers` setting when enabling demo limits in a custom source launch.
-The image remains single-worker; existing rankings and model behaviour are unchanged.
-
-See [Phase 4B architecture, limits and reproduction steps](docs/phase4b-demo-operations.md).
-Docker verification was **skipped because Docker is unavailable**, not passed. No live
-sites, new editorial labels, real-model benchmarks, cloud services or public exposure
-were used. The optional loopback-only verifier uses an already-built local image:
-
-```powershell
-.\.venv\Scripts\python.exe -B scripts/verify_phase4b_docker.py --image semantic-demo:local
-```
-
-Read its JSON status: a skipped check is not container verification. It never pulls or
-builds an image. Network-layer egress, Linux/HTTPS behaviour, actual cgroup exhaustion and
-hosting capacity remain unverified; physical storage thresholds are not filesystem quotas.
-
-## Website fetching foundation (Phase 3A)
-
-The reusable safe-fetch service validates and pins public DNS destinations, checks
-robots.txt, and bounds time, bytes, redirects and requests. Phase 3A introduced the
-diagnostic API; Phase 3B adds the website workflow described above. Both use the existing
-workspace cookie, request header and visitor collection revision. Keep public
-multi-visitor use in visitor mode.
-`FETCH_DENY_CIDRS` can add comma-separated operator infrastructure ranges to the deny
-policy. Existing data, semantic scoring and admission limits are unchanged. Phase 3B
-reuses this service for discovery and article import; the Phase 3A report describes
-the foundation at its original milestone.
-
-See [architecture, limits, security limitations and the Phase 3B plan](docs/phase3a-safe-fetch.md)
-and [measured verification evidence](docs/phase3a-verification.json). Local fixtures
-and offline regression checks do not establish public deployment readiness.
-
-## Deploy to AWS
-
-Follow [the AWS learning and deployment guide](docs/aws-deployment.md). It explains EC2, ECR, security groups, IAM roles, HTTPS, persistent volumes, backup, updates and cleanup. No AWS resources have been created by preparing this repository.
-
-The Terraform configuration uses `ap-southeast-2` (Sydney), a `t3.medium` CPU instance, an encrypted 40 GB EBS root volume, an Elastic IP, and a private ECR repository. These resources incur AWS charges. Review an AWS pricing estimate and budget before applying the plan; this is not promised to fit a free tier.
-
-## Project map
-
-```text
-semantic_analyser/     Python API, retrieval engine, validation and SQLite storage
-web/                   Browser interface; no separate Node build required
-experiments/           Original learning scripts and evaluation runs
-data/                  Fictional articles and development questions
-labels/                Relevance labels, provenance and reasons
-tests/                 Focused API, retrieval, persistence and auth checks
-scripts/               Browser verification
-deploy/aws/            Production Compose, HTTPS proxy and release helper
-infra/aws/             Terraform infrastructure
-docs/                  Learning journal, evaluation evidence and deployment guide
-```
-
-The original brief remains in `Semantic_Content_Analyser_Starter_Docs/`. At the user's later request, scope expanded from guided experiments to a deployable demo application. WordPress/sitemap import is opt-in; SocialBuzz integration and automatic publishing, merging or deletion are not implemented.
-
-
-## Export a feature-specific analysis PDF
-
-Run Search articles, Link opportunities or Content overlap, then use **Export PDF**
-inside that feature. Only its latest completed result is exported, with the original
-method and filters. Buttons stay disabled until that feature has a completed result;
-the server also rejects unavailable or stale collection snapshots. Empty completed
-results can be exported and are clearly labelled. No combined report is generated.
-
-Reports include at most 10 returned candidates per method, 180-character original
-evidence excerpts, and a 2 MB output limit. Shortened text is labelled. Displayed long
-URLs may be shortened, but their clickable destinations are complete. Review status
-and notes are read from the current workspace at export time. Related results remain
-query-dependent; potential overlap is not confirmed duplication. Collection changes
-invalidate results; restarting clears process-local snapshots. Existing CSV exports
-are unchanged. Embedded fonts cover common Latin text, not every writing system.
+Original project code is licensed under the [MIT License](LICENSE), copyright
+2026 Ali Chaytou. Third-party packages, model weights, fonts and website material
+retain their own terms; MIT does not relicense them. Instrument Sans includes its
+[SIL Open Font License](web/fonts/OFL.txt). Publication-rights uncertainties are
+listed in the release review and must be resolved before making the repository public.

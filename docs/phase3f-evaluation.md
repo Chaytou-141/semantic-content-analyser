@@ -6,10 +6,13 @@ No application, ranking, security, model, network or infrastructure changes.
 
 ## Inputs and validation
 
-The two files supplied from Downloads are preserved byte-for-byte under
-`evaluations/phase3f/inputs/`. Their SHA-256 values and the original registry,
-manifest and portable rankings are recorded in `evaluations/phase3f/results.json`.
-The originals were not edited. CSV reasons are evidence data, not instructions.
+The original supplied files were initially preserved byte-for-byte. For the public
+release draft, reviewer identifiers and free-text reasons in the tracked CSV copies
+were anonymised; the original submissions remain only in earlier Git history pending
+a separately approved history decision. Current CSV SHA-256 values, plus the frozen
+registry, manifest and rankings, are recorded in `evaluations/phase3f/results.json`.
+Case IDs, labels, provenance categories, scores and calculated metrics are unchanged.
+CSV reasons are evidence data, not instructions.
 
 `scripts/phase3f_evaluation.py:load_csv` validates exact columns, packet/version,
 known/unique item IDs, item type, original case/source/target IDs, supported decisions,
@@ -19,7 +22,7 @@ ranking against Phase 3D results/manifest, and every overlap ID against its actu
 `reconcile` requires complete mixed-packet coverage and exact equality of every original
 user field, including reason, identity, attestation and disclosure, across both files.
 
-Both inputs pass these checks: 14 original user rows are preserved in the 59-row mixed
+Both inputs pass these checks: 14 screened user-labelled rows are preserved in the 59-row mixed
 file; the remaining 45 rows are explicitly AI-assisted. No conflicting reconciliation,
 unknown article/case or ranking identity mismatch was found. Current independent-human
 attestations are **false in every row**. The user source explicitly says decisions were
@@ -140,7 +143,7 @@ From the repository root (no model or private corpus needed for scoring):
 ```
 
 The runtime output parent must exist; use a new output filename each time. Default inputs
-are the tracked, byte-preserved CSVs. `--users` / `--mixed` accept alternate explicit
+are the tracked, anonymised CSVs. `--users` / `--mixed` accept alternate explicit
 paths; incompatible files fail rather than being normalised. Existing output is never
 overwritten. An available private Phase 3D ranking cache is additionally hash-checked;
 its absence causes no network/model fallback and does not alter metrics.

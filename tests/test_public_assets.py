@@ -18,7 +18,7 @@ def test_public_asset_allowlist_blocks_real_stray_files(tmp_path):
             assert response.status_code==404 and 'SYNTHETIC_PRIVATE_CANARY' not in response.text
 
 
-@pytest.mark.parametrize('path',['/static/%2e%2e/private.py','/static/..%2fprivate.py','/static/%252e%252e%252fprivate.py','/static/fonts/../../private.py'])
+@pytest.mark.parametrize('path',['/static/%2e%2e/private.py','/static/..%2fprivate.py','/static/%252e%252e%252fprivate.py','/static/fonts/../../private.py','/static/fonts%5c..%5cprivate.py','/static/fonts%5c..%5cInstrumentSans.ttf'])
 def test_encoded_traversal_is_not_a_public_asset(tmp_path,path):
     (tmp_path/'private.py').write_text('SYNTHETIC_PRIVATE_CANARY')
     app=FastAPI();app.mount('/static',PublicAssets(directory=tmp_path))

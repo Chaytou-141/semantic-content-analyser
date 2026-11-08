@@ -1042,7 +1042,7 @@
     {
       "item_id": "C-R01-W72fdaf17cd4c4232",
       "review_origin": "chatgpt_ai_assisted",
-      "reason": "Main focus is ice build-up; stock placement is incidental.",
+      "reason": "AI-assisted provisional judgement; detailed rationale omitted.",
       "ranking_evidence": [
         {
           "method": "embeddings",
@@ -1058,7 +1058,7 @@
     {
       "item_id": "C-R01-Wb759d5121095c6e0",
       "review_origin": "chatgpt_ai_assisted",
-      "reason": "Combination fridge-freezer storage does not address retail chest layout.",
+      "reason": "AI-assisted provisional judgement; detailed rationale omitted.",
       "ranking_evidence": [
         {
           "method": "tfidf",
@@ -1074,7 +1074,7 @@
     {
       "item_id": "C-R01-Wc8d0057aff79b0bf",
       "review_origin": "user_decision_after_ai_screening",
-      "reason": "User rejected general freezer buying guide for this specific chest-freezer organisation question.",
+      "reason": "Screened editorial judgement; detailed comment withheld for publication.",
       "ranking_evidence": [
         {
           "method": "embeddings",
@@ -1099,7 +1099,7 @@
     {
       "item_id": "C-R02-W38e46c97bbbb0405",
       "review_origin": "user_decision_after_ai_screening",
-      "reason": "User rejected broad upright-fridge features article for detailed installation checks.",
+      "reason": "Screened editorial judgement; detailed comment withheld for publication.",
       "ranking_evidence": [
         {
           "method": "tfidf",
@@ -1115,7 +1115,7 @@
     {
       "item_id": "C-R02-W62fab2566c9ce776",
       "review_origin": "chatgpt_ai_assisted",
-      "reason": "Focuses on replacement decisions rather than pre-install measurements.",
+      "reason": "AI-assisted provisional judgement; detailed rationale omitted.",
       "ranking_evidence": [
         {
           "method": "embeddings",
@@ -1140,7 +1140,7 @@
     {
       "item_id": "C-R03-W7979ae9d079cd4e8",
       "review_origin": "user_decision_after_ai_screening",
-      "reason": "User rejected freezer glazing article for a chilled-display comparison question.",
+      "reason": "Screened editorial judgement; detailed comment withheld for publication.",
       "ranking_evidence": [
         {
           "method": "embeddings",
@@ -1156,7 +1156,7 @@
     {
       "item_id": "C-R04-W1d81d7c9e8f5f100",
       "review_origin": "chatgpt_ai_assisted",
-      "reason": "Self-service workflow does not explain delicate sushi and low-airflow cooling.",
+      "reason": "AI-assisted provisional judgement; detailed rationale omitted.",
       "ranking_evidence": [
         {
           "method": "tfidf",
@@ -1172,7 +1172,7 @@
     {
       "item_id": "C-R04-W38e46c97bbbb0405",
       "review_origin": "chatgpt_ai_assisted",
-      "reason": "General upright fridge features omit sushi-specific cooling effects.",
+      "reason": "AI-assisted provisional judgement; detailed rationale omitted.",
       "ranking_evidence": [
         {
           "method": "embeddings",
@@ -1197,7 +1197,7 @@
     {
       "item_id": "C-R04-Wb1b62862200f9fab",
       "review_origin": "user_decision_after_ai_screening",
-      "reason": "User rejected general forced-air stocking advice for a static-cooled sushi display question.",
+      "reason": "Screened editorial judgement; detailed comment withheld for publication.",
       "ranking_evidence": [
         {
           "method": "embeddings",
@@ -1222,7 +1222,7 @@
     {
       "item_id": "C-R04-Wcde14bde9c3a81b5",
       "review_origin": "chatgpt_ai_assisted",
-      "reason": "Heated glass discussion is unrelated to delicate sushi drying and cooling.",
+      "reason": "AI-assisted provisional judgement; detailed rationale omitted.",
       "ranking_evidence": [
         {
           "method": "embeddings",
@@ -1238,7 +1238,7 @@
     {
       "item_id": "C-L01-Wd20a8f0e6dce6f2e",
       "review_origin": "chatgpt_ai_assisted",
-      "reason": "Open refrigerated display doors are a different cabinet and cooling application.",
+      "reason": "AI-assisted provisional judgement; detailed rationale omitted.",
       "ranking_evidence": [
         {
           "method": "tfidf",
@@ -1254,7 +1254,7 @@
     {
       "item_id": "C-L02-W1d81d7c9e8f5f100",
       "review_origin": "user_decision_after_ai_screening",
-      "reason": "User rejected self-service product article as a link from an operating-cost guide.",
+      "reason": "Screened editorial judgement; detailed comment withheld for publication.",
       "ranking_evidence": [
         {
           "method": "embeddings",
@@ -1279,7 +1279,7 @@
     {
       "item_id": "C-L02-W38e46c97bbbb0405",
       "review_origin": "chatgpt_ai_assisted",
-      "reason": "General upright display features do not meaningfully expand energy-cost analysis.",
+      "reason": "AI-assisted provisional judgement; detailed rationale omitted.",
       "ranking_evidence": [
         {
           "method": "embeddings",
@@ -1295,7 +1295,7 @@
     {
       "item_id": "C-L02-W59124efd4aebdc60",
       "review_origin": "chatgpt_ai_assisted",
-      "reason": "Supplier overview is primarily generic promotional content.",
+      "reason": "AI-assisted provisional judgement; detailed rationale omitted.",
       "ranking_evidence": [
         {
           "method": "embeddings",
@@ -1320,7 +1320,7 @@
     {
       "item_id": "C-L02-W62fab2566c9ce776",
       "review_origin": "chatgpt_ai_assisted",
-      "reason": "Replacement decision content is too broad for this running-cost passage.",
+      "reason": "AI-assisted provisional judgement; detailed rationale omitted.",
       "ranking_evidence": [
         {
           "method": "embeddings",
@@ -1345,7 +1345,7 @@
     {
       "item_id": "C-L02-Wb759d5121095c6e0",
       "review_origin": "chatgpt_ai_assisted",
-      "reason": "Fridge/freezer combination is not a direct follow-on to open-display running costs.",
+      "reason": "AI-assisted provisional judgement; detailed rationale omitted.",
       "ranking_evidence": [
         {
           "method": "tfidf",
@@ -1361,7 +1361,7 @@
     {
       "item_id": "C-L03-W0352ca07b1d5f7a4",
       "review_origin": "chatgpt_ai_assisted",
-      "reason": "Open display energy-cost guide shares maintenance wording but not sushi static cooling.",
+      "reason": "AI-assisted provisional judgement; detailed rationale omitted.",
       "ranking_evidence": [
         {
           "method": "embeddings",
@@ -1377,7 +1377,7 @@
     {
       "item_id": "C-L03-W1d81d7c9e8f5f100",
       "review_origin": "chatgpt_ai_assisted",
-      "reason": "Self-service retail display has only generic cooling and presentation overlap.",
+      "reason": "AI-assisted provisional judgement; detailed rationale omitted.",
       "ranking_evidence": [
         {
           "method": "tfidf",
@@ -1393,7 +1393,7 @@
     {
       "item_id": "C-L03-W1dd3e6cf9eb6189f",
       "review_origin": "chatgpt_ai_assisted",
-      "reason": "Deli cabinet sizing is a different decision from sushi static cooling design.",
+      "reason": "AI-assisted provisional judgement; detailed rationale omitted.",
       "ranking_evidence": [
         {
           "method": "tfidf",
@@ -1409,7 +1409,7 @@
     {
       "item_id": "C-L03-W38e46c97bbbb0405",
       "review_origin": "chatgpt_ai_assisted",
-      "reason": "General upright fridge article does not explain sushi-sensitive direct airflow.",
+      "reason": "AI-assisted provisional judgement; detailed rationale omitted.",
       "ranking_evidence": [
         {
           "method": "embeddings",
@@ -1434,7 +1434,7 @@
     {
       "item_id": "C-L03-Wb1b62862200f9fab",
       "review_origin": "user_decision_after_ai_screening",
-      "reason": "User rejected general airflow guidance as a link from static-cooled sushi explanation.",
+      "reason": "Screened editorial judgement; detailed comment withheld for publication.",
       "ranking_evidence": [
         {
           "method": "embeddings",
@@ -1459,7 +1459,7 @@
     {
       "item_id": "C-L03-Wb759d5121095c6e0",
       "review_origin": "chatgpt_ai_assisted",
-      "reason": "Combination fridge/freezer is not relevant to static sushi display cooling.",
+      "reason": "AI-assisted provisional judgement; detailed rationale omitted.",
       "ranking_evidence": [
         {
           "method": "embeddings",
@@ -1486,7 +1486,7 @@
     "registry": "ebf4e4fc3708851b38aba24cf412aad12be832522f5d870c37255ead2fbdd184",
     "manifest": "67cd2c62725d1f6ccdb508258a7bd323bc6f9922a53a2b603be39be1e1fc6e65",
     "rankings": "87a03f203d6798095e04e2bdca0b8dfe80aec58ab7d3c6fe0c7c1594c0ab0cd1",
-    "user_csv": "ba0fbe2b0ddda2d100e8717e84bb244a0bc89f6f21f230f013bdfba354104103",
-    "mixed_csv": "00328aadff2adb46cc1a5ea794eac60694f237268a3c4066b8a49ffd46e5966b"
+    "user_csv": "3dbe5fc2a88fa77b60a559242e5cda11ddd493250a7cf958089ea864b9f37337",
+    "mixed_csv": "93d8056b8050c113c80187d582b782a842f85b4858579eb4ea6592f7ac57f50e"
   }
 }

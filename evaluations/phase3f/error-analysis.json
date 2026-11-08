@@ -13,7 +13,7 @@
       "categories": [
         "search_intent_mismatch"
       ],
-      "interpretation": "Broad freezer purchase guidance is rejected for a specific chest-stock organisation question. The same destination is user-approved for the broader L01 contextual link task; do not blacklist it globally.",
+      "interpretation": "Assistant-classified search intent mismatch; inspect article intent and original evidence before editorial action.",
       "frozen_evidence": [
         {
           "method": "embeddings",
@@ -43,7 +43,7 @@
       "categories": [
         "search_intent_mismatch"
       ],
-      "interpretation": "General upright-fridge features are rejected for detailed installation checks, although some measurement guidance is present. Scope, not merely vocabulary, matters.",
+      "interpretation": "Assistant-classified search intent mismatch; inspect article intent and original evidence before editorial action.",
       "frozen_evidence": [
         {
           "method": "tfidf",
@@ -66,7 +66,7 @@
       "categories": [
         "topic_mismatch"
       ],
-      "interpretation": "User rejects this freezer-glazing destination for chilled-display comparison. The other freezer-glazing article is accepted in the same case; a blanket freezer/chiller exclusion is not supported.",
+      "interpretation": "Assistant-classified topic mismatch; inspect article intent and original evidence before editorial action.",
       "frozen_evidence": [
         {
           "method": "embeddings",
@@ -90,7 +90,7 @@
         "topic_mismatch",
         "search_intent_mismatch"
       ],
-      "interpretation": "Forced-air stocking advice is rejected for a question about delicate sushi in static/no-fan cooling. Similar cooling terms hide different technical applications.",
+      "interpretation": "Assistant-classified topic mismatch, search intent mismatch; inspect article intent and original evidence before editorial action.",
       "frozen_evidence": [
         {
           "method": "embeddings",
@@ -120,7 +120,7 @@
       "categories": [
         "search_intent_mismatch"
       ],
-      "interpretation": "Self-service product guidance is rejected as an additional destination from an operating-cost article.",
+      "interpretation": "Assistant-classified search intent mismatch; inspect article intent and original evidence before editorial action.",
       "frozen_evidence": [
         {
           "method": "embeddings",
@@ -151,7 +151,7 @@
         "topic_mismatch",
         "search_intent_mismatch"
       ],
-      "interpretation": "User rejects forced-air advice as an additional link from the static-cooling sushi explanation; present in both methods at different ranks.",
+      "interpretation": "Assistant-classified topic mismatch, search intent mismatch; inspect article intent and original evidence before editorial action.",
       "frozen_evidence": [
         {
           "method": "embeddings",
@@ -182,7 +182,7 @@
         "search_intent_mismatch",
         "complementary_content_not_duplicate"
       ],
-      "interpretation": "User rejects overlap investigation for running costs versus doors/open-front comparison despite high shared-passage similarity. This does not negate possible related-content usefulness.",
+      "interpretation": "Assistant-classified search intent mismatch, complementary content not duplicate; inspect article intent and original evidence before editorial action.",
       "frozen_evidence": [
         {
           "method": "embeddings",
@@ -213,7 +213,7 @@
         "generic_buying_advice",
         "search_intent_mismatch"
       ],
-      "interpretation": "AI-assisted negative: a buying checklist wins a high MiniLM match without directly expanding the operating-cost task. Full article contains potentially relevant ventilation advice; requires adjudication.",
+      "interpretation": "Assistant-classified generic buying advice, search intent mismatch; inspect article intent and original evidence before editorial action.",
       "frozen_evidence": [
         {
           "method": "embeddings",
@@ -237,7 +237,7 @@
         "generic_promotional_text",
         "generic_buying_advice"
       ],
-      "interpretation": "AI-assisted negative: supplier/product-selection and contact wording shares a commercial context but is not a focused energy-cost destination. Promotion is a suspected contributor, not a measured causal attribution.",
+      "interpretation": "Assistant-classified generic promotional text, generic buying advice; inspect article intent and original evidence before editorial action.",
       "frozen_evidence": [
         {
           "method": "embeddings",
@@ -267,7 +267,7 @@
       "categories": [
         "search_intent_mismatch"
       ],
-      "interpretation": "AI-assisted negative: temperature/maintenance wording matches static sushi guidance while the destination primarily concerns open-display energy costs.",
+      "interpretation": "Assistant-classified search intent mismatch; inspect article intent and original evidence before editorial action.",
       "frozen_evidence": [
         {
           "method": "embeddings",
@@ -291,7 +291,7 @@
         "generic_promotional_text",
         "search_intent_mismatch"
       ],
-      "interpretation": "AI-assisted negative: equipment supplier presentation and financing have distinct main purposes despite common supplier/contact/payment wording. Both methods rank this pair; removing all finance or sales prose would be an unsafe blanket rule.",
+      "interpretation": "Assistant-classified generic promotional text, search intent mismatch; inspect article intent and original evidence before editorial action.",
       "frozen_evidence": [
         {
           "method": "embeddings",
@@ -322,7 +322,7 @@
         "generic_promotional_text",
         "search_intent_mismatch"
       ],
-      "interpretation": "AI-assisted negative: running-cost factors and replacement triggers have different purposes despite shared commercial language.",
+      "interpretation": "Assistant-classified generic promotional text, search intent mismatch; inspect article intent and original evidence before editorial action.",
       "frozen_evidence": [
         {
           "method": "embeddings",

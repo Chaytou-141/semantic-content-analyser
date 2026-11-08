@@ -10,6 +10,9 @@ PUBLIC_ASSETS = frozenset({
 
 class PublicAssets(StaticFiles):
     async def get_response(self, path, scope):
-        if path not in PUBLIC_ASSETS:
+        # Starlette uses OS-native separators for nested paths on Windows.
+        # Normalize only for the allowlist; StaticFiles still resolves the
+        # original path and applies its own containment and symlink checks.
+        if path.replace('\\', '/') not in PUBLIC_ASSETS:
             raise HTTPException(status_code=404)
         return await super().get_response(path, scope)

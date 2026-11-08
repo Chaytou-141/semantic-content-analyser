@@ -5,14 +5,14 @@ RUN go mod download -json github.com/caddyserver/caddy/v2@v2.11.7 > /module.json
     && cp -a /go/pkg/mod/github.com/caddyserver/caddy/v2@v2.11.7 /src \
     && chmod -R u+w /src
 WORKDIR /src
-RUN go get golang.org/x/net@v0.62.0 github.com/go-jose/go-jose/v4@v4.1.6 \
+RUN go get golang.org/x/net@v0.62.0 github.com/go-jose/go-jose/v4@v4.1.6 github.com/klauspost/compress@v1.20.2 \
     && go mod verify \
     && go list -m all > /modules.txt
 RUN go build -trimpath -buildvcs=false -ldflags '-s -w -X github.com/caddyserver/caddy/v2.CustomVersion=v2.11.7-phase4e' -o /caddy ./cmd/caddy
 
-FROM alpine:3.23@sha256:ff7f0c727dd796aa36787bfcd9a64bf35a6ce72a73451b3359fde849b6703d63
+FROM alpine:3.23@sha256:469c9ea410b9215eaee7976ba6c0639039b444be8e5d638f7abbada189971eb2
 # Fresh runtime: no obsolete Caddy executable/curl in inherited image layers.
-RUN apk add --no-cache ca-certificates=20261020-r0 tzdata=2026f-r0 \
+RUN apk add --no-cache ca-certificates=20261020-r0 tzdata=2026f-r0 zlib=1.4-r0 \
     mailcap=2.1.54-r0 openssl=3.5.9-r0 ssl_client=1.37.0-r30 \
     && mkdir -p /etc/caddy /config/caddy /data/caddy /srv
 ENV XDG_CONFIG_HOME=/config XDG_DATA_HOME=/data
