@@ -12,12 +12,35 @@ function isSampleCollection() {
 // Display only. Never change the saved body, passage text or source offsets.
 function displayText(text) { return text.replace(/:?(?:\bcontentReference\[oaicite:\d+\]\{index=\d+\})/gu, ""); }
 
-function evidence(text, label, start, end) {
+function sharedEvidenceWords(left, right) {
+  // Exact word forms only: punctuation separates tokens; case is ignored.
+  // Deliberately do not stem plurals ("court" and "courts" remain different).
+  const ignored = new Set("about after again also been before being between both could does each from have into more most other over same some such than that their them then there these they this those through very were what when where which while will with would your".split(" "));
+  const words = (text) => [...displayText(text).matchAll(/[\p{L}\p{N}]+/gu)].map((match) => match[0].toLowerCase()).filter((word) => word.length >= 4 && /\p{L}/u.test(word) && !ignored.has(word));
+  const destination = new Set(words(right));
+  return [...new Set(words(left))].filter((word) => destination.has(word)).slice(0, 10);
+}
+
+function highlightedEvidence(text, words) {
+  const fragment = document.createDocumentFragment();
+  const shared = new Set(words);
+  let cursor = 0;
+  for (const match of text.matchAll(/[\p{L}\p{N}]+/gu)) {
+    if (!shared.has(match[0].toLowerCase())) continue;
+    fragment.append(document.createTextNode(text.slice(cursor, match.index)), el("mark", { class: "shared-word", text: match[0] }));
+    cursor = match.index + match[0].length;
+  }
+  fragment.append(document.createTextNode(text.slice(cursor)));
+  return fragment;
+}
+
+function evidence(text, label, start, end, sharedWords = []) {
   const clean = displayText(text);
   const preview = clean.length > 320 ? clean.slice(0, 320).replace(/\s+\S*$/u, "") + "…" : clean;
   const full = el("details", { class: "full-evidence" }, el("summary", { text: `Read full ${label.toLowerCase()}` }), el("pre", { text }));
+  if (sharedWords.length) full.querySelector("pre").replaceChildren(highlightedEvidence(text, sharedWords));
   if (Number.isInteger(start) && Number.isInteger(end)) full.append(el("p", { class: "context-note", text: `Saved source character offsets: ${start}–${end}.` }));
-  return el("div", { class: "evidence-block" }, el("p", { class: "passage evidence-preview", text: preview }),
+  return el("div", { class: "evidence-block" }, el("p", { class: "passage evidence-preview" }, highlightedEvidence(preview, sharedWords)),
     clean !== text ? el("p", { class: "context-note", text: "A source citation marker is hidden in this preview. Full saved evidence is unchanged." }) : null, full);
 }
 
@@ -377,8 +400,10 @@ function renderLinks(payload) {
         el("div", { class: "link-detail-heading" }, route, el("div", { class: "link-similarity", "aria-label": `Cosine similarity ${result.score.toFixed(3)}` }, el("strong", { text: result.score.toFixed(3) }), el("span", { text: "Cosine similarity" })), help),
         el("section", { class: "link-editorial", "aria-label": "Your editorial review" }, el("p", { text: "Would this destination help the reader?" }), actions, noteEditor),
         el("div", { class: "link-evidence-heading" }, el("h4", { text: "Matching passage evidence" }), el("p", { text: "These are the passages compared, not an explanation of usefulness. Review the article intent before adding a link." })),
-        linkPassage(result.source_passage, "Source passage", result.source_start, result.source_end, source?.url),
-        linkPassage(result.passage, "Destination passage", result.passage_start, result.passage_end, result.url));
+        el("div", { class: "link-evidence-flow", role: "group", "aria-label": "Suggested link evidence, from source to destination" },
+          linkPassage(result.source_passage, "Source passage", result.source_start, result.source_end, source?.url, source?.title || sourceId, "source"),
+          el("p", { class: "link-evidence-direction" }, el("span", { "aria-hidden": "true", text: "↓" }), el("span", { text: "Suggested link" })),
+          linkPassage(result.passage, "Destination passage", result.passage_start, result.passage_end, result.url, result.title, "destination")));
       if (focusTab) buttons[index].focus({ preventScroll: true });
       if (inspect) focusDetail();
     }
@@ -406,14 +431,17 @@ function renderLinks(payload) {
   container.replaceChildren(...sections);
 }
 
-function linkPassage(text, label, start, end, url) {
+function linkPassage(text, label, start, end, url, title, side) {
   // Exact prefix from the returned passage: never paraphrase or remove markers.
   const excerpt = linkExcerpt(text);
   const full = el("details", { class: "full-evidence" }, el("summary", { text: `Read full ${label.toLowerCase()}` }), el("pre", { text }));
   if (Number.isInteger(start) && Number.isInteger(end)) full.append(el("p", { class: "link-offsets", text: `Original character offsets: ${start}–${end}` }));
   const original = safeTarget(url);
   if (original.tagName === "A") original.textContent = label === "Source passage" ? "Open source article" : "Open destination article";
-  return el("section", { class: "link-passage", "aria-label": label }, el("h4", { text: label }), el("blockquote", { class: "link-excerpt", text: excerpt }),
+  const direction = side === "source" ? "Source · link from" : "Destination · link to";
+  return el("section", { class: `link-passage link-passage--${side}`, "aria-label": `${direction}: ${title}` },
+    el("h4", { class: "link-passage-label", text: direction }), el("h5", { class: "link-passage-title", text: title }),
+    el("blockquote", { class: "link-excerpt", text: excerpt }),
     excerpt.length < text.length ? el("p", { class: "link-excerpt-note", text: "Exact excerpt. Open the full passage for context." }) : null,
     el("div", { class: "link-passage-links" }, full, original));
 }
@@ -436,9 +464,13 @@ function renderOverlaps(payload) {
   if (!payload.pairs.length) { empty(container, "No pairs above this threshold.", "Try a lower threshold. A lack of high similarity is not proof that topics never overlap."); return; }
   const list = el("div", { class: "result-list" });
   for (const pair of payload.pairs) {
+    const sharedWords = sharedEvidenceWords(pair.left.passage, pair.right.passage);
     const columns = el("div", { class: "pair-grid" });
-    for (const article of [pair.left, pair.right]) columns.append(el("div", {}, el("h3", {}, articleTitle(article)), metadata(article), evidence(article.passage, "overlap passage", article.passage_start, article.passage_end), safeTarget(article.url)));
-    list.append(el("article", { class: "result-card" }, el("div", { class: "pair-heading" }, el("span", { text: "Possible topic overlap · editorial review" }), scoreBadge(pair.score)), columns, el("div", { class: "result-footer" }, el("span", { text: "Check whether the pages answer different reader questions and contain unique information." }))));
+    for (const [index, article] of [pair.left, pair.right].entries()) columns.append(el("div", {}, el("span", { class: "overlap-article-label", text: index === 0 ? "Article A" : "Article B" }), el("h3", {}, articleTitle(article)), metadata(article), evidence(article.passage, "overlap passage", article.passage_start, article.passage_end, sharedWords), safeTarget(article.url)));
+    const wording = el("div", { class: "overlap-wording" },
+      el("strong", { text: sharedWords.length ? `Common terms: ${sharedWords.join(" · ")}` : "No common terms highlighted. The passages may still be related in meaning." }),
+      el("p", { text: "Highlighted terms appear in both passages. They do not determine the semantic similarity score." }));
+    list.append(el("article", { class: "result-card" }, el("div", { class: "pair-heading" }, el("span", { text: "Possible topic overlap · editorial review" }), scoreBadge(pair.score)), wording, columns, el("div", { class: "result-footer" }, el("span", { text: "Check whether the pages answer different reader questions and contain unique information." }))));
   }
   container.replaceChildren(el("div", { class: "result-heading" }, el("h2", { text: `${payload.pairs.length} pairs to inspect` })), list);
 }

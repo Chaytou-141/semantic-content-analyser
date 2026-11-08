@@ -625,3 +625,50 @@ progress { display: block; width: 100%; height: 12px; accent-color: var(--accent
 .feature-report-heading { flex-wrap: wrap; }
 .feature-report-heading > div { flex: 1 1 280px; }
 .feature-report-heading [data-export-pdf] { flex-shrink: 0; }
+
+/* Brief, action-led motion without moving content or delaying interaction. */
+@keyframes surface-reveal { from { opacity: .65; } to { opacity: 1; } }
+.view:not([hidden]) { animation: surface-reveal 160ms ease-out; }
+dialog[open], .link-detail { animation: surface-reveal 140ms ease-out; }
+.link-candidate, .nav-item { transition: background-color 140ms ease-out, border-color 140ms ease-out, color 140ms ease-out; }
+@media (prefers-reduced-motion: reduce) {
+  .view:not([hidden]), dialog[open], .link-detail { animation: none; }
+  .link-candidate, .nav-item { transition: none; }
+}
+
+/* Feedback follows user actions; nothing loops except active-work spinners. */
+@keyframes result-arrive { from { opacity: .55; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes toast-arrive { from { opacity: 0; transform: translate(-50%, 8px); } to { opacity: 1; transform: translate(-50%, 0); } }
+.result-card { animation: result-arrive 200ms ease-out; transition: border-color 160ms ease-out, box-shadow 160ms ease-out; }
+.toast:not([hidden]) { animation: toast-arrive 180ms ease-out; }
+.import-success:not([hidden]) { animation: result-arrive 220ms ease-out; }
+.button { transition: background-color 150ms ease-out, border-color 150ms ease-out, transform 120ms ease-out, box-shadow 150ms ease-out; }
+.button:not(:disabled):active { transform: translateY(1px); }
+.link-review-state { transition: background-color 180ms ease-out, color 180ms ease-out; }
+@media (hover: hover) and (pointer: fine) {
+  .button:not(:disabled):hover { transform: translateY(-1px); box-shadow: 0 3px 9px #44334f12; }
+  .button:not(:disabled):active { transform: translateY(1px); }
+  .result-card:hover { border-color: var(--line-strong); box-shadow: 0 3px 12px #44334f08; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .result-card, .toast:not([hidden]), .import-success:not([hidden]) { animation: none; }
+  .result-card, .button, .link-review-state { transition: none; }
+  .button:not(:disabled):hover, .button:not(:disabled):active { transform: none; }
+}
+
+/* Evidence direction: preserve serif source text and existing full-passage controls. */
+.link-passage.link-passage--source { border-left: 3px solid #80536f; background: #f7f2f6; }
+.link-passage.link-passage--destination { border-left: 3px solid #347579; background: #f0f7f7; }
+.link-passage .link-passage-label, .link-passage .link-passage-title, .link-evidence-direction { font-family: "Instrument Sans", Arial, sans-serif; }
+.link-passage .link-passage-label { font-size: 12px; font-weight: 650; color: #714561; margin-bottom: 7px; }
+.link-passage--destination .link-passage-label { color: #285f63; }
+.link-passage .link-passage-title { margin: 0 0 13px; font-size: 16px; font-weight: 600; line-height: 1.45; color: var(--ink); overflow-wrap: anywhere; }
+.link-evidence-direction { display: flex; align-items: center; gap: 9px; margin: 10px 0 0; padding-left: 18px; font-size: 12px; font-weight: 550; color: var(--muted); }
+.link-evidence-direction > [aria-hidden] { font-size: 21px; line-height: 1; color: var(--accent-dark); }
+
+/* Exact shared wording is a reading aid, not model attribution. */
+.shared-word { background: #ebe3f0; color: inherit; border-radius: 2px; box-shadow: inset 0 -1px #cbb7d7; padding: 0; }
+.overlap-wording { padding: 12px 15px; background: #f5f1f7; border-left: 3px solid #b7a3c3; border-radius: 4px; }
+.overlap-wording strong { font-size: 12px; font-weight: 600; overflow-wrap: anywhere; }
+.overlap-wording p { margin: 5px 0 0; font-size: 12px; line-height: 1.65; color: var(--muted); }
+.overlap-article-label { display: block; font-size: 11px; font-weight: 600; color: var(--muted); margin-bottom: 8px; }

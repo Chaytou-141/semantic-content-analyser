@@ -134,5 +134,5 @@ def test_long_link_cards_keep_evidence_and_editorial_status_together():
         scores=text.count('Cosine similarity:')
         if scores:
             assert text.count('Editorial status: Useful')==scores
-            assert text.count('Suggested destination')>=scores
+            assert text.count('Destination · link to')==scores
     assert 'shortened' in text_of(data)

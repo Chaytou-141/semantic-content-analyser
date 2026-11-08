@@ -90,9 +90,9 @@ def build_report(articles, section, snapshot, reviews, check=lambda: None):
             else:
                 if section=='links':
                     src=by_id[params['source_id']]
-                    left=article_cell(src.title,src.url,row['source_passage'],'Source article')
-                    right=article_cell(row['title'],row.get('url',''),row.get('passage',''),'Suggested destination')
-                    relation='Source article -> Suggested destination'
+                    left=article_cell(src.title,src.url,row['source_passage'],'Source · link from')
+                    right=article_cell(row['title'],row.get('url',''),row.get('passage',''),'Destination · link to')
+                    relation='Suggested link: source -> destination'
                 else:
                     a,b=row['left'],row['right']
                     left=article_cell(a['title'],a.get('url',''),a.get('passage',''),'Article A')
